@@ -4,19 +4,28 @@ abstract public class Item implements Purchasable {
 
     private String name;
     private int cost;
-    private String description;    public Item () { };
+    private String description;
+    private GameEnvironment game;
+    private double refundAmount = 0.5;
     
-    //
-    // Methods
-    //
-
-
+    public Item (String name, int cost, String description, GameEnvironment game) {
+    	this.name = name;
+    	this.cost = cost;
+    	this.description = description;
+    	this.game = game;
+    };
+    
+    /**
+	 * Getters and Setters methods 
+	 * 
+	 */
+    
     /**
      * Set the value of name
-     * @param newVar the new value of name
+     * @param name the new value of name
      */
-    public void setName (String newVar) {
-        name = newVar;
+    public void setName (String name) {
+        this.name = name;
     }
 
     /**
@@ -29,10 +38,10 @@ abstract public class Item implements Purchasable {
 
     /**
      * Set the value of cost
-     * @param newVar the new value of cost
+     * @param cost the new value of cost
      */
-    public void setCost (int newVar) {
-        cost = newVar;
+    public void setCost (int cost) {
+        this.cost = cost;
     }
 
     /**
@@ -45,10 +54,10 @@ abstract public class Item implements Purchasable {
 
     /**
      * Set the value of description
-     * @param newVar the new value of description
+     * @param description the new value of description
      */
-    public void setDescription (String newVar) {
-        description = newVar;
+    public void setDescription (String description) {
+        this.description = description;
     }
 
     /**
@@ -59,42 +68,47 @@ abstract public class Item implements Purchasable {
         return description;
     }
 
-    //
-    // Other methods
-    //
+    /**
+	 * Functional methods
+	 * 
+	 */
 
     /**
-     * @param        item
+     * @throws InsufficientFundsException 
      */
-    public void buy(Item item)
+    public void buy() throws InsufficientFundsException
     {
+    	game.minusBalance(cost);
+		game.getInventory().addItem(this);
     }
 
 
     /**
-     * @param        item
+     * @param item
      */
     public void sell(Item item)
     {
+    	game.addBalance(cost * refundAmount);
+    	game.getInventory().removeItem(this);
     }
 
 
     /**
-     * @param        monster
+     * @param monster
      */
     abstract public void use(Monster monster);
 
 
     /**
      * Buy a purchasable from the shop and add it to the player inventory.
-     * @param        purchasable
+     * @param purchasable
      */
     abstract public void buy(Purchasable purchasable);
 
 
     /**
      * Sell a purchasable in the player inventory to the shop.
-     * @param        purchasable
+     * @param purchasable
      */
     abstract public void sell(Purchasable purchasable);
 
