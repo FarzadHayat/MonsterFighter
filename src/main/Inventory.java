@@ -1,55 +1,87 @@
+package main;
 import java.util.ArrayList;
 
 public class Inventory {
-
+	
+	private int monsterListSize = 4;
+	private int itemListSize = 4;
     private ArrayList<Monster> myMonsters;
     private ArrayList<Item> myItems;
     
+    
     public Inventory () {
-    	myMonsters = new ArrayList<Monster>();
-    	myItems = new ArrayList<Item>();
+    	myMonsters = new ArrayList<Monster>(monsterListSize);
+    	myItems = new ArrayList<Item>(itemListSize);
     };
 
 
     /**
-     * @param        item
-     * @param        monster
+     * @param monster
+     * @throws InventoryFullException 
      */
-    public void useItem(Item item, Monster monster)
+    public void addMonster(Monster monster) throws InventoryFullException
     {
+    	if (!monstersFull()) {
+    		myMonsters.add(monster);
+    	}
+    	else {
+    		throw new InventoryFullException("Inventory full!");
+    	}
     }
 
 
     /**
-     * @param        monster
+     * @param monster
+     * @throws PurchasableNotFoundException 
      */
-    public void addMonster(Monster monster)
+    public void removeMonster(Monster monster) throws PurchasableNotFoundException
     {
+    	if (myMonsters.contains(monster)) {    		
+    		myMonsters.remove(monster);
+    	}
+    	else {
+    		throw new PurchasableNotFoundException("Puchasable not found in inventory!");
+    	}
     }
 
 
     /**
-     * @param        monster
+     * @param item
+     * @throws InventoryFullException 
      */
-    public void removeMonster(Monster monster)
+    public void addItem(Item item) throws InventoryFullException
     {
+    	if (!itemsFull()) {
+    		myItems.add(item);
+    	}
+    	else {
+    		throw new InventoryFullException("Inventory full!");
+    	}
     }
 
 
     /**
-     * @param        item
+     * @param item
+     * @throws PurchasableNotFoundException 
      */
-    public void addItem(Item item)
+    public void removeItem(Item item) throws PurchasableNotFoundException
     {
+    	if (myItems.contains(item)) {    		
+    		myItems.remove(item);
+    	}
+    	else {
+    		throw new PurchasableNotFoundException("Purchasable not found in inventory!");
+    	}
     }
-
-
-    /**
-     * @param        item
-     */
-    public void removeItem(Item item)
-    {
+    
+    
+    public boolean monstersFull() {
+		return myMonsters.size() >= monsterListSize;
     }
-
+    
+    
+    public boolean itemsFull() {
+		return myItems.size() >= itemListSize;
+    }
 
 }
