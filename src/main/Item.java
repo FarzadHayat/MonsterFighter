@@ -101,18 +101,4 @@ abstract public class Item implements Purchasable {
     abstract public void use(Monster monster);
 
 
-    /**
-     * Buy a purchasable from the shop and add it to the player inventory.
-     * @param purchasable
-     */
-    abstract public void buy(Purchasable purchasable);
-
-
-    /**
-     * Sell a purchasable in the player inventory to the shop.
-     * @param purchasable
-     */
-    abstract public void sell(Purchasable purchasable);
-
-
 }

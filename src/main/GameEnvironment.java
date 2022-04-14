@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class GameEnvironment {
 
-    private int balance;
+    private double balance;
     private String playerName;
     private int numDays;
     private String difficulty;
@@ -20,7 +20,7 @@ public class GameEnvironment {
      * Set the value of balance
      * @param balance the new value of balance
      */
-    public void setBalance (int balance) {
+    public void setBalance (double balance) {
         this.balance = balance;
     }
 
@@ -28,7 +28,7 @@ public class GameEnvironment {
      * Get the value of balance
      * @return the value of balance
      */
-    public int getBalance () {
+    public double getBalance () {
         return balance;
     }
 
@@ -78,6 +78,14 @@ public class GameEnvironment {
      */
     public String getDifficulty () {
         return difficulty;
+    }
+    
+    /**
+     * Get the value of inventory
+     * @return the value of inventory
+     */
+    public Inventory getInventory () {
+        return inventory;
     }
 
     //
@@ -168,11 +176,24 @@ public class GameEnvironment {
     {
     	// let the player pick a monster
     }
+
+    
+    public void addBalance(double amount) {
+		balance += amount;
+    }
+    
+    public void minusBalance(double amount) throws InsufficientFundsException {
+		if (balanceSufficient(amount)) {
+			balance -= amount;
+    	}
+    	else {
+    		throw new InsufficientFundsException("Insufficient funds!");
+    	}
+    }
     
     
-    public boolean balanceSufficient(int cost) {
-		return false;
-    	
+    public boolean balanceSufficient(double amount) {
+    	return balance >= amount;
     }
     
     
