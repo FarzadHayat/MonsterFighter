@@ -2,7 +2,15 @@ package main;
 
 public interface Purchasable {
 	
-	public void buy(Purchasable item);
+	/**
+     * Buy an purchasable from the shop and add it to the player inventory.
+     * @param purchasable
+     */
+	public void buy(Purchasable purchasable);
 	
-	public void sell(Purchasable item);
+	/**
+     * Sell an purchasable to the shop and removes it from the player inventory.
+     * @param purchasable
+     */
+	public void sell(Purchasable purchasable);
 }

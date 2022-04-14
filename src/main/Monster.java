@@ -35,62 +35,189 @@ public abstract class Monster implements Purchasable {
 	 * Getters and Setters methods 
 	 * 
 	 */
-	public String getName() {
-		return name;
-	}
 	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getDescription() {
-		return description;
-	}
-	
-	public int getHealth() {
-		return health;
-	}
-	
-	public int getMaxHealth() {
-		return maxHealth;
-	}
-	
-	public int getDamage() {
-		return damage;
-	}
-	
-	public int getCost() {
-		return cost;
-	}
-	
-	public int getLevel() {
-		return level;
-	}
-	
-	public double getCritRate() {
-		return critRate;
-	}
+	/**
+     * Set the value of name
+     * @param name the new value of name
+     */
+    public void setName (String name) {
+        this.name = name;
+    }
+
+    /**
+     * Get the value of name
+     * @return the value of name
+     */
+    public String getName () {
+        return name;
+    }
+
+    /**
+     * Set the value of health
+     * @param health the new value of health
+     */
+    public void setHealth (int health) {
+        this.health = health;
+    }
+
+    /**
+     * Get the value of health
+     * @return the value of health
+     */
+    public int getHealth () {
+        return health;
+    }
+
+    /**
+     * Set the value of maxHealth
+     * @param maxHealth the new value of maxHealth
+     */
+    public void setMaxHealth (int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    /**
+     * Get the value of maxHealth
+     * @return the value of maxHealth
+     */
+    public int getMaxHealth () {
+        return maxHealth;
+    }
+
+    /**
+     * Set the value of healAmount
+     * @param healAmount the new value of healAmount
+     */
+    public void setHealAmount (int healAmount) {
+        this.healAmount = healAmount;
+    }
+
+    /**
+     * Get the value of healAmount
+     * @return the value of healAmount
+     */
+    public int getHealAmount () {
+        return healAmount;
+    }
+
+    /**
+     * Set the value of damage
+     * @param damage the new value of damage
+     */
+    public void setDamage (int damage) {
+        this.damage = damage;
+    }
+
+    /**
+     * Get the value of damage
+     * @return the value of damage
+     */
+    public int getDamage () {
+        return damage;
+    }
+
+    /**
+     * Set the value of cost
+     * @param cost the new value of cost
+     */
+    public void setCost (int cost) {
+        this.cost = cost;
+    }
+
+    /**
+     * Get the value of cost
+     * @return the value of cost
+     */
+    public int getCost () {
+        return cost;
+    }
+
+    /**
+     * Set the value of description
+     * @param description the new value of description
+     */
+    public void setDescription (String description) {
+        this.description = description;
+    }
+
+    /**
+     * Get the value of description
+     * @return the value of description
+     */
+    public String getDescription () {
+        return description;
+    }
+
+    /**
+     * Set the value of level
+     * @param level the new value of level
+     */
+    public void setLevel (int level) {
+        this.level = level;
+    }
+
+    /**
+     * Get the value of level
+     * @return the value of level
+     */
+    public int getLevel () {
+        return level;
+    }
+
+    /**
+     * Set the value of critRate
+     * @param critRate the new value of critRate
+     */
+    public void setCritRate (double critRate) {
+        this.critRate = critRate;
+    }
+
+    /**
+     * Get the value of critRate
+     * @return the value of critRate
+     */
+    public double getCritRate () {
+        return critRate;
+    }
 	
 	/**
 	 * Functional methods
 	 * 
 	 */
+
+    /**
+     * Heals the monster for the heal amount.
+     */
 	public void heal() {
 		health += healAmount;
 	}
 	
+	/**
+     * @param other the monster that should take damage
+     */
 	public void attack(Monster other) {
 		other.takeDamage(this.damage);
 	}
 	
+	/**
+     * @param damageReceived the amount of damage this monster took
+     */
 	public void takeDamage(int damageReceived) {
 		health -= damageReceived;
 	}
 	
+    /**
+     * Buy a monster from the shop and add it to the player inventory.
+     * @param monster
+     */
 	public void buy(Monster monster) {
 		//GameEnvironment.minusBalance(cost)
 	}
 	
+    /**
+     * Sell a monster back to the shop and removes it from the player inventory.
+     * @param monster
+     */
 	public void sell(Monster monster) {
 		/**
 		 * Refund 50% of the original cost of the 
@@ -98,7 +225,9 @@ public abstract class Monster implements Purchasable {
 		 */
 		//GameEnvironment.addBalance(cost*0.5)
 	}
-	
+	/**
+     * Level up the monster's stats.
+     */
 	public void levelUp() {
 		level += 1; 
 	}
