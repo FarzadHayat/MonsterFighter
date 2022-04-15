@@ -60,7 +60,7 @@ public class Inventory {
     		myMonsters.remove(monster);
     	}
     	else {
-    		throw new PurchasableNotFoundException("Puchasable not found in inventory!");
+    		throw new PurchasableNotFoundException("Purchasable not found in inventory!");
     	}
     }
 
