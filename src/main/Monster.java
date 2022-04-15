@@ -22,7 +22,7 @@ public abstract class Monster implements Purchasable {
 	 * Constructor method 
 	 * FOR SUBCLASS: super(name, description, maxHealth, damage, cost, level, healAmount, critRate)
 	 */
-	public Monster(String name, String description, int maxHealth, int damage, int cost, int level, int healAmount, double critRate) {
+	public Monster(String name, String description, int maxHealth, int damage, int cost, int level, int healAmount, double critRate, GameEnvironment game) {
 		this.name = name;
 		this.description = description;
 		this.maxHealth = maxHealth;
@@ -32,6 +32,7 @@ public abstract class Monster implements Purchasable {
 		this.level = level;
 		this.healAmount = healAmount;
 		this.critRate = critRate;
+		this.game = game;
 	}
 	
 	/**
@@ -228,6 +229,7 @@ public abstract class Monster implements Purchasable {
 	public void takeDamage(int damageReceived) {
 		health -= damageReceived;
 		if(this.getHealth() <= 0) {
+			this.setHealth(0);
 			this.setIsFainted(true);
 		}
 	}
