@@ -3,15 +3,15 @@ package main;
 abstract public class Item implements Purchasable {
 
     private String name;
-    private int cost;
     private String description;
+    private int cost;
     private GameEnvironment game;
     private double refundAmount = 0.5;
     
-    public Item (String name, int cost, String description, GameEnvironment game) {
+    public Item (String name, String description, int cost, GameEnvironment game) {
     	this.name = name;
-    	this.cost = cost;
     	this.description = description;
+    	this.cost = cost;
     	this.game = game;
     };
     
@@ -74,8 +74,9 @@ abstract public class Item implements Purchasable {
 	 */
 
     /**
-     * @throws InsufficientFundsException 
-     * @throws InventoryFullException 
+     * buy this item from the shop and add it to the player inventory
+     * @throws InsufficientFundsException cost of item is more than player balance error
+     * @throws InventoryFullException inventory is full error
      */
     public void buy() throws InsufficientFundsException, InventoryFullException
     {
@@ -85,10 +86,10 @@ abstract public class Item implements Purchasable {
 
 
     /**
-     * @param item
-     * @throws PurchasableNotFoundException 
+     * sell this item back to the shop for a partial refund and remove it from the player inventory
+     * @throws PurchasableNotFoundException item was not found in the player inventory error
      */
-    public void sell(Item item) throws PurchasableNotFoundException
+    public void sell() throws PurchasableNotFoundException
     {
     	game.addBalance(cost * refundAmount);
     	game.getInventory().removeItem(this);
@@ -96,6 +97,7 @@ abstract public class Item implements Purchasable {
 
 
     /**
+     * use this item on the given Monster
      * @param monster
      */
     abstract public void use(Monster monster);
