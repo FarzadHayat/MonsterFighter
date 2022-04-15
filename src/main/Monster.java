@@ -15,6 +15,8 @@ public abstract class Monster implements Purchasable {
 	private int healAmount;
 	private double critRate;
 	private boolean isFainted = false;
+	private GameEnvironment game;
+	private double refundAmount = 0.5;
 	
 	/**
 	 * Constructor method 
@@ -208,6 +210,9 @@ public abstract class Monster implements Purchasable {
      */
 	public void heal() {
 		health += healAmount;
+		if(this.getHealth() > this.getMaxHealth()) {
+			this.setHealth(maxHealth);
+		}
 	}
 	
 	/**
@@ -222,32 +227,34 @@ public abstract class Monster implements Purchasable {
      */
 	public void takeDamage(int damageReceived) {
 		health -= damageReceived;
+		if(this.getHealth() <= 0) {
+			this.setIsFainted(true);
+		}
 	}
 	
     /**
      * Buy a monster from the shop and add it to the player inventory.
-     * @param monster
+     * @throws InsufficientFundsException cost of item is more than player balance error
+     * @throws InventoryFullException inventory is full error
      */
-	public void buy(Monster monster) {
-		//GameEnvironment.minusBalance(cost)
+	public void buy() throws InsufficientFundsException, InventoryFullException{
+		game.minusBalance(cost);
+		game.getInventory().addMonster(this);
 	}
 	
     /**
-     * Sell a monster back to the shop and removes it from the player inventory.
-     * @param monster
+     * Sell monster back to the shop for a partial refund and removes the monster from the player's inventory
+     * @throws PurchasableNotFoundException monster was not found in the player inventory error
      */
-	public void sell(Monster monster) {
-		/**
-		 * Refund 50% of the original cost of the 
-		 * monster to the player 
-		 */
-		//GameEnvironment.addBalance(cost*0.5)
+	public void sell() throws PurchasableNotFoundException {
+		game.addBalance(cost * refundAmount);
+		game.getInventory().removeMonster(this);
 	}
+	
 	/**
-     * Level up the monster's stats.
+     * Level up the monster's statistics.
      */
-	public void levelUp() {
-		level += 1; 
-	}
+	public abstract void levelUp();
+	
 	
 }
