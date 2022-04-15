@@ -14,6 +14,7 @@ public abstract class Monster implements Purchasable {
 	private int level;
 	private int healAmount;
 	private double critRate;
+	private boolean isFainted = false;
 	
 	/**
 	 * Constructor method 
@@ -178,6 +179,23 @@ public abstract class Monster implements Purchasable {
      */
     public double getCritRate () {
         return critRate;
+    }
+    
+    
+    /**
+     * Set the value of isFainted
+     * @param isFainted the new value of isFainted
+     */
+    public void setIsFainted (boolean isFainted) {
+        this.isFainted = isFainted;
+    }
+
+    /**
+     * Get the value of isFainted
+     * @return the value of isFainted
+     */
+    public boolean getIsFainted () {
+        return isFainted;
     }
 	
 	/**

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI verified="false" xmi.version="1.2" timestamp="2022-04-15T10:48:48" xmlns:UML="http://schema.omg.org/spec/UML/1.4">
+<XMI verified="false" xmi.version="1.2" timestamp="2022-04-15T14:37:08" xmlns:UML="http://schema.omg.org/spec/UML/1.4">
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://umbrello.kde.org</XMI.exporter>
@@ -66,6 +66,7 @@
         <UML:Attribute visibility="private" isSpecification="false" xmi.id="uwKqFpLp8PD6m" type="udw9KuG4gcXpA" name="description"/>
         <UML:Attribute visibility="private" isSpecification="false" xmi.id="u6VZFlw9E6flW" type="uSyqOFBpQog5B" name="level"/>
         <UML:Attribute visibility="private" isSpecification="false" xmi.id="uRTea39D12J5D" type="uLW1MTqN6bxu0" name="critRate"/>
+        <UML:Attribute visibility="private" isSpecification="false" xmi.id="uJL0gSUg4BRZu" type="uyx11w8vfoNfP" name="isFainted"/>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uwmMH5EWuyM0G" isOverride="false" name="attack" isInline="false" isVirtual="false">
          <UML:BehavioralFeature.parameter>
           <UML:Parameter visibility="private" isSpecification="false" xmi.id="uoF9FVIic1lFx" type="utYs0dO9Yua30" value="" name="monster"/>
@@ -425,7 +426,7 @@
   </UML:Model>
  </XMI.content>
  <XMI.extensions xmi.extender="umbrello">
-  <docsettings viewid="uHXvhGqyEV0CF" uniqueid="u6sLu6Jyfbm9g" documentation=""/>
+  <docsettings viewid="uHXvhGqyEV0CF" uniqueid="uJL0gSUg4BRZu" documentation=""/>
   <listview>
    <listitem open="1" type="800" id="Views">
     <listitem open="1" type="821" id="Component_View"/>
@@ -533,7 +534,7 @@
      <listitem open="0" type="813" id="ubhSuS5PsScs9">
       <listitem open="0" type="815" id="u2nZ2a5e62NqE"/>
      </listitem>
-     <listitem open="0" type="813" id="utYs0dO9Yua30">
+     <listitem open="1" type="813" id="utYs0dO9Yua30">
       <listitem open="0" type="815" id="uwmMH5EWuyM0G"/>
       <listitem open="0" type="815" id="uJ2fAbcCYRiZT"/>
       <listitem open="0" type="814" id="udVAjX2kGYjOU"/>
@@ -542,6 +543,7 @@
       <listitem open="0" type="814" id="uwKqFpLp8PD6m"/>
       <listitem open="0" type="814" id="uLJUYlK5kPmWX"/>
       <listitem open="0" type="814" id="udWPeAEV9ZF2U"/>
+      <listitem open="0" type="814" id="uJL0gSUg4BRZu"/>
       <listitem open="0" type="814" id="u6VZFlw9E6flW"/>
       <listitem open="0" type="815" id="uigX2x1fblj8W"/>
       <listitem open="0" type="814" id="u7EMMGud8h40n"/>
