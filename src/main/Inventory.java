@@ -3,18 +3,38 @@ import java.util.ArrayList;
 
 public class Inventory {
 	
-	private int monsterListSize = 4;
-	private int itemListSize = 4;
+	private int myMonstersSize = 4;
+	private int myItemsSize = 4;
     private ArrayList<Monster> myMonsters;
     private ArrayList<Item> myItems;
     
     
     public Inventory () {
-    	myMonsters = new ArrayList<Monster>(monsterListSize);
-    	myItems = new ArrayList<Item>(itemListSize);
+    	myMonsters = new ArrayList<Monster>(myMonstersSize);
+    	myItems = new ArrayList<Item>(myItemsSize);
     };
 
-
+    
+    public void setMyMonsters(ArrayList<Monster> monsterList) {
+    	myMonsters = monsterList;
+    }
+    
+    
+    public void setMyItem(ArrayList<Item> itemList) {
+    	myItems = itemList;
+    }
+    
+    
+    public ArrayList<Monster> getMyMonsters() {
+    	return myMonsters;
+    }
+    
+    
+    public ArrayList<Item> getMyItems() {
+    	return myItems;
+    }
+    
+    
     /**
      * @param monster
      * @throws InventoryFullException 
@@ -76,12 +96,12 @@ public class Inventory {
     
     
     public boolean monstersFull() {
-		return myMonsters.size() >= monsterListSize;
+		return myMonsters.size() >= myMonstersSize;
     }
     
     
     public boolean itemsFull() {
-		return myItems.size() >= itemListSize;
+		return myItems.size() >= myItemsSize;
     }
 
 }
