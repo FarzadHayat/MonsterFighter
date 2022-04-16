@@ -59,7 +59,7 @@ class ItemTest {
 			testItem.buy();
 		}
 		catch (InventoryFullException e){
-			assertEquals(e.getMessage(), "Inventory full!");
+			assertEquals(e.getMessage(), "Item inventory is full!");
 		}
 	}
 	
@@ -106,7 +106,7 @@ class ItemTest {
 			testItem2.sell();
 		}
 		catch (PurchasableNotFoundException e){
-			assertEquals(e.getMessage(), "Purchasable not found in inventory!");
+			assertEquals(e.getMessage(), "Item not found in inventory!");
 		}
 	}
 

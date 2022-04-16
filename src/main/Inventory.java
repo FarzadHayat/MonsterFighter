@@ -45,7 +45,7 @@ public class Inventory {
     		myMonsters.add(monster);
     	}
     	else {
-    		throw new InventoryFullException("Inventory full!");
+    		throw new InventoryFullException("Monster inventory is full!");
     	}
     }
 
@@ -60,7 +60,7 @@ public class Inventory {
     		myMonsters.remove(monster);
     	}
     	else {
-    		throw new PurchasableNotFoundException("Purchasable not found in inventory!");
+    		throw new PurchasableNotFoundException("Monster not found in inventory!");
     	}
     }
 
@@ -75,7 +75,7 @@ public class Inventory {
     		myItems.add(item);
     	}
     	else {
-    		throw new InventoryFullException("Inventory full!");
+    		throw new InventoryFullException("Item inventory is full!");
     	}
     }
 
@@ -90,7 +90,7 @@ public class Inventory {
     		myItems.remove(item);
     	}
     	else {
-    		throw new PurchasableNotFoundException("Purchasable not found in inventory!");
+    		throw new PurchasableNotFoundException("Item not found in inventory!");
     	}
     }
     

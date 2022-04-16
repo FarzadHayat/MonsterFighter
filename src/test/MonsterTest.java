@@ -129,7 +129,7 @@ class MonsterTest {
 			monster.buy();
 		}
 		catch(InventoryFullException e) {
-			assertEquals(e.getMessage(), "Inventory full!");
+			assertEquals(e.getMessage(), "Monster inventory is full!");
 		}
 	}
 	
@@ -169,7 +169,7 @@ class MonsterTest {
 			monster.sell();
 		}
 		catch(PurchasableNotFoundException e) {
-			assertEquals(e.getMessage(), "Purchasable not found in inventory!");
+			assertEquals(e.getMessage(), "Monster not found in inventory!");
 		}
 	}
 
