@@ -1,24 +1,42 @@
 package main;
 
-public class IncreaseCritRate {
-    public IncreaseCritRate () { };
+public class IncreaseCritRate extends Item {
     
-    //
-    // Methods
-    //
-
-
-    //
-    // Other methods
-    //
+	/**
+	 * Fields
+	 */
+	private double critIncrease = 0.1;
+	
+	
+	/**
+	 * Constructors
+	 * 
+	 */
+	public IncreaseCritRate (GameEnvironment game) {
+		super(game);
+		super.setName("Increase Crit Rate");
+		super.setDescription("Increases the monster's crit rate by " + critIncrease * 100 + " percent.");
+		super.setCost(10);
+	};
+	
+	public IncreaseCritRate (String name, String description, int cost, GameEnvironment game) {
+		super(name, description, cost, game);
+	}
+	
 
     /**
-     * increase the monster's crit rate by x amount.
-     * @param        monster
+     * increase the monster's crit rate by critIncrease amount.
+     * @param monster
+     * @throws PurchasableNotFoundException 
      */
-    public void use(Monster monster)
+    public void use(Monster monster) throws PurchasableNotFoundException
     {
+    	double newCritRate = monster.getCritRate() + critIncrease;
+    	if (newCritRate > monster.getMaxCritRate()) {
+    		newCritRate = monster.getMaxCritRate();
+    	}
+    	monster.setCritRate(newCritRate);
+    	game.getInventory().removeItem(this);
     }
-
 
 }

@@ -2,11 +2,26 @@ package main;
 
 abstract public class Item implements Purchasable {
 
+	/**
+	 * Fields
+	 * 
+	 */
     private String name;
     private String description;
     private int cost;
-    private GameEnvironment game;
-    private double refundAmount = 0.5;
+    protected GameEnvironment game;
+    protected double refundAmount = 0.5;
+    
+    
+    /**
+	 * Constructors
+	 * 
+	 */
+    
+    public Item (GameEnvironment game) {
+    	this.game = game;
+    }
+    
     
     public Item (String name, String description, int cost, GameEnvironment game) {
     	this.name = name;
@@ -15,10 +30,21 @@ abstract public class Item implements Purchasable {
     	this.game = game;
     };
     
+    
     /**
 	 * Getters and Setters methods 
 	 * 
 	 */
+    
+    
+    /**
+     * Get the value of name
+     * @return the value of name
+     */
+    public String getName () {
+    	return name;
+    }
+    
     
     /**
      * Set the value of name
@@ -27,15 +53,35 @@ abstract public class Item implements Purchasable {
     public void setName (String name) {
         this.name = name;
     }
-
+    
+    
     /**
-     * Get the value of name
-     * @return the value of name
+     * Get the value of description
+     * @return the value of description
      */
-    public String getName () {
-        return name;
+    public String getDescription () {
+    	return description;
+    }
+    
+    
+    /**
+     * Set the value of description
+     * @param description the new value of description
+     */
+    public void setDescription (String description) {
+    	this.description = description;
+    }
+    
+    
+    /**
+     * Get the value of cost
+     * @return the value of cost
+     */
+    public int getCost () {
+    	return cost;
     }
 
+    
     /**
      * Set the value of cost
      * @param cost the new value of cost
@@ -43,36 +89,14 @@ abstract public class Item implements Purchasable {
     public void setCost (int cost) {
         this.cost = cost;
     }
-
-    /**
-     * Get the value of cost
-     * @return the value of cost
-     */
-    public int getCost () {
-        return cost;
-    }
-
-    /**
-     * Set the value of description
-     * @param description the new value of description
-     */
-    public void setDescription (String description) {
-        this.description = description;
-    }
-
-    /**
-     * Get the value of description
-     * @return the value of description
-     */
-    public String getDescription () {
-        return description;
-    }
-
+    
+    
     /**
 	 * Functional methods
 	 * 
 	 */
 
+    
     /**
      * buy this item from the shop and add it to the player inventory
      * @throws InsufficientFundsException cost of item is more than player balance error
@@ -99,8 +123,9 @@ abstract public class Item implements Purchasable {
     /**
      * use this item on the given Monster
      * @param monster
+     * @throws PurchasableNotFoundException 
      */
-    abstract public void use(Monster monster);
+    abstract public void use(Monster monster) throws PurchasableNotFoundException;
 
 
 }
