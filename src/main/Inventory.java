@@ -13,6 +13,11 @@ public class Inventory {
     	myMonsters = new ArrayList<Monster>(myMonstersSize);
     	myItems = new ArrayList<Item>(myItemsSize);
     };
+    
+    
+    public ArrayList<Monster> getMyMonsters() {
+    	return myMonsters;
+    }
 
     
     public void setMyMonsters(ArrayList<Monster> monsterList) {
@@ -20,18 +25,13 @@ public class Inventory {
     }
     
     
-    public void setMyItem(ArrayList<Item> itemList) {
-    	myItems = itemList;
-    }
-    
-    
-    public ArrayList<Monster> getMyMonsters() {
-    	return myMonsters;
-    }
-    
-    
     public ArrayList<Item> getMyItems() {
     	return myItems;
+    }
+    
+    
+    public void setMyItem(ArrayList<Item> itemList) {
+    	myItems = itemList;
     }
     
     
@@ -102,6 +102,21 @@ public class Inventory {
     
     public boolean itemsFull() {
 		return myItems.size() >= myItemsSize;
+    }
+    
+    
+    /**
+     * checks whether all monsters have fainted.
+     * @return whether the monsters are all fainted
+     */
+    public boolean allMonstersFainted() {
+    	boolean fainted = true;
+    	for (Monster monster : myMonsters) {
+    		if (!monster.getIsFainted()) {
+    			fainted = false;
+    		}
+    	}
+    	return fainted;
     }
 
 }

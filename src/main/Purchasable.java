@@ -4,13 +4,14 @@ public interface Purchasable {
 	
 	/**
      * Buy an purchasable from the shop and add it to the player inventory.
-     * @param purchasable
+	 * @throws InventoryFullException 
+	 * @throws InsufficientFundsException 
      */
-	public void buy(Purchasable purchasable);
+	public void buy() throws InsufficientFundsException, InventoryFullException;
 	
 	/**
      * Sell an purchasable to the shop and removes it from the player inventory.
-     * @param purchasable
+	 * @throws PurchasableNotFoundException 
      */
-	public void sell(Purchasable purchasable);
+	public void sell() throws PurchasableNotFoundException;
 }

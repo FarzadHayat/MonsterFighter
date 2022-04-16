@@ -23,17 +23,4 @@ public class IncreaseHealth extends Item {
     {
     }
 
-	@Override
-	public void buy(Purchasable purchasable) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sell(Purchasable purchasable) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 }
