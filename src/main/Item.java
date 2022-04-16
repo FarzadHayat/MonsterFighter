@@ -10,7 +10,7 @@ abstract public class Item implements Purchasable {
     private String description;
     private int cost;
     protected GameEnvironment game;
-    protected double refundAmount = 0.5;
+    private double refundAmount = 0.5;
     
     
     /**

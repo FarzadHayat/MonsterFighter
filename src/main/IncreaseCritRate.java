@@ -7,7 +7,6 @@ public class IncreaseCritRate extends Item {
 	 */
 	private double critIncrease = 0.1;
 	
-	
 	/**
 	 * Constructors
 	 * 
@@ -15,13 +14,9 @@ public class IncreaseCritRate extends Item {
 	public IncreaseCritRate (GameEnvironment game) {
 		super(game);
 		super.setName("Increase Crit Rate");
-		super.setDescription("Increases the monster's crit rate by " + critIncrease * 100 + " percent.");
+		super.setDescription("Increase a monster's crit rate by " + critIncrease * 100 + " percent.");
 		super.setCost(10);
 	};
-	
-	public IncreaseCritRate (String name, String description, int cost, GameEnvironment game) {
-		super(name, description, cost, game);
-	}
 	
 
     /**
