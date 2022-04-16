@@ -233,19 +233,26 @@ public abstract class Monster implements Purchasable {
 	
 	/**
      * @param other the monster that should take damage
+	 * @throws InvalidValueException 
      */
-	public void attack(Monster other) {
+	public void attack(Monster other) throws InvalidValueException {
 		other.takeDamage(this.damage);
 	}
 	
 	/**
      * @param damageReceived the amount of damage this monster took
+     * @throws InvalidValueException
      */
-	public void takeDamage(int damageReceived) {
-		health -= damageReceived;
-		if(this.getHealth() <= 0) {
-			this.setHealth(0);
-			this.setIsFainted(true);
+	public void takeDamage(int damageReceived) throws InvalidValueException {
+		if(damageReceived < 0) {
+			throw new InvalidValueException("Invalid damage value!");
+		}
+		else {
+			health -= damageReceived;
+			if(this.getHealth() <= 0) {
+				this.setHealth(0);
+				this.setIsFainted(true);
+			}
 		}
 	}
 	

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import main.Chunky;
 import main.GameEnvironment;
 import main.InsufficientFundsException;
+import main.InvalidValueException;
 import main.InventoryFullException;
 import main.Monster;
 import main.PurchasableNotFoundException;
@@ -26,21 +27,25 @@ class MonsterTest {
 	}
 
 	@Test
-	public void testTakeDamage1() {
+	public void testTakeDamage1() throws InvalidValueException {
 		//Taking damage less than total health 
 		monster.takeDamage(10);
 		assertEquals(90, monster.getHealth());
 	}
 	
 	@Test
-	public void testTakeDamage2() {
-		//Taking 0 damage 
-		monster.takeDamage(0);
-		assertEquals(100, monster.getHealth());
+	public void testTakeDamage2() throws InvalidValueException {
+		//Taking negative damage
+		try {
+			monster.takeDamage(-10);
+		}
+		catch(InvalidValueException e) {
+			assertEquals(e.getMessage(), "Invalid damage value!");
+		}
 	}
 	
 	@Test 
-	public void testTakeDamage3() {
+	public void testTakeDamage3() throws InvalidValueException {
 		//Taking damage equivalent to total health 
 		monster.takeDamage(100);
 		assertEquals(0, monster.getHealth());
@@ -48,11 +53,18 @@ class MonsterTest {
 	}
 	
 	@Test 
-	public void testTakeDamage4() {
+	public void testTakeDamage4() throws InvalidValueException {
 		//Taking more damage than total health 
 		monster.takeDamage(120);
 		assertEquals(0, monster.getHealth());
 		assertEquals(true, monster.getIsFainted());
+	}
+	
+	@Test
+	public void testTakeDamage5() throws InvalidValueException {
+		//Taking zero damage 
+		monster.takeDamage(0);
+		assertEquals(100, monster.getHealth());
 	}
 	
 	@Test
@@ -63,7 +75,7 @@ class MonsterTest {
 	}
 	
 	@Test 
-	public void testHeal2() {
+	public void testHeal2() throws InvalidValueException {
 		//Healing to exactly max health 
 		monster.takeDamage(10);
 		monster.heal();
@@ -71,7 +83,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testHeal3() {
+	public void testHeal3() throws InvalidValueException {
 		//Healing to less than max health 
 		monster.takeDamage(20);
 		monster.heal();
@@ -79,7 +91,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testHeal4() {
+	public void testHeal4() throws InvalidValueException {
 		//Health exceed max health after healing 
 		monster.takeDamage(5);
 		monster.heal();
@@ -87,7 +99,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testAttack1() {
+	public void testAttack1() throws InvalidValueException {
 		//Attacking and dealing damage to an enemy 
 		Monster enemy = new Chunky("Enemy", "Enemy description", 100, 20, 20, 1, 10, 0.1, game);
 		monster.attack(enemy);
