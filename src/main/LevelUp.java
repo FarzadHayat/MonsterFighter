@@ -27,7 +27,7 @@ public class LevelUp extends Item {
     public void use(Monster monster) throws PurchasableNotFoundException
     {
     	monster.levelUp();
-    	game.getInventory().removeItem(this);
+    	game.getMyItems().remove(this);
     }
 
 

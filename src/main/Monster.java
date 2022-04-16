@@ -263,7 +263,7 @@ public abstract class Monster implements Purchasable {
      */
 	public void buy() throws InsufficientFundsException, InventoryFullException{
 		game.minusBalance(cost);
-		game.getInventory().addMonster(this);
+		game.getMyMonsters().add(this);
 	}
 	
     /**
@@ -272,7 +272,7 @@ public abstract class Monster implements Purchasable {
      */
 	public void sell() throws PurchasableNotFoundException {
 		game.addBalance(cost * refundAmount);
-		game.getInventory().removeMonster(this);
+		game.getMyMonsters().remove(this);
 	}
 	
 	/**

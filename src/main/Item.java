@@ -105,7 +105,7 @@ abstract public class Item implements Purchasable {
     public void buy() throws InsufficientFundsException, InventoryFullException
     {
     	game.minusBalance(cost);
-		game.getInventory().addItem(this);
+		game.getMyItems().add(this);
     }
 
 
@@ -116,7 +116,7 @@ abstract public class Item implements Purchasable {
     public void sell() throws PurchasableNotFoundException
     {
     	game.addBalance(cost * refundAmount);
-    	game.getInventory().removeItem(this);
+    	game.getMyItems().remove(this);
     }
 
 

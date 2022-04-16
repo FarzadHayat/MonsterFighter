@@ -13,16 +13,19 @@ import main.InsufficientFundsException;
 import main.InvalidValueException;
 import main.InventoryFullException;
 import main.Monster;
+import main.MonsterInventory;
 import main.PurchasableNotFoundException;
 
 class MonsterTest {
 
 	private GameEnvironment game;
+	private MonsterInventory myMonsters;
 	private Monster monster;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
+		myMonsters = game.getMyMonsters();
 		monster = new Chunky("Test", "Testing description", 100, 20, 20, 1, 10, 0.1, game);
 	}
 
@@ -115,7 +118,7 @@ class MonsterTest {
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(monster);
 		assertEquals(0, game.getBalance());
-		assertEquals(monsterList, game.getInventory().getMyMonsters());
+		assertEquals(monsterList, myMonsters.getMonsterList());
 	}
 	
 	@Test
@@ -154,7 +157,7 @@ class MonsterTest {
 		testMonster.sell();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		assertEquals(10, game.getBalance());
-		assertEquals(monsterList, game.getInventory().getMyMonsters());
+		assertEquals(monsterList, myMonsters.getMonsterList());
 	}
 	
 	@Test
@@ -170,7 +173,7 @@ class MonsterTest {
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(testMonster);
 		assertEquals(20, game.getBalance());
-		assertEquals(monsterList, game.getInventory().getMyMonsters());
+		assertEquals(monsterList, myMonsters.getMonsterList());
 	}
 	
 	@Test

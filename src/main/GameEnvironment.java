@@ -1,29 +1,36 @@
 package main;
-import java.util.Scanner;
 
 public class GameEnvironment {
 
+	/**
+	 * Fields
+	 * 
+	 */
     private double balance;
     private String playerName;
     private int numDays;
     private String difficulty;
-    private Inventory inventory;
+    private MonsterInventory myMonsters;
+    private ItemInventory myItems;
     
+    
+    /**
+     * Constructors
+     * 
+     */
     public GameEnvironment () {
     	balance = 0;
-    	inventory = new Inventory();
+    	myMonsters = new MonsterInventory();
+    	myItems = new ItemInventory();
     	setupGame();
     };
 
-
+    
     /**
-     * Set the value of balance
-     * @param balance the new value of balance
+     * Getters and setters
      */
-    public void setBalance (double balance) {
-        this.balance = balance;
-    }
 
+    
     /**
      * Get the value of balance
      * @return the value of balance
@@ -31,7 +38,26 @@ public class GameEnvironment {
     public double getBalance () {
         return balance;
     }
+    
+    
+    /**
+     * Set the value of balance
+     * @param balance the new value of balance
+     */
+    public void setBalance (double balance) {
+    	this.balance = balance;
+    }
 
+    
+    /**
+     * Get the value of name
+     * @return the value of name
+     */
+    public String getName () {
+        return playerName;
+    }
+    
+    
     /**
      * Set the value of name
      * @param playerName the new value of name
@@ -40,22 +66,7 @@ public class GameEnvironment {
     	this.playerName = playerName;
     }
 
-    /**
-     * Get the value of name
-     * @return the value of name
-     */
-    public String getName () {
-        return playerName;
-    }
-
-    /**
-     * Set the value of numDays
-     * @param numDays the new value of numDays
-     */
-    public void setNumDays (int numDays) {
-        this.numDays = numDays;
-    }
-
+    
     /**
      * Get the value of numDays
      * @return the value of numDays
@@ -63,15 +74,17 @@ public class GameEnvironment {
     public int getNumDays () {
         return numDays;
     }
-
+    
+    
     /**
-     * Set the value of difficulty
-     * @param difficulty the new value of difficulty
+     * Set the value of numDays
+     * @param numDays the new value of numDays
      */
-    public void setDifficulty (String difficulty) {
-        this.difficulty = difficulty;
+    public void setNumDays (int numDays) {
+    	this.numDays = numDays;
     }
 
+    
     /**
      * Get the value of difficulty
      * @return the value of difficulty
@@ -80,17 +93,55 @@ public class GameEnvironment {
         return difficulty;
     }
     
+    
     /**
-     * Get the value of inventory
-     * @return the value of inventory
+     * Set the value of difficulty
+     * @param difficulty the new value of difficulty
      */
-    public Inventory getInventory () {
-        return inventory;
+    public void setDifficulty (String difficulty) {
+    	this.difficulty = difficulty;
     }
 
-    //
-    // Other methods
-    //
+    
+    /**
+     * Get the value of myMonsters
+     * @return the value of myMonsters
+     */
+    public MonsterInventory getMyMonsters () {
+        return myMonsters;
+    }
+    
+    
+    /**
+     * Set the value of myMonsters
+     * @param myMonsters the new value of myMonsters
+     */
+    public void setMyMonsters (MonsterInventory myMonsters) {
+    	this.myMonsters = myMonsters;
+    }
+
+    
+    /**
+     * Get the value of myItems
+     * @return the value of myItems
+     */
+    public ItemInventory getMyItems () {
+        return myItems;
+    }
+    
+    
+    /**
+     * Set the value of myItems
+     * @param myItems the new value of myItems
+     */
+    public void setMyItems (ItemInventory myItems) {
+    	this.myItems = myItems;
+    }
+    
+    /**
+     * Functional
+     * 
+     */
 
     /**
      */

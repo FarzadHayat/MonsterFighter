@@ -31,7 +31,7 @@ public class IncreaseCritRate extends Item {
     		newCritRate = monster.getMaxCritRate();
     	}
     	monster.setCritRate(newCritRate);
-    	game.getInventory().removeItem(this);
+    	game.getMyItems().remove(this);
     }
 
 }

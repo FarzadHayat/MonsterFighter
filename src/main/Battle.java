@@ -18,9 +18,9 @@ public class Battle {
      * */
     private Turn currentTurn;
     private Turn winner;
-    private ArrayList<Monster> enemyMonsters;
     private GameEnvironment game;
-    private Inventory inventory;
+    private MonsterInventory enemyMonsters;
+    private MonsterInventory playerMonsters;
     
     
     private enum Turn {
@@ -33,10 +33,10 @@ public class Battle {
      * Constructors
      * 
      * */
-    public Battle (GameEnvironment game, ArrayList<Monster> monsterList) {
+    public Battle (GameEnvironment game, MonsterInventory enemyMonsters) {
     	this.game = game;
-    	this.inventory = game.getInventory();
-    	enemyMonsters = monsterList;
+    	playerMonsters = game.getMyMonsters();
+    	this.enemyMonsters = enemyMonsters;
     };
     
 
@@ -94,11 +94,12 @@ public class Battle {
     /**
      * choose a random player monster to attack a random enemy monster
 	 * and turn over to the enemy
+     * @throws InvalidValueException 
      */
-    public void playerAttack()
+    public void playerAttack() throws InvalidValueException
     {
-    	Monster attackingMonster = randomMonster(inventory.getMyMonsters());
-    	Monster defendingMonster = randomMonster(enemyMonsters);
+    	Monster attackingMonster = randomMonster(playerMonsters.getMonsterList());
+    	Monster defendingMonster = randomMonster(enemyMonsters.getMonsterList());
     	attackingMonster.attack(defendingMonster);
     	currentTurn = Turn.ENEMY;
     }
@@ -107,11 +108,12 @@ public class Battle {
     /**
      * choose a random enemy monster to attack a random player monster
 	 * turn over to the player
+     * @throws InvalidValueException 
      */
-    public void enemyAttack()
+    public void enemyAttack() throws InvalidValueException
     {
-    	Monster attackingMonster = randomMonster(enemyMonsters);
-    	Monster defendingMonster = randomMonster(inventory.getMyMonsters());
+    	Monster attackingMonster = randomMonster(enemyMonsters.getMonsterList());
+    	Monster defendingMonster = randomMonster(playerMonsters.getMonsterList());
     	attackingMonster.attack(defendingMonster);
     	currentTurn = Turn.PLAYER;
     }
@@ -122,8 +124,9 @@ public class Battle {
      * Start with the player attacking and takes turns going to enemy and back to player.
      * Checks status after each attack.
      * Repeat until one side's team is all fainted.
+     * @throws InvalidValueException 
      */
-    public void play()
+    public void play() throws InvalidValueException
     {
     	currentTurn = Turn.PLAYER;
     	
@@ -147,28 +150,12 @@ public class Battle {
      * If the enemy's monsters have all fainted, then the player wins.
      */
     public void checkStatus() {
-    	if (allMonstersFainted(inventory.getMyMonsters())) {
+    	if (playerMonsters.allFainted()) {
     		lose();
     	}
-    	if (allMonstersFainted(enemyMonsters)) {
+    	if (enemyMonsters.allFainted()) {
     		win();
     	}
-    }
-    
-    
-    /**
-     * checks whether a list of monsters have all fainted.
-     * @param monsterList
-     * @return whether the monsters are all fainted
-     */
-    public boolean allMonstersFainted(ArrayList<Monster> monsterList) {
-    	boolean dead = true;
-    	for (Monster monster : monsterList) {
-    		if (!monster.getIsFainted()) {
-    			dead = false;
-    		}
-    	}
-    	return dead;
     }
     
 

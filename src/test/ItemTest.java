@@ -12,11 +12,13 @@ import main.*;
 class ItemTest {
 	
 	private GameEnvironment game;
+	private ItemInventory myItems;
 	
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
+		myItems = game.getMyItems();
 	}
 
 	
@@ -29,7 +31,7 @@ class ItemTest {
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
 		assertEquals(0, game.getBalance());
-		assertEquals(testItemList, game.getInventory().getMyItems());
+		assertEquals(testItemList, myItems.getItemList());
 	}
 	
 	
@@ -73,7 +75,7 @@ class ItemTest {
 		testItem.sell();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		assertEquals(2.5, game.getBalance());
-		assertEquals(testItemList, game.getInventory().getMyItems());
+		assertEquals(testItemList, myItems.getItemList());
 	}
 	
 	
@@ -91,7 +93,7 @@ class ItemTest {
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem2);
 		assertEquals(5, game.getBalance());
-		assertEquals(testItemList, game.getInventory().getMyItems());
+		assertEquals(testItemList, myItems.getItemList());
 	}
 	
 	
