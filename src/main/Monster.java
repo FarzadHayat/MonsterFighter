@@ -14,6 +14,7 @@ public abstract class Monster implements Purchasable {
 	private int level;
 	private int healAmount;
 	private double critRate;
+	private double maxCritRate = 1;
 	private boolean isFainted = false;
 	private GameEnvironment game;
 	private double refundAmount = 0.5;
@@ -186,6 +187,20 @@ public abstract class Monster implements Purchasable {
     
     
     /**
+	 * @return the maxCritRate
+	 */
+	public double getMaxCritRate() {
+		return maxCritRate;
+	}
+
+	/**
+	 * @param maxCritRate the maxCritRate to set
+	 */
+	public void setMaxCritRate(double maxCritRate) {
+		this.maxCritRate = maxCritRate;
+	}
+
+	/**
      * Set the value of isFainted
      * @param isFainted the new value of isFainted
      */
