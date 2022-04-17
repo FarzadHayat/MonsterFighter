@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 public class GameEnvironment {
 
 	/**
@@ -12,6 +14,8 @@ public class GameEnvironment {
     private String difficulty;
     private MonsterInventory myMonsters;
     private ItemInventory myItems;
+    private MonsterInventory allMonsters;
+    private ItemInventory allItems;
     
     
     /**
@@ -20,8 +24,27 @@ public class GameEnvironment {
      */
     public GameEnvironment () {
     	balance = 0;
-    	myMonsters = new MonsterInventory();
-    	myItems = new ItemInventory();
+    	myMonsters = new MonsterInventory(this);
+    	myItems = new ItemInventory(this);
+    	
+    	setAllMonsters(new MonsterInventory(this));
+    	ArrayList<Monster> allMonstersList = new ArrayList<Monster>();
+    	allMonstersList.add(new AverageJoe(this));
+    	allMonstersList.add(new Chunky(this));
+    	allMonstersList.add(new Lanky(this));
+    	allMonstersList.add(new Shanny(this));
+    	allMonstersList.add(new Raka(this));
+    	allMonstersList.add(new Zap(this));
+    	getAllMonsters().setMonsterList(allMonstersList);
+    	
+    	setAllItems(new ItemInventory(this));
+    	ArrayList<Item> allItemsList = new ArrayList<Item>();
+    	allItemsList.add(new IncreaseHealth(this));
+    	allItemsList.add(new IncreaseCritRate(this));
+    	allItemsList.add(new IncreaseDamage(this));
+    	allItemsList.add(new LevelUp(this));
+    	getAllItems().setItemList(allItemsList);
+    	
     	setupGame();
     };
 
@@ -137,13 +160,48 @@ public class GameEnvironment {
     public void setMyItems (ItemInventory myItems) {
     	this.myItems = myItems;
     }
+
+
+	/**
+	 * @return the allMonsters
+	 */
+	public MonsterInventory getAllMonsters() {
+		return allMonsters;
+	}
+
+
+	/**
+	 * @param allMonsters the allMonsters to set
+	 */
+	public void setAllMonsters(MonsterInventory allMonsters) {
+		this.allMonsters = allMonsters;
+	}
+
+
+	/**
+	 * @return the allItems
+	 */
+	public ItemInventory getAllItems() {
+		return allItems;
+	}
+
+
+	/**
+	 * @param allItems the allItems to set
+	 */
+	public void setAllItems(ItemInventory allItems) {
+		this.allItems = allItems;
+	}
+	
     
     /**
      * Functional
      * 
      */
 
-    /**
+	/**
+	 * Sleep
+	 * 
      */
     public void sleep()
     {
