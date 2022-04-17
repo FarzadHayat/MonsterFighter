@@ -1,14 +1,17 @@
 package main;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MonsterInventory {
 	
 	private int inventorySize = 4;
     private ArrayList<Monster> monsterList;
+    private GameEnvironment game;
     
     
-    public MonsterInventory () {
+    public MonsterInventory (GameEnvironment game) {
     	monsterList = new ArrayList<Monster>(inventorySize);
+    	this.game = game;
     };
     
     
@@ -79,6 +82,40 @@ public class MonsterInventory {
     		}
     	}
     	return fainted;
+    }
+    
+    
+    /**
+     * Returns a random non-fainted monster from the inventory
+     * @return the randomly selected non-fainted monster
+     */
+    public Monster random() {
+    	Random random = new Random();
+    	boolean monsterFound = false;
+    	Monster selectedMonster = null;
+    	
+    	while (!monsterFound) {
+    		int index = random.nextInt(inventorySize);
+    		selectedMonster = monsterList.get(index);
+    		if (!selectedMonster.getIsFainted()) {
+    			monsterFound = true;
+    		}
+    	}
+    	
+		return selectedMonster;
+    }
+    
+    /**
+     * Randomises the monster inventory by selecting random monsters from the all monsters in the game.
+     * @throws InventoryFullException
+     */
+    public void randomiseInventory() throws InventoryFullException {
+    	ArrayList<Monster> newMonsterList = new ArrayList<Monster>(inventorySize);
+    	for (int i = 0; i < inventorySize; i++) {
+    		Monster randomMonster = game.getAllMonsters().random();
+    		newMonsterList.add(randomMonster);
+    	}
+    	monsterList = newMonsterList;
     }
 
 }

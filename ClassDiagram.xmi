@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI verified="false" xmi.version="1.2" timestamp="2022-04-18T07:42:41" xmlns:UML="http://schema.omg.org/spec/UML/1.4">
+<XMI verified="false" xmi.version="1.2" timestamp="2022-04-18T08:59:42" xmlns:UML="http://schema.omg.org/spec/UML/1.4">
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://umbrello.kde.org</XMI.exporter>
@@ -73,7 +73,7 @@
         </UML:Operation>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uJ2fAbcCYRiZT" isOverride="false" name="buy" isInline="false" isVirtual="false"/>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uX8CxtQdq9AXA" isOverride="false" name="sell" isInline="false" isVirtual="false"/>
-        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="true" isLeaf="false" isRoot="false" xmi.id="uigX2x1fblj8W" isOverride="false" name="levelUp" isInline="false" isVirtual="false"/>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uigX2x1fblj8W" isOverride="false" name="levelUp" isInline="false" isVirtual="false"/>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uGwT54nxkWdOk" isOverride="false" name="selectMonsterName" isInline="false" isVirtual="false"/>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="ud6HlCkOXDx7v" comment="Heals the monster for the healAmount." isOverride="false" name="heal" isInline="false" isVirtual="false"/>
        </UML:Classifier.feature>
@@ -152,12 +152,6 @@
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uAHQReO2hRpCQ" isOverride="false" name="win" isInline="false" isVirtual="false"/>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uvGoF2VrQEkdh" isOverride="false" name="lose" isInline="false" isVirtual="false"/>
         <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uuVk2Ro9bgA2n" isOverride="false" name="checkStatus" isInline="false" isVirtual="false"/>
-        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uwdYxYIXNjEOz" isOverride="false" name="randomMonster" isInline="false" isVirtual="false">
-         <UML:BehavioralFeature.parameter>
-          <UML:Parameter kind="return" xmi.id="ujU8wuNdFBpZ4" type="utYs0dO9Yua30"/>
-          <UML:Parameter visibility="private" isSpecification="false" xmi.id="uUoE0c5PQUUhb" type="uLLfN2DKFMgQc" value="" name="monsterList"/>
-         </UML:BehavioralFeature.parameter>
-        </UML:Operation>
        </UML:Classifier.feature>
       </UML:Class>
       <UML:Class visibility="public" isSpecification="false" namespace="Logical_View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uxgenjfTlWlwZ" name="RandomEvent">
@@ -264,6 +258,12 @@
           <UML:Parameter kind="return" xmi.id="udu7ZtWSKOng2" type="uyx11w8vfoNfP"/>
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uRGmCMGdJoNsn" isOverride="false" name="random" isInline="false" isVirtual="false">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="ueASTiDHnXz9V" type="utYs0dO9Yua30"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uLx3rVEyXKFJv" isOverride="false" name="randomiseInventory" isInline="false" isVirtual="false"/>
        </UML:Classifier.feature>
       </UML:Class>
       <UML:Class visibility="public" isSpecification="false" namespace="Logical_View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="u0gjKudmRlEPi" comment="Extends Exception:&#xa;Exception class for catching an insufficient funds error." name="InsufficientFundsException"/>
@@ -297,6 +297,12 @@
           <UML:Parameter kind="return" xmi.id="unIacCYxGvTtK" type="uyx11w8vfoNfP"/>
          </UML:BehavioralFeature.parameter>
         </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="umGaHmtNdrp0X" isOverride="false" name="random" isInline="false" isVirtual="false">
+         <UML:BehavioralFeature.parameter>
+          <UML:Parameter kind="return" xmi.id="u39DPth1R4Xm3" type="u9GEdJi6RkXoY"/>
+         </UML:BehavioralFeature.parameter>
+        </UML:Operation>
+        <UML:Operation visibility="public" isSpecification="false" isQuery="false" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uJQMWaYrjqeO5" isOverride="false" name="randomiseInventory" isInline="false" isVirtual="false"/>
        </UML:Classifier.feature>
       </UML:Class>
       <UML:Class visibility="public" isSpecification="false" namespace="Logical_View" isAbstract="false" isLeaf="false" isRoot="false" xmi.id="uryvOfPzVvyIe" comment="Extends Exception:&#xa;Exception class for catching an invalid value error." name="InvalidValueException"/>
@@ -304,12 +310,12 @@
      </UML:Namespace.ownedElement>
      <XMI.extension xmi.extender="umbrello">
       <diagrams resolution="120">
-       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="class diagram" font="Calibri,16,-1,5,50,0,0,0,0,0" canvasheight="0" canvaswidth="0" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#f6f6f6" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffffc0" zoom="100" xmi.id="u8mNxRtPwoVUY" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
+       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="0" showpackage="1" showpubliconly="0" showstereotype="1" name="class diagram" font="Calibri,16,-1,5,50,0,0,0,0,0" canvasheight="0" canvaswidth="0" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#f6f6f6" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffffc0" zoom="100" xmi.id="u8mNxRtPwoVUY" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
         <widgets/>
         <messages/>
         <associations/>
        </diagram>
-       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="Monster Fighter" font="Calibri,16,-1,5,50,0,0,0,0,0" canvasheight="1716.41" canvaswidth="2941.96" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#f6f6f6" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffffc0" zoom="46.52391396064095" xmi.id="uHXvhGqyEV0CF" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
+       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="Monster Fighter" font="Calibri,16,-1,5,50,0,0,0,0,0" canvasheight="1716.41" canvaswidth="2941.96" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#f6f6f6" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffffc0" zoom="46" xmi.id="uHXvhGqyEV0CF" documentation="" showscope="1" snapgrid="0" showatts="1" type="1">
         <widgets>
          <interfacewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" showoperations="1" usesdiagramusefillcolor="0" showpubliconly="0" showpackage="1" x="-641.394" showattsigs="601" showstereotype="1" y="-513.775" showattributes="0" font="Calibri,16,-1,5,50,0,0,0,0,0" drawascircle="0" localid="u81RLpcD5v24w" width="399.166" isinstance="0" usefillcolor="1" fillcolor="#ffffc0" xmi.id="upZy1LZKtlOg3" autoresize="0" showscope="1" height="149.989" showopsigs="601"/>
          <classwidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" showoperations="1" usesdiagramusefillcolor="0" showpubliconly="0" showpackage="1" x="-970.283" showattsigs="601" showstereotype="1" y="-294.765" showattributes="1" font="Calibri,16,-1,5,50,0,0,0,0,0" drawascircle="0" localid="uFTmNenx8WjHd" width="359.368" isinstance="0" usefillcolor="1" fillcolor="#ffffc0" xmi.id="utYs0dO9Yua30" autoresize="0" showscope="1" height="606.094" showopsigs="601"/>
@@ -473,7 +479,7 @@
   </UML:Model>
  </XMI.content>
  <XMI.extensions xmi.extender="umbrello">
-  <docsettings viewid="uHXvhGqyEV0CF" uniqueid="ujU8wuNdFBpZ4" documentation=""/>
+  <docsettings viewid="uHXvhGqyEV0CF" uniqueid="u39DPth1R4Xm3" documentation=""/>
   <listview>
    <listitem open="1" type="800" id="Views">
     <listitem open="1" type="821" id="Component_View"/>
@@ -492,7 +498,6 @@
       <listitem open="0" type="815" id="uvGoF2VrQEkdh"/>
       <listitem open="0" type="815" id="ukixAYVgapdtD"/>
       <listitem open="0" type="815" id="umJ6LX5FF9K6L"/>
-      <listitem open="0" type="815" id="uwdYxYIXNjEOz"/>
       <listitem open="0" type="814" id="uzSTdurhJmeUN"/>
       <listitem open="0" type="815" id="uAHQReO2hRpCQ"/>
       <listitem open="0" type="814" id="uwslIcldaM2DI"/>
@@ -572,11 +577,13 @@
       <listitem open="0" type="815" id="u0muM9h6GmEvl"/>
       <listitem open="0" type="815" id="uSCEnEwhKF4QZ"/>
      </listitem>
-     <listitem open="0" type="813" id="u5ChAjulA3VQ2">
+     <listitem open="1" type="813" id="u5ChAjulA3VQ2">
       <listitem open="0" type="815" id="un9OqpsO6UCTW"/>
       <listitem open="0" type="815" id="u6nt0ob7hvX6D"/>
       <listitem open="0" type="814" id="uzMJ0R7r2xqbu"/>
       <listitem open="0" type="814" id="u53Sv4gST8tVJ"/>
+      <listitem open="0" type="815" id="umGaHmtNdrp0X"/>
+      <listitem open="0" type="815" id="uJQMWaYrjqeO5"/>
       <listitem open="0" type="815" id="uz4D4b4zP2TH5"/>
      </listitem>
      <listitem open="0" type="813" id="uhXUuh4k6kJsK">
@@ -605,12 +612,14 @@
       <listitem open="0" type="815" id="ujew6C7L22GQT"/>
      </listitem>
      <listitem open="0" type="807" id="uHXvhGqyEV0CF" label="Monster Fighter"/>
-     <listitem open="0" type="813" id="uhTkeqSXV3qJ4">
+     <listitem open="1" type="813" id="uhTkeqSXV3qJ4">
       <listitem open="0" type="815" id="uzArZtqqCR0Sw"/>
       <listitem open="0" type="815" id="uC5y0qEpLqD60"/>
       <listitem open="0" type="815" id="uZ0vUIpJSN6gA"/>
       <listitem open="0" type="814" id="ubKzZoxZvYV6Y"/>
       <listitem open="0" type="814" id="urEeAPWGaYnzn"/>
+      <listitem open="0" type="815" id="uRGmCMGdJoNsn"/>
+      <listitem open="0" type="815" id="uLx3rVEyXKFJv"/>
       <listitem open="0" type="815" id="uCToJFllf0xuj"/>
      </listitem>
      <listitem open="0" type="817" id="upZy1LZKtlOg3">

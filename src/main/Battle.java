@@ -67,29 +67,7 @@ public class Battle {
      * Functional
      * 
      * */
-    
-    
-    /**
-     * Returns a random non fainted monsters from the list.
-     * @param monsterList
-     * @return a random non fainted monster from the given list of monsters
-     */
-    public Monster randomMonster(ArrayList<Monster> monsterList) {
-    	
-    	Random random = new Random();
-    	boolean monsterFound = false;
-    	Monster selectedMonster = null;
-    	
-    	while (!monsterFound) {
-    		int index = random.nextInt(monsterList.size());
-    		selectedMonster = monsterList.get(index);
-    		if (!selectedMonster.getIsFainted()) {
-    			monsterFound = true;
-    		}
-    	}
-    	
-		return selectedMonster;
-    }
+
     
     /**
      * choose a random player monster to attack a random enemy monster
@@ -98,8 +76,8 @@ public class Battle {
      */
     public void playerAttack() throws InvalidValueException
     {
-    	Monster attackingMonster = randomMonster(playerMonsters.getMonsterList());
-    	Monster defendingMonster = randomMonster(enemyMonsters.getMonsterList());
+    	Monster attackingMonster = playerMonsters.random();
+    	Monster defendingMonster = enemyMonsters.random();
     	attackingMonster.attack(defendingMonster);
     	currentTurn = Turn.ENEMY;
     }
@@ -112,8 +90,8 @@ public class Battle {
      */
     public void enemyAttack() throws InvalidValueException
     {
-    	Monster attackingMonster = randomMonster(enemyMonsters.getMonsterList());
-    	Monster defendingMonster = randomMonster(playerMonsters.getMonsterList());
+    	Monster attackingMonster = enemyMonsters.random();
+    	Monster defendingMonster = playerMonsters.random();
     	attackingMonster.attack(defendingMonster);
     	currentTurn = Turn.PLAYER;
     }
