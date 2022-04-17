@@ -3,14 +3,19 @@ package main;
 public class LevelUp extends Item {
 	
 	/**
+	 * Fields
+	 * 
+	 */
+	private static String name = "Level Up";
+	private static String description = "Level up a monster by one level.";
+	private static int cost = 50;
+	
+	/**
 	 * Constructors
 	 * 
 	 */
     public LevelUp (GameEnvironment game) {
-    	super(game);
-    	super.setName("Level Up");
-		super.setDescription("Level up a monster by one level.");
-		super.setCost(10);
+    	super(name, description, cost, game);
     };
     
     
@@ -20,7 +25,7 @@ public class LevelUp extends Item {
      */
 
     /**
-     * Levels up the monster by one level.
+     * Level up a monster by one level.
      * @param monster
      * @throws PurchasableNotFoundException
      */
