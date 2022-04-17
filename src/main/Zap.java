@@ -45,6 +45,7 @@ public class Zap extends Monster {
     	setCost(getCost()+levelUpCost);
     	setHealAmount(getHealAmount()+levelUpHealAmount);
     	setCritRate(getCritRate()+levelUpCritRate);
+    	setHealth(getHealth()+levelUpHealth);
     }
 
 

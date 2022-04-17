@@ -43,6 +43,7 @@ public class Shanny extends Monster {
     	setDamage(getDamage()+levelUpDamage);
     	setCost(getCost()+levelUpCost);
     	setHealAmount(getHealAmount()+levelUpHealAmount);
+    	setHealth(getHealth()+levelUpHealth);
     }
 
 
