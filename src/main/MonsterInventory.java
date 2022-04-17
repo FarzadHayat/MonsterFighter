@@ -12,6 +12,16 @@ public class MonsterInventory {
     };
     
     
+    public int getInventorySize() {
+    	return inventorySize;
+    }
+    
+    
+    public void setInventorySize(int inventorySize) {
+    	this.inventorySize = inventorySize;
+    }
+    
+    
     public ArrayList<Monster> getMonsterList() {
     	return monsterList;
     }

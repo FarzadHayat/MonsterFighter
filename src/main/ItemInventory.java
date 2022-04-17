@@ -12,6 +12,16 @@ public class ItemInventory {
     };
     
     
+    public int getInventorySize() {
+    	return inventorySize;
+    }
+    
+    
+    public void setInventorySize(int inventorySize) {
+    	this.inventorySize = inventorySize;
+    }
+    
+    
     public ArrayList<Item> getItemList() {
     	return itemList;
     }
