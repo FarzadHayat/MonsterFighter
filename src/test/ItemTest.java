@@ -26,7 +26,7 @@ class ItemTest {
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException {
 		// Blue sky
 		game.setBalance(10);
-		Item testItem = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 10, game);
+		Item testItem = new IncreaseHealth(game);
 		testItem.buy();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
@@ -39,7 +39,7 @@ class ItemTest {
 	public void testBuy2() throws InsufficientFundsException, InventoryFullException {
 		// Insufficient funds
 		game.setBalance(5);
-		Item testItem = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 10, game);
+		Item testItem = new IncreaseHealth(game);
 		try {    		
 			testItem.buy();
 		}
@@ -53,7 +53,7 @@ class ItemTest {
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException {
 		// Inventory full	
 		game.setBalance(50);
-		Item testItem = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 10, game);
+		Item testItem = new IncreaseHealth(game);
 		for (int i = 0; i < 4; i++) {			
 			testItem.buy();
 		}
@@ -70,7 +70,7 @@ class ItemTest {
 	public void testSell1() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
 		// Blue sky
 		game.setBalance(5);
-		Item testItem = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 5, game);
+		Item testItem = new IncreaseHealth(game);
 		testItem.buy();
 		testItem.sell();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
@@ -83,8 +83,8 @@ class ItemTest {
 	public void testSell2() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
 		// Multiple items of the same type
 		game.setBalance(15);
-		Item testItem1 = new IncreaseHealth("Health Potion 1", "Heals the Monster upon usage", 5, game);
-		Item testItem2 = new IncreaseHealth("Health Potion 2", "Heals the Monster upon usage", 5, game);
+		Item testItem1 = new IncreaseHealth(game);
+		Item testItem2 = new IncreaseHealth(game);
 		testItem1.buy();
 		testItem2.buy();
 		testItem2.buy();
@@ -101,8 +101,8 @@ class ItemTest {
 	public void testSell3() throws PurchasableNotFoundException, InsufficientFundsException, InventoryFullException {
 		// Purchasable not found in inventory
 		game.setBalance(10);
-		Item testItem1 = new IncreaseHealth("Health Potion 1", "Heals the Monster upon usage", 10, game);
-		Item testItem2 = new IncreaseHealth("Health Potion 2", "Heals the Monster upon usage", 10, game);
+		Item testItem1 = new IncreaseHealth(game);
+		Item testItem2 = new IncreaseHealth(game);
 		testItem1.buy();
 		try {    		
 			testItem2.sell();

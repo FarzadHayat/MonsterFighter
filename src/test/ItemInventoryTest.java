@@ -25,7 +25,7 @@ class ItemInventoryTest {
 	@Test
 	public void testAddItem1() throws InventoryFullException {
 		// Blue sky
-		Item testItem = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 10, game);
+		Item testItem = new IncreaseHealth(game);
 		myItems.add(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
@@ -36,7 +36,7 @@ class ItemInventoryTest {
 	@Test
 	public void testAddItem2() throws InventoryFullException {
 		// Inventory full
-		Item testItem = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 10, game);
+		Item testItem = new IncreaseHealth(game);
 		for (int i = 0; i < 4; i++) {			
 			myItems.add(testItem);
 		}
@@ -52,7 +52,7 @@ class ItemInventoryTest {
 	@Test
 	public void testRemoveItem1() throws PurchasableNotFoundException, InventoryFullException {
 		// Blue sky
-		Item testItem = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 10, game);
+		Item testItem = new IncreaseHealth(game);
 		myItems.add(testItem);
 		myItems.remove(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
@@ -63,8 +63,8 @@ class ItemInventoryTest {
 	@Test
 	public void testRemoveItem2() throws PurchasableNotFoundException, InventoryFullException {
 		// Multiple items of the same type
-		Item testItem1 = new IncreaseHealth("Health Potion 1", "Heals the Monster upon usage", 10, game);
-		Item testItem2 = new IncreaseHealth("Health Potion 2", "Heals the Monster upon usage", 10, game);
+		Item testItem1 = new IncreaseHealth(game);
+		Item testItem2 = new IncreaseHealth(game);
 		myItems.add(testItem1);
 		myItems.add(testItem2);
 		myItems.add(testItem2);
@@ -79,8 +79,8 @@ class ItemInventoryTest {
 	@Test
 	public void testRemoveItem3() throws PurchasableNotFoundException, InventoryFullException {
 		// Purchasable not found in inventory
-		Item testItem1 = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 10, game);
-		Item testItem2 = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 10, game);
+		Item testItem1 = new IncreaseHealth(game);
+		Item testItem2 = new IncreaseHealth(game);
 		myItems.add(testItem2);
 		try {    		
 			myItems.remove(testItem1);
@@ -93,7 +93,7 @@ class ItemInventoryTest {
 	
 	@Test
 	void testItemsFull() throws InventoryFullException {
-		Item testItem = new IncreaseHealth("Health Potion", "Heals the Monster upon usage", 10, game);
+		Item testItem = new IncreaseHealth(game);
 		assertFalse(myItems.isFull());
 		myItems.add(testItem);
 		myItems.add(testItem);
