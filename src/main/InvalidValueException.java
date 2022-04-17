@@ -3,7 +3,7 @@ package main;
 /**
  * Class InvalidValueException
  * Extends Exception:
-Exception class for catching an invalid value error.
+ * Exception class for catching an invalid value error.
  */
 @SuppressWarnings("serial")
 public class InvalidValueException extends Exception {

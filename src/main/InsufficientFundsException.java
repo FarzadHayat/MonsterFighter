@@ -3,7 +3,7 @@ package main;
 /**
  * Class InsufficientFundsException
  * Extends Exception:
-Exception class for catching an insufficient funds error.
+ * Exception class for catching an insufficient funds error.
  */
 @SuppressWarnings("serial")
 public class InsufficientFundsException extends Exception {
