@@ -23,7 +23,7 @@ class IncreaseHealthTest {
 	@Test
 	void testUse1() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
 		// Blue sky
-		Monster monster = new Chunky("Test", "Test", 100, 1, 1, 1, 1, 1, game);
+		Monster monster = new Chunky(game);
 		monster.setHealth(0);
 		Item item = new IncreaseHealth(game);
 		game.getMyMonsters().add(monster);
@@ -38,9 +38,9 @@ class IncreaseHealthTest {
 	@Test
 	void testUse2() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
 		// Monster is only partially healed
-		Monster monster = new Chunky("Test", "Test", 100, 1, 1, 1, 1, 1, game);
+		Monster monster = new Chunky(game);
+		monster.setHealth(monster.getHealth() - (IncreaseHealth.getHealthIncrease() / 2));
 		Item item = new IncreaseHealth(game);
-		monster.setHealth(95);
 		game.getMyMonsters().add(monster);
 		game.getMyItems().add(item);
 		item.use(monster);
@@ -53,8 +53,7 @@ class IncreaseHealthTest {
 	@Test
 	void testUse3() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
 		// Monster is already max health
-		Monster monster = new Chunky("Test", "Test", 100, 1, 1, 1, 1, 1, game);
-		monster.setHealth(100);
+		Monster monster = new Chunky(game);
 		Item item = new IncreaseHealth(game);
 		game.getMyMonsters().add(monster);
 		game.getMyItems().add(item);
@@ -71,7 +70,7 @@ class IncreaseHealthTest {
 	@Test
 	void testUse4() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
 		// Item not owned
-		Monster monster = new Chunky("Test", "Test", 1, 1, 1, 1, 1, 1, game);
+		Monster monster = new Chunky(game);
 		Item item = new IncreaseHealth(game);
 		game.getMyMonsters().add(monster);
 		try {			

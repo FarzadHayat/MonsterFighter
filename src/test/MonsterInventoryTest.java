@@ -25,7 +25,7 @@ class MonsterInventoryTest {
 	@Test
 	public void testAddMonster1() throws InventoryFullException {
 		// Blue sky
-		Monster testMonster = new Chunky("Chunky", "Description", 100, 10, 10, 0, 10, 0.1, game);
+		Monster testMonster = new Chunky(game);
 		myMonsters.add(testMonster);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
 		testMonsterList.add(testMonster);
@@ -36,7 +36,7 @@ class MonsterInventoryTest {
 	@Test
 	public void testAddMonster2() throws InventoryFullException {
 		// Inventory full
-		Monster testMonster = new Chunky("Chunky", "Description", 100, 10, 10, 0, 10, 0.1, game);
+		Monster testMonster = new Chunky(game);
 		for (int i = 0; i < myMonsters.getInventorySize(); i++) {			
 			myMonsters.add(testMonster);
 		}
@@ -52,7 +52,7 @@ class MonsterInventoryTest {
 	@Test
 	public void testRemoveMonster1() throws PurchasableNotFoundException, InventoryFullException {
 		// Blue sky
-		Monster testMonster = new Chunky("Chunky", "Description", 100, 10, 10, 0, 10, 0.1, game);
+		Monster testMonster = new Chunky(game);
 		myMonsters.add(testMonster);
 		myMonsters.remove(testMonster);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
@@ -63,8 +63,8 @@ class MonsterInventoryTest {
 	@Test
 	public void testRemoveMonster2() throws PurchasableNotFoundException, InventoryFullException {
 		// Multiple items of the same type
-		Monster testMonster1 = new Chunky("Chunky 1", "Description", 100, 10, 10, 0, 10, 0.1, game);
-		Monster testMonster2 = new Chunky("Chunky 2", "Description", 100, 10, 10, 0, 10, 0.1, game);
+		Monster testMonster1 = new Chunky(game);
+		Monster testMonster2 = new Chunky(game);
 		myMonsters.add(testMonster1);
 		myMonsters.add(testMonster2);
 		myMonsters.add(testMonster2);
@@ -79,8 +79,8 @@ class MonsterInventoryTest {
 	@Test
 	public void testRemoveMonster3() throws PurchasableNotFoundException, InventoryFullException {
 		// Purchasable not found in inventory
-		Monster testMonster1 = new Chunky("Chunky 1", "Description", 100, 10, 10, 0, 10, 0.1, game);
-		Monster testMonster2 = new Chunky("Chunky 2", "Description", 100, 10, 10, 0, 10, 0.1, game);
+		Monster testMonster1 = new Chunky(game);
+		Monster testMonster2 = new Chunky(game);
 		myMonsters.add(testMonster2);
 		try {    		
 			myMonsters.remove(testMonster1);
@@ -93,7 +93,7 @@ class MonsterInventoryTest {
 	
 	@Test
 	void testMonstersFull() throws InventoryFullException {
-		Monster testMonster = new Chunky("Chunky", "Description", 100, 10, 10, 0, 10, 0.1, game);
+		Monster testMonster = new Chunky(game);
 		assertFalse(myMonsters.isFull());
 		myMonsters.add(testMonster);
 		myMonsters.add(testMonster);

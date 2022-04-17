@@ -23,21 +23,22 @@ class IncreaseDamageTest {
 	@Test
 	void testUse1() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
 		// Blue sky
-		Monster monster = new Chunky("Test", "Test", 1, 0, 1, 1, 1, 1, game);
+		Monster monster = new Chunky(game);
+		int damageBefore = monster.getDamage();
 		Item item = new IncreaseDamage(game);
 		game.getMyMonsters().add(monster);
 		game.getMyItems().add(item);
 		item.use(monster);
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		assertEquals(itemList, game.getMyItems().getItemList());
-		assertEquals(IncreaseDamage.getDamageIncrease(), monster.getDamage());
+		assertEquals(damageBefore + IncreaseDamage.getDamageIncrease(), monster.getDamage());
 	}
 	
 	
 	@Test
 	void testUse2() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
 		// Item not owned
-		Monster monster = new Chunky("Test", "Test", 1, 1, 1, 1, 1, 1, game);
+		Monster monster = new Chunky(game);
 		Item item = new IncreaseDamage(game);
 		game.getMyMonsters().add(monster);
 		try {			
