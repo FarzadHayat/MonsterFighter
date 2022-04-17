@@ -62,7 +62,12 @@ public abstract class Monster implements Purchasable {
      * @param health the new value of health
      */
     public void setHealth (int health) {
-        this.health = health;
+    	if(health >= maxHealth) {
+    		this.health = maxHealth;
+    	}
+    	else {
+            this.health = health;
+    	}
     }
 
     /**
