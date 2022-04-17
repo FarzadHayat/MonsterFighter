@@ -13,6 +13,9 @@ public class GameEnvironment {
     private int numDays;
     private String difficulty;
     
+    private int numBattles = 5;
+    private ArrayList<Battle> battleList;
+    
     private MonsterInventory myMonsters;
     private ItemInventory myItems;
     
@@ -26,12 +29,14 @@ public class GameEnvironment {
     /**
      * Constructors
      * @throws InventoryFullException 
-     * 
      */
     public GameEnvironment () throws InventoryFullException {
     	balance = 0;
     	myMonsters = new MonsterInventory(this);
     	myItems = new ItemInventory(this);
+    	
+    	battleList = new ArrayList<Battle>(numBattles);
+    	randomiseBattles();
     	
     	setAllMonsters(new MonsterInventory(this));
     	ArrayList<Monster> allMonstersList = new ArrayList<Monster>();
@@ -137,6 +142,38 @@ public class GameEnvironment {
 
     
     /**
+	 * @return the numBattles
+	 */
+	public int getNumBattles() {
+		return numBattles;
+	}
+
+
+	/**
+	 * @param numBattles the numBattles to set
+	 */
+	public void setNumBattles(int numBattles) {
+		this.numBattles = numBattles;
+	}
+
+
+	/**
+	 * @return the battleList
+	 */
+	public ArrayList<Battle> getBattleList() {
+		return battleList;
+	}
+
+
+	/**
+	 * @param battleList the battleList to set
+	 */
+	public void setBattleList(ArrayList<Battle> battleList) {
+		this.battleList = battleList;
+	}
+
+
+	/**
      * Get the value of myMonsters
      * @return the value of myMonsters
      */
@@ -358,10 +395,17 @@ public class GameEnvironment {
     
     /**
      * Randomise the battles in battleList.
+     * @throws InventoryFullException 
      * 
      */
-    public void randomiseBattles()
+    public void randomiseBattles() throws InventoryFullException
     {
+    	for (int i = 0; i < numBattles; i++) {
+    		MonsterInventory monsterInventory = new MonsterInventory(this);
+    		monsterInventory.randomiseInventory();
+    		Battle battle = new Battle(this, monsterInventory);
+    		battleList.add(battle);
+    	}
     }
 
 
@@ -375,6 +419,5 @@ public class GameEnvironment {
     	shopMonsters.randomiseInventory();
     	shopItems.randomiseInventory();
     }
-
 
 }
