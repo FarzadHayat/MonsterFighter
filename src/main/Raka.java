@@ -7,19 +7,36 @@ package main;
 public class Raka extends Monster {
 	
 	/**
-	 * Default variables
-	 * Note: Need to give value to these variables later on 
+	 * Default value for monster statistics 
 	 */
-	private int healingAmount;
-	private int buffAmount;
+	private static String defaultName = "Raka";
+	private static String description = "";
+	private static int defaultMaxHealth = 80;
+	private static int defaultDamage = 10;
+	private static int defaultCost = 70;
+	private static int defaultHealAmount = (int) (0.2*defaultMaxHealth);
+	private static double defaultCritRate = 0.1;
+	private static int level = 1;
+	
+	/**
+	 * Increment on statistics per level 
+	 */
+	private int levelUpHealth = (int)(0.1*getMaxHealth());
+	private int levelUpDamage = 5;
+	private int levelUpCost = 10;
+	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
+	
+	/**
+	 * Damage before Raka buffs the other monster
+	 */
 	private int damageBefore;
 	
 	/**
 	 * Constructor for Raka class 
 	 * Note: Need to change to default values later on 
 	 */
-	public Raka(String name, String description, int maxHealth, int damage, int cost, int level, int healAmount, double critRate, GameEnvironment game) {
-    	super(name, description, maxHealth, damage, cost, level, healAmount, critRate, game);
+	public Raka(GameEnvironment game) {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
     
     /**
@@ -30,19 +47,11 @@ public class Raka extends Monster {
     }
     
     public int getHealingAmount() {
-    	return healingAmount;
+    	return getHealAmount();
     }
-    
-    public void setHealingAmount(int amount) {
-    	this.healingAmount = amount;
-    }
-    
+
     public int getBuffAmount() {
-    	return buffAmount;
-    }
-    
-    public void setBuffAmount(int amount) {
-    	this.buffAmount = amount;
+    	return getDamage();
     }
     
     /**
@@ -50,7 +59,7 @@ public class Raka extends Monster {
      * @param other monster to heal 
      */
     public void healAllies(Monster other) {
-    	other.setHealth(other.getHealth()+healingAmount);
+    	other.setHealth(other.getHealth()+getHealAmount());
     }
     
     /**
@@ -60,17 +69,19 @@ public class Raka extends Monster {
     public void increaseDamage(Monster other) {
     	//damage before 
     	damageBefore = other.getDamage();
-    	other.setDamage(damageBefore+buffAmount);
+    	other.setDamage(damageBefore+getDamage());
     	//After battle set other damage back to damageBefore 
     }
 
     /**
-     * Increases healing amount and buff amount equally by 5 
+     * Level up monster statistics relevant to the monster 
      */
     public void levelUp()
     {
-    	setHealingAmount(getHealingAmount()+5);
-    	setBuffAmount(getBuffAmount()+5);
+    	setMaxHealth(getMaxHealth()+levelUpHealth);
+    	setDamage(getDamage()+levelUpDamage);
+    	setCost(getCost()+levelUpCost);
+    	setHealAmount(getHealAmount()+levelUpHealAmount);
     }
 
 

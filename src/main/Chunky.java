@@ -8,19 +8,43 @@ Tanky but low damage and expensive
 public class Chunky extends Monster {
 	
 	/**
+	 * Default value for monster statistics 
+	 */
+	private static String defaultName = "Chunky";
+	private static String description = "";
+	private static int defaultMaxHealth = 200;
+	private static int defaultDamage = 10;
+	private static int defaultCost = 80;
+	private static int defaultHealAmount = (int) (0.2*defaultMaxHealth);
+	private static double defaultCritRate = 0.1;
+	private static int level = 1;
+	
+	/**
+	 * Increment on statistics per level 
+	 */
+	private int levelUpHealth = (int)(0.2*getMaxHealth());
+	private int levelUpDamage = 5;
+	private int levelUpCost = 10;
+	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
+	
+	
+	/**
 	 * Constructor for Chunky class 
 	 * Note: Need to change to default values later on 
 	 */
-    public Chunky(String name, String description, int maxHealth, int damage, int cost, int level, int healAmount, double critRate, GameEnvironment game) {
-    	super(name, description, maxHealth, damage, cost, level, healAmount, critRate, game);
+    public Chunky(GameEnvironment game) {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
 
     /**
-     * Increases max health by 15 
+     * Level up monster statistics relevant to the monster 
      */
     public void levelUp()
     {
-    	setMaxHealth(getMaxHealth()+15);
+    	setMaxHealth(getMaxHealth()+levelUpHealth);
+    	setDamage(getDamage()+levelUpDamage);
+    	setCost(getCost()+levelUpCost);
+    	setHealAmount(getHealAmount()+levelUpHealAmount);
     }
 
 }

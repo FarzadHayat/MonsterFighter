@@ -7,19 +7,44 @@ package main;
 public class Zap extends Monster {
 	
 	/**
+	 * Default value for monster statistics 
+	 */
+	private static String defaultName = "Zap";
+	private static String description = "";
+	private static int defaultMaxHealth = 80;
+	private static int defaultDamage = 20;
+	private static int defaultCost = 50;
+	private static int defaultHealAmount = (int) (0.2*defaultMaxHealth);
+	private static double defaultCritRate = 0.5;
+	private static int level = 1;
+	
+	/**
+	 * Increment on statistics per level 
+	 */
+	private int levelUpHealth = (int)(0.1*getMaxHealth());
+	private int levelUpDamage = 8;
+	private int levelUpCost = 10;
+	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
+	private double levelUpCritRate = 0.2;
+	
+	/**
 	 * Constructor for Zap class 
 	 * Note: Need to change to default values later on 
 	 */
-	public Zap(String name, String description, int maxHealth, int damage, int cost, int level, int healAmount, double critRate, GameEnvironment game) {
-    	super(name, description, maxHealth, damage, cost, level, healAmount, critRate, game);
+	public Zap(GameEnvironment game) {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
 
     /**
-     * Increases critical rate by 0.2
+     * Level up monster statistics relevant to the monster 
      */
     public void levelUp()
     {
-    	setCritRate(getCritRate()+0.2);
+    	setMaxHealth(getMaxHealth()+levelUpHealth);
+    	setDamage(getDamage()+levelUpDamage);
+    	setCost(getCost()+levelUpCost);
+    	setHealAmount(getHealAmount()+levelUpHealAmount);
+    	setCritRate(getCritRate()+levelUpCritRate);
     }
 
 
