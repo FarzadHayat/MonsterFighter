@@ -25,7 +25,7 @@ public class LevelUp extends Item {
      */
 
     /**
-     * Level up a monster by one level.
+     * Level up the monster by one level.
      * @param monster
      * @throws PurchasableNotFoundException
      */

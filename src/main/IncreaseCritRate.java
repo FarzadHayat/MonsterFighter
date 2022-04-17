@@ -4,6 +4,7 @@ public class IncreaseCritRate extends Item {
     
 	/**
 	 * Fields
+	 * 
 	 */
 	private static double critIncrease = 0.2;
 	private static String name = "Increase Crit Rate";
@@ -20,7 +21,7 @@ public class IncreaseCritRate extends Item {
 	
 
     /**
-     * increase the monster's crit rate by critIncrease amount.
+     * Increase the monster's crit rate by critIncrease amount.
      * @param monster
      * @throws PurchasableNotFoundException 
      * @throws StatMaxedOutException 
