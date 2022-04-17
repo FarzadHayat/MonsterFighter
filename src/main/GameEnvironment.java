@@ -12,10 +12,13 @@ public class GameEnvironment {
     private String playerName;
     private int numDays;
     private String difficulty;
+    
     private MonsterInventory myMonsters;
     private ItemInventory myItems;
+    
     private MonsterInventory allMonsters;
     private ItemInventory allItems;
+    
     private MonsterInventory shopMonsters;
     private ItemInventory shopItems;
     
