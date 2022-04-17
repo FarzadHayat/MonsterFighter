@@ -35,10 +35,6 @@ public class GameEnvironment {
     	myMonsters = new MonsterInventory(this);
     	myItems = new ItemInventory(this);
     	
-    	battleList = new ArrayList<Battle>(numBattles);
-    	randomiseBattles();
-    	
-    	setAllMonsters(new MonsterInventory(this));
     	ArrayList<Monster> allMonstersList = new ArrayList<Monster>();
     	allMonstersList.add(new AverageJoe(this));
     	allMonstersList.add(new Chunky(this));
@@ -46,15 +42,18 @@ public class GameEnvironment {
     	allMonstersList.add(new Shanny(this));
     	allMonstersList.add(new Raka(this));
     	allMonstersList.add(new Zap(this));
-    	getAllMonsters().setMonsterList(allMonstersList);
+    	allMonsters = new MonsterInventory(this, allMonstersList);
     	
-    	setAllItems(new ItemInventory(this));
     	ArrayList<Item> allItemsList = new ArrayList<Item>();
     	allItemsList.add(new IncreaseHealth(this));
     	allItemsList.add(new IncreaseCritRate(this));
     	allItemsList.add(new IncreaseDamage(this));
     	allItemsList.add(new LevelUp(this));
-    	getAllItems().setItemList(allItemsList);
+    	allItems = new ItemInventory(this, allItemsList);
+    	
+    	battleList = new ArrayList<Battle>(numBattles);
+    	randomiseBattles();
+    	System.out.println(battleList);
     	
     	shopMonsters = new MonsterInventory(this);
     	shopItems = new ItemInventory(this);
@@ -419,5 +418,6 @@ public class GameEnvironment {
     	shopMonsters.randomiseInventory();
     	shopItems.randomiseInventory();
     }
+
 
 }
