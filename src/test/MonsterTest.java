@@ -34,7 +34,7 @@ class MonsterTest {
 	public void testTakeDamage1() throws InvalidValueException {
 		//Taking damage less than total health 
 		monster.takeDamage(10);
-		assertEquals(90, monster.getHealth());
+		assertEquals(monster.getMaxHealth()-10, monster.getHealth());
 	}
 	
 	@Test
@@ -51,7 +51,7 @@ class MonsterTest {
 	@Test 
 	public void testTakeDamage3() throws InvalidValueException {
 		//Taking damage equivalent to total health 
-		monster.takeDamage(100);
+		monster.takeDamage(monster.getHealth());
 		assertEquals(0, monster.getHealth());
 		assertEquals(true, monster.getIsFainted());
 	}
@@ -59,7 +59,7 @@ class MonsterTest {
 	@Test 
 	public void testTakeDamage4() throws InvalidValueException {
 		//Taking more damage than total health 
-		monster.takeDamage(120);
+		monster.takeDamage(monster.getHealth()+20);
 		assertEquals(0, monster.getHealth());
 		assertEquals(true, monster.getIsFainted());
 	}
@@ -81,7 +81,7 @@ class MonsterTest {
 	@Test 
 	public void testHeal2() throws InvalidValueException {
 		//Healing to exactly max health 
-		monster.takeDamage(10);
+		monster.takeDamage(monster.getHealAmount());
 		monster.heal();
 		assertEquals(100, monster.getHealth());
 	}
@@ -89,7 +89,7 @@ class MonsterTest {
 	@Test
 	public void testHeal3() throws InvalidValueException {
 		//Healing to less than max health 
-		monster.takeDamage(30);
+		monster.takeDamage(monster.getHealAmount()+10);
 		monster.heal();
 		assertEquals(90, monster.getHealth());
 	}
@@ -97,7 +97,7 @@ class MonsterTest {
 	@Test
 	public void testHeal4() throws InvalidValueException {
 		//Health exceed max health after healing 
-		monster.takeDamage(5);
+		monster.takeDamage(monster.getHealAmount()/2);
 		monster.heal();
 		assertEquals(100, monster.getHealth());
 	}
@@ -125,7 +125,7 @@ class MonsterTest {
 	@Test
 	public void testBuy2() throws InsufficientFundsException, InventoryFullException {
 		//Insufficient fund in player's balance 
-		game.setBalance(10);
+		game.setBalance(monster.getCost()/2);
 		try {
 			monster.buy();
 		}
@@ -180,7 +180,7 @@ class MonsterTest {
 	@Test
 	public void testSell3() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
 		//Purchasable not found in inventory
-		game.setBalance(20);
+		game.setBalance(monster.getCost());
 		try {
 			monster.sell();
 		}
