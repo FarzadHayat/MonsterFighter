@@ -31,6 +31,10 @@ public class LevelUp extends Item {
      */
     public void use(Monster monster) throws PurchasableNotFoundException
     {
+    	if (!game.getMyItems().getItemList().contains(this)) {
+    		throw new PurchasableNotFoundException("You do not own this item!");
+    	}
+    	
     	monster.levelUp();
     	game.getMyItems().remove(this);
     }

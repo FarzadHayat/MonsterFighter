@@ -49,7 +49,11 @@ public class IncreaseDamage extends Item {
      */
     public void use(Monster monster) throws PurchasableNotFoundException
     {	
-    	monster.setDamage(monster.getDamage() + getDamageIncrease());
+    	if (!game.getMyItems().getItemList().contains(this)) {
+    		throw new PurchasableNotFoundException("You do not own this item!");
+    	}
+    	
+    	monster.setDamage(monster.getDamage() + damageIncrease);
     	game.getMyItems().remove(this);
     }
 

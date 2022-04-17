@@ -50,6 +50,10 @@ public class IncreaseCritRate extends Item {
      */
     public void use(Monster monster) throws PurchasableNotFoundException, StatMaxedOutException
     {
+    	if (!game.getMyItems().getItemList().contains(this)) {
+    		throw new PurchasableNotFoundException("You do not own this item!");
+    	}
+    	
     	double critRate = monster.getCritRate();
     	double maxCritRate = monster.getMaxCritRate();
     	
@@ -57,7 +61,7 @@ public class IncreaseCritRate extends Item {
 			throw new StatMaxedOutException("Crit Rate is already maxed out!");
 		}
 		
-    	double newCritRate = critRate + getCritIncrease();
+    	double newCritRate = critRate + critIncrease;
     	if (newCritRate > maxCritRate) {
     		newCritRate = maxCritRate;
     	}

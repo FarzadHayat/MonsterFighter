@@ -50,14 +50,18 @@ public class IncreaseHealth extends Item {
      */
     public void use(Monster monster) throws PurchasableNotFoundException, StatMaxedOutException
     {
+    	if (!game.getMyItems().getItemList().contains(this)) {
+    		throw new PurchasableNotFoundException("You do not own this item!");
+    	}
+    	
     	int health = monster.getHealth();
-    	int maxHealth = monster.getHealth();
+    	int maxHealth = monster.getMaxHealth();
     	
 		if (health == maxHealth) {
-			throw new StatMaxedOutException("Health is already maxed out!");
+			throw new StatMaxedOutException("Health is already full!");
 		}
 		
-    	int newHealth = health + getHealthIncrease();
+    	int newHealth = health + healthIncrease;
     	if (newHealth > maxHealth) {
     		newHealth = maxHealth;
     	}
