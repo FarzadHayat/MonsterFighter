@@ -23,7 +23,7 @@ public class RandomEvent {
     /**
      * Randomise the purchasables in the shop.
      */
-    public void randomisePurchasable()
+    public void randomiseShop()
     {
     }
 
