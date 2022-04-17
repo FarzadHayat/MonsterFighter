@@ -12,6 +12,7 @@ public abstract class Monster implements Purchasable {
 	private int damage;
 	private int cost;
 	private int level;
+	private int maxLevel = 4;
 	private int healAmount;
 	private double critRate;
 	private double maxCritRate = 1;
@@ -159,6 +160,20 @@ public abstract class Monster implements Purchasable {
     }
 
     /**
+	 * @return the maxLevel
+	 */
+	public int getMaxLevel() {
+		return maxLevel;
+	}
+
+	/**
+	 * @param maxLevel the maxLevel to set
+	 */
+	public void setMaxLevel(int maxLevel) {
+		this.maxLevel = maxLevel;
+	}
+
+	/**
      * Set the value of level
      * @param level the new value of level
      */
@@ -298,8 +313,16 @@ public abstract class Monster implements Purchasable {
 	
 	/**
      * Level up the monster's statistics.
+	 * @throws StatMaxedOutException 
      */
-	public abstract void levelUp();
+	public void levelUp( ) throws StatMaxedOutException {
+		if (level == maxLevel) {
+			throw new StatMaxedOutException("Monster is already max level!");
+		}
+		else {
+			level += 1;
+		}
+	};
 	
 	
 }

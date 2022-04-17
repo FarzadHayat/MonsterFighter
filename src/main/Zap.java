@@ -37,9 +37,11 @@ public class Zap extends Monster {
 
     /**
      * Level up monster statistics relevant to the monster 
+     * @throws StatMaxedOutException 
      */
-    public void levelUp()
+    public void levelUp() throws StatMaxedOutException
     {
+    	super.levelUp();
     	setMaxHealth(getMaxHealth()+levelUpHealth);
     	setDamage(getDamage()+levelUpDamage);
     	setCost(getCost()+levelUpCost);
