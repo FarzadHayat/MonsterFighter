@@ -7,19 +7,43 @@ package main;
 public class Shanny extends Monster {
 	
 	/**
+	 * Default value for monster statistics 
+	 */
+	private static String defaultName = "Shanny";
+	private static String description = "";
+	private static int defaultMaxHealth = 100;
+	private static int defaultDamage = 15;
+	private static int defaultCost = 60;
+	private static int defaultHealAmount = (int) (0.5*defaultMaxHealth);
+	private static double defaultCritRate = 0.2;
+	private static int level = 1;
+	
+	/**
+	 * Increment on statistics per level 
+	 */
+	private int levelUpHealth = (int)(0.1*getMaxHealth());
+	private int levelUpDamage = 8;
+	private int levelUpCost = 10;
+	private int levelUpHealAmount = (int)(0.2*getMaxHealth());
+	
+	/**
 	 * Constructor for Shanny class 
 	 * Note: Need to change to default values later on 
 	 */
-	public Shanny(String name, String description, int maxHealth, int damage, int cost, int level, int healAmount, double critRate, GameEnvironment game) {
-    	super(name, description, maxHealth, damage, cost, level, healAmount, critRate, game);
+	public Shanny(GameEnvironment game) {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
     
     /**
-     * Increases healAmount by 15
+     * Level up monster statistics relevant to the monster 
      */
     public void levelUp()
     {
-    	setHealAmount(getHealAmount()+15);
+    	setMaxHealth(getMaxHealth()+levelUpHealth);
+    	setDamage(getDamage()+levelUpDamage);
+    	setCost(getCost()+levelUpCost);
+    	setHealAmount(getHealAmount()+levelUpHealAmount);
+    	setHealth(getHealth()+levelUpHealth);
     }
 
 

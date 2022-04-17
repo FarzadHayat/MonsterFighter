@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import main.AverageJoe;
 import main.Chunky;
 import main.GameEnvironment;
 import main.InsufficientFundsException;
@@ -26,14 +27,14 @@ class MonsterTest {
 	void setUp() throws Exception {
 		game = new GameEnvironment();
 		myMonsters = game.getMyMonsters();
-		monster = new Chunky("Test", "Testing description", 100, 20, 20, 1, 10, 0.1, game);
+		monster = new AverageJoe(game);
 	}
 
 	@Test
 	public void testTakeDamage1() throws InvalidValueException {
 		//Taking damage less than total health 
 		monster.takeDamage(10);
-		assertEquals(90, monster.getHealth());
+		assertEquals(monster.getMaxHealth()-10, monster.getHealth());
 	}
 	
 	@Test
@@ -50,7 +51,7 @@ class MonsterTest {
 	@Test 
 	public void testTakeDamage3() throws InvalidValueException {
 		//Taking damage equivalent to total health 
-		monster.takeDamage(100);
+		monster.takeDamage(monster.getHealth());
 		assertEquals(0, monster.getHealth());
 		assertEquals(true, monster.getIsFainted());
 	}
@@ -58,7 +59,7 @@ class MonsterTest {
 	@Test 
 	public void testTakeDamage4() throws InvalidValueException {
 		//Taking more damage than total health 
-		monster.takeDamage(120);
+		monster.takeDamage(monster.getHealth()+20);
 		assertEquals(0, monster.getHealth());
 		assertEquals(true, monster.getIsFainted());
 	}
@@ -80,7 +81,7 @@ class MonsterTest {
 	@Test 
 	public void testHeal2() throws InvalidValueException {
 		//Healing to exactly max health 
-		monster.takeDamage(10);
+		monster.takeDamage(monster.getHealAmount());
 		monster.heal();
 		assertEquals(100, monster.getHealth());
 	}
@@ -88,7 +89,7 @@ class MonsterTest {
 	@Test
 	public void testHeal3() throws InvalidValueException {
 		//Healing to less than max health 
-		monster.takeDamage(20);
+		monster.takeDamage(monster.getHealAmount()+10);
 		monster.heal();
 		assertEquals(90, monster.getHealth());
 	}
@@ -96,7 +97,7 @@ class MonsterTest {
 	@Test
 	public void testHeal4() throws InvalidValueException {
 		//Health exceed max health after healing 
-		monster.takeDamage(5);
+		monster.takeDamage(monster.getHealAmount()/2);
 		monster.heal();
 		assertEquals(100, monster.getHealth());
 	}
@@ -104,7 +105,7 @@ class MonsterTest {
 	@Test
 	public void testAttack1() throws InvalidValueException {
 		//Attacking and dealing damage to an enemy 
-		Monster enemy = new Chunky("Enemy", "Enemy description", 100, 20, 20, 1, 10, 0.1, game);
+		Monster enemy = new AverageJoe(game);
 		monster.attack(enemy);
 		assertEquals(80, enemy.getHealth());
 		assertEquals(100, monster.getHealth());
@@ -113,7 +114,7 @@ class MonsterTest {
 	@Test
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException {
 		//Blue sky
-		game.setBalance(20);
+		game.setBalance(monster.getCost());
 		monster.buy();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(monster);
@@ -124,7 +125,7 @@ class MonsterTest {
 	@Test
 	public void testBuy2() throws InsufficientFundsException, InventoryFullException {
 		//Insufficient fund in player's balance 
-		game.setBalance(10);
+		game.setBalance(monster.getCost()/2);
 		try {
 			monster.buy();
 		}
@@ -136,7 +137,7 @@ class MonsterTest {
 	@Test
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException {
 		//Inventory full
-		game.setBalance(100);
+		game.setBalance(monster.getCost()*5);
 		for(int i = 0; i < 4; i++) {
 			monster.buy();
 		}
@@ -151,20 +152,20 @@ class MonsterTest {
 	@Test
 	public void testSell1() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
 		//Blue sky
-		game.setBalance(20);
-		Monster testMonster = new Chunky("Test1", "Testing description1", 100, 20, 20, 1, 10, 0.1, game);
+		game.setBalance(monster.getCost());
+		Monster testMonster = new AverageJoe(game);
 		testMonster.buy();
 		testMonster.sell();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
-		assertEquals(10, game.getBalance());
+		assertEquals(30, game.getBalance());
 		assertEquals(monsterList, myMonsters.getMonsterList());
 	}
 	
 	@Test
 	public void testSell2() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
 		//Multiple items of same type
-		game.setBalance(60);
-		Monster testMonster = new Chunky("Test1", "Testing description1", 100, 20, 20, 1, 10, 0.1, game);
+		game.setBalance(monster.getCost()*3);
+		Monster testMonster = new AverageJoe(game);
 		monster.buy();
 		testMonster.buy();
 		testMonster.buy();
@@ -172,14 +173,14 @@ class MonsterTest {
 		monster.sell();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(testMonster);
-		assertEquals(20, game.getBalance());
+		assertEquals(60, game.getBalance());
 		assertEquals(monsterList, myMonsters.getMonsterList());
 	}
 	
 	@Test
 	public void testSell3() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
 		//Purchasable not found in inventory
-		game.setBalance(20);
+		game.setBalance(monster.getCost());
 		try {
 			monster.sell();
 		}
