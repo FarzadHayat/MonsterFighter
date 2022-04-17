@@ -4,17 +4,35 @@ import java.util.Random;
 
 public class MonsterInventory {
 	
+	/**
+	 * Fields
+	 * 
+	 */
 	private int inventorySize = 4;
     private ArrayList<Monster> monsterList;
     private GameEnvironment game;
     
     
+    /**
+     * Constructors
+     * 
+     */
     public MonsterInventory (GameEnvironment game) {
     	monsterList = new ArrayList<Monster>(inventorySize);
     	this.game = game;
     };
     
     
+    public MonsterInventory (GameEnvironment game, ArrayList<Monster> monsterList) {
+    	this.game = game;
+    	this.monsterList = monsterList;
+    };
+    
+    
+    /**
+     * Getters and setters
+     * 
+     */
     public int getInventorySize() {
     	return inventorySize;
     }
@@ -34,6 +52,11 @@ public class MonsterInventory {
     	this.monsterList = monsterList;
     }
     
+    
+    /**
+     * Functional
+     * 
+     */
     
     /**
      * @param monster
