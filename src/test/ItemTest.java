@@ -25,8 +25,8 @@ class ItemTest {
 	@Test
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException {
 		// Blue sky
-		game.setBalance(10);
 		Item testItem = new IncreaseHealth(game);
+		game.setBalance(testItem.getCost());
 		testItem.buy();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
@@ -38,8 +38,8 @@ class ItemTest {
 	@Test
 	public void testBuy2() throws InsufficientFundsException, InventoryFullException {
 		// Insufficient funds
-		game.setBalance(5);
 		Item testItem = new IncreaseHealth(game);
+		game.setBalance(testItem.getCost() / 2);
 		try {    		
 			testItem.buy();
 		}
@@ -52,9 +52,9 @@ class ItemTest {
 	@Test
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException {
 		// Inventory full	
-		game.setBalance(50);
 		Item testItem = new IncreaseHealth(game);
-		for (int i = 0; i < 4; i++) {			
+		game.setBalance(testItem.getCost() * (myItems.getInventorySize() + 1));
+		for (int i = 0; i < myItems.getInventorySize(); i++) {			
 			testItem.buy();
 		}
 		try {    		
@@ -69,12 +69,12 @@ class ItemTest {
 	@Test
 	public void testSell1() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
 		// Blue sky
-		game.setBalance(5);
 		Item testItem = new IncreaseHealth(game);
+		game.setBalance(testItem.getCost());
 		testItem.buy();
 		testItem.sell();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
-		assertEquals(2.5, game.getBalance());
+		assertEquals(testItem.getCost() * testItem.getRefundAmount(), game.getBalance());
 		assertEquals(testItemList, myItems.getItemList());
 	}
 	
@@ -82,9 +82,9 @@ class ItemTest {
 	@Test
 	public void testSell2() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
 		// Multiple items of the same type
-		game.setBalance(15);
 		Item testItem1 = new IncreaseHealth(game);
 		Item testItem2 = new IncreaseHealth(game);
+		game.setBalance(testItem1.getCost() * 3);
 		testItem1.buy();
 		testItem2.buy();
 		testItem2.buy();
@@ -92,7 +92,7 @@ class ItemTest {
 		testItem1.sell();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem2);
-		assertEquals(5, game.getBalance());
+		assertEquals(testItem1.getCost(), game.getBalance());
 		assertEquals(testItemList, myItems.getItemList());
 	}
 	
@@ -100,9 +100,9 @@ class ItemTest {
 	@Test
 	public void testSell3() throws PurchasableNotFoundException, InsufficientFundsException, InventoryFullException {
 		// Purchasable not found in inventory
-		game.setBalance(10);
 		Item testItem1 = new IncreaseHealth(game);
 		Item testItem2 = new IncreaseHealth(game);
+		game.setBalance(testItem1.getCost());
 		testItem1.buy();
 		try {    		
 			testItem2.sell();

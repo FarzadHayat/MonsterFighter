@@ -37,7 +37,7 @@ class MonsterInventoryTest {
 	public void testAddMonster2() throws InventoryFullException {
 		// Inventory full
 		Monster testMonster = new Chunky("Chunky", "Description", 100, 10, 10, 0, 10, 0.1, game);
-		for (int i = 0; i < 4; i++) {			
+		for (int i = 0; i < myMonsters.getInventorySize(); i++) {			
 			myMonsters.add(testMonster);
 		}
 		try {    		

@@ -37,7 +37,7 @@ class ItemInventoryTest {
 	public void testAddItem2() throws InventoryFullException {
 		// Inventory full
 		Item testItem = new IncreaseHealth(game);
-		for (int i = 0; i < 4; i++) {			
+		for (int i = 0; i < myItems.getInventorySize(); i++) {			
 			myItems.add(testItem);
 		}
 		try {    		
