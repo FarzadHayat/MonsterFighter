@@ -92,6 +92,24 @@ abstract public class Item implements Purchasable {
     
     
     /**
+     * Get the value of refundAmount
+     * @return the value of refundAmount
+     */
+    public double getRefundAmount () {
+    	return refundAmount;
+    }
+
+    
+	/**
+     * Set the value of refundAmount
+     * @param refundAmount the new value of refundAmount
+     */
+    public void setRefundAmount (double refundAmount) {
+        this.refundAmount = refundAmount;
+    }
+    
+    
+    /**
 	 * Functional methods
 	 * 
 	 */

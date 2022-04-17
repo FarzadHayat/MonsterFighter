@@ -215,6 +215,22 @@ public abstract class Monster implements Purchasable {
     public boolean getIsFainted () {
         return isFainted;
     }
+
+	/**
+     * Set the value of refundAmount
+     * @param refundAmount the new value of refundAmount
+     */
+    public void setRefundAmount (double refundAmount) {
+        this.refundAmount = refundAmount;
+    }
+
+    /**
+     * Get the value of refundAmount
+     * @return the value of refundAmount
+     */
+    public double getRefundAmount () {
+        return refundAmount;
+    }
 	
 	/**
 	 * Functional methods
