@@ -1,6 +1,4 @@
 package main;
-import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Class Battle
@@ -33,10 +31,17 @@ public class Battle {
      * Constructors
      * 
      * */
-    public Battle (GameEnvironment game, MonsterInventory enemyMonsters) {
+    public Battle (GameEnvironment game) {
     	this.game = game;
     	playerMonsters = game.getMyMonsters();
-    	this.enemyMonsters = enemyMonsters;
+    	enemyMonsters = new MonsterInventory(game);
+    };
+    
+    
+    public Battle (GameEnvironment game, MonsterInventory monsterInventory) {
+    	this.game = game;
+    	playerMonsters = game.getMyMonsters();
+    	enemyMonsters = monsterInventory;
     };
     
 
@@ -46,28 +51,78 @@ public class Battle {
      * */
 
 
-    /**
-     * Set the value of currentTurn
-     * @param currentTurn the new value of currentTurn
-     */
-    public void setCurrentTurn (Turn currentTurn) {
-        this.currentTurn = currentTurn;
-    }
-
-    /**
+	/**
      * Get the value of currentTurn
      * @return the value of currentTurn
      */
     public Turn getCurrentTurn () {
         return currentTurn;
     }
+    
+    
+    /**
+     * Set the value of currentTurn
+     * @param currentTurn the new value of currentTurn
+     */
+    public void setCurrentTurn (Turn currentTurn) {
+    	this.currentTurn = currentTurn;
+    }
+
+    
+    /**
+     * Get the value of winner
+     * @return the value of winner
+     */
+    public Turn getWinner () {
+        return winner;
+    }
+    
+    
+    /**
+     * Set the value of winner
+     * @param winner the new value of winner
+     */
+    public void setWinner (Turn winner) {
+    	this.winner = winner;
+    }
+
+    
+    /**
+	 * @return the enemyMonsters
+	 */
+	public MonsterInventory getEnemyMonsters() {
+		return enemyMonsters;
+	}
+
+
+	/**
+	 * @param enemyMonsters the enemyMonsters to set
+	 */
+	public void setEnemyMonsters(MonsterInventory enemyMonsters) {
+		this.enemyMonsters = enemyMonsters;
+	}
+
+
+	/**
+	 * @return the playerMonsters
+	 */
+	public MonsterInventory getPlayerMonsters() {
+		return playerMonsters;
+	}
+
+
+	/**
+	 * @param playerMonsters the playerMonsters to set
+	 */
+	public void setPlayerMonsters(MonsterInventory playerMonsters) {
+		this.playerMonsters = playerMonsters;
+	}
 
 
     /** 
      * Functional
      * 
      * */
-
     
     /**
      * choose a random player monster to attack a random enemy monster
@@ -76,8 +131,8 @@ public class Battle {
      */
     public void playerAttack() throws InvalidValueException
     {
-    	Monster attackingMonster = playerMonsters.random();
-    	Monster defendingMonster = enemyMonsters.random();
+    	Monster attackingMonster = getPlayerMonsters().random();
+    	Monster defendingMonster = getEnemyMonsters().random();
     	attackingMonster.attack(defendingMonster);
     	currentTurn = Turn.ENEMY;
     }
@@ -90,8 +145,8 @@ public class Battle {
      */
     public void enemyAttack() throws InvalidValueException
     {
-    	Monster attackingMonster = enemyMonsters.random();
-    	Monster defendingMonster = playerMonsters.random();
+    	Monster attackingMonster = getEnemyMonsters().random();
+    	Monster defendingMonster = getPlayerMonsters().random();
     	attackingMonster.attack(defendingMonster);
     	currentTurn = Turn.PLAYER;
     }
@@ -135,9 +190,11 @@ public class Battle {
     		win();
     	}
     }
-    
 
+    
     /**
+     * Player wins the game
+     * 
      */
     public void win()
     {
@@ -147,12 +204,13 @@ public class Battle {
 
 
     /**
+     * Player loses the game
+     * 
      */
     public void lose()
     {
     	winner = Turn.ENEMY;
     	// do some stuff here
     }
-
 
 }
