@@ -16,13 +16,16 @@ public class GameEnvironment {
     private ItemInventory myItems;
     private MonsterInventory allMonsters;
     private ItemInventory allItems;
+    private MonsterInventory shopMonsters;
+    private ItemInventory shopItems;
     
     
     /**
      * Constructors
+     * @throws InventoryFullException 
      * 
      */
-    public GameEnvironment () {
+    public GameEnvironment () throws InventoryFullException {
     	balance = 0;
     	myMonsters = new MonsterInventory(this);
     	myItems = new ItemInventory(this);
@@ -44,6 +47,10 @@ public class GameEnvironment {
     	allItemsList.add(new IncreaseDamage(this));
     	allItemsList.add(new LevelUp(this));
     	getAllItems().setItemList(allItemsList);
+    	
+    	shopMonsters = new MonsterInventory(this);
+    	shopItems = new ItemInventory(this);
+    	randomiseShop();
     	
     	setupGame();
     };
@@ -184,13 +191,45 @@ public class GameEnvironment {
 	public ItemInventory getAllItems() {
 		return allItems;
 	}
-
-
+	
+	
 	/**
-	 * @param allItems the allItems to set
+	 * @param allItems the allItems o set
 	 */
 	public void setAllItems(ItemInventory allItems) {
 		this.allItems = allItems;
+	}
+
+
+	/**
+	 * @return the shopMonsters
+	 */
+	public MonsterInventory getShopMonsters() {
+		return shopMonsters;
+	}
+
+
+	/**
+	 * @param shopMonsters the shopMonsters to set
+	 */
+	public void setShopMonsters(MonsterInventory shopMonsters) {
+		this.shopMonsters = shopMonsters;
+	}
+	
+	
+	/**
+	 * @return the shopItems
+	 */
+	public ItemInventory getShopItems() {
+		return shopItems;
+	}
+
+
+	/**
+	 * @param shopItems the shopItems to set
+	 */
+	public void setShopItems(ItemInventory shopItems) {
+		this.shopItems = shopItems;
 	}
 	
     
@@ -225,14 +264,6 @@ public class GameEnvironment {
 
 
     /**
-     * Select a battle to fight.
-     */
-    public void selectBattle()
-    {
-    }
-
-
-    /**
      * View the team properties panel.
      */
     public void viewTeam()
@@ -241,29 +272,37 @@ public class GameEnvironment {
 
 
     /**
-     * View the game statistics panel.
-     */
-    public void viewStats()
-    {
-    }
+	 * View the game statistics panel.
+	 */
+	public void viewStats()
+	{
+	}
 
 
-    /**
-     * 1. Set player name and request a different name if necessary.
+	/**
+	 * View the player inventory panel.
+	 */
+	public void viewInventory()
+	{
+	}
+
+
+	/**
+	 * 1. Set player name and request a different name if necessary.
 	 * 2. Set number of days and request a different input if necessary.
 	 * 3. Set difficulty.
 	 * 4. Select starting monster and set monster name if not using the default.
-     */
-    public void setupGame()
-    {
-    	selectPlayerName();
-    	selectNumDays();
-    	SelectDifficulty();
-    	selectStartingMonster();
-    }
+	 */
+	public void setupGame()
+	{
+		selectPlayerName();
+		selectNumDays();
+		SelectDifficulty();
+		selectStartingMonster();
+	}
 
-    
-    public void selectPlayerName()
+
+	public void selectPlayerName()
     {
     	// let the player pick a name
     }
@@ -281,7 +320,15 @@ public class GameEnvironment {
     }
     
     
-    public void selectStartingMonster()
+    /**
+	 * Select a battle to fight.
+	 */
+	public void selectBattle()
+	{
+	}
+
+
+	public void selectStartingMonster()
     {
     	// let the player pick a monster
     }
@@ -307,10 +354,23 @@ public class GameEnvironment {
     
     
     /**
-     * View the player inventory panel.
+     * Randomise the battles in battleList.
+     * 
      */
-    public void viewInventory()
+    public void randomiseBattles()
     {
+    }
+
+
+    /**
+     * Randomise the purchasables in the shop.
+     * @throws InventoryFullException 
+     * 
+     */
+    public void randomiseShop() throws InventoryFullException
+    {
+    	shopMonsters.randomiseInventory();
+    	shopItems.randomiseInventory();
     }
 
 
