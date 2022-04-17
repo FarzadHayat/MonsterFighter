@@ -8,9 +8,31 @@ public class IncreaseDamage extends Item {
 	 */
 	private static int damageIncrease = 10;
 	private static String name = "Increase Damage";
-	private static String description = "Increase a monster's damage by " + damageIncrease + ".";
+	private static String description = "Increase a monster's damage by " + getDamageIncrease() + ".";
 	private static int cost = 20;
 	
+	
+	/**
+	 * Getters and setters
+	 * 
+	 */
+	
+	/**
+	 * @return the damageIncrease
+	 */
+	public static int getDamageIncrease() {
+		return damageIncrease;
+	}
+
+
+	/**
+	 * @param damageIncrease the damageIncrease to set
+	 */
+	public static void setDamageIncrease(int damageIncrease) {
+		IncreaseDamage.damageIncrease = damageIncrease;
+	}
+
+
 	/**
 	 * Constructors
 	 * 
@@ -27,7 +49,7 @@ public class IncreaseDamage extends Item {
      */
     public void use(Monster monster) throws PurchasableNotFoundException
     {	
-    	monster.setDamage(monster.getDamage() + damageIncrease);
+    	monster.setDamage(monster.getDamage() + getDamageIncrease());
     	game.getMyItems().remove(this);
     }
 

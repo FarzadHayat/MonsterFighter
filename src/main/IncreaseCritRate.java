@@ -8,9 +8,31 @@ public class IncreaseCritRate extends Item {
 	 */
 	private static double critIncrease = 0.2;
 	private static String name = "Increase Crit Rate";
-	private static String description = "Increase a monster's crit rate by " + critIncrease * 100 + " percent.";
+	private static String description = "Increase a monster's crit rate by " + getCritIncrease() * 100 + " percent.";
 	private static int cost = 20;
 	
+	
+	/**
+	 * Getters and setters
+	 * 
+	 */
+	
+	/**
+	 * @return the critIncrease
+	 */
+	public static double getCritIncrease() {
+		return critIncrease;
+	}
+
+
+	/**
+	 * @param critIncrease the critIncrease to set
+	 */
+	public static void setCritIncrease(double critIncrease) {
+		IncreaseCritRate.critIncrease = critIncrease;
+	}
+
+
 	/**
 	 * Constructors
 	 * 
@@ -35,7 +57,7 @@ public class IncreaseCritRate extends Item {
 			throw new StatMaxedOutException("Crit Rate is already maxed out!");
 		}
 		
-    	double newCritRate = critRate + critIncrease;
+    	double newCritRate = critRate + getCritIncrease();
     	if (newCritRate > maxCritRate) {
     		newCritRate = maxCritRate;
     	}
