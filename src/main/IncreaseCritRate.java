@@ -5,17 +5,17 @@ public class IncreaseCritRate extends Item {
 	/**
 	 * Fields
 	 */
-	private double critIncrease = 0.1;
+	private static double critIncrease = 0.2;
+	private static String name = "Increase Crit Rate";
+	private static String description = "Increase a monster's crit rate by " + critIncrease * 100 + " percent.";
+	private static int cost = 20;
 	
 	/**
 	 * Constructors
 	 * 
 	 */
 	public IncreaseCritRate (GameEnvironment game) {
-		super(game);
-		super.setName("Increase Crit Rate");
-		super.setDescription("Increase a monster's crit rate by " + critIncrease * 100 + " percent.");
-		super.setCost(10);
+		super(name, description, cost, game);
 	};
 	
 
@@ -23,13 +23,22 @@ public class IncreaseCritRate extends Item {
      * increase the monster's crit rate by critIncrease amount.
      * @param monster
      * @throws PurchasableNotFoundException 
+     * @throws StatMaxedOutException 
      */
-    public void use(Monster monster) throws PurchasableNotFoundException
+    public void use(Monster monster) throws PurchasableNotFoundException, StatMaxedOutException
     {
-    	double newCritRate = monster.getCritRate() + critIncrease;
-    	if (newCritRate > monster.getMaxCritRate()) {
-    		newCritRate = monster.getMaxCritRate();
+    	double critRate = monster.getCritRate();
+    	double maxCritRate = monster.getMaxCritRate();
+    	
+		if (critRate == maxCritRate) {
+			throw new StatMaxedOutException("Crit Rate is already maxed out!");
+		}
+		
+    	double newCritRate = critRate + critIncrease;
+    	if (newCritRate > maxCritRate) {
+    		newCritRate = maxCritRate;
     	}
+    	
     	monster.setCritRate(newCritRate);
     	game.getMyItems().remove(this);
     }

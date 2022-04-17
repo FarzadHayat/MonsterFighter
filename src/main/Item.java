@@ -124,8 +124,9 @@ abstract public class Item implements Purchasable {
      * use this item on the given Monster
      * @param monster
      * @throws PurchasableNotFoundException 
+     * @throws StatMaxedOutException 
      */
-    abstract public void use(Monster monster) throws PurchasableNotFoundException;
+    abstract public void use(Monster monster) throws PurchasableNotFoundException, StatMaxedOutException;
 
 
 }
