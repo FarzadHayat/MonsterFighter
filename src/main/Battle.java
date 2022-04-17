@@ -212,5 +212,14 @@ public class Battle {
     	winner = Turn.ENEMY;
     	// do some stuff here
     }
+    
+    
+    public String toString() {
+    	String result = "Battle enemies:\n";
+    	for (Monster monster : enemyMonsters.getMonsterList()) {
+    		result += "    " + monster + "\n";
+    	}
+    	return result;
+    }
 
 }
