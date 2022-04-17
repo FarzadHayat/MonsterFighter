@@ -58,19 +58,30 @@ public class Raka extends Monster {
      * Heals one monster for the healingAmount 
      * @param other monster to heal 
      */
-    public void healAllies(Monster other) {
-    	other.setHealth(other.getHealth()+getHealAmount());
+    public void healAllies(Monster other) throws InvalidTargetException {
+    	if(!other.getIsFainted()) {
+    		other.setHealth(other.getHealth()+getHealAmount());
+    	}
+    	else {
+    		throw new InvalidTargetException("Target is fainted!");
+    	}
+    	
     }
     
     /**
      * Increase damage of ally monster by buffAmount 
      * @param other monster to buff 
      */
-    public void increaseDamage(Monster other) {
-    	//damage before 
-    	damageBefore = other.getDamage();
-    	other.setDamage(damageBefore+getDamage());
-    	//After battle set other damage back to damageBefore 
+    public void increaseDamage(Monster other) throws InvalidTargetException {
+    	if(!other.getIsFainted()) {
+    		//damage before 
+        	damageBefore = other.getDamage();
+        	other.setDamage(damageBefore+getDamage());
+        	//After battle set other damage back to damageBefore 
+    	}
+    	else {
+    		throw new InvalidTargetException("Target is fainted!");
+    	}
     }
 
     /**
