@@ -2,6 +2,7 @@ package main;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GameEnvironment {
 
@@ -25,6 +26,29 @@ public class GameEnvironment {
     
     private MonsterInventory shopMonsters;
     private ItemInventory shopItems;
+    
+    private enum Command {
+    	VIEW,
+    	BUY,
+    	SELL,
+    	SELECT
+    }
+    
+    private enum View {
+    	SHOP,
+    	INVENTORY,
+    	BATTLES,
+    	STATS,
+    	TEAM
+    }
+    
+    private enum Select {
+    	NAME,
+    	NUMDAYS,
+    	DIFFICULTY,
+    	BATTLE,
+    	MONSTER
+    }
     
     
     /**
@@ -297,7 +321,7 @@ public class GameEnvironment {
     /**
      * View the shop page.
      */
-    public void visitShop()
+    public void viewShop()
     {
     }
 
@@ -344,7 +368,7 @@ public class GameEnvironment {
 	{
 		selectPlayerName();
 		selectNumDays();
-		SelectDifficulty();
+		selectDifficulty();
 		selectStartingMonster();
 	}
 
@@ -361,7 +385,7 @@ public class GameEnvironment {
     }
     
     
-    public void SelectDifficulty()
+    public void selectDifficulty()
     {
     	// let the player pick a difficulty
     }
@@ -439,21 +463,95 @@ public class GameEnvironment {
     	shopItems.randomiseInventory();
     }
     
+    
+    public void run() {
+    	Scanner input = new Scanner(System.in);
+    	while (true) {    		
+    		String[] commands = input.nextLine().toUpperCase().strip().split("\\s+");
+    		if (commands[0] == "QUIT") {
+    			break;
+    		}
+    		try {    		
+    			if (commands.length != 2) {
+    				throw new IllegalArgumentException();
+    			}
+    			Command c1 = Command.valueOf(commands[0]);
+    			System.out.println(c1);
+    			switch (c1) {
+	    			case VIEW:
+	    				View view = View.valueOf(commands[1]);
+	    				System.out.println(view);
+	    				switch (view) {
+	    					case SHOP:
+	    						viewShop();
+	    						break;
+	    					case INVENTORY:
+	    						viewInventory();
+	    						break;
+	    					case BATTLES:
+	    						viewBattles();
+	    						break;
+	    					case STATS:
+	    						viewStats();
+	    						break;
+	    					case TEAM:
+	    						viewTeam();
+	    						break;
+	    				}
+	    				break;
+	    			case BUY:
+	    				// do some stuff here...
+	    				break;
+	    			case SELL:
+	    				// do some stuff here...
+	    				break;
+	    			case SELECT:
+	    				Select select = Select.valueOf(commands[1]);
+	    				System.out.println(select);
+	    				switch (select) {
+	    					case NAME:
+	    						selectPlayerName();
+	    						break;
+	    					case NUMDAYS:
+	    						selectNumDays();
+	    						break;
+	    					case DIFFICULTY:
+	    						selectDifficulty();
+	    						break;
+	    					case BATTLE:
+	    						selectBattle();
+	    						break;
+	    					case MONSTER:
+	    						selectStartingMonster();
+	    						break;
+	    				}
+	    				break;
+    			}
+    		}
+    		catch (IllegalArgumentException e) {
+    			System.out.println("Command not found! Try again:");
+    		}
+    	}
+    	input.close();
+    }
+    
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InventoryFullException {
     	GameEnvironment game = new GameEnvironment();
     	
-    	for (int i = 0; i < game.battleList.size(); i++)
-    	{
-    		Battle battle = game.battleList.get(i);
-    		System.out.println(String.format("=== Battle %s ===", i + 1));
-    		System.out.println(battle);
-    	}
+//    	for (int i = 0; i < game.battleList.size(); i++)
+//    	{
+//    		Battle battle = game.battleList.get(i);
+//    		System.out.println(String.format("=== Battle %s ===", i + 1));
+//    		System.out.println(battle);
+//    	}
+//    	
+//    	System.out.println("-----------------------------");
+//    	System.out.println(game.shopItems);
+//    	
+//    	System.out.println("-----------------------------");
+//    	System.out.println(game.shopMonsters);
     	
-    	System.out.println("-----------------------------");
-    	System.out.println(game.shopItems);
-    	
-    	System.out.println("-----------------------------");
-    	System.out.println(game.shopMonsters);
+    	game.run();
     }
 
 }
