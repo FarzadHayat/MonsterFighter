@@ -1,10 +1,7 @@
 package main;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.util.regex.*;
+import java.util.*;
 
 public class GameEnvironment {
 
@@ -15,7 +12,13 @@ public class GameEnvironment {
     private double balance;
     private String playerName;
     private int numDays;
-    private String difficulty;
+    private Difficulty difficulty;
+    
+    private enum Difficulty {
+    	EASY,
+    	NORMAL,
+    	HARD
+    }
     
     private int numBattles = 5;
     private ArrayList<Battle> battleList;
@@ -28,6 +31,15 @@ public class GameEnvironment {
     
     private MonsterInventory shopMonsters;
     private ItemInventory shopItems;
+    
+    private enum MonsterClass {
+    	AVERAGEJOE,
+    	CHUNKY,
+    	LANKY,
+    	SHANNY,
+    	RAKA,
+    	ZAP
+    };
     
     private enum Command {
     	VIEW,
@@ -67,7 +79,7 @@ public class GameEnvironment {
     	balance = 0;
     	myMonsters = new MonsterInventory(this);
     	myItems = new ItemInventory(this);
-    	
+
     	allMonsters = new MonsterInventory(this);
     	ArrayList<Monster> allMonstersList = new ArrayList<Monster>();
     	allMonstersList.add(new AverageJoe(this));
@@ -85,6 +97,14 @@ public class GameEnvironment {
     	allItemsList.add(new IncreaseCritRate(this));
     	allItemsList.add(new LevelUp(this));
     	allItems.setItemList(allItemsList);
+    	
+//    	monsterClasses = new HashMap<String, Class<? extends Monster>>();
+//    	monsterClasses.put("averagejoe", AverageJoe.class);
+//    	monsterClasses.put("chunky", Chunky.class);
+//    	monsterClasses.put("lanky", Lanky.class);
+//    	monsterClasses.put("shanny", Shanny.class);
+//    	monsterClasses.put("raka", Raka.class);
+//    	monsterClasses.put("zap", Zap.class);
     	
     	battleList = new ArrayList<Battle>(numBattles);
     	randomiseBattles();
@@ -174,7 +194,7 @@ public class GameEnvironment {
      * Get the value of difficulty
      * @return the value of difficulty
      */
-    public String getDifficulty () {
+    public Difficulty getDifficulty () {
         return difficulty;
     }
     
@@ -183,7 +203,7 @@ public class GameEnvironment {
      * Set the value of difficulty
      * @param difficulty the new value of difficulty
      */
-    public void setDifficulty (String difficulty) {
+    public void setDifficulty (Difficulty difficulty) {
     	this.difficulty = difficulty;
     }
 
@@ -379,8 +399,9 @@ public class GameEnvironment {
 	 * 2. Set number of days and request a different input if necessary.
 	 * 3. Set difficulty.
 	 * 4. Select starting monster and set monster name if not using the default.
+	 * @throws InventoryFullException 
 	 */
-	public void setupGame()
+	public void setupGame() throws InventoryFullException
 	{
 		selectPlayerName();
 		selectNumDays();
@@ -396,17 +417,18 @@ public class GameEnvironment {
 	public void selectPlayerName()
     {
     	Scanner input = new Scanner(System.in);
-    	System.out.println("Select a player name (between 3 - 15 characters"
-    					+ " containing no numbers or special characters):");
-    	while (getPlayerName() == null) {
-    		String name = input.nextLine();
-    		try {
-    			setPlayerName(name);
-    		}
-    		catch (InvalidValueException e) {
-    			System.out.println(e.getMessage());
-    		}    		
-    	}
+		System.out.println("Select a player name (between 3 - 15 characters"
+						+ " containing no numbers or special characters):");
+		while (getPlayerName() == null) {
+			String name = input.nextLine();
+			try {
+				setPlayerName(name);
+			}
+			catch (InvalidValueException e) {
+				System.out.println(e.getMessage());
+			}    		
+		}
+		System.out.println(String.format("Nice to meet you %s!", getPlayerName()));
     }
     
     
@@ -417,41 +439,97 @@ public class GameEnvironment {
     public void selectNumDays()
     {
     	Scanner input = new Scanner(System.in);
-    	System.out.println("Select a number of days (between 5 - 15):");
-    	while (getNumDays() == 0) {
-    		try {
-    			int numDays = input.nextInt();
-    			setNumDays(numDays);
-    		}
-    		catch (InputMismatchException e) {
-    			System.out.println("Please enter a number! Try again:");
-    			// bug exists here
-    		}
-    		catch (InvalidValueException e) {
-    			System.out.println(e.getMessage());
-    		}    		
-    	}
-    }
-    
-    
-    public void selectDifficulty()
-    {
-    	// let the player pick a difficulty
+		System.out.println("Select a number of days (between 5 - 15):");
+		while (getNumDays() == 0) {
+			try {
+				int numDays = Integer.parseInt(input.nextLine().strip());
+				setNumDays(numDays);
+			}
+			catch (NumberFormatException e) {
+				System.out.println("Please enter a number! Try again:");
+			}
+			catch (InvalidValueException e) {
+				System.out.println(e.getMessage());
+			}    		
+		}
+		System.out.println(String.format("You chose: %s days.", getNumDays()));
     }
     
     
     /**
+     * Let the player pick a difficulty
+     * 
+     */
+    public void selectDifficulty()
+    {
+    	Scanner input = new Scanner(System.in);
+		System.out.println("Select a difficulty level (easy, normal, hard):");
+		while (difficulty == null) {
+			try {
+				String inputStr = input.nextLine().toUpperCase().strip();
+				Difficulty difficulty = Difficulty.valueOf(inputStr);
+				setDifficulty(difficulty);
+			}
+			catch (IllegalArgumentException e) {
+				System.out.println("Invalid difficulty! Try again:");
+			}
+		}
+		System.out.println(String.format("You chose: %s.", getDifficulty()));
+    }
+
+
+    /**
+     * Let the player pick a starting monster
+     * @throws InventoryFullException 
+     * 
+     */
+	public void selectStartingMonster() throws InventoryFullException
+    {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
+		while (getMyMonsters().getMonsterList().size() == 0) {
+			String inputStr = input.nextLine().toUpperCase().strip().replaceAll("\\s+", "");
+			try {
+				MonsterClass monsterClass = MonsterClass.valueOf(inputStr);
+				Monster monster = null;
+				switch (monsterClass) {
+					case AVERAGEJOE:
+						monster = new AverageJoe(this);
+						break;
+					case CHUNKY:
+						monster = new Chunky(this);
+						break;
+					case LANKY:
+						monster = new Lanky(this);
+						break;
+					case SHANNY:
+						monster = new Shanny(this);
+						break;
+					case RAKA:
+						monster = new Raka(this);
+						break;
+					case ZAP:
+						monster = new Zap(this);
+						break;
+				}
+				getMyMonsters().add(monster);
+			}
+			catch (IllegalArgumentException e) {
+				System.out.println("Invalid starting monster! Try again:");
+			}				
+		}
+		System.out.println(String.format("You chose:\n%s", getMyMonsters()));
+    }
+	
+	
+	/**
 	 * Select a battle to fight.
 	 */
 	public void selectBattle()
 	{
+		
 	}
-
-
-	public void selectStartingMonster()
-    {
-    	// let the player pick a monster
-    }
+		
 
     
     public void addBalance(double amount) {
@@ -513,7 +591,7 @@ public class GameEnvironment {
     }
     
     
-    public void run() {
+    public void run() throws InventoryFullException {
     	Scanner input = new Scanner(System.in);
     	while (true) {    		
     		String[] commands = input.nextLine().toUpperCase().strip().split("\\s+");
@@ -524,9 +602,9 @@ public class GameEnvironment {
     			if (commands.length != 2) {
     				throw new IllegalArgumentException();
     			}
-    			Command c1 = Command.valueOf(commands[0]);
-    			System.out.println(c1);
-    			switch (c1) {
+    			Command command = Command.valueOf(commands[0]);
+    			System.out.println(command);
+    			switch (command) {
 	    			case VIEW:
 	    				View view = View.valueOf(commands[1]);
 	    				System.out.println(view);

@@ -128,8 +128,9 @@ public class Battle {
      * choose a random player monster to attack a random enemy monster
 	 * and turn over to the enemy
      * @throws InvalidValueException 
+     * @throws InvalidTargetException 
      */
-    public void playerAttack() throws InvalidValueException
+    public void playerAttack() throws InvalidValueException, InvalidTargetException
     {
     	Monster attackingMonster = getPlayerMonsters().random();
     	Monster defendingMonster = getEnemyMonsters().random();
@@ -142,8 +143,9 @@ public class Battle {
      * choose a random enemy monster to attack a random player monster
 	 * turn over to the player
      * @throws InvalidValueException 
+     * @throws InvalidTargetException 
      */
-    public void enemyAttack() throws InvalidValueException
+    public void enemyAttack() throws InvalidValueException, InvalidTargetException
     {
     	Monster attackingMonster = getEnemyMonsters().random();
     	Monster defendingMonster = getPlayerMonsters().random();
@@ -158,8 +160,9 @@ public class Battle {
      * Checks status after each attack.
      * Repeat until one side's team is all fainted.
      * @throws InvalidValueException 
+     * @throws InvalidTargetException 
      */
-    public void play() throws InvalidValueException
+    public void play() throws InvalidValueException, InvalidTargetException
     {
     	currentTurn = Turn.PLAYER;
     	
