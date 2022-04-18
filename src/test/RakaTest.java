@@ -50,7 +50,7 @@ class RakaTest {
 		}
 		catch(InvalidTargetException e) {
 			assertEquals(0, target.getHealth());
-			assertEquals(e.getMessage(), "Target is fainted!");
+			assertEquals(e.getMessage(), "Invalid target!");
 		}
 	}
 	
@@ -70,7 +70,19 @@ class RakaTest {
 		}
 		catch(InvalidTargetException e) {
 			assertEquals(20, target.getDamage());
-			assertEquals(e.getMessage(), "Target is fainted!");
+			assertEquals(e.getMessage(), "Invalid target!");
+		}
+	}
+	
+	@Test
+	public void testBuff3() throws InvalidTargetException {
+		raka.increaseDamage(target);
+		try {
+			raka.increaseDamage(target);
+		}
+		catch(InvalidTargetException e) {
+			assertEquals(30, target.getDamage());
+			assertEquals(e.getMessage(), "Invalid target!");
 		}
 	}
 

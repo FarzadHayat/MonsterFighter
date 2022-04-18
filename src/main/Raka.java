@@ -63,7 +63,7 @@ public class Raka extends Monster {
     		other.setHealth(other.getHealth()+getHealAmount());
     	}
     	else {
-    		throw new InvalidTargetException("Target is fainted!");
+    		throw new InvalidTargetException("Invalid target!");
     	}
     	
     }
@@ -81,7 +81,7 @@ public class Raka extends Monster {
         	//After turn set other damage back to damageBefore 
     	}
     	else {
-    		throw new InvalidTargetException("Target is fainted!");
+    		throw new InvalidTargetException("Invalid target!");
     	}
     }
 
