@@ -11,6 +11,7 @@ import main.AverageJoe;
 import main.Chunky;
 import main.GameEnvironment;
 import main.InsufficientFundsException;
+import main.InvalidTargetException;
 import main.InvalidValueException;
 import main.InventoryFullException;
 import main.Monster;
@@ -103,11 +104,12 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testAttack1() throws InvalidValueException {
+	public void testAttack1() throws InvalidValueException, InvalidTargetException {
 		//Attacking and dealing damage to an enemy 
 		Monster enemy = new AverageJoe(game);
 		monster.attack(enemy);
-		assertEquals(80, enemy.getHealth());
+		//Taking into account whether the monster crits or not 
+		assertTrue(enemy.getHealth() == 80 || enemy.getHealth() == 60);
 		assertEquals(100, monster.getHealth());
 	}
 	

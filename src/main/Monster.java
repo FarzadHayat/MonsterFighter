@@ -1,5 +1,7 @@
 package main;
 
+import java.util.*;
+
 public abstract class Monster implements Purchasable {
 	/**
 	 *	Monster statistic variables 
@@ -288,8 +290,19 @@ public abstract class Monster implements Purchasable {
      * @param other the monster that should take damage
 	 * @throws InvalidValueException 
      */
-	public void attack(Monster other) throws InvalidValueException {
-		other.takeDamage(this.damage);
+	public void attack(Monster other) throws InvalidValueException, InvalidTargetException {
+		if(!other.getIsFainted()) {
+			if(this.critAttack()) {
+				other.takeDamage(this.damage*2);
+			}
+			else {
+				other.takeDamage(this.damage);
+			}
+		}
+		else {
+			throw new InvalidTargetException("Invalid target!");
+		}
+		
 	}
 	
 	/**
@@ -306,6 +319,20 @@ public abstract class Monster implements Purchasable {
 				this.setHealth(0);
 				this.setIsFainted(true);
 			}
+		}
+	}
+	
+	/**
+	 * Checks if monster should deal a critical hit by its critical rate 
+	 */
+	public boolean critAttack() {
+		Random rn = new Random();
+		int chanceValue = rn.nextInt(10)+1;
+		if(chanceValue <= this.getCritRate()*10) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 	
