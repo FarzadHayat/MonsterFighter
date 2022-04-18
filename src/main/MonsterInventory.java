@@ -1,4 +1,5 @@
 package main;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -131,11 +132,20 @@ public class MonsterInventory {
     /**
      * Randomises the monster inventory by selecting random monsters from the all monsters in the game.
      * @throws InventoryFullException
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+     * @throws InvocationTargetException 
+     * @throws IllegalArgumentException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
      */
-    public void randomiseInventory() throws InventoryFullException {
+    public void randomiseInventory() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    	Random random = new Random();
     	ArrayList<Monster> newMonsterList = new ArrayList<Monster>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
-    		Monster randomMonster = game.getAllMonsters().random();
+    		int index = random.nextInt(game.getMonsterClasses().size());
+    		Class<? extends Monster> clazz = game.getMonsterClasses().get(index);
+    		Monster randomMonster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
     		newMonsterList.add(randomMonster);
     	}
     	monsterList = newMonsterList;

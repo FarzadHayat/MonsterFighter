@@ -1,5 +1,6 @@
 package main;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class GameEnvironment {
@@ -19,8 +20,8 @@ public class GameEnvironment {
     private MonsterInventory myMonsters;
     private ItemInventory myItems;
     
-    private MonsterInventory allMonsters;
-    private ItemInventory allItems;
+    private ArrayList<Class<? extends Monster>> monsterClasses;
+    private ArrayList<Class<? extends Item>> itemClasses;
     
     private MonsterInventory shopMonsters;
     private ItemInventory shopItems;
@@ -29,31 +30,34 @@ public class GameEnvironment {
     /**
      * Constructors
      * @throws InventoryFullException 
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+     * @throws InvocationTargetException 
+     * @throws IllegalArgumentException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
      */
-    public GameEnvironment () throws InventoryFullException {
+    public GameEnvironment () throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
     	balance = 0;
     	myMonsters = new MonsterInventory(this);
     	myItems = new ItemInventory(this);
     	
-    	ArrayList<Monster> allMonstersList = new ArrayList<Monster>();
-    	allMonstersList.add(new AverageJoe(this));
-    	allMonstersList.add(new Chunky(this));
-    	allMonstersList.add(new Lanky(this));
-    	allMonstersList.add(new Shanny(this));
-    	allMonstersList.add(new Raka(this));
-    	allMonstersList.add(new Zap(this));
-    	allMonsters = new MonsterInventory(this, allMonstersList);
+    	monsterClasses = new ArrayList<Class<? extends Monster>>();
+    	monsterClasses.add(AverageJoe.class);
+    	monsterClasses.add(Chunky.class);
+    	monsterClasses.add(Lanky.class);
+    	monsterClasses.add(Shanny.class);
+    	monsterClasses.add(Raka.class);
+    	monsterClasses.add(Zap.class);
     	
-    	ArrayList<Item> allItemsList = new ArrayList<Item>();
-    	allItemsList.add(new IncreaseHealth(this));
-    	allItemsList.add(new IncreaseCritRate(this));
-    	allItemsList.add(new IncreaseDamage(this));
-    	allItemsList.add(new LevelUp(this));
-    	allItems = new ItemInventory(this, allItemsList);
+    	itemClasses = new ArrayList<Class<? extends Item>>();
+    	itemClasses.add(IncreaseHealth.class);
+    	itemClasses.add(IncreaseCritRate.class);
+    	itemClasses.add(IncreaseDamage.class);
+    	itemClasses.add(LevelUp.class);
     	
     	battleList = new ArrayList<Battle>(numBattles);
     	randomiseBattles();
-    	System.out.println(battleList);
     	
     	shopMonsters = new MonsterInventory(this);
     	shopItems = new ItemInventory(this);
@@ -209,34 +213,34 @@ public class GameEnvironment {
 
 
 	/**
-	 * @return the allMonsters
+	 * @return the monsterClasses
 	 */
-	public MonsterInventory getAllMonsters() {
-		return allMonsters;
+	public ArrayList<Class<? extends Monster>> getMonsterClasses() {
+		return monsterClasses;
 	}
 
 
 	/**
-	 * @param allMonsters the allMonsters to set
+	 * @param monsterClasses the monsterClasses to set
 	 */
-	public void setAllMonsters(MonsterInventory allMonsters) {
-		this.allMonsters = allMonsters;
+	public void setMonsterClasses(ArrayList<Class<? extends Monster>> allMonsters) {
+		this.monsterClasses = allMonsters;
 	}
 
 
 	/**
-	 * @return the allItems
+	 * @return the itemClasses
 	 */
-	public ItemInventory getAllItems() {
-		return allItems;
+	public ArrayList<Class<? extends Item>> getItemClasses() {
+		return itemClasses;
 	}
 	
 	
 	/**
-	 * @param allItems the allItems o set
+	 * @param itemClasses the itemClasses o set
 	 */
-	public void setAllItems(ItemInventory allItems) {
-		this.allItems = allItems;
+	public void setItemClasses(ArrayList<Class<? extends Item>> allItems) {
+		this.itemClasses = allItems;
 	}
 
 
@@ -395,9 +399,15 @@ public class GameEnvironment {
     /**
      * Randomise the battles in battleList.
      * @throws InventoryFullException 
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+     * @throws InvocationTargetException 
+     * @throws IllegalArgumentException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
      * 
      */
-    public void randomiseBattles() throws InventoryFullException
+    public void randomiseBattles() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
     {
     	for (int i = 0; i < numBattles; i++) {
     		MonsterInventory monsterInventory = new MonsterInventory(this);
@@ -411,13 +421,18 @@ public class GameEnvironment {
     /**
      * Randomise the purchasables in the shop.
      * @throws InventoryFullException 
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+     * @throws InvocationTargetException 
+     * @throws IllegalArgumentException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
      * 
      */
-    public void randomiseShop() throws InventoryFullException
+    public void randomiseShop() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
     {
     	shopMonsters.randomiseInventory();
     	shopItems.randomiseInventory();
     }
-
 
 }

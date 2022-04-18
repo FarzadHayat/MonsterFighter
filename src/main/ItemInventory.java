@@ -1,4 +1,5 @@
 package main;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -108,11 +109,20 @@ public class ItemInventory {
     /**
      * Randomises the item inventory by selecting random items from the all items in the game.
      * @throws InventoryFullException
+     * @throws SecurityException 
+     * @throws NoSuchMethodException 
+     * @throws InvocationTargetException 
+     * @throws IllegalArgumentException 
+     * @throws IllegalAccessException 
+     * @throws InstantiationException 
      */
-    public void randomiseInventory() throws InventoryFullException {
+    public void randomiseInventory() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    	Random random = new Random();
     	ArrayList<Item> newItemList = new ArrayList<Item>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
-    		Item randomItem = game.getAllItems().random();
+    		int index = random.nextInt(game.getItemClasses().size());
+    		Class<? extends Item> clazz = game.getItemClasses().get(index);
+    		Item randomItem = clazz.getConstructor(GameEnvironment.class).newInstance(game);
     		newItemList.add(randomItem);
     	}
     	itemList = newItemList;
