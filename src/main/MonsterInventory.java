@@ -141,10 +141,11 @@ public class MonsterInventory {
      */
     public void randomiseInventory() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
     	Random random = new Random();
+    	ArrayList<Monster> allMonstersList = game.getAllMonsters().getMonsterList();
     	ArrayList<Monster> newMonsterList = new ArrayList<Monster>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
-    		int index = random.nextInt(game.getMonsterClasses().size());
-    		Class<? extends Monster> clazz = game.getMonsterClasses().get(index);
+    		int index = random.nextInt(allMonstersList.size());
+    		Class<? extends Monster> clazz = allMonstersList.get(index).getClass();
     		Monster randomMonster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
     		newMonsterList.add(randomMonster);
     	}

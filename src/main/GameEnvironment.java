@@ -20,8 +20,8 @@ public class GameEnvironment {
     private MonsterInventory myMonsters;
     private ItemInventory myItems;
     
-    private ArrayList<Class<? extends Monster>> monsterClasses;
-    private ArrayList<Class<? extends Item>> itemClasses;
+    private MonsterInventory allMonsters;
+    private ItemInventory allItems;
     
     private MonsterInventory shopMonsters;
     private ItemInventory shopItems;
@@ -42,19 +42,23 @@ public class GameEnvironment {
     	myMonsters = new MonsterInventory(this);
     	myItems = new ItemInventory(this);
     	
-    	monsterClasses = new ArrayList<Class<? extends Monster>>();
-    	monsterClasses.add(AverageJoe.class);
-    	monsterClasses.add(Chunky.class);
-    	monsterClasses.add(Lanky.class);
-    	monsterClasses.add(Shanny.class);
-    	monsterClasses.add(Raka.class);
-    	monsterClasses.add(Zap.class);
+    	allMonsters = new MonsterInventory(this);
+    	ArrayList<Monster> allMonstersList = new ArrayList<Monster>();
+    	allMonstersList.add(new AverageJoe(this));
+    	allMonstersList.add(new Chunky(this));
+    	allMonstersList.add(new Lanky(this));
+    	allMonstersList.add(new Shanny(this));
+    	allMonstersList.add(new Raka(this));
+    	allMonstersList.add(new Zap(this));
+    	allMonsters.setMonsterList(allMonstersList);
     	
-    	itemClasses = new ArrayList<Class<? extends Item>>();
-    	itemClasses.add(IncreaseHealth.class);
-    	itemClasses.add(IncreaseCritRate.class);
-    	itemClasses.add(IncreaseDamage.class);
-    	itemClasses.add(LevelUp.class);
+    	allItems = new ItemInventory(this);
+    	ArrayList<Item> allItemsList = new ArrayList<Item>();
+    	allItemsList.add(new IncreaseHealth(this));
+    	allItemsList.add(new IncreaseDamage(this));
+    	allItemsList.add(new IncreaseCritRate(this));
+    	allItemsList.add(new LevelUp(this));
+    	allItems.setItemList(allItemsList);
     	
     	battleList = new ArrayList<Battle>(numBattles);
     	randomiseBattles();
@@ -213,34 +217,34 @@ public class GameEnvironment {
 
 
 	/**
-	 * @return the monsterClasses
+	 * @return the allMonsters
 	 */
-	public ArrayList<Class<? extends Monster>> getMonsterClasses() {
-		return monsterClasses;
+	public MonsterInventory getAllMonsters() {
+		return allMonsters;
 	}
 
 
 	/**
-	 * @param monsterClasses the monsterClasses to set
+	 * @param allMonsters the allMonsters to set
 	 */
-	public void setMonsterClasses(ArrayList<Class<? extends Monster>> allMonsters) {
-		this.monsterClasses = allMonsters;
+	public void setAllMonsters(MonsterInventory allMonsters) {
+		this.allMonsters = allMonsters;
 	}
 
 
 	/**
-	 * @return the itemClasses
+	 * @return the allItems
 	 */
-	public ArrayList<Class<? extends Item>> getItemClasses() {
-		return itemClasses;
+	public ItemInventory getAllItems() {
+		return allItems;
 	}
 	
 	
 	/**
-	 * @param itemClasses the itemClasses o set
+	 * @param allItems the allItems o set
 	 */
-	public void setItemClasses(ArrayList<Class<? extends Item>> allItems) {
-		this.itemClasses = allItems;
+	public void setAllItems(ItemInventory allItems) {
+		this.allItems = allItems;
 	}
 
 

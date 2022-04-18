@@ -118,10 +118,11 @@ public class ItemInventory {
      */
     public void randomiseInventory() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
     	Random random = new Random();
+    	ArrayList<Item> allItemsList = game.getAllItems().getItemList();
     	ArrayList<Item> newItemList = new ArrayList<Item>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
-    		int index = random.nextInt(game.getItemClasses().size());
-    		Class<? extends Item> clazz = game.getItemClasses().get(index);
+    		int index = random.nextInt(allItemsList.size());
+    		Class<? extends Item> clazz = allItemsList.get(index).getClass();
     		Item randomItem = clazz.getConstructor(GameEnvironment.class).newInstance(game);
     		newItemList.add(randomItem);
     	}
