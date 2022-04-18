@@ -2,7 +2,9 @@ package main;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.regex.*;
 
 public class GameEnvironment {
 
@@ -119,20 +121,28 @@ public class GameEnvironment {
 
     
     /**
-     * Get the value of name
-     * @return the value of name
+     * Get the value of playerName
+     * @return the value of playerName
      */
-    public String getName () {
+    public String getPlayerName () {
         return playerName;
     }
     
     
     /**
-     * Set the value of name
-     * @param playerName the new value of name
+     * Set the value of playerName
+     * @param playerName the new value of playerName
+     * @throws InvalidValueException 
      */
-    public void setPlayerName (String playerName) {
-    	this.playerName = playerName;
+    public void setPlayerName (String playerName) throws InvalidValueException {
+    	playerName = playerName.strip();
+    	String regex = "(([a-z]|[A-Z])*(\s)*)*([a-z]|[A-Z])+";
+    	if (3 <= playerName.length() && playerName.length() <= 15 && playerName.matches(regex)) {
+    		this.playerName = playerName;
+    	}
+    	else {    		
+    		throw new InvalidValueException("Invalid player name! Try again:");
+    	}
     }
 
     
@@ -148,9 +158,15 @@ public class GameEnvironment {
     /**
      * Set the value of numDays
      * @param numDays the new value of numDays
+     * @throws InvalidValueException 
      */
-    public void setNumDays (int numDays) {
-    	this.numDays = numDays;
+    public void setNumDays (int numDays) throws InvalidValueException {
+    	if (5 <= numDays && numDays <= 15) {
+    		this.numDays = numDays;
+    	}
+    	else {    		
+    		throw new InvalidValueException("Invalid number of days! Try again:");
+    	}
     }
 
     
@@ -373,15 +389,48 @@ public class GameEnvironment {
 	}
 
 
+	/**
+	 * Let the player pick a name.
+	 * 
+	 */
 	public void selectPlayerName()
     {
-    	// let the player pick a name
+    	Scanner input = new Scanner(System.in);
+    	System.out.println("Select a player name (between 3 - 15 characters"
+    					+ " containing no numbers or special characters):");
+    	while (getPlayerName() == null) {
+    		String name = input.nextLine();
+    		try {
+    			setPlayerName(name);
+    		}
+    		catch (InvalidValueException e) {
+    			System.out.println(e.getMessage());
+    		}    		
+    	}
     }
     
     
+	/**
+	 * Let the player pick a number of days
+	 * 
+	 */
     public void selectNumDays()
     {
-    	// let the player pick a number of days
+    	Scanner input = new Scanner(System.in);
+    	System.out.println("Select a number of days (between 5 - 15):");
+    	while (getNumDays() == 0) {
+    		try {
+    			int numDays = input.nextInt();
+    			setNumDays(numDays);
+    		}
+    		catch (InputMismatchException e) {
+    			System.out.println("Please enter a number! Try again:");
+    			// bug exists here
+    		}
+    		catch (InvalidValueException e) {
+    			System.out.println(e.getMessage());
+    		}    		
+    	}
     }
     
     
@@ -551,7 +600,7 @@ public class GameEnvironment {
 //    	System.out.println("-----------------------------");
 //    	System.out.println(game.shopMonsters);
     	
-    	game.run();
+    	//game.run();
     }
 
 }

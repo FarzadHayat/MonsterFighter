@@ -7,15 +7,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.AverageJoe;
-import main.Chunky;
-import main.GameEnvironment;
-import main.InsufficientFundsException;
-import main.InvalidValueException;
-import main.InventoryFullException;
-import main.Monster;
-import main.MonsterInventory;
-import main.PurchasableNotFoundException;
+import main.*;
 
 class MonsterTest {
 
