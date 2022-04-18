@@ -73,11 +73,12 @@ public class Raka extends Monster {
      * @param other monster to buff 
      */
     public void increaseDamage(Monster other) throws InvalidTargetException {
-    	if(!other.getIsFainted()) {
+    	if(!other.getIsFainted() && !other.getIsBuffed()) {
     		//damage before 
         	damageBefore = other.getDamage();
         	other.setDamage(damageBefore+getDamage());
-        	//After battle set other damage back to damageBefore 
+        	other.setIsBuffed(true);
+        	//After turn set other damage back to damageBefore 
     	}
     	else {
     		throw new InvalidTargetException("Target is fainted!");

@@ -19,6 +19,7 @@ public abstract class Monster implements Purchasable {
 	private boolean isFainted = false;
 	private GameEnvironment game;
 	private double refundAmount = 0.5;
+	private boolean isBuffed = false;
 	
 	/**
 	 * Constructor method 
@@ -250,6 +251,22 @@ public abstract class Monster implements Purchasable {
      */
     public double getRefundAmount () {
         return refundAmount;
+    }
+    
+	/**
+     * Set the value of isFainted
+     * @param isFainted the new value of isFainted
+     */
+    public void setIsBuffed (boolean buffed) {
+        this.isBuffed = buffed;
+    }
+
+    /**
+     * Get the value of isFainted
+     * @return the value of isFainted
+     */
+    public boolean getIsBuffed () {
+        return isBuffed;
     }
 	
 	/**
