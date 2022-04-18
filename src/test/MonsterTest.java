@@ -17,6 +17,7 @@ import main.InventoryFullException;
 import main.Monster;
 import main.MonsterInventory;
 import main.PurchasableNotFoundException;
+import main.*;
 
 class MonsterTest {
 
