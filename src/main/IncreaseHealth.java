@@ -8,7 +8,7 @@ public class IncreaseHealth extends Item {
 	 */
 	private static int healthIncrease = 20;
 	private static String name = "Increase Health";
-	private static String description = "Increase a monster's health by " + getHealthIncrease() + ".";
+	private static String description = "Increase a monster's health by " + healthIncrease + ".";
 	private static int cost = 20;
 	
 	

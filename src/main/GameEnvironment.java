@@ -434,5 +434,22 @@ public class GameEnvironment {
     	shopMonsters.randomiseInventory();
     	shopItems.randomiseInventory();
     }
+    
+    public static void main(String[] args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InventoryFullException {
+    	GameEnvironment game = new GameEnvironment();
+    	
+    	for (int i = 0; i < game.battleList.size(); i++)
+    	{
+    		Battle battle = game.battleList.get(i);
+    		System.out.println(String.format("=== Battle %s ===", i + 1));
+    		System.out.println(battle);
+    	}
+    	
+    	System.out.println("-----------------------------");
+    	System.out.println(game.shopItems);
+    	
+    	System.out.println("-----------------------------");
+    	System.out.println(game.shopMonsters);
+    }
 
 }

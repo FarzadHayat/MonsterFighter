@@ -9,7 +9,7 @@ public class AverageJoe extends Monster{
 	/**
 	 * Default value for monster statistics 
 	 */
-	private static String defaultName = "AverageJoe";
+	private static String defaultName = "Average Joe";
 	private static String description = "";
 	private static int defaultMaxHealth = 100;
 	private static int defaultDamage = 20;

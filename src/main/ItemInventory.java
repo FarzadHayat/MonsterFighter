@@ -127,5 +127,15 @@ public class ItemInventory {
     	}
     	itemList = newItemList;
     }
+    
+    
+    public String toString() {
+    	String result = "";
+    	for (Item item : itemList)
+    	{
+    		result += "\n" + item;
+    	}
+    	return result;
+    }
 
 }

@@ -146,5 +146,12 @@ abstract public class Item implements Purchasable {
      */
     abstract public void use(Monster monster) throws PurchasableNotFoundException, StatMaxedOutException;
 
-
+    
+    public String toString() {
+    	String result = "Item: " + name + "\n";
+    	result += description + "\n";
+    	result += "Cost: " + cost + "\n";
+    	return result;
+    }
+    
 }

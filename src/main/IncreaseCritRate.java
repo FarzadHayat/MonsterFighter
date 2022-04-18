@@ -8,7 +8,7 @@ public class IncreaseCritRate extends Item {
 	 */
 	private static double critIncrease = 0.2;
 	private static String name = "Increase Crit Rate";
-	private static String description = "Increase a monster's crit rate by " + getCritIncrease() * 100 + " percent.";
+	private static String description = "Increase a monster's crit rate by " + (int) (critIncrease * 100) + " percent.";
 	private static int cost = 20;
 	
 	

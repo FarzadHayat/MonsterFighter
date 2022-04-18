@@ -215,9 +215,10 @@ public class Battle {
     
     
     public String toString() {
-    	String result = "Battle enemies:\n";
-    	for (Monster monster : enemyMonsters.getMonsterList()) {
-    		result += "    " + monster + "\n";
+    	String result = "";
+    	for (int i = 0; i < enemyMonsters.getMonsterList().size(); i++) {
+    		Monster monster = enemyMonsters.getMonsterList().get(i);
+    		result += String.format("\n%s. %s", i + 1, monster);
     	}
     	return result;
     }

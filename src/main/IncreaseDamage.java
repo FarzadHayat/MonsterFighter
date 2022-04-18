@@ -8,7 +8,7 @@ public class IncreaseDamage extends Item {
 	 */
 	private static int damageIncrease = 10;
 	private static String name = "Increase Damage";
-	private static String description = "Increase a monster's damage by " + getDamageIncrease() + ".";
+	private static String description = "Increase a monster's damage by " + damageIncrease + ".";
 	private static int cost = 20;
 	
 	

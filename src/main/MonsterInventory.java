@@ -150,5 +150,15 @@ public class MonsterInventory {
     	}
     	monsterList = newMonsterList;
     }
+    
+    
+    public String toString() {
+    	String result = "";
+    	for (Monster monster : monsterList)
+    	{
+    		result += "\n" + monster;
+    	}
+    	return result;
+    }
 
 }

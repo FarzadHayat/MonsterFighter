@@ -325,4 +325,18 @@ public abstract class Monster implements Purchasable {
 	};
 	
 	
+	public String toString() {
+    	String result = "Monster: " + name + "\n";
+    	result += description + "\n";
+    	result += "Health: " + health + "\n";
+    	result += "Max Health: " + maxHealth + "\n";
+    	result += "Damage: " + damage + "\n";
+    	result += "Cost: " + cost + "\n";
+    	result += "Level: " + level + "\n";
+    	result += "Heal Amount: " + healAmount + "\n";
+    	result += "Crit Rate: " + critRate + "\n";
+    	result += "Fainted: " + isFainted + "\n";
+    	return result;
+    }
+	
 }
