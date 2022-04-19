@@ -60,6 +60,7 @@ public class MonsterInventory {
      */
     
     /**
+     * Add the given monster to the inventory
      * @param monster
      * @throws InventoryFullException 
      */
@@ -75,6 +76,7 @@ public class MonsterInventory {
 
 
     /**
+     * Remove the given monster from the inventory
      * @param monster
      * @throws PurchasableNotFoundException 
      */
@@ -89,14 +91,16 @@ public class MonsterInventory {
     }
     
     
+    /**
+     * @return whether the inventory is full
+     */
     public boolean isFull() {
 		return monsterList.size() >= inventorySize;
     }
     
     
     /**
-     * checks whether all monsters have fainted.
-     * @return whether the monsters are all fainted
+     * @return whether all monsters have fainted
      */
     public boolean allFainted() {
     	boolean fainted = true;
@@ -130,7 +134,7 @@ public class MonsterInventory {
     }
     
     /**
-     * Randomises the monster inventory by selecting random monsters from the all monsters in the game.
+     * Randomises the monster inventory by selecting random monsters from all monsters in the game.
      * @throws InventoryFullException
      * @throws SecurityException 
      * @throws NoSuchMethodException 
@@ -153,6 +157,9 @@ public class MonsterInventory {
     }
     
     
+    /**
+     * Return a string representation of the inventory
+     */
     public String toString() {
     	String result = "";
     	for (Monster monster : monsterList)

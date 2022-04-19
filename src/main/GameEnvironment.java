@@ -98,22 +98,12 @@ public class GameEnvironment {
     	allItemsList.add(new LevelUp(this));
     	allItems.setItemList(allItemsList);
     	
-//    	monsterClasses = new HashMap<String, Class<? extends Monster>>();
-//    	monsterClasses.put("averagejoe", AverageJoe.class);
-//    	monsterClasses.put("chunky", Chunky.class);
-//    	monsterClasses.put("lanky", Lanky.class);
-//    	monsterClasses.put("shanny", Shanny.class);
-//    	monsterClasses.put("raka", Raka.class);
-//    	monsterClasses.put("zap", Zap.class);
-    	
     	battleList = new ArrayList<Battle>(numBattles);
     	randomiseBattles();
     	
     	shopMonsters = new MonsterInventory(this);
     	shopItems = new ItemInventory(this);
     	randomiseShop();
-    	
-    	setupGame();
     };
 
     
@@ -664,8 +654,8 @@ public class GameEnvironment {
     
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InventoryFullException {
     	GameEnvironment game = new GameEnvironment();
-    	
-//    	for (int i = 0; i < game.battleList.size(); i++)
+
+    	//    	for (int i = 0; i < game.battleList.size(); i++)
 //    	{
 //    		Battle battle = game.battleList.get(i);
 //    		System.out.println(String.format("=== Battle %s ===", i + 1));
@@ -678,6 +668,7 @@ public class GameEnvironment {
 //    	System.out.println("-----------------------------");
 //    	System.out.println(game.shopMonsters);
     	
+    	//game.setupGame();
     	//game.run();
     }
 
