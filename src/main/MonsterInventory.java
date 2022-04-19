@@ -136,22 +136,21 @@ public class MonsterInventory {
     /**
      * Randomises the monster inventory by selecting random monsters from all monsters in the game.
      * @throws InventoryFullException
-     * @throws SecurityException 
-     * @throws NoSuchMethodException 
-     * @throws InvocationTargetException 
-     * @throws IllegalArgumentException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
      */
-    public void randomiseInventory() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public void randomiseInventory() throws InventoryFullException {
     	Random random = new Random();
     	ArrayList<Monster> allMonstersList = game.getAllMonsters().getMonsterList();
     	ArrayList<Monster> newMonsterList = new ArrayList<Monster>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
     		int index = random.nextInt(allMonstersList.size());
     		Class<? extends Monster> clazz = allMonstersList.get(index).getClass();
-    		Monster randomMonster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
-    		newMonsterList.add(randomMonster);
+			try {
+				Monster randomMonster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
+				newMonsterList.add(randomMonster);
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
     	}
     	monsterList = newMonsterList;
     }
