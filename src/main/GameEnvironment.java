@@ -32,6 +32,8 @@ public class GameEnvironment {
     private MonsterInventory shopMonsters;
     private ItemInventory shopItems;
     
+    private Scanner scanner = new Scanner(System.in);
+    
     private enum MonsterClass {
     	AVERAGEJOE,
     	CHUNKY,
@@ -330,6 +332,22 @@ public class GameEnvironment {
 	}
 	
     
+	/**
+	 * @return the scanner
+	 */
+	public Scanner getScanner() {
+		return scanner;
+	}
+	
+	
+	/**
+	 * @param scanner the scanner to set
+	 */
+	public void setScanner(Scanner scanner) {
+		this.scanner = scanner;
+	}
+	
+	
     /**
      * Functional
      * 
@@ -406,7 +424,7 @@ public class GameEnvironment {
 	 */
 	public void selectPlayerName()
     {
-    	Scanner input = new Scanner(System.in);
+    	Scanner input = getScanner();
 		System.out.println("Select a player name (between 3 - 15 characters"
 						+ " containing no numbers or special characters):");
 		while (getPlayerName() == null) {
@@ -428,7 +446,7 @@ public class GameEnvironment {
 	 */
     public void selectNumDays()
     {
-    	Scanner input = new Scanner(System.in);
+    	Scanner input = getScanner();
 		System.out.println("Select a number of days (between 5 - 15):");
 		while (getNumDays() == 0) {
 			try {
@@ -452,7 +470,7 @@ public class GameEnvironment {
      */
     public void selectDifficulty()
     {
-    	Scanner input = new Scanner(System.in);
+    	Scanner input = getScanner();
 		System.out.println("Select a difficulty level (easy, normal, hard):");
 		while (difficulty == null) {
 			try {
@@ -475,7 +493,7 @@ public class GameEnvironment {
      */
 	public void selectStartingMonster() throws InventoryFullException
     {
-		Scanner input = new Scanner(System.in);
+		Scanner input = getScanner();
 		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
 		while (getMyMonsters().getMonsterList().size() == 0) {
 			String inputStr = input.nextLine().toUpperCase().strip().replaceAll("\\s+", "");
@@ -582,7 +600,7 @@ public class GameEnvironment {
     
     
     public void run() throws InventoryFullException {
-    	Scanner input = new Scanner(System.in);
+    	Scanner input = getScanner();
     	while (true) {    		
     		String[] commands = input.nextLine().toUpperCase().strip().split("\\s+");
     		if (commands[0] == "QUIT") {
