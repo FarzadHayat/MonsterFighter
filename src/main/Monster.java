@@ -292,12 +292,7 @@ public abstract class Monster implements Purchasable {
      */
 	public void attack(Monster other) throws InvalidValueException, InvalidTargetException {
 		if(!other.getIsFainted()) {
-			if(this.critAttack()) {
-				other.takeDamage(this.damage*2);
-			}
-			else {
-				other.takeDamage(this.damage);
-			}
+			other.takeDamage(finalDamage());
 		}
 		else {
 			throw new InvalidTargetException("Invalid target!");
@@ -325,14 +320,15 @@ public abstract class Monster implements Purchasable {
 	/**
 	 * Checks if monster should deal a critical hit by its critical rate 
 	 */
-	public boolean critAttack() {
+	public int finalDamage() {
 		Random rn = new Random();
-		int chanceValue = rn.nextInt(10)+1;
-		if(chanceValue <= this.getCritRate()*10) {
-			return true;
+		double chanceValue = (double)(rn.nextInt(10)+1) / 10;
+		if(chanceValue <= getCritRate()) {
+			//Monster deals a critical hit for 2 times its original damage 
+			return getDamage()*2;
 		}
 		else {
-			return false;
+			return getDamage();
 		}
 	}
 	
