@@ -1,5 +1,6 @@
 package main;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public abstract class Monster implements Purchasable {
@@ -7,7 +8,8 @@ public abstract class Monster implements Purchasable {
 	 *	Monster statistic variables 
 	 *
 	 */
-	private String name;
+	private String[] monsterNames = {"averagejoe", "chunky", "lanky", "shanny", "zap", "raka"};
+ 	private String name;
 	private String description;
 	private int health;
 	private int maxHealth;
@@ -45,14 +47,6 @@ public abstract class Monster implements Purchasable {
 	 * 
 	 */
 	
-	/**
-     * Set the value of name
-     * @param name the new value of name
-     */
-    public void setName (String name) {
-        this.name = name;
-    }
-
     /**
      * Get the value of name
      * @return the value of name
@@ -364,6 +358,53 @@ public abstract class Monster implements Purchasable {
 		}
 	};
 	
+	/**
+	 * Set the name of the monster 
+	 */
+	public void setName() {
+		
+		//Player chooses to rename their monster or keep the default name 
+		Scanner choice = new Scanner(System.in);
+		System.out.println("Do you wish to rename your monster? Yes OR No?");
+		String givenChoice = choice.nextLine().toLowerCase();
+		while(!givenChoice.equals("yes") && !givenChoice.equals("no")) {
+			System.out.println("Invalid input, please try again.");
+			givenChoice = choice.nextLine().toLowerCase();
+		}
+		
+		//Player chooses to rename their monster 
+		if(givenChoice.equals("yes")) {
+			Scanner input = new Scanner(System.in);
+			System.out.println("Select a monster name (between 3 - 15 characters"
+					+ " containing no numbers or special characters):");
+			String monsterName = input.nextLine().toLowerCase().replaceAll("\\s+", "");
+			
+			//monsterName must meet the required length and regex and must not be a default monster name 
+			while(Arrays.asList(monsterNames).contains(monsterName) || !validName(monsterName)) {
+				System.out.println("You have entered an invalid monster name, please try again.");
+				monsterName = input.nextLine().toLowerCase().replaceAll("\\s+", "");
+			}
+			this.name = monsterName;
+			input.close();
+		}
+		System.out.println(String.format("Welcome %s to the team!", getName()));
+		choice.close();
+	}
+	
+	/**
+     * Check if given monster name meets the required length and regex
+     * @param monsterName name given by the player
+     */
+    public boolean validName (String monsterName) {
+    	monsterName = monsterName.strip();
+    	String regex = "(([a-z]|[A-Z])*(\s)*)*([a-z]|[A-Z])+";
+    	if (3 <= monsterName.length() && monsterName.length() <= 15 && monsterName.matches(regex)) {
+    		return true;
+    	}
+    	else {    		
+    		return false;
+    	}
+    }
 	
 	public String toString() {
     	String result = "Monster: " + name + "\n";
@@ -378,5 +419,13 @@ public abstract class Monster implements Purchasable {
     	result += "Fainted: " + isFainted + "\n";
     	return result;
     }
+	
+	public static void main(String[]args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InventoryFullException, InvalidValueException {
+		GameEnvironment game = new GameEnvironment();
+		Monster test = new AverageJoe(game);
+		System.out.println(test.getName());
+		test.setName();
+		System.out.println(test.getName());
+	}
 	
 }
