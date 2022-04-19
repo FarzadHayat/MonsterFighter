@@ -80,5 +80,42 @@ class RakaTest {
 			assertEquals(e.getMessage(), "Invalid target!");
 		}
 	}
+	
+	@Test
+	void testLevelUp1() throws StatMaxedOutException {
+		//Raka level up once 
+		raka.levelUp();
+		assertEquals(88, raka.getMaxHealth());
+		assertEquals(15, raka.getDamage());
+		assertEquals(80, raka.getCost());
+		assertEquals(24, raka.getHealAmount());
+		assertEquals(0.1, raka.getCritRate());
+	}
+	
+	@Test
+	void testLevelUp2() throws StatMaxedOutException {
+		//Raka level up twice 
+		raka.levelUp();
+		raka.levelUp();
+		assertEquals(96, raka.getMaxHealth());
+		assertEquals(20, raka.getDamage());
+		assertEquals(90, raka.getCost());
+		assertEquals(32, raka.getHealAmount());
+		assertEquals(0.1, raka.getCritRate());
+	}
+	
+	@Test
+	void testLevelUp3() throws StatMaxedOutException {
+		//Raka level up at max level
+		for(int i = 0; i < 3; i++) {
+			raka.levelUp();
+		}
+		try {
+			raka.levelUp();
+		}
+		catch(StatMaxedOutException e) {
+			assertEquals(e.getMessage(), "Monster is already max level!");
+		}
+	}
 
 }

@@ -182,5 +182,17 @@ class MonsterTest {
 			assertEquals(e.getMessage(), "Monster not found in inventory!");
 		}
 	}
+	
+	@Test
+	public void testLevelUp() throws StatMaxedOutException {
+		//Monster is maxed alredy at max level
+		monster.setLevel(monster.getMaxLevel());
+		try {
+			monster.levelUp();
+		}
+		catch(StatMaxedOutException e) {
+			assertEquals(e.getMessage(), "Monster is already max level!");
+		}
+	}
 
 }

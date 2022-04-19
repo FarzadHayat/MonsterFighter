@@ -48,6 +48,14 @@ public abstract class Monster implements Purchasable {
 	 * 
 	 */
 	
+	/**
+	 * Set the name of the monster
+	 * @param name of the monster
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	
     /**
      * Get the value of name
      * @return the value of name
@@ -374,9 +382,9 @@ public abstract class Monster implements Purchasable {
 	};
 	
 	/**
-	 * Set the name of the monster 
+	 * Select the name of the monster 
 	 */
-	public void setName() {
+	public void selectMonsterName() {
 		
 		//Player chooses to rename their monster or keep the default name 
 		Scanner choice = new Scanner(System.in);
@@ -399,7 +407,7 @@ public abstract class Monster implements Purchasable {
 				System.out.println("You have entered an invalid monster name, please try again.");
 				monsterName = input.nextLine().toLowerCase().replaceAll("\\s+", "");
 			}
-			this.name = monsterName;
+			setName(monsterName);
 			input.close();
 		}
 		System.out.println(String.format("Welcome %s to the team!", getName()));

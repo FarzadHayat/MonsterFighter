@@ -22,7 +22,7 @@ public class Zap extends Monster {
 	 * Increment on statistics per level 
 	 */
 	private int levelUpHealth = (int)(0.1*getMaxHealth());
-	private int levelUpDamage = 8;
+	private int levelUpDamage = 10;
 	private int levelUpCost = 10;
 	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
 	private double levelUpCritRate = 0.2;
@@ -46,7 +46,8 @@ public class Zap extends Monster {
     	setDamage(getDamage()+levelUpDamage);
     	setCost(getCost()+levelUpCost);
     	setHealAmount(getHealAmount()+levelUpHealAmount);
-    	setCritRate(getCritRate()+levelUpCritRate);
+    	double newCritRate = Math.round((getCritRate()+levelUpCritRate)*10.0)/ 10.0;
+    	setCritRate(newCritRate);
     	setHealth(getHealth()+levelUpHealth);
     }
 
