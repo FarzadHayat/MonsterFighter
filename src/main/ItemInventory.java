@@ -109,22 +109,22 @@ public class ItemInventory {
     /**
      * Randomises the item inventory by selecting random items from the all items in the game.
      * @throws InventoryFullException
-     * @throws SecurityException 
-     * @throws NoSuchMethodException 
-     * @throws InvocationTargetException 
-     * @throws IllegalArgumentException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
      */
-    public void randomiseInventory() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public void randomiseInventory() throws InventoryFullException {
     	Random random = new Random();
     	ArrayList<Item> allItemsList = game.getAllItems().getItemList();
     	ArrayList<Item> newItemList = new ArrayList<Item>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
     		int index = random.nextInt(allItemsList.size());
     		Class<? extends Item> clazz = allItemsList.get(index).getClass();
-    		Item randomItem = clazz.getConstructor(GameEnvironment.class).newInstance(game);
-    		newItemList.add(randomItem);
+			try {
+				Item randomItem = clazz.getConstructor(GameEnvironment.class).newInstance(game);
+				newItemList.add(randomItem);
+			}
+			catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
     	}
     	itemList = newItemList;
     }
@@ -137,6 +137,38 @@ public class ItemInventory {
     		result += "\n" + item;
     	}
     	return result;
+    }
+    
+    
+    /**
+     * Return whether the inventory contains an item with the given itemName.
+     * @param itemName
+     * @return whether the inventory contains the item
+     */
+    public boolean contains(String itemName) {
+    	boolean hasItem = false;
+    	for (Item item: getItemList()) {
+    		if (item.getName().equals(itemName)) {
+    			hasItem = true;
+    		}
+    	}
+    	return hasItem;
+    }
+    
+    
+    /**
+     * Return the first occurence of the item with the given itemName.
+     * @param itemName
+     * @return the item
+     */
+    public Item find(String itemName) {
+    	Item selectedItem = null;
+    	for (Item item : getItemList()) {
+    		if (item.getName().equals(itemName)) {
+    			selectedItem = item;
+    		}
+    	}
+		return selectedItem;
     }
 
 }

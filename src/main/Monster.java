@@ -20,6 +20,7 @@ public abstract class Monster implements Purchasable {
 	private int healAmount;
 	private double critRate;
 	private double maxCritRate = 1;
+	private double critMultiplier = 2;
 	private boolean isFainted = false;
 	private GameEnvironment game;
 	private double refundAmount = 0.5;
@@ -218,6 +219,20 @@ public abstract class Monster implements Purchasable {
 	}
 
 	/**
+	 * @return the critMultiplier
+	 */
+	public double getCritMultiplier() {
+		return critMultiplier;
+	}
+
+	/**
+	 * @param critMultiplier the critMultiplier to set
+	 */
+	public void setCritMultiplier(double critMultiplier) {
+		this.critMultiplier = critMultiplier;
+	}
+
+	/**
      * Set the value of isFainted
      * @param isFainted the new value of isFainted
      */
@@ -285,11 +300,11 @@ public abstract class Monster implements Purchasable {
 	 * @throws InvalidValueException 
      */
 	public void attack(Monster other) throws InvalidValueException, InvalidTargetException {
-		if(!other.getIsFainted()) {
-			other.takeDamage(finalDamage());
+		if(other.getIsFainted()) {
+			throw new InvalidTargetException("Invalid target!");
 		}
 		else {
-			throw new InvalidTargetException("Invalid target!");
+			other.takeDamage(finalDamage());
 		}
 		
 	}
@@ -312,18 +327,18 @@ public abstract class Monster implements Purchasable {
 	}
 	
 	/**
-	 * Checks if monster should deal a critical hit by its critical rate 
+	 * Return the damage the monster deals based on whether it was a critical hit
+	 * @return the final damage after calculations 
 	 */
 	public int finalDamage() {
 		Random rn = new Random();
 		double chanceValue = (double)(rn.nextInt(10)+1) / 10;
+		int totalDamage = getDamage();
 		if(chanceValue <= getCritRate()) {
 			//Monster deals a critical hit for 2 times its original damage 
-			return getDamage()*2;
+			totalDamage *= getCritMultiplier();
 		}
-		else {
-			return getDamage();
-		}
+		return totalDamage;
 	}
 	
     /**
@@ -407,7 +422,8 @@ public abstract class Monster implements Purchasable {
     }
 	
 	public String toString() {
-    	String result = "Monster: " + name + "\n";
+    	String result = "Monster: " + getClass().getSimpleName() + "\n";
+    	result += "Name: " + name + "\n";
     	result += description + "\n";
     	result += "Health: " + health + "\n";
     	result += "Max Health: " + maxHealth + "\n";
@@ -419,13 +435,5 @@ public abstract class Monster implements Purchasable {
     	result += "Fainted: " + isFainted + "\n";
     	return result;
     }
-	
-	public static void main(String[]args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InventoryFullException, InvalidValueException {
-		GameEnvironment game = new GameEnvironment();
-		Monster test = new AverageJoe(game);
-		System.out.println(test.getName());
-		test.setName();
-		System.out.println(test.getName());
-	}
 	
 }

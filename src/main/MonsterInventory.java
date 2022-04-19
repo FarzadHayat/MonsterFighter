@@ -60,6 +60,7 @@ public class MonsterInventory {
      */
     
     /**
+     * Add the given monster to the inventory
      * @param monster
      * @throws InventoryFullException 
      */
@@ -75,6 +76,7 @@ public class MonsterInventory {
 
 
     /**
+     * Remove the given monster from the inventory
      * @param monster
      * @throws PurchasableNotFoundException 
      */
@@ -89,14 +91,16 @@ public class MonsterInventory {
     }
     
     
+    /**
+     * @return whether the inventory is full
+     */
     public boolean isFull() {
 		return monsterList.size() >= inventorySize;
     }
     
     
     /**
-     * checks whether all monsters have fainted.
-     * @return whether the monsters are all fainted
+     * @return whether all monsters have fainted
      */
     public boolean allFainted() {
     	boolean fainted = true;
@@ -130,29 +134,31 @@ public class MonsterInventory {
     }
     
     /**
-     * Randomises the monster inventory by selecting random monsters from the all monsters in the game.
+     * Randomises the monster inventory by selecting random monsters from all monsters in the game.
      * @throws InventoryFullException
-     * @throws SecurityException 
-     * @throws NoSuchMethodException 
-     * @throws InvocationTargetException 
-     * @throws IllegalArgumentException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
      */
-    public void randomiseInventory() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public void randomiseInventory() throws InventoryFullException {
     	Random random = new Random();
     	ArrayList<Monster> allMonstersList = game.getAllMonsters().getMonsterList();
     	ArrayList<Monster> newMonsterList = new ArrayList<Monster>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
     		int index = random.nextInt(allMonstersList.size());
     		Class<? extends Monster> clazz = allMonstersList.get(index).getClass();
-    		Monster randomMonster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
-    		newMonsterList.add(randomMonster);
+			try {
+				Monster randomMonster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
+				newMonsterList.add(randomMonster);
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
     	}
     	monsterList = newMonsterList;
     }
     
     
+    /**
+     * Return a string representation of the inventory
+     */
     public String toString() {
     	String result = "";
     	for (Monster monster : monsterList)
@@ -161,5 +167,37 @@ public class MonsterInventory {
     	}
     	return result;
     }
-
+    
+    
+    /**
+     * Return whether the inventory contains a monster with the given monsterName.
+     * @param monsterName
+     * @return whether the inventory contains the monster
+     */
+    public boolean contains(String monsterName) {
+    	boolean hasMonster = false;
+    	for (Monster monster : getMonsterList()) {
+    		if (monster.getName().equals(monsterName)) {
+    			hasMonster = true;
+    		}
+    	}
+    	return hasMonster;
+    }
+    
+    
+    /**
+     * Return the first occurence of the monster with the given monsterName.
+     * @param monsterName
+     * @return the monster
+     */
+    public Monster find(String monsterName) {
+    	Monster selectedMonster = null;
+    	for (Monster monster : getMonsterList()) {
+    		if (monster.getName().equals(monsterName)) {
+    			selectedMonster = monster;
+    		}
+    	}
+		return selectedMonster;
+    }
+    
 }

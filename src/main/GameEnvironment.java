@@ -32,14 +32,7 @@ public class GameEnvironment {
     private MonsterInventory shopMonsters;
     private ItemInventory shopItems;
     
-    private enum MonsterClass {
-    	AVERAGEJOE,
-    	CHUNKY,
-    	LANKY,
-    	SHANNY,
-    	RAKA,
-    	ZAP
-    };
+    private Scanner scanner = new Scanner(System.in);
     
     private enum Command {
     	VIEW,
@@ -68,14 +61,8 @@ public class GameEnvironment {
     /**
      * Constructors
      * @throws InventoryFullException 
-     * @throws SecurityException 
-     * @throws NoSuchMethodException 
-     * @throws InvocationTargetException 
-     * @throws IllegalArgumentException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
      */
-    public GameEnvironment () throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public GameEnvironment () throws InventoryFullException {
     	balance = 0;
     	myMonsters = new MonsterInventory(this);
     	myItems = new ItemInventory(this);
@@ -98,22 +85,12 @@ public class GameEnvironment {
     	allItemsList.add(new LevelUp(this));
     	allItems.setItemList(allItemsList);
     	
-//    	monsterClasses = new HashMap<String, Class<? extends Monster>>();
-//    	monsterClasses.put("averagejoe", AverageJoe.class);
-//    	monsterClasses.put("chunky", Chunky.class);
-//    	monsterClasses.put("lanky", Lanky.class);
-//    	monsterClasses.put("shanny", Shanny.class);
-//    	monsterClasses.put("raka", Raka.class);
-//    	monsterClasses.put("zap", Zap.class);
-    	
     	battleList = new ArrayList<Battle>(numBattles);
     	randomiseBattles();
     	
     	shopMonsters = new MonsterInventory(this);
     	shopItems = new ItemInventory(this);
     	randomiseShop();
-    	
-    	setupGame();
     };
 
     
@@ -340,6 +317,22 @@ public class GameEnvironment {
 	}
 	
     
+	/**
+	 * @return the scanner
+	 */
+	public Scanner getScanner() {
+		return scanner;
+	}
+	
+	
+	/**
+	 * @param scanner the scanner to set
+	 */
+	public void setScanner(Scanner scanner) {
+		this.scanner = scanner;
+	}
+	
+	
     /**
      * Functional
      * 
@@ -416,7 +409,7 @@ public class GameEnvironment {
 	 */
 	public void selectPlayerName()
     {
-    	Scanner input = new Scanner(System.in);
+    	Scanner input = getScanner();
 		System.out.println("Select a player name (between 3 - 15 characters"
 						+ " containing no numbers or special characters):");
 		while (getPlayerName() == null) {
@@ -438,7 +431,7 @@ public class GameEnvironment {
 	 */
     public void selectNumDays()
     {
-    	Scanner input = new Scanner(System.in);
+    	Scanner input = getScanner();
 		System.out.println("Select a number of days (between 5 - 15):");
 		while (getNumDays() == 0) {
 			try {
@@ -462,7 +455,7 @@ public class GameEnvironment {
      */
     public void selectDifficulty()
     {
-    	Scanner input = new Scanner(System.in);
+    	Scanner input = getScanner();
 		System.out.println("Select a difficulty level (easy, normal, hard):");
 		while (difficulty == null) {
 			try {
@@ -485,37 +478,25 @@ public class GameEnvironment {
      */
 	public void selectStartingMonster() throws InventoryFullException
     {
-		Scanner input = new Scanner(System.in);
+		Scanner input = getScanner();
 		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
 		while (getMyMonsters().getMonsterList().size() == 0) {
-			String inputStr = input.nextLine().toUpperCase().strip().replaceAll("\\s+", "");
+			String inputStr = input.nextLine();
+			String monsterName = format(inputStr);
 			try {
-				MonsterClass monsterClass = MonsterClass.valueOf(inputStr);
-				Monster monster = null;
-				switch (monsterClass) {
-					case AVERAGEJOE:
-						monster = new AverageJoe(this);
-						break;
-					case CHUNKY:
-						monster = new Chunky(this);
-						break;
-					case LANKY:
-						monster = new Lanky(this);
-						break;
-					case SHANNY:
-						monster = new Shanny(this);
-						break;
-					case RAKA:
-						monster = new Raka(this);
-						break;
-					case ZAP:
-						monster = new Zap(this);
-						break;
+				if (getAllMonsters().contains(monsterName)) {				
+					Class<? extends Monster> clazz = getAllMonsters().find(monsterName).getClass();
+					Monster monster = clazz.getConstructor(GameEnvironment.class).newInstance(this);
+					getMyMonsters().add(monster);
 				}
-				getMyMonsters().add(monster);
+				else {
+					throw new PurchasableNotFoundException("Invalid starting monster! Try again:");
+				}
 			}
-			catch (IllegalArgumentException e) {
-				System.out.println("Invalid starting monster! Try again:");
+			catch (PurchasableNotFoundException | InstantiationException | IllegalAccessException
+					| IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+					| SecurityException e) {
+				System.out.println(e.getMessage());
 			}				
 		}
 		System.out.println(String.format("You chose:\n%s", getMyMonsters()));
@@ -554,16 +535,8 @@ public class GameEnvironment {
     /**
      * Randomise the battles in battleList.
      * @throws InventoryFullException 
-     * @throws SecurityException 
-     * @throws NoSuchMethodException 
-     * @throws InvocationTargetException 
-     * @throws IllegalArgumentException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
-     * 
      */
-    public void randomiseBattles() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
-    {
+    public void randomiseBattles() throws InventoryFullException {
     	for (int i = 0; i < numBattles; i++) {
     		MonsterInventory monsterInventory = new MonsterInventory(this);
     		monsterInventory.randomiseInventory();
@@ -576,26 +549,18 @@ public class GameEnvironment {
     /**
      * Randomise the purchasables in the shop.
      * @throws InventoryFullException 
-     * @throws SecurityException 
-     * @throws NoSuchMethodException 
-     * @throws InvocationTargetException 
-     * @throws IllegalArgumentException 
-     * @throws IllegalAccessException 
-     * @throws InstantiationException 
-     * 
      */
-    public void randomiseShop() throws InventoryFullException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
-    {
+    public void randomiseShop() throws InventoryFullException {
     	shopMonsters.randomiseInventory();
     	shopItems.randomiseInventory();
     }
     
     
     public void run() throws InventoryFullException {
-    	Scanner input = new Scanner(System.in);
+    	Scanner input = getScanner();
     	while (true) {    		
     		String[] commands = input.nextLine().toUpperCase().strip().split("\\s+");
-    		if (commands[0] == "QUIT") {
+    		if (commands[0].equals("QUIT")) {
     			break;
     		}
     		try {    		
@@ -662,10 +627,32 @@ public class GameEnvironment {
     	input.close();
     }
     
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, InventoryFullException {
+    
+    /**
+     * Returns a proper case version of the given phrase with all redundant whitespace removed.
+     * @param phrase to be formatted
+     * @return the formatted phrase
+     */
+    public String format(String phrase) {
+    	String[] words = phrase.toLowerCase().strip().split("\\s+");
+    	for (int i = 0; i < words.length; i++) {
+    		String word = words[i];
+    		String first = word.substring(0, 1);
+    		if (first.matches("[a-zA-Z]")) {
+    			first = first.toUpperCase();
+    		}
+    		String rest = word.substring(1, word.length());   
+    		words[i] = first + rest;
+    	}
+    	String result = String.join(" ", words);
+		return result;
+    }
+    
+    
+    public static void main(String[] args) throws InventoryFullException {
     	GameEnvironment game = new GameEnvironment();
-    	
-//    	for (int i = 0; i < game.battleList.size(); i++)
+
+    	//    	for (int i = 0; i < game.battleList.size(); i++)
 //    	{
 //    		Battle battle = game.battleList.get(i);
 //    		System.out.println(String.format("=== Battle %s ===", i + 1));
@@ -678,6 +665,7 @@ public class GameEnvironment {
 //    	System.out.println("-----------------------------");
 //    	System.out.println(game.shopMonsters);
     	
+    	//game.setupGame();
     	//game.run();
     }
 
