@@ -138,5 +138,37 @@ public class ItemInventory {
     	}
     	return result;
     }
+    
+    
+    /**
+     * Return whether the inventory contains an item with the given itemName.
+     * @param itemName
+     * @return whether the inventory contains the item
+     */
+    public boolean contains(String itemName) {
+    	boolean hasItem = false;
+    	for (Item item: getItemList()) {
+    		if (item.getName().equals(itemName)) {
+    			hasItem = true;
+    		}
+    	}
+    	return hasItem;
+    }
+    
+    
+    /**
+     * Return the first occurence of the item with the given itemName.
+     * @param itemName
+     * @return the item
+     */
+    public Item find(String itemName) {
+    	Item selectedItem = null;
+    	for (Item item : getItemList()) {
+    		if (item.getName().equals(itemName)) {
+    			selectedItem = item;
+    		}
+    	}
+		return selectedItem;
+    }
 
 }

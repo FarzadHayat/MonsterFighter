@@ -168,5 +168,37 @@ public class MonsterInventory {
     	}
     	return result;
     }
-
+    
+    
+    /**
+     * Return whether the inventory contains a monster with the given monsterName.
+     * @param monsterName
+     * @return whether the inventory contains the monster
+     */
+    public boolean contains(String monsterName) {
+    	boolean hasMonster = false;
+    	for (Monster monster : getMonsterList()) {
+    		if (monster.getName().equals(monsterName)) {
+    			hasMonster = true;
+    		}
+    	}
+    	return hasMonster;
+    }
+    
+    
+    /**
+     * Return the first occurence of the monster with the given monsterName.
+     * @param monsterName
+     * @return the monster
+     */
+    public Monster find(String monsterName) {
+    	Monster selectedMonster = null;
+    	for (Monster monster : getMonsterList()) {
+    		if (monster.getName().equals(monsterName)) {
+    			selectedMonster = monster;
+    		}
+    	}
+		return selectedMonster;
+    }
+    
 }
