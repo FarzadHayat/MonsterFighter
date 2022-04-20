@@ -22,8 +22,8 @@ public class CommandLine {
     
     private enum View {
     	SHOP,
-    	MONSTERS,
-    	ITEMS,
+    	TEAM,
+    	INVENTORY,
     	BATTLES,
     	STATS
     }
@@ -204,7 +204,7 @@ public class CommandLine {
     /**
      * View my monsters
      */
-    public void viewMonsters() {
+    public void viewTeam() {
     	System.out.println("===== MY MONSTERS =====");
     	System.out.println(game.getMyMonsters());
     }
@@ -226,7 +226,7 @@ public class CommandLine {
 	/**
 	 * View my items
 	 */
-	public void viewItems() {
+	public void viewInventory() {
 		System.out.println("===== MY ITEMS =====");
 		System.out.println(game.getMyItems());
 	}
@@ -268,11 +268,11 @@ public class CommandLine {
 			case SHOP:
 				viewShop();
 				break;
-			case MONSTERS:
-				viewMonsters();
+			case TEAM:
+				viewTeam();
 				break;
-			case ITEMS:
-				viewItems();
+			case INVENTORY:
+				viewInventory();
 				break;
 			case BATTLES:
 				viewBattles();
