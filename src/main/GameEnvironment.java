@@ -35,10 +35,13 @@ public class GameEnvironment {
     
     private Scanner scanner = new Scanner(System.in);
     
+    private boolean isFinished = false;
+    
     private enum Command {
     	VIEW,
     	SELECT,
     	SHOP,
+    	SLEEP,
     	QUIT
     }
     
@@ -185,15 +188,9 @@ public class GameEnvironment {
 
 	/**
 	 * @param day the day to set
-	 * @throws InvalidValueException 
 	 */
-	public void setDay(int day) throws InvalidValueException {
-    	if (1 <= day && day <= 15) {
-    		this.day = day;
-    	}
-    	else {    		
-    		throw new InvalidValueException("Invalid day! Try again:");
-    	}
+	public void setDay(int day) {
+		this.day = day;
 	}
 
 
@@ -369,16 +366,60 @@ public class GameEnvironment {
      */
 
 	/**
+	 * @return the isFinished
+	 */
+	public boolean isFinished() {
+		return isFinished;
+	}
+
+
+	/**
+	 * @param isFinished the isFinished to set
+	 */
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
+	}
+
+
+	/**
 	 * Sleep through the night. Randomises shop, randomises battles, and heals all player monsters once.
 	 * @throws InventoryFullException 
 	 * @throws InvalidValueException 
 	 * 
      */
     public void sleep() throws InventoryFullException, InvalidValueException {
+    	setDay(getDay() + 1);
+    	checkStatus();
+    	if (isFinished() && day > numDays) {
+    		setDay(getNumDays());
+    	}
     	randomiseShop();
     	randomiseBattles();
     	myMonsters.healAll();
-    	setDay(getDay() + 1);
+    	// Random events
+    }
+    
+    
+    /**
+     * Checks if number of days has finished or there is a stalemate
+     * where the player has no monsters and can't buy anything.
+     * If yes, then set isFinished to true.
+     */
+    public void checkStatus() {
+    	boolean stalemate = true;
+    	if (myMonsters.getMonsterList().size() == 0) {
+    		for (Monster monster : shopMonsters.getMonsterList()) {
+    			if (balance >= monster.getCost()) {
+    				stalemate = false;
+    			}
+    		}
+    	}
+    	else {
+    		stalemate = false;
+    	}
+    	if (day > numDays || stalemate) {
+    		setFinished(true);
+    	}
     }
 
 
@@ -579,7 +620,7 @@ public class GameEnvironment {
 		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
 		while (getMyMonsters().getMonsterList().size() == 0) {
 			String inputStr = input.nextLine();
-			String monsterName = format(inputStr);
+			String monsterName = properCase(inputStr);
 			try {
 				if (getAllMonsters().contains(monsterName)) {				
 					Class<? extends Monster> clazz = getAllMonsters().find(monsterName).getClass();
@@ -764,10 +805,10 @@ public class GameEnvironment {
     public void run() throws InventoryFullException {
     	Scanner input = getScanner();
     	outer:
-    	while (true) {    		
+    	while (!isFinished()) {    		
     		String[] inputArray = input.nextLine().toUpperCase().strip().split("\\s+");
     		ArrayList<String> commands = new ArrayList<String>(Arrays.asList(inputArray));
-    		String rest = format(String.join(" ", commands.subList(2, commands.size())));
+    		String rest;
     		try {    		
     			Command command = Command.valueOf(commands.get(0));
     			switch (command) {
@@ -777,11 +818,16 @@ public class GameEnvironment {
 	    				break;
 	    			case SELECT:
 	    				Select select = Select.valueOf(commands.get(1));
+	    				rest = properCase(String.join(" ", commands.subList(2, commands.size())));
 	    				selectSwitch(select, rest);
 	    				break;
 	    			case SHOP:
 	    				Shop shop = Shop.valueOf(commands.get(1));
+	    				rest = properCase(String.join(" ", commands.subList(2, commands.size())));
 	    				shopSwitch(shop, rest);
+	    				break;
+	    			case SLEEP:
+	    				sleep();
 	    				break;
 	    			case QUIT:
 	    				break outer;
@@ -803,7 +849,7 @@ public class GameEnvironment {
      * @param phrase to be formatted
      * @return the formatted phrase
      */
-    public String format(String phrase) {
+    public String properCase(String phrase) {
     	String[] words = phrase.toLowerCase().strip().split("\\s+");
     	if (String.join("", words).equals("")) {
     		return "";
@@ -824,8 +870,13 @@ public class GameEnvironment {
     
     public static void main(String[] args) throws InventoryFullException, InvalidValueException {
     	GameEnvironment game = new GameEnvironment();
-    	//game.setupGame();
+    	// The setup
+    	game.setupGame();
+    	// The main command line
     	game.run();
+    	// Game over
+    	System.out.println("<<<<< Game over! >>>>>");
+    	game.viewStats();
     }
 
 }
