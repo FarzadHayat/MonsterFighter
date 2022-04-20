@@ -84,7 +84,7 @@ public class CommandLine {
 	 */
 	public void selectPlayerName() {
     	Scanner input = getScanner();
-		System.out.println("Select a player name (between 3 - 15 characters"
+		System.out.println("Select a player name (3 - 15 characters"
 						+ " containing no numbers or special characters):");
 		while (game.getPlayerName() == null) {
 			String name = input.nextLine();
@@ -178,45 +178,32 @@ public class CommandLine {
 	 */
 	public void selectMonsterName(Monster monster) {
 		
-		//Player chooses to rename their monster or keep the default name 
+		// Player can choose to rename their monster or keep the default name 
 		Scanner input = getScanner();
 		System.out.println("Do you wish to rename your monster? Yes OR No?");
-		String givenChoice = input.nextLine().toLowerCase();
-		while(!givenChoice.equals("yes") && !givenChoice.equals("no")) {
+		String choice = input.nextLine().toLowerCase();
+		while(!(choice.equals("yes") || choice.equals("no"))) {
 			System.out.println("Invalid input, please try again.");
-			givenChoice = input.nextLine().toLowerCase();
+			choice = input.nextLine().toLowerCase();
 		}
 		
-		//Player chooses to rename their monster 
-		if(givenChoice.equals("yes")) {
-			System.out.println("Select a monster name (between 3 - 15 characters"
+		// Player chooses to rename their monster 
+		if(choice.equals("yes")) {
+			System.out.println("Select a unique monster name (3 - 15 characters"
 					+ " containing no numbers or special characters):");
-			String monsterName = properCase(input.nextLine());
-			
-			//monsterName must meet the required length and regex and must not be a default monster name 
-			while(game.getMyMonsters().contains(monsterName) || game.getAllMonsters().contains(monsterName) || !validName(monsterName)) {
-				System.out.println("You have entered an invalid monster name, please try again.");
-				monsterName = properCase(input.nextLine());
+			while (true) {
+				String name = input.nextLine();
+				try {
+					monster.setName(name);
+					break;
+				}
+				catch (InvalidValueException e) {
+					System.out.println(e.getMessage());
+				}    		
 			}
-			monster.setName(monsterName);
+			System.out.println(String.format("Welcome %s to the team!", monster.getName()));
+			input.close();
 		}
-		System.out.println(String.format("Welcome %s to the team!", monster.getName()));
-		input.close();
-	}
-	
-	/**
-         * Check if given monster name meets the required length and regex
-         * @param monsterName name given by the player
-         */
-	public boolean validName (String monsterName) {
-        	monsterName = monsterName.strip();
-        	String regex = "(([a-z]|[A-Z])*(\\s)*)*([a-z]|[A-Z])+";
-        	if (3 <= monsterName.length() && monsterName.length() <= 15 && monsterName.matches(regex)) {
-        		return true;
-        	}
-        	else {    		
-        		return false;
-        	}
 	}
 	
 
@@ -445,9 +432,9 @@ public class CommandLine {
     }
     
     public static void main(String[]args) throws InventoryFullException, InvalidValueException {
-	GameEnvironment game = new GameEnvironment();
-	CommandLine cmd = new CommandLine(game);
-	cmd.selectStartingMonster();
+		GameEnvironment game = new GameEnvironment();
+		CommandLine cmd = new CommandLine(game);
+		cmd.selectStartingMonster();
     }
     
 }

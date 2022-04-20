@@ -103,7 +103,7 @@ public class GameEnvironment {
      */
     public void setPlayerName (String playerName) throws InvalidValueException {
     	playerName = playerName.strip();
-    	String regex = "(([a-z]|[A-Z])*(\\s)*)*([a-z]|[A-Z])+";
+    	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
     	if (3 <= playerName.length() && playerName.length() <= 15 && playerName.matches(regex)) {
     		this.playerName = playerName;
     	}

@@ -50,9 +50,18 @@ public abstract class Monster implements Purchasable {
 	/**
 	 * Set the name of the monster
 	 * @param name of the monster
+	 * @throws InvalidValueException 
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String name) throws InvalidValueException {
+		name = name.strip();
+    	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
+    	if (3 <= name.length() && name.length() <= 15 && name.matches(regex) 
+			&& !game.getMyMonsters().contains(name) && !game.getAllMonsters().contains(name)) {
+    		this.name = name;
+    	}
+    	else {    		
+    		throw new InvalidValueException("Invalid monster name! Try again:");
+    	}
 	}
 	
     /**
