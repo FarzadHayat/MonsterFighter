@@ -309,11 +309,11 @@ public abstract class Monster implements Purchasable {
 	public int attack(Monster other) throws InvalidValueException, InvalidTargetException {
 	    int damageDealt = finalDamage();
 	    if(other.getIsFainted()) {
-		throw new InvalidTargetException("Invalid target!");
+	    	throw new InvalidTargetException("Invalid target!");
 	    }
 	    else {
-		other.takeDamage(damageDealt);
-		return damageDealt;
+			other.takeDamage(damageDealt);
+			return damageDealt;
 	    }
 		
 	}

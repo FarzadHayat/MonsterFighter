@@ -41,7 +41,6 @@ public class GameEnvironment {
     	setDay(1);
     	setBalance(100);
 
-    	setAllMonsters(new MonsterInventory(this));
     	ArrayList<Monster> allMonstersList = new ArrayList<Monster>();
     	allMonstersList.add(new AverageJoe(this));
     	allMonstersList.add(new Chunky(this));
@@ -49,15 +48,14 @@ public class GameEnvironment {
     	allMonstersList.add(new Shanny(this));
     	allMonstersList.add(new Raka(this));
     	allMonstersList.add(new Zap(this));
-    	allMonsters.setList(allMonstersList);
+    	allMonsters = new MonsterInventory(this, allMonstersList);
     	
-    	setAllItems(new ItemInventory(this));
     	ArrayList<Item> allItemsList = new ArrayList<Item>();
     	allItemsList.add(new IncreaseHealth(this));
     	allItemsList.add(new IncreaseDamage(this));
     	allItemsList.add(new IncreaseCritRate(this));
     	allItemsList.add(new LevelUp(this));
-    	allItems.setList(allItemsList);
+    	allItems = new ItemInventory(this, allItemsList);
     	
     	myMonsters = new MonsterInventory(this);
     	myItems = new ItemInventory(this);

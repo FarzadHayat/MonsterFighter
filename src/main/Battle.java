@@ -134,11 +134,11 @@ public class Battle {
     {
     	Monster playerMonster = getPlayerMonsters().random();
     	Monster enemyMonster = getEnemyMonsters().random();
-    	playerMonster.attack(enemyMonster);
+    	int damageDealt = playerMonster.attack(enemyMonster);
     	currentTurn = Turn.ENEMY;
     	
     	System.out.println(String.format("\nPlayer %s attacked enemy %s for %s damage.", 
-    			playerMonster.getName(), enemyMonster.getName(), 999));
+    			playerMonster.getName(), enemyMonster.getName(), damageDealt));
     	if (enemyMonster.getIsFainted()) {
     		System.out.println(String.format("Enemy %s has fainted!", enemyMonster.getName()));
     	}
@@ -159,11 +159,11 @@ public class Battle {
     {
     	Monster enemyMonster = getEnemyMonsters().random();
     	Monster playerMonster = getPlayerMonsters().random();
-    	enemyMonster.attack(playerMonster);
+    	int damageDealt = enemyMonster.attack(playerMonster);
     	currentTurn = Turn.PLAYER;
     	
     	System.out.println(String.format("\nEnemy %s attacked player %s for %s damage.", 
-    			enemyMonster.getName(), playerMonster.getName(), 999));
+    			enemyMonster.getName(), playerMonster.getName(), damageDealt));
     	if (playerMonster.getIsFainted()) {
     		System.out.println(String.format("Player %s has fainted!", playerMonster.getName()));
     	}
