@@ -113,7 +113,7 @@ class MonsterTest {
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(monster);
 		assertEquals(0, game.getBalance());
-		assertEquals(monsterList, myMonsters.getMonsterList());
+		assertEquals(monsterList, myMonsters.getList());
 	}
 	
 	@Test
@@ -152,7 +152,7 @@ class MonsterTest {
 		testMonster.sell();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		assertEquals(30, game.getBalance());
-		assertEquals(monsterList, myMonsters.getMonsterList());
+		assertEquals(monsterList, myMonsters.getList());
 	}
 	
 	@Test
@@ -168,7 +168,7 @@ class MonsterTest {
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(testMonster);
 		assertEquals(60, game.getBalance());
-		assertEquals(monsterList, myMonsters.getMonsterList());
+		assertEquals(monsterList, myMonsters.getList());
 	}
 	
 	@Test

@@ -29,7 +29,7 @@ class ItemInventoryTest {
 		myItems.add(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
-		assertEquals(testItemList, myItems.getItemList());
+		assertEquals(testItemList, myItems.getList());
 	}
 	
 	
@@ -56,7 +56,7 @@ class ItemInventoryTest {
 		myItems.add(testItem);
 		myItems.remove(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
-		assertEquals(testItemList, myItems.getItemList());
+		assertEquals(testItemList, myItems.getList());
 	}
 	
 	
@@ -72,7 +72,7 @@ class ItemInventoryTest {
 		myItems.remove(testItem1);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem2);
-		assertEquals(testItemList, myItems.getItemList());
+		assertEquals(testItemList, myItems.getList());
 	}
 	
 	

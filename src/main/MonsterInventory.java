@@ -10,7 +10,7 @@ public class MonsterInventory {
 	 * 
 	 */
 	private int inventorySize = 4;
-    private ArrayList<Monster> monsterList;
+    private ArrayList<Monster> list;
     private GameEnvironment game;
     
     
@@ -19,14 +19,14 @@ public class MonsterInventory {
      * 
      */
     public MonsterInventory (GameEnvironment game) {
-    	monsterList = new ArrayList<Monster>(inventorySize);
+    	list = new ArrayList<Monster>(inventorySize);
     	this.game = game;
     };
     
     
-    public MonsterInventory (GameEnvironment game, ArrayList<Monster> monsterList) {
+    public MonsterInventory (GameEnvironment game, ArrayList<Monster> list) {
     	this.game = game;
-    	this.monsterList = monsterList;
+    	this.list = list;
     };
     
     
@@ -44,13 +44,13 @@ public class MonsterInventory {
     }
     
     
-    public ArrayList<Monster> getMonsterList() {
-    	return monsterList;
+    public ArrayList<Monster> getList() {
+    	return list;
     }
 
     
-    public void setMonsterList(ArrayList<Monster> monsterList) {
-    	this.monsterList = monsterList;
+    public void setList(ArrayList<Monster> list) {
+    	this.list = list;
     }
     
     
@@ -67,7 +67,7 @@ public class MonsterInventory {
     public void add(Monster monster) throws InventoryFullException
     {
     	if (!isFull()) {
-    		monsterList.add(monster);
+    		list.add(monster);
     	}
     	else {
     		throw new InventoryFullException("Monster inventory is full!");
@@ -82,8 +82,8 @@ public class MonsterInventory {
      */
     public void remove(Monster monster) throws PurchasableNotFoundException
     {
-    	if (monsterList.contains(monster)) {    		
-    		monsterList.remove(monster);
+    	if (contains(monster)) {    		
+    		list.remove(monster);
     	}
     	else {
     		throw new PurchasableNotFoundException("Monster not found in inventory!");
@@ -91,11 +91,28 @@ public class MonsterInventory {
     }
     
     
+	/**
+	 * @return
+	 */
+	public int size() {
+		return list.size();
+	}
+	
+	
+	/**
+	 * @param index
+	 * @return
+	 */
+	public Monster get(int index) {
+		return list.get(index);
+	}
+    
+    
     /**
      * @return whether the inventory is full
      */
     public boolean isFull() {
-		return monsterList.size() >= inventorySize;
+		return list.size() >= inventorySize;
     }
     
     
@@ -104,7 +121,7 @@ public class MonsterInventory {
      */
     public boolean allFainted() {
     	boolean fainted = true;
-    	for (Monster monster : monsterList) {
+    	for (Monster monster : list) {
     		if (!monster.getIsFainted()) {
     			fainted = false;
     		}
@@ -117,7 +134,7 @@ public class MonsterInventory {
      * Heals all monsters in the inventory once.
      */
     public void healAll() {
-    	for (Monster monster : getMonsterList()) {
+    	for (Monster monster : getList()) {
     		monster.heal();
     	}
     }
@@ -133,8 +150,8 @@ public class MonsterInventory {
     	Monster selectedMonster = null;
     	
     	while (!monsterFound) {
-    		int index = random.nextInt(monsterList.size());
-    		selectedMonster = monsterList.get(index);
+    		int index = random.nextInt(list.size());
+    		selectedMonster = list.get(index);
     		if (!selectedMonster.getIsFainted()) {
     			monsterFound = true;
     		}
@@ -149,7 +166,7 @@ public class MonsterInventory {
      */
     public void randomiseInventory() throws InventoryFullException {
     	Random random = new Random();
-    	ArrayList<Monster> allMonstersList = game.getAllMonsters().getMonsterList();
+    	ArrayList<Monster> allMonstersList = game.getAllMonsters().getList();
     	ArrayList<Monster> newMonsterList = new ArrayList<Monster>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
     		int index = random.nextInt(allMonstersList.size());
@@ -162,7 +179,7 @@ public class MonsterInventory {
 				e.printStackTrace();
 			}
     	}
-    	monsterList = newMonsterList;
+    	list = newMonsterList;
     }
     
     
@@ -171,12 +188,21 @@ public class MonsterInventory {
      */
     public String toString() {
     	String result = "";
-    	for (Monster monster : monsterList)
+    	for (Monster monster : list)
     	{
     		result += "\n" + monster;
     	}
     	return result;
     }
+    
+    
+    /**
+	 * @param monster
+	 * @return
+	 */
+	public boolean contains(Monster monster) {
+		return list.contains(monster);
+	}
     
     
     /**
@@ -186,7 +212,7 @@ public class MonsterInventory {
      */
     public boolean contains(String monsterName) {
     	boolean hasMonster = false;
-    	for (Monster monster : getMonsterList()) {
+    	for (Monster monster : getList()) {
     		if (monster.getName().equals(monsterName)) {
     			hasMonster = true;
     		}
@@ -202,7 +228,7 @@ public class MonsterInventory {
      */
     public Monster find(String monsterName) {
     	Monster selectedMonster = null;
-    	for (Monster monster : getMonsterList()) {
+    	for (Monster monster : getList()) {
     		if (monster.getName().equals(monsterName)) {
     			selectedMonster = monster;
     		}

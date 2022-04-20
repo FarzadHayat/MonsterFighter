@@ -197,7 +197,7 @@ public class Battle {
     		}
     		checkStatus();
     	}
-    	game.getBattleList().remove(this);
+    	game.getBattles().remove(this);
     }
     
     
@@ -244,8 +244,8 @@ public class Battle {
     
     public String toString() {
     	String result = "";
-    	for (int i = 0; i < enemyMonsters.getMonsterList().size(); i++) {
-    		Monster monster = enemyMonsters.getMonsterList().get(i);
+    	for (int i = 0; i < enemyMonsters.size(); i++) {
+    		Monster monster = enemyMonsters.get(i);
     		result += String.format("\n%s. %s", i + 1, monster);
     	}
     	return result;

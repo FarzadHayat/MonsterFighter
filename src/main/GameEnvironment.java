@@ -20,9 +20,6 @@ public class GameEnvironment {
     	HARD
     }
     
-    private int numBattles = 5;
-    private ArrayList<Battle> battleList;
-    
     private MonsterInventory myMonsters;
     private ItemInventory myItems;
     
@@ -30,6 +27,7 @@ public class GameEnvironment {
     private ItemInventory allItems;
     
     private Shop shop;
+    private BattleInventory battles;
     
     private boolean isFinished = false;
     
@@ -51,7 +49,7 @@ public class GameEnvironment {
     	allMonstersList.add(new Shanny(this));
     	allMonstersList.add(new Raka(this));
     	allMonstersList.add(new Zap(this));
-    	allMonsters.setMonsterList(allMonstersList);
+    	allMonsters.setList(allMonstersList);
     	
     	setAllItems(new ItemInventory(this));
     	ArrayList<Item> allItemsList = new ArrayList<Item>();
@@ -59,14 +57,12 @@ public class GameEnvironment {
     	allItemsList.add(new IncreaseDamage(this));
     	allItemsList.add(new IncreaseCritRate(this));
     	allItemsList.add(new LevelUp(this));
-    	allItems.setItemList(allItemsList);
+    	allItems.setList(allItemsList);
     	
     	myMonsters = new MonsterInventory(this);
     	myItems = new ItemInventory(this);
     	shop = new Shop(this);
-
-    	setBattleList(new ArrayList<Battle>(numBattles));
-    	randomiseBattles();	
+    	battles = new BattleInventory(this);
     };
 
     
@@ -176,38 +172,6 @@ public class GameEnvironment {
     	this.difficulty = difficulty;
     }
 
-    
-    /**
-	 * @return the numBattles
-	 */
-	public int getNumBattles() {
-		return numBattles;
-	}
-
-
-	/**
-	 * @param numBattles the numBattles to set
-	 */
-	public void setNumBattles(int numBattles) {
-		this.numBattles = numBattles;
-	}
-
-
-	/**
-	 * @return the battleList
-	 */
-	public ArrayList<Battle> getBattleList() {
-		return battleList;
-	}
-
-
-	/**
-	 * @param battleList the battleList to set
-	 */
-	public void setBattleList(ArrayList<Battle> battleList) {
-		this.battleList = battleList;
-	}
-
 
 	/**
      * Get the value of myMonsters
@@ -294,6 +258,22 @@ public class GameEnvironment {
 
 
 	/**
+	 * @return the battles
+	 */
+	public BattleInventory getBattles() {
+		return battles;
+	}
+
+
+	/**
+	 * @param battles the battles to set
+	 */
+	public void setBattles(BattleInventory battles) {
+		this.battles = battles;
+	}
+
+
+	/**
 	 * @return the isFinished
 	 */
 	public boolean isFinished() {
@@ -327,7 +307,7 @@ public class GameEnvironment {
     		setDay(getNumDays());
     	}
     	getShop().randomise();
-    	randomiseBattles();
+    	battles.randomise();
     	myMonsters.healAll();
     	// Random events
     }
@@ -340,8 +320,8 @@ public class GameEnvironment {
      */
     public void checkStatus() {
     	boolean stalemate = true;
-    	if (myMonsters.getMonsterList().size() == 0) {
-    		for (Monster monster : getShop().getMonsters().getMonsterList()) {
+    	if (myMonsters.size() == 0) {
+    		for (Monster monster : getShop().getMonsters().getList()) {
     			if (balance >= monster.getCost()) {
     				stalemate = false;
     			}
@@ -387,20 +367,6 @@ public class GameEnvironment {
      */
     public boolean balanceSufficient(double amount) {
     	return balance >= amount;
-    }
-    
-    
-    /**
-     * Randomise the battles in battleList.
-     * @throws InventoryFullException 
-     */
-    public void randomiseBattles() throws InventoryFullException {
-    	for (int i = 0; i < numBattles; i++) {
-    		MonsterInventory monsterInventory = new MonsterInventory(this);
-    		monsterInventory.randomiseInventory();
-    		Battle battle = new Battle(this, monsterInventory);
-    		battleList.add(battle);
-    	}
     }
     
     

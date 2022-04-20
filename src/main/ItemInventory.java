@@ -10,7 +10,7 @@ public class ItemInventory {
 	 * 
 	 */
 	private int inventorySize = 4;
-    private ArrayList<Item> itemList;
+    private ArrayList<Item> list;
     private GameEnvironment game;
     
     
@@ -19,7 +19,7 @@ public class ItemInventory {
      * 
      */
     public ItemInventory (GameEnvironment game) {
-    	itemList = new ArrayList<Item>(inventorySize);
+    	list = new ArrayList<Item>(inventorySize);
     	this.game = game;
     };
     
@@ -27,7 +27,7 @@ public class ItemInventory {
     
     public ItemInventory (GameEnvironment game, ArrayList<Item> itemList) {
     	this.game = game;
-    	this.itemList = itemList;
+    	this.list = itemList;
     };
     
     
@@ -45,13 +45,13 @@ public class ItemInventory {
     }
     
     
-    public ArrayList<Item> getItemList() {
-    	return itemList;
+    public ArrayList<Item> getList() {
+    	return list;
     }
     
     
-    public void setItemList(ArrayList<Item> itemList) {
-    	this.itemList = itemList;
+    public void setList(ArrayList<Item> list) {
+    	this.list = list;
     }
     
     
@@ -67,7 +67,7 @@ public class ItemInventory {
     public void add(Item item) throws InventoryFullException
     {
     	if (!isFull()) {
-    		itemList.add(item);
+    		list.add(item);
     	}
     	else {
     		throw new InventoryFullException("Item inventory is full!");
@@ -81,8 +81,8 @@ public class ItemInventory {
      */
     public void remove(Item item) throws PurchasableNotFoundException
     {
-    	if (itemList.contains(item)) {    		
-    		itemList.remove(item);
+    	if (contains(item)) {    		
+    		list.remove(item);
     	}
     	else {
     		throw new PurchasableNotFoundException("Item not found in inventory!");
@@ -90,8 +90,28 @@ public class ItemInventory {
     }
     
     
+	/**
+	 * @return
+	 */
+	public int size() {
+		return list.size();
+	}
+	
+	
+	/**
+	 * @param index
+	 * @return
+	 */
+	public Item get(int index) {
+		return list.get(index);
+	}
+    
+    
+	/**
+	 * @return
+	 */
     public boolean isFull() {
-		return itemList.size() >= inventorySize;
+		return list.size() >= inventorySize;
     }
     
     
@@ -101,8 +121,8 @@ public class ItemInventory {
      */
     public Item random() {
     	Random random = new Random();
-    	int index = random.nextInt(itemList.size());
-    	Item selectedItem = itemList.get(index);
+    	int index = random.nextInt(list.size());
+    	Item selectedItem = list.get(index);
 		return selectedItem;
     }
     
@@ -112,7 +132,7 @@ public class ItemInventory {
      */
     public void randomiseInventory() throws InventoryFullException {
     	Random random = new Random();
-    	ArrayList<Item> allItemsList = game.getAllItems().getItemList();
+    	ArrayList<Item> allItemsList = game.getAllItems().getList();
     	ArrayList<Item> newItemList = new ArrayList<Item>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
     		int index = random.nextInt(allItemsList.size());
@@ -126,13 +146,13 @@ public class ItemInventory {
 				e.printStackTrace();
 			}
     	}
-    	itemList = newItemList;
+    	list = newItemList;
     }
     
     
     public String toString() {
     	String result = "";
-    	for (Item item : itemList)
+    	for (Item item : list)
     	{
     		result += "\n" + item;
     	}
@@ -141,13 +161,22 @@ public class ItemInventory {
     
     
     /**
+	 * @param item
+	 * @return
+	 */
+	public boolean contains(Item item) {
+		return list.contains(item);
+	}
+	
+    
+    /**
      * Return whether the inventory contains an item with the given itemName.
      * @param itemName
      * @return whether the inventory contains the item
      */
     public boolean contains(String itemName) {
     	boolean hasItem = false;
-    	for (Item item: getItemList()) {
+    	for (Item item: getList()) {
     		if (item.getName().equals(itemName)) {
     			hasItem = true;
     		}
@@ -163,7 +192,7 @@ public class ItemInventory {
      */
     public Item find(String itemName) {
     	Item selectedItem = null;
-    	for (Item item : getItemList()) {
+    	for (Item item : getList()) {
     		if (item.getName().equals(itemName)) {
     			selectedItem = item;
     		}

@@ -29,7 +29,7 @@ class MonsterInventoryTest {
 		myMonsters.add(testMonster);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
 		testMonsterList.add(testMonster);
-		assertEquals(testMonsterList, myMonsters.getMonsterList());
+		assertEquals(testMonsterList, myMonsters.getList());
 	}
 	
 	
@@ -56,7 +56,7 @@ class MonsterInventoryTest {
 		myMonsters.add(testMonster);
 		myMonsters.remove(testMonster);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
-		assertEquals(testMonsterList, myMonsters.getMonsterList());
+		assertEquals(testMonsterList, myMonsters.getList());
 	}
 	
 	
@@ -72,7 +72,7 @@ class MonsterInventoryTest {
 		myMonsters.remove(testMonster1);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
 		testMonsterList.add(testMonster2);
-		assertEquals(testMonsterList, myMonsters.getMonsterList());
+		assertEquals(testMonsterList, myMonsters.getList());
 	}
 	
 	

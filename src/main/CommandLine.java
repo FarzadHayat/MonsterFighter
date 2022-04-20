@@ -151,7 +151,7 @@ public class CommandLine {
 	public void selectStartingMonster() throws InventoryFullException {
 		Scanner input = getScanner();
 		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
-		while (game.getMyMonsters().getMonsterList().size() == 0) {
+		while (game.getMyMonsters().size() == 0) {
 			String inputStr = input.nextLine();
 			String monsterName = properCase(inputStr);
 			try {
@@ -192,9 +192,9 @@ public class CommandLine {
      */
     public void viewBattles() {
     	System.out.println("===== BATTLES =====");
-    	for (int i = 0; i < game.getBattleList().size(); i++)
+    	for (int i = 0; i < game.getBattles().size(); i++)
     	{
-    		Battle battle = game.getBattleList().get(i);
+    		Battle battle = game.getBattles().get(i);
     		System.out.println(String.format("===== Battle %s =====", i + 1));
     		System.out.println(battle);
     	}
@@ -240,13 +240,13 @@ public class CommandLine {
 	 * @throws IndexOutOfBoundsException
 	 */
 	public void selectBattle(String battleString) throws InvalidValueException, InvalidTargetException, NumberFormatException, IndexOutOfBoundsException {
-		if (game.getMyMonsters().getMonsterList().size() == 0) {
+		if (game.getMyMonsters().size() == 0) {
 			throw new IllegalArgumentException();
 		}
 		try {
 			int index = Integer.parseInt(battleString);
-			if (1 <= index && index <= game.getBattleList().size()) {				
-				Battle battle = game.getBattleList().get(index - 1);
+			if (1 <= index && index <= game.getBattles().size()) {				
+				Battle battle = game.getBattles().get(index - 1);
 				battle.play();			
 			}
 			else {

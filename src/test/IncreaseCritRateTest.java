@@ -30,7 +30,7 @@ class IncreaseCritRateTest {
 		game.getMyItems().add(item);
 		item.use(monster);
 		ArrayList<Item> itemList = new ArrayList<Item>();
-		assertEquals(itemList, game.getMyItems().getItemList());
+		assertEquals(itemList, game.getMyItems().getList());
 		assertEquals(IncreaseCritRate.getCritIncrease(), monster.getCritRate());
 	}
 
@@ -45,7 +45,7 @@ class IncreaseCritRateTest {
 		game.getMyItems().add(item);
 		item.use(monster);
 		ArrayList<Item> itemList = new ArrayList<Item>();
-		assertEquals(itemList, game.getMyItems().getItemList());
+		assertEquals(itemList, game.getMyItems().getList());
 		assertEquals(monster.getMaxCritRate(), monster.getCritRate());
 	}
 	

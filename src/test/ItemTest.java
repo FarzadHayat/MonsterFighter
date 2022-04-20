@@ -31,7 +31,7 @@ class ItemTest {
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
 		assertEquals(0, game.getBalance());
-		assertEquals(testItemList, myItems.getItemList());
+		assertEquals(testItemList, myItems.getList());
 	}
 	
 	
@@ -75,7 +75,7 @@ class ItemTest {
 		testItem.sell();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		assertEquals(testItem.getCost() * testItem.getRefundAmount(), game.getBalance());
-		assertEquals(testItemList, myItems.getItemList());
+		assertEquals(testItemList, myItems.getList());
 	}
 	
 	
@@ -93,7 +93,7 @@ class ItemTest {
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem2);
 		assertEquals(testItem1.getCost(), game.getBalance());
-		assertEquals(testItemList, myItems.getItemList());
+		assertEquals(testItemList, myItems.getList());
 	}
 	
 	

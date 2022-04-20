@@ -30,7 +30,7 @@ class IncreaseDamageTest {
 		game.getMyItems().add(item);
 		item.use(monster);
 		ArrayList<Item> itemList = new ArrayList<Item>();
-		assertEquals(itemList, game.getMyItems().getItemList());
+		assertEquals(itemList, game.getMyItems().getList());
 		assertEquals(damageBefore + IncreaseDamage.getDamageIncrease(), monster.getDamage());
 	}
 	
