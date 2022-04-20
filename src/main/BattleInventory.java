@@ -71,6 +71,20 @@ public class BattleInventory {
 	
 	/**
 	 * @param battle
+	 * @throws InventoryFullException
+	 */
+	public void add(int index, Battle battle) throws InventoryFullException {
+		if (size() < inventorySize) {
+			list.add(index, battle);			
+		}
+		else {
+			throw new InventoryFullException("Battle inventory is full!");
+		}
+	}
+	
+	
+	/**
+	 * @param battle
 	 */
 	public void remove(Battle battle) {
 		list.remove(battle);
@@ -115,4 +129,29 @@ public class BattleInventory {
     		add(battle);
     	}
     }
+    
+    
+    /**
+     * @param battle
+     * @return
+     */
+	public int indexOf(Battle battle) {
+		return list.indexOf(battle);
+	}
+	
+	
+	/**
+	 * 
+	 */
+	public String toString() {
+		String result = "\n===== BATTLES =====\n";
+    	int start = 1;
+    	for (Battle battle : list)
+    	{
+    		result += String.format("\n%s: %s", start, battle);
+    		start++;
+    	}
+    	result += String.format("\n%s: Go back", start);
+    	return result;
+	}
 }

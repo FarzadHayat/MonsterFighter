@@ -73,6 +73,22 @@ public class MonsterInventory {
     		throw new InventoryFullException("Monster inventory is full!");
     	}
     }
+    
+    
+    /**
+     * Add the given monster to the inventory
+     * @param monster
+     * @throws InventoryFullException 
+     */
+    public void add(int index, Monster monster) throws InventoryFullException
+    {
+    	if (!isFull()) {
+    		list.add(index, monster);
+    	}
+    	else {
+    		throw new InventoryFullException("Monster inventory is full!");
+    	}
+    }
 
 
     /**
@@ -185,6 +201,8 @@ public class MonsterInventory {
     
     /**
      * Return a string representation of the inventory
+     * @param start 
+     * @return 
      */
     public String toString() {
     	String result = "";
@@ -235,5 +253,25 @@ public class MonsterInventory {
     	}
 		return selectedMonster;
     }
-    
+
+
+    /**
+     * @param monster
+     * @return
+     */
+	public int indexOf(Monster monster) {
+		return list.indexOf(monster);
+	}
+
+
+	public String view() {
+		String result = "\n===== MY MONSTERS =====\n\n";
+		int start = 1;
+    	for (Monster monster : list) {
+    		result += String.format("%s: %s\n", start, monster);
+    		start++;
+    	}
+    	result += String.format("\n%s: Go back", start);
+    	return result;
+	}
 }

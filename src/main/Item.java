@@ -119,11 +119,16 @@ abstract public class Item implements Purchasable {
      * buy this item from the shop and add it to the player inventory
      * @throws InsufficientFundsException cost of item is more than player balance error
      * @throws InventoryFullException inventory is full error
+     * @throws PurchasableNotFoundException 
      */
-    public void buy() throws InsufficientFundsException, InventoryFullException
+    public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException
     {
     	game.minusBalance(cost);
 		game.getMyItems().add(this);
+		int index = game.getShop().getItems().indexOf(this);
+		game.getShop().getItems().remove(this);
+		game.getShop().getItems().add(index, game.getAllItems().random());
+		return "You bought: " + name;
     }
 
 
@@ -131,10 +136,11 @@ abstract public class Item implements Purchasable {
      * sell this item back to the shop for a partial refund and remove it from the player inventory
      * @throws PurchasableNotFoundException item was not found in the player inventory error
      */
-    public void sell() throws PurchasableNotFoundException
+    public String sell() throws PurchasableNotFoundException
     {
     	game.addBalance(cost * refundAmount);
     	game.getMyItems().remove(this);
+    	return "You sold: " + name;
     }
 
 
@@ -147,10 +153,32 @@ abstract public class Item implements Purchasable {
     abstract public void use(Monster monster) throws PurchasableNotFoundException, StatMaxedOutException;
 
     
+    /**
+	 * @return
+	 */
     public String toString() {
-    	String result = "Item: " + name + "\n";
+    	return String.format("%s (%s cost: %s)", name, description, cost);
+    }
+    
+    
+    /**
+	 * @return
+	 */
+    public String view() {
+    	String result = "";
+    	if (game.getShop().getItems().contains(this)) {
+    		result += String.format("\nBalance: %s\n", game.getBalance());
+    	}
+    	result += "Item: " + name + "\n";
     	result += description + "\n";
     	result += "Cost: " + cost + "\n";
+    	if (game.getShop().getItems().contains(this)) {    		
+    		result += "\n1: Buy";
+    	}
+    	if (game.getMyItems().contains(this)) {    		
+    		result += "\n1: Sell";
+    	}
+    	result += "\n2: Go back";
     	return result;
     }
     

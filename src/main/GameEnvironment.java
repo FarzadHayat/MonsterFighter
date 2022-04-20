@@ -372,11 +372,10 @@ public class GameEnvironment {
     	GameEnvironment game = new GameEnvironment();
     	CommandLine commandLine = new CommandLine(game);
     	// The setup
-    	commandLine.setupGame();
+    	//commandLine.setupGame();
     	// The main command line
     	commandLine.run();
     	// Game over
-    	System.out.println("<<<<< Game over! >>>>>");
     	commandLine.viewStats();
     }
 

@@ -1,6 +1,5 @@
 package main;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public abstract class Monster implements Purchasable {
@@ -363,19 +362,25 @@ public abstract class Monster implements Purchasable {
      * Buy a monster from the shop and add it to the player inventory.
      * @throws InsufficientFundsException cost of item is more than player balance error
      * @throws InventoryFullException inventory is full error
+     * @throws PurchasableNotFoundException 
      */
-	public void buy() throws InsufficientFundsException, InventoryFullException{
+	public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException{
 		game.minusBalance(cost);
 		game.getMyMonsters().add(this);
+		int index = game.getShop().getMonsters().indexOf(this);
+		game.getShop().getMonsters().remove(this);
+		game.getShop().getMonsters().add(index, game.getAllMonsters().random());
+		return "You bought: " + name;
 	}
 	
     /**
      * Sell monster back to the shop for a partial refund and removes the monster from the player's inventory
      * @throws PurchasableNotFoundException monster was not found in the player inventory error
      */
-	public void sell() throws PurchasableNotFoundException {
+	public String sell() throws PurchasableNotFoundException {
 		game.addBalance(cost * refundAmount);
 		game.getMyMonsters().remove(this);
+		return "You sold: " + name;
 	}
 	
 	/**
@@ -391,18 +396,45 @@ public abstract class Monster implements Purchasable {
 		}
 	};
 	
-        public String toString() {
-        	String result = "Monster: " + getClass().getSimpleName() + "\n";
-        	result += "Name: " + name + "\n";
-        	result += description + "\n";
-        	result += "Health: " + health + "\n";
-        	result += "Max Health: " + maxHealth + "\n";
-        	result += "Damage: " + damage + "\n";
-        	result += "Cost: " + cost + "\n";
-        	result += "Level: " + level + "\n";
-        	result += "Heal Amount: " + healAmount + "\n";
-        	result += "Crit Rate: " + critRate + "\n";
-        	result += "Fainted: " + isFainted + "\n";
-        	return result;
-        }
+	
+	/**
+	 * @return
+	 */
+	public String toString() {
+		return String.format("%s (%s health: %s, max health: %s, damage: %s, cost: %s, "
+						+ "level: %s, heal amount: %s, crit rate: %s, fainted: %s)",
+				name, description, health, maxHealth, damage, cost, level, healAmount, critRate, isFainted);
+	}
+	
+	
+	/**
+	 * @return
+	 */
+    public String view() {
+    	String result = "";
+    	if (game.getShop().getMonsters().contains(this)) {
+    		result += String.format("\nBalance: %s\n", game.getBalance());
+    	}
+    	result = "Monster: " + getClass().getSimpleName() + "\n";
+    	if (!name.equals(getClass().getSimpleName())){    		
+    		result += "Name: " + name + "\n";
+    	}
+    	result += description + "\n";
+    	result += "Health: " + health + "\n";
+    	result += "Max Health: " + maxHealth + "\n";
+    	result += "Damage: " + damage + "\n";
+    	result += "Cost: " + cost + "\n";
+    	result += "Level: " + level + "\n";
+    	result += "Heal Amount: " + healAmount + "\n";
+    	result += "Crit Rate: " + critRate + "\n";
+    	result += "Fainted: " + isFainted + "\n";
+    	if (game.getShop().getMonsters().contains(this)) {    		
+    		result += "\n1: Buy";
+    	}
+    	if (game.getMyMonsters().contains(this)) {    		
+    		result += "\n1: Sell";
+    	}
+    	result += "\n2: Go back";
+    	return result;
+    }
 }

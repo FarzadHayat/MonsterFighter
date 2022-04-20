@@ -106,7 +106,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy1() throws InsufficientFundsException, InventoryFullException {
+	public void testBuy1() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException {
 		//Blue sky
 		game.setBalance(monster.getCost());
 		monster.buy();
@@ -117,7 +117,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy2() throws InsufficientFundsException, InventoryFullException {
+	public void testBuy2() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException {
 		//Insufficient fund in player's balance 
 		game.setBalance(monster.getCost()/2);
 		try {
@@ -129,7 +129,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy3() throws InsufficientFundsException, InventoryFullException {
+	public void testBuy3() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException {
 		//Inventory full
 		game.setBalance(monster.getCost()*5);
 		for(int i = 0; i < 4; i++) {

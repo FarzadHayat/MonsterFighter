@@ -1,49 +1,35 @@
 package main;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 import main.GameEnvironment.Difficulty;
 
 public class CommandLine {
 
+	/**
+	 * Fields
+	 * 
+	 */
     private Scanner scanner = new Scanner(System.in);
     private GameEnvironment game;
+    private MonsterInventory shopMonsters;
+    private ItemInventory shopItems;
+    private int selection;
     
-    private enum Command {
-    	VIEW,
-    	SELECT,
-    	SHOP,
-    	SLEEP,
-    	QUIT
-    }
     
-    private enum View {
-    	SHOP,
-    	TEAM,
-    	INVENTORY,
-    	BATTLES,
-    	STATS
-    }
+    /**
+     * Constructors
+     * 
+     */
     
-    private enum Select {
-    	NAME,
-    	DAYS,
-    	DIFFICULTY,
-    	BATTLE,
-    	MONSTER
-    }
-    
-    public enum Trade {
-    	BUY,
-    	SELL
-    }
-	
-    
+    /**
+     * @param game
+     */
     public CommandLine(GameEnvironment game) {
     	this.game = game;
+    	shopMonsters = game.getShop().getMonsters();
+    	shopItems = game.getShop().getItems();
     }
     
     
@@ -64,6 +50,11 @@ public class CommandLine {
 	
 
 	/**
+	 * Functional
+	 * 
+	 */
+	
+	/**
 	 * 1. Set player name and request a different name if necessary.
 	 * 2. Set number of days and request a different input if necessary.
 	 * 3. Set difficulty.
@@ -83,11 +74,10 @@ public class CommandLine {
 	 * 
 	 */
 	public void selectPlayerName() {
-    	Scanner input = getScanner();
 		System.out.println("Select a player name (3 - 15 characters"
 						+ " containing no numbers or special characters):");
 		while (game.getPlayerName() == null) {
-			String name = input.nextLine();
+			String name = scanner.nextLine();
 			try {
 				game.setPlayerName(name);
 			}
@@ -104,11 +94,10 @@ public class CommandLine {
 	 * 
 	 */
     public void selectNumDays() {
-    	Scanner input = getScanner();
 		System.out.println("Select a number of days (between 5 - 15):");
 		while (game.getNumDays() == 0) {
 			try {
-				int numDays = Integer.parseInt(input.nextLine().strip());
+				int numDays = Integer.parseInt(scanner.nextLine().strip());
 				game.setNumDays(numDays);
 			}
 			catch (NumberFormatException e) {
@@ -127,11 +116,10 @@ public class CommandLine {
      * 
      */
     public void selectDifficulty() {
-    	Scanner input = getScanner();
 		System.out.println("Select a difficulty level (easy, normal, hard):");
 		while (game.getDifficulty() == null) {
 			try {
-				String inputStr = input.nextLine().toUpperCase().strip();
+				String inputStr = scanner.nextLine().toUpperCase().strip();
 				Difficulty difficulty = Difficulty.valueOf(inputStr);
 				game.setDifficulty(difficulty);
 			}
@@ -149,10 +137,9 @@ public class CommandLine {
      * 
      */
 	public void selectStartingMonster() throws InventoryFullException {
-		Scanner input = getScanner();
 		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
 		while (game.getMyMonsters().size() == 0) {
-			String inputStr = input.nextLine();
+			String inputStr = scanner.nextLine();
 			String monsterName = properCase(inputStr);
 			try {
 				if (game.getAllMonsters().contains(monsterName)) {				
@@ -179,12 +166,11 @@ public class CommandLine {
 	public void selectMonsterName(Monster monster) {
 		
 		// Player can choose to rename their monster or keep the default name 
-		Scanner input = getScanner();
 		System.out.println("Do you wish to rename your monster? Yes OR No?");
-		String choice = input.nextLine().toLowerCase();
+		String choice = scanner.nextLine().toLowerCase();
 		while(!(choice.equals("yes") || choice.equals("no"))) {
 			System.out.println("Invalid input, please try again.");
-			choice = input.nextLine().toLowerCase();
+			choice = scanner.nextLine().toLowerCase();
 		}
 		
 		// Player chooses to rename their monster 
@@ -192,7 +178,7 @@ public class CommandLine {
 			System.out.println("Select a unique monster name (3 - 15 characters"
 					+ " containing no numbers or special characters):");
 			while (true) {
-				String name = input.nextLine();
+				String name = scanner.nextLine();
 				try {
 					monster.setName(name);
 					break;
@@ -202,209 +188,267 @@ public class CommandLine {
 				}    		
 			}
 			System.out.println(String.format("Welcome %s to the team!", monster.getName()));
-			input.close();
+			scanner.close();
 		}
 	}
-	
-
-    /**
-     * View the shop page
-     */
+    
+    
     public void viewShop() {
-    	System.out.println("===== MONSTERS =====");
-    	System.out.println(game.getShop().getMonsters());
-    	System.out.println("===== ITEMS =====");
-    	System.out.println(game.getShop().getItems());
+    	outer:
+			while (true) {
+				System.out.println(game.getShop());
+				try {
+					selection = scanner.nextInt();
+					switch (selection) {
+						case 1, 2, 3, 4:
+							viewMonster(shopMonsters.get(selection - 1));
+							break;
+						case 5, 6, 7, 8:
+							viewItem(shopItems.get(selection - 5));
+							break;
+						case 9:
+							break outer;
+					}
+				}
+				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
+					System.out.println("Command not found! Try again:");
+					scanner.next();
+				}
+			}
     }
-
-
+    
+    
     /**
-     * View the possible battles
+     * @param monster
      */
-    public void viewBattles() {
-    	System.out.println("===== BATTLES =====");
-    	for (int i = 0; i < game.getBattles().size(); i++)
-    	{
-    		Battle battle = game.getBattles().get(i);
-    		System.out.println(String.format("===== Battle %s =====", i + 1));
-    		System.out.println(battle);
-    	}
+    public void viewMonster(Monster monster) {
+    	outer:
+			while (true) {
+				System.out.println(monster.view());
+				try {
+					selection = scanner.nextInt();
+					switch (selection) {
+						case 1:
+							if (game.getMyMonsters().contains(monster)) {
+								System.out.println(monster.sell());
+							}
+							if (shopMonsters.contains(monster)) {							
+								System.out.println(monster.buy());
+							}
+						case 2:
+							break outer;
+					}
+				}
+				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
+						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException e) {
+					System.out.println("Command not found! Try again:");
+					scanner.next();
+				}
+			}
     }
-
-
+    
+    
     /**
+     * @param item
+     */
+    public void viewItem(Item item) {
+    	outer:
+			while (true) {
+				System.out.println(item.view());
+				try {
+					selection = scanner.nextInt();
+					switch (selection) {
+						case 1:
+							if (game.getMyItems().contains(item)) {
+								System.out.println(item.sell());
+							}
+							if (shopItems.contains(item)) {							
+								System.out.println(item.buy());
+							}
+						case 2:
+							break outer;
+					}
+				}
+				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
+						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException e) {
+					System.out.println("Command not found! Try again:");
+					scanner.next();
+				}
+			}
+    }
+    
+    
+    public void viewBattles() {
+    	outer:
+			while (true) {
+				System.out.println(game.getBattles());
+				try {
+					selection = scanner.nextInt();
+					if (game.getMyItems().size() == selection - 1) {
+						break;
+					}
+					switch (selection) {
+						case 1, 2, 3, 4, 5:
+							viewBattle(game.getBattles().get(selection - 1));
+							break;
+						case 6:
+							break outer;
+					}
+				}
+				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
+					System.out.println("Command not found! Try again:");
+					scanner.next();
+				}
+			}
+    }
+    
+    
+    /**
+     * 
+     * @param battle
+     */
+    private void viewBattle(Battle battle) {
+    	outer:
+    		while (true) {
+    			System.out.println(battle.view());
+    			try {
+    				selection = scanner.nextInt();
+    				switch (selection) {
+    					case 1:
+    						battle.play();
+    					case 2:
+    						break outer;
+    				}
+    			}
+    			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
+    					InvalidValueException | InvalidTargetException e) {
+    				System.out.println("Command not found! Try again:");
+    				scanner.next();
+    			}
+    		}
+	}
+
+
+	/**
      * View my monsters
      */
     public void viewTeam() {
-    	System.out.println("===== MY MONSTERS =====");
-    	System.out.println(game.getMyMonsters());
+    	outer:
+			while (true) {
+		    	System.out.println(game.getMyMonsters().view());
+				try {
+					selection = scanner.nextInt();
+					if (game.getMyMonsters().size() == selection - 1) {
+						break;
+					}
+					switch (selection) {
+						case 1, 2, 3, 4:
+							viewMonster(game.getMyMonsters().get(selection - 1));
+							break;
+						case 5:
+							break outer;
+					}
+				}
+				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
+					System.out.println("Command not found! Try again:");
+					scanner.next();
+				}
+			}
     }
 
 
+	/**
+     * View my items
+     */
+    public void viewInventory() {
+    	outer:
+			while (true) {
+		    	System.out.println(game.getMyItems().view());
+				try {
+					selection = scanner.nextInt();
+					if (game.getMyItems().size() == selection - 1) {
+						break;
+					}
+					switch (selection) {
+						case 1, 2, 3, 4:							
+							viewItem(game.getMyItems().get(selection - 1));
+							break;
+						case 5:
+							break outer;
+					}
+				}
+				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
+					System.out.println("Command not found! Try again:");
+					scanner.next();
+				}
+			}
+    }
+    
+    
     /**
-	 * View the game statistics
-	 */
-	public void viewStats() {
-		System.out.println("===== PLAYER STATS =====");
-		System.out.println("Balance: " + game.getBalance());
-		System.out.println("Player name: " + game.getPlayerName());
-		System.out.println(String.format("Day %s out of %s", game.getDay(), game.getNumDays()));
-		System.out.println("Difficulty: " + game.getDifficulty());
-		// print current score and other stats about past battles
-	}
-
-
+     * View the game statistics
+     */
+    public void viewStats() {
+    	System.out.println("\n===== PLAYER STATS =====");
+    	System.out.println("Balance: " + game.getBalance());
+    	System.out.println("Player name: " + game.getPlayerName());
+    	System.out.println(String.format("Day %s out of %s", game.getDay(), game.getNumDays()));
+    	System.out.println("Difficulty: " + game.getDifficulty());
+    	// print current score and other stats about past battles
+    }
+    
+	
 	/**
-	 * View my items
+	 * 
 	 */
-	public void viewInventory() {
-		System.out.println("===== MY ITEMS =====");
-		System.out.println(game.getMyItems());
-	}
-
-
-	/**
-	 * Select a battle to fight.
-	 * @throws InvalidValueException 
-	 * @throws InvalidTargetException 
-	 * @throws NumberFormatException
-	 * @throws IndexOutOfBoundsException
-	 */
-	public void selectBattle(String battleString) throws InvalidValueException, InvalidTargetException, NumberFormatException, IndexOutOfBoundsException {
-		if (game.getMyMonsters().size() == 0) {
-			throw new IllegalArgumentException();
-		}
-		try {
-			int index = Integer.parseInt(battleString);
-			if (1 <= index && index <= game.getBattles().size()) {				
-				Battle battle = game.getBattles().get(index - 1);
-				battle.play();			
-			}
-			else {
-				throw new IndexOutOfBoundsException();
-			}
-		}
-		catch (NumberFormatException | IndexOutOfBoundsException e) {
-			throw e;
-		}
+	public void viewHome() {
+		System.out.println("\nHome (select a number):");
+		System.out.println("1: Shop");
+		System.out.println("2: Team");
+		System.out.println("3: Inventory");
+		System.out.println("4: Battles");
+		System.out.println("5: Stats");
+		System.out.println("6: Sleep");
 	}
 	
     
-    /**
-     * @param view
-     * @throws IllegalArgumentException
-     */
-    public void viewSwitch(View view) throws IllegalArgumentException {
-    	switch (view) {
-			case SHOP:
-				viewShop();
-				break;
-			case TEAM:
-				viewTeam();
-				break;
-			case INVENTORY:
-				viewInventory();
-				break;
-			case BATTLES:
-				viewBattles();
-				break;
-			case STATS:
-				viewStats();
-				break;
-			}
-    }
-    
-    
-    /**
-     * @param select
-     * @param rest
-     * @throws InventoryFullException
-     * @throws NumberFormatException
-     * @throws IndexOutOfBoundsException
-     * @throws InvalidValueException
-     * @throws InvalidTargetException
-     */
-    public void selectSwitch(Select select, String rest) throws InventoryFullException, NumberFormatException, IndexOutOfBoundsException, InvalidValueException, InvalidTargetException {
-    	switch (select) {
-			case NAME:
-				selectPlayerName();
-				break;
-			case DAYS:
-				selectNumDays();
-				break;
-			case DIFFICULTY:
-				selectDifficulty();
-				break;
-			case MONSTER:
-				selectStartingMonster();
-				break;
-			case BATTLE:
-				selectBattle(rest);
-				break;
-    	}
-    }
-    
-    
-    /**
-     * @param shop
-     * @param rest
-     */
-    public void tradeSwitch(Trade trade, String rest) {
-    	try {
-    		switch (trade) {
-	    		case BUY:
-	    			game.getShop().buy(rest);
-	    			break;
-	    		case SELL:
-	    			game.getShop().sell(rest);
-	    			break;
-    		}
-    	}
-		catch (InventoryFullException | InsufficientFundsException | PurchasableNotFoundException e) {
-			System.out.println(e.getMessage() + " Try again:");
-		}
-    }
-    
-    
+	/**
+	 * 
+	 * @throws InventoryFullException
+	 */
     public void run() throws InventoryFullException {
-    	Scanner input = getScanner();
-    	outer:
-    	while (!game.isFinished()) {    		
-    		String[] inputArray = input.nextLine().toUpperCase().strip().split("\\s+");
-    		ArrayList<String> commands = new ArrayList<String>(Arrays.asList(inputArray));
-    		String rest;
-    		try {    		
-    			Command command = Command.valueOf(commands.get(0));
-    			switch (command) {
-	    			case VIEW:
-	    				View view = View.valueOf(commands.get(1));
-	    				viewSwitch(view);
-	    				break;
-	    			case SELECT:
-	    				Select select = Select.valueOf(commands.get(1));
-	    				rest = properCase(String.join(" ", commands.subList(2, commands.size())));
-	    				selectSwitch(select, rest);
-	    				break;
-	    			case SHOP:
-	    				Trade trade = Trade.valueOf(commands.get(1));
-	    				rest = properCase(String.join(" ", commands.subList(2, commands.size())));
-	    				tradeSwitch(trade, rest);
-	    				break;
-	    			case SLEEP:
-	    				game.sleep();
-	    				break;
-	    			case QUIT:
-	    				break outer;
-    			}
+    	while (!game.isFinished()) {
+    		viewHome();
+    		try {
+    			selection = scanner.nextInt();
+    			switch (selection) {
+    				case 1:
+    					viewShop();
+    					break;
+    				case 2:
+    					viewTeam();
+    					break;
+    				case 3:
+    					viewInventory();
+    					break;
+    				case 4:
+    					viewBattles();
+    					break;
+    				case 5:
+    					viewStats();
+    					break;
+    				case 6:
+    					game.sleep();
+    					break;
+				}
     		}
-    		catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+    		catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException
+    				| InvalidValueException e) {
     			System.out.println("Command not found! Try again:");
+    			scanner.next();
     		}
-    		catch (InvalidValueException | InvalidTargetException  e) {
-				e.printStackTrace();
-			}
     	}
-    	input.close();
+    	System.out.println("<<<<< Game over! >>>>>");
     }
     
     
@@ -429,12 +473,6 @@ public class CommandLine {
     	}
     	String result = String.join(" ", words);
 		return result;
-    }
-    
-    public static void main(String[]args) throws InventoryFullException, InvalidValueException {
-		GameEnvironment game = new GameEnvironment();
-		CommandLine cmd = new CommandLine(game);
-		cmd.selectStartingMonster();
     }
     
 }

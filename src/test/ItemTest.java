@@ -23,7 +23,7 @@ class ItemTest {
 
 	
 	@Test
-	public void testBuy1() throws InsufficientFundsException, InventoryFullException {
+	public void testBuy1() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException {
 		// Blue sky
 		Item testItem = new IncreaseHealth(game);
 		game.setBalance(testItem.getCost());
@@ -36,7 +36,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testBuy2() throws InsufficientFundsException, InventoryFullException {
+	public void testBuy2() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException {
 		// Insufficient funds
 		Item testItem = new IncreaseHealth(game);
 		game.setBalance(testItem.getCost() / 2);
@@ -50,7 +50,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testBuy3() throws InsufficientFundsException, InventoryFullException {
+	public void testBuy3() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException {
 		// Inventory full	
 		Item testItem = new IncreaseHealth(game);
 		game.setBalance(testItem.getCost() * (myItems.getInventorySize() + 1));

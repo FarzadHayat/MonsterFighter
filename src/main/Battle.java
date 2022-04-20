@@ -243,11 +243,15 @@ public class Battle {
     
     
     public String toString() {
-    	String result = "";
-    	for (int i = 0; i < enemyMonsters.size(); i++) {
-    		Monster monster = enemyMonsters.get(i);
-    		result += String.format("\n%s. %s", i + 1, monster);
-    	}
+    	int index = game.getBattles().indexOf(this);
+    	return String.format("Battle %s\n %s\n", index + 1, enemyMonsters);
+    }
+    
+    
+    public String view() {
+    	String result = toString();
+    	result += "\n1: Fight";
+    	result += "\n2: Go back";
     	return result;
     }
 

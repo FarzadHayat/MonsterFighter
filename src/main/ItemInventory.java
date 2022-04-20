@@ -73,6 +73,21 @@ public class ItemInventory {
     		throw new InventoryFullException("Item inventory is full!");
     	}
     }
+    
+    
+    /**
+     * @param item
+     * @throws InventoryFullException 
+     */
+    public void add(int index, Item item) throws InventoryFullException
+    {
+    	if (!isFull()) {
+    		list.add(index, item);
+    	}
+    	else {
+    		throw new InventoryFullException("Item inventory is full!");
+    	}
+    }
 
 
     /**
@@ -150,6 +165,10 @@ public class ItemInventory {
     }
     
     
+    /**
+     * Return a string representation of the inventory
+     * @return
+     */
     public String toString() {
     	String result = "";
     	for (Item item : list)
@@ -199,5 +218,26 @@ public class ItemInventory {
     	}
 		return selectedItem;
     }
+    
+    
+    /**
+     * @param item
+     * @return
+     */
+	public int indexOf(Item item) {
+		return list.indexOf(item);
+	}
+	
+	
+	public String view() {
+		String result = "\n===== MY ITEMS =====\n\n";
+		int start = 1;
+    	for (Item item : list) {
+    		result += String.format("%s: %s\n", start, item);
+    		start++;
+    	}
+    	result += String.format("\n%s: Go back", start);
+    	return result;
+	}
 
 }

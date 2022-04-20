@@ -46,57 +46,6 @@ public class Shop {
 	}
 	
 	
-	/**
-     * Find the given purchasable name in the shop and buy it
-     * @param rest the name of the purchasable
-     * @throws PurchasableNotFoundException 
-     * @throws InventoryFullException 
-     * @throws InsufficientFundsException 
-     */
-    public void buy(String rest) throws PurchasableNotFoundException, InsufficientFundsException, InventoryFullException {
-		if (monsters.contains(rest)) {
-			Monster monster = monsters.find(rest);
-			monster.buy();
-			monsters.remove(monster);
-			System.out.println("You bought: " + monster.getName());
-		}
-		else {
-			if (items.contains(rest)) {
-				Item item = items.find(rest);
-				item.buy();
-				items.remove(item);
-				System.out.println("You bought: " + item.getName());
-			}
-			else {
-				throw new PurchasableNotFoundException("Purchasable not found in shop!");
-			}
-		}
-    }
-    
-	/**
-	 * Find the given purchasable name in the player inventory and sell it
-	 * @param rest
-	 * @throws PurchasableNotFoundException 
-	 */
-    public void sell(String rest) throws PurchasableNotFoundException {  		
-		if (game.getMyMonsters().contains(rest)) {
-			Monster monster = game.getMyMonsters().find(rest); 
-			monster.sell();
-			System.out.println("You sold: " + monster.getName());
-		}
-		else {
-			if (game.getMyItems().contains(rest)) {
-				Item item = game.getMyItems().find(rest); 
-				item.sell();
-				System.out.println("You sold: " + item.getName());
-			}
-			else {
-				throw new PurchasableNotFoundException("Purchasable not found in inventory!");
-			}
-		}
-    }
-	
-	
     /**
      * Randomise the purchasables in the shop.
      * @throws InventoryFullException 
@@ -105,4 +54,26 @@ public class Shop {
 		monsters.randomiseInventory();
     	items.randomiseInventory();
     }
+    
+    
+    /**
+     * 
+     */
+    public String toString() {
+    	String result = String.format("\nBalance: %s\n", game.getBalance());
+    	int start = 1;
+    	result += "\n===== MONSTERS =====\n\n";
+    	for (Monster monster : monsters.getList()) {
+    		result += String.format("%s: %s\n", start, monster);
+    		start++;
+    	}
+    	result += "\n===== ITEMS =====\n\n";
+    	for (Item item : items.getList()) {
+    		result += String.format("%s: %s\n", start, item);
+    		start++;
+    	}
+    	result += String.format("\n%s: Go back", start);
+    	return result;
+    }
+    
 }
