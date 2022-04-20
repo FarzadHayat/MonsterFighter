@@ -179,31 +179,29 @@ public class CommandLine {
 	public void selectMonsterName(Monster monster) {
 		
 		//Player chooses to rename their monster or keep the default name 
-		Scanner choice = new Scanner(System.in);
+		Scanner input = getScanner();
 		System.out.println("Do you wish to rename your monster? Yes OR No?");
-		String givenChoice = choice.nextLine().toLowerCase();
+		String givenChoice = input.nextLine().toLowerCase();
 		while(!givenChoice.equals("yes") && !givenChoice.equals("no")) {
 			System.out.println("Invalid input, please try again.");
-			givenChoice = choice.nextLine().toLowerCase();
+			givenChoice = input.nextLine().toLowerCase();
 		}
 		
 		//Player chooses to rename their monster 
 		if(givenChoice.equals("yes")) {
-			Scanner input = new Scanner(System.in);
 			System.out.println("Select a monster name (between 3 - 15 characters"
 					+ " containing no numbers or special characters):");
-			String monsterName = properCase(input.nextLine().replaceAll("\\s+", ""));
+			String monsterName = properCase(input.nextLine());
 			
 			//monsterName must meet the required length and regex and must not be a default monster name 
-			while(game.getMyMonsters().contains(monsterName) || !validName(monsterName)) {
+			while(game.getMyMonsters().contains(monsterName) || game.getAllMonsters().contains(monsterName) || !validName(monsterName)) {
 				System.out.println("You have entered an invalid monster name, please try again.");
-				monsterName = properCase(input.nextLine().replaceAll("\\s+", ""));;
+				monsterName = properCase(input.nextLine());
 			}
 			monster.setName(monsterName);
-			input.close();
 		}
 		System.out.println(String.format("Welcome %s to the team!", monster.getName()));
-		choice.close();
+		input.close();
 	}
 	
 	/**
@@ -444,6 +442,12 @@ public class CommandLine {
     	}
     	String result = String.join(" ", words);
 		return result;
+    }
+    
+    public static void main(String[]args) throws InventoryFullException, InvalidValueException {
+	GameEnvironment game = new GameEnvironment();
+	CommandLine cmd = new CommandLine(game);
+	cmd.selectStartingMonster();
     }
     
 }
