@@ -369,11 +369,16 @@ public class GameEnvironment {
      */
 
 	/**
-	 * Sleep
+	 * Sleep through the night. Randomises shop, randomises battles, and heals all player monsters once.
+	 * @throws InventoryFullException 
+	 * @throws InvalidValueException 
 	 * 
      */
-    public void sleep() {
-    	
+    public void sleep() throws InventoryFullException, InvalidValueException {
+    	randomiseShop();
+    	randomiseBattles();
+    	myMonsters.healAll();
+    	setDay(getDay() + 1);
     }
 
 

@@ -114,6 +114,16 @@ public class MonsterInventory {
     
     
     /**
+     * Heals all monsters in the inventory once.
+     */
+    public void healAll() {
+    	for (Monster monster : getMonsterList()) {
+    		monster.heal();
+    	}
+    }
+    
+    
+    /**
      * Returns a random non-fainted monster from the inventory
      * @return the randomly selected non-fainted monster
      */
