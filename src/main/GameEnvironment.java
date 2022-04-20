@@ -1,6 +1,5 @@
 package main;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class GameEnvironment {
@@ -15,7 +14,7 @@ public class GameEnvironment {
     private int day;
     private Difficulty difficulty;
     
-    private enum Difficulty {
+    protected enum Difficulty {
     	EASY,
     	NORMAL,
     	HARD
@@ -30,41 +29,9 @@ public class GameEnvironment {
     private MonsterInventory allMonsters;
     private ItemInventory allItems;
     
-    private MonsterInventory shopMonsters;
-    private ItemInventory shopItems;
-    
-    private Scanner scanner = new Scanner(System.in);
+    private Shop shop;
     
     private boolean isFinished = false;
-    
-    private enum Command {
-    	VIEW,
-    	SELECT,
-    	SHOP,
-    	SLEEP,
-    	QUIT
-    }
-    
-    private enum View {
-    	SHOP,
-    	MONSTERS,
-    	ITEMS,
-    	BATTLES,
-    	STATS
-    }
-    
-    private enum Select {
-    	NAME,
-    	DAYS,
-    	DIFFICULTY,
-    	BATTLE,
-    	MONSTER
-    }
-    
-    public enum Shop {
-    	BUY,
-    	SELL
-    }
     
     
     /**
@@ -75,8 +42,6 @@ public class GameEnvironment {
     public GameEnvironment () throws InventoryFullException, InvalidValueException {
     	setDay(1);
     	setBalance(100);
-    	setMyMonsters(new MonsterInventory(this));
-    	setMyItems(new ItemInventory(this));
 
     	setAllMonsters(new MonsterInventory(this));
     	ArrayList<Monster> allMonstersList = new ArrayList<Monster>();
@@ -96,12 +61,12 @@ public class GameEnvironment {
     	allItemsList.add(new LevelUp(this));
     	allItems.setItemList(allItemsList);
     	
+    	myMonsters = new MonsterInventory(this);
+    	myItems = new ItemInventory(this);
+    	shop = new Shop(this);
+
     	setBattleList(new ArrayList<Battle>(numBattles));
-    	randomiseBattles();
-    	
-    	setShopMonsters(new MonsterInventory(this));
-    	setShopItems(new ItemInventory(this));
-    	randomiseShop();
+    	randomiseBattles();	
     };
 
     
@@ -310,60 +275,23 @@ public class GameEnvironment {
 	public void setAllItems(ItemInventory allItems) {
 		this.allItems = allItems;
 	}
-
-
+	
+	
 	/**
-	 * @return the shopMonsters
+	 * @return the shop
 	 */
-	public MonsterInventory getShopMonsters() {
-		return shopMonsters;
+	public Shop getShop() {
+		return shop;
 	}
 
 
 	/**
-	 * @param shopMonsters the shopMonsters to set
+	 * @param shop the shop to set
 	 */
-	public void setShopMonsters(MonsterInventory shopMonsters) {
-		this.shopMonsters = shopMonsters;
-	}
-	
-	
-	/**
-	 * @return the shopItems
-	 */
-	public ItemInventory getShopItems() {
-		return shopItems;
+	public void setShop(Shop shop) {
+		this.shop = shop;
 	}
 
-
-	/**
-	 * @param shopItems the shopItems to set
-	 */
-	public void setShopItems(ItemInventory shopItems) {
-		this.shopItems = shopItems;
-	}
-	
-    
-	/**
-	 * @return the scanner
-	 */
-	public Scanner getScanner() {
-		return scanner;
-	}
-	
-	
-	/**
-	 * @param scanner the scanner to set
-	 */
-	public void setScanner(Scanner scanner) {
-		this.scanner = scanner;
-	}
-	
-	
-    /**
-     * Functional
-     * 
-     */
 
 	/**
 	 * @return the isFinished
@@ -380,6 +308,11 @@ public class GameEnvironment {
 		this.isFinished = isFinished;
 	}
 
+	
+	/**
+	 * Functional
+	 * 
+	 */
 
 	/**
 	 * Sleep through the night. Randomises shop, randomises battles, and heals all player monsters once.
@@ -393,7 +326,7 @@ public class GameEnvironment {
     	if (isFinished() && day > numDays) {
     		setDay(getNumDays());
     	}
-    	randomiseShop();
+    	getShop().randomise();
     	randomiseBattles();
     	myMonsters.healAll();
     	// Random events
@@ -408,7 +341,7 @@ public class GameEnvironment {
     public void checkStatus() {
     	boolean stalemate = true;
     	if (myMonsters.getMonsterList().size() == 0) {
-    		for (Monster monster : shopMonsters.getMonsterList()) {
+    		for (Monster monster : getShop().getMonsters().getMonsterList()) {
     			if (balance >= monster.getCost()) {
     				stalemate = false;
     			}
@@ -421,251 +354,6 @@ public class GameEnvironment {
     		setFinished(true);
     	}
     }
-
-
-    /**
-     * View the shop page
-     */
-    public void viewShop() {
-    	System.out.println("===== MONSTERS =====");
-    	System.out.println(shopMonsters);
-    	System.out.println("===== ITEMS =====");
-    	System.out.println(shopItems);
-    }
-    
-    
-    /**
-     * Find the given purchasable name in the shop and buy it
-     * @param rest the name of the purchasable
-     * @throws PurchasableNotFoundException 
-     * @throws InventoryFullException 
-     * @throws InsufficientFundsException 
-     */
-    public void shopBuy(String rest) throws PurchasableNotFoundException, InsufficientFundsException, InventoryFullException {
-		if (shopMonsters.contains(rest)) {
-			Monster monster = shopMonsters.find(rest);
-			monster.buy();
-			shopMonsters.remove(monster);
-			System.out.println("You bought: " + monster.getName());
-		}
-		else {
-			if (shopItems.contains(rest)) {
-				Item item = shopItems.find(rest);
-				item.buy();
-				shopItems.remove(item);
-				System.out.println("You bought: " + item.getName());
-			}
-			else {
-				throw new PurchasableNotFoundException("Purchasable not found in shop!");
-			}
-		}
-    }
-    
-	/**
-	 * Find the given purchasable name in the player inventory and sell it
-	 * @param rest
-	 * @throws PurchasableNotFoundException 
-	 */
-    public void shopSell(String rest) throws PurchasableNotFoundException {  		
-		if (myMonsters.contains(rest)) {
-			Monster monster = myMonsters.find(rest); 
-			monster.sell();
-			System.out.println("You sold: " + monster.getName());
-		}
-		else {
-			if (myItems.contains(rest)) {
-				Item item = myItems.find(rest); 
-				item.sell();
-				System.out.println("You sold: " + item.getName());
-			}
-			else {
-				throw new PurchasableNotFoundException("Purchasable not found in inventory!");
-			}
-		}
-    }
-
-
-    /**
-     * View the possible battles
-     */
-    public void viewBattles() {
-    	System.out.println("===== BATTLES =====");
-    	for (int i = 0; i < battleList.size(); i++)
-    	{
-    		Battle battle = battleList.get(i);
-    		System.out.println(String.format("===== Battle %s =====", i + 1));
-    		System.out.println(battle);
-    	}
-    }
-
-
-    /**
-     * View my monsters
-     */
-    public void viewMonsters() {
-    	System.out.println("===== MY MONSTERS =====");
-    	System.out.println(myMonsters);
-    }
-
-
-    /**
-	 * View the game statistics
-	 */
-	public void viewStats() {
-		System.out.println("===== PLAYER STATS =====");
-		System.out.println("Balance: " + getBalance());
-		System.out.println("Player name: " + getPlayerName());
-		System.out.println(String.format("Day %s out of %s", getDay(), getNumDays()));
-		System.out.println("Difficulty: " + getDifficulty());
-		// print current score and other stats about past battles
-	}
-
-
-	/**
-	 * View my items
-	 */
-	public void viewItems() {
-		System.out.println("===== MY ITEMS =====");
-		System.out.println(myItems);
-	}
-
-
-	/**
-	 * 1. Set player name and request a different name if necessary.
-	 * 2. Set number of days and request a different input if necessary.
-	 * 3. Set difficulty.
-	 * 4. Select starting monster and set monster name if not using the default.
-	 * @throws InventoryFullException 
-	 */
-	public void setupGame() throws InventoryFullException {
-		selectPlayerName();
-		selectNumDays();
-		selectDifficulty();
-		selectStartingMonster();
-	}
-
-
-	/**
-	 * Let the player pick a name.
-	 * 
-	 */
-	public void selectPlayerName() {
-    	Scanner input = getScanner();
-		System.out.println("Select a player name (between 3 - 15 characters"
-						+ " containing no numbers or special characters):");
-		while (getPlayerName() == null) {
-			String name = input.nextLine();
-			try {
-				setPlayerName(name);
-			}
-			catch (InvalidValueException e) {
-				System.out.println(e.getMessage());
-			}    		
-		}
-		System.out.println(String.format("Nice to meet you %s!", getPlayerName()));
-    }
-    
-    
-	/**
-	 * Let the player pick a number of days
-	 * 
-	 */
-    public void selectNumDays() {
-    	Scanner input = getScanner();
-		System.out.println("Select a number of days (between 5 - 15):");
-		while (getNumDays() == 0) {
-			try {
-				int numDays = Integer.parseInt(input.nextLine().strip());
-				setNumDays(numDays);
-			}
-			catch (NumberFormatException e) {
-				System.out.println("Please enter a number! Try again:");
-			}
-			catch (InvalidValueException e) {
-				System.out.println(e.getMessage());
-			}    		
-		}
-		System.out.println(String.format("You chose: %s days.", getNumDays()));
-    }
-    
-    
-    /**
-     * Let the player pick a difficulty
-     * 
-     */
-    public void selectDifficulty() {
-    	Scanner input = getScanner();
-		System.out.println("Select a difficulty level (easy, normal, hard):");
-		while (difficulty == null) {
-			try {
-				String inputStr = input.nextLine().toUpperCase().strip();
-				Difficulty difficulty = Difficulty.valueOf(inputStr);
-				setDifficulty(difficulty);
-			}
-			catch (IllegalArgumentException e) {
-				System.out.println("Invalid difficulty! Try again:");
-			}
-		}
-		System.out.println(String.format("You chose: %s.", getDifficulty()));
-    }
-
-
-    /**
-     * Let the player pick a starting monster
-     * @throws InventoryFullException 
-     * 
-     */
-	public void selectStartingMonster() throws InventoryFullException {
-		Scanner input = getScanner();
-		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
-		while (getMyMonsters().getMonsterList().size() == 0) {
-			String inputStr = input.nextLine();
-			String monsterName = properCase(inputStr);
-			try {
-				if (getAllMonsters().contains(monsterName)) {				
-					Class<? extends Monster> clazz = getAllMonsters().find(monsterName).getClass();
-					Monster monster = clazz.getConstructor(GameEnvironment.class).newInstance(this);
-					getMyMonsters().add(monster);
-				}
-				else {
-					throw new PurchasableNotFoundException("Invalid starting monster!");
-				}
-			}
-			catch (PurchasableNotFoundException | InstantiationException | IllegalAccessException
-					| IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-					| SecurityException e) {
-				System.out.println(e.getMessage() + " Try again:");
-			}				
-		}
-		System.out.println(String.format("You chose:\n%s", getMyMonsters()));
-    }
-	
-	
-	/**
-	 * Select a battle to fight.
-	 * @throws InvalidValueException 
-	 * @throws InvalidTargetException 
-	 * @throws NumberFormatException
-	 * @throws IndexOutOfBoundsException
-	 */
-	public void selectBattle(String battleString) throws InvalidValueException, InvalidTargetException, NumberFormatException, IndexOutOfBoundsException {
-		if (myMonsters.getMonsterList().size() == 0) {
-			throw new IllegalArgumentException();
-		}
-		try {
-			int index = Integer.parseInt(battleString);
-			if (1 <= index && index <= battleList.size()) {				
-				Battle battle = battleList.get(index - 1);
-				battle.play();			
-			}
-			else {
-				throw new IndexOutOfBoundsException();
-			}
-		}
-		catch (NumberFormatException | IndexOutOfBoundsException e) {
-			throw e;
-		}
-	}
 		
 
     /**
@@ -714,169 +402,18 @@ public class GameEnvironment {
     		battleList.add(battle);
     	}
     }
-
-
-    /**
-     * Randomise the purchasables in the shop.
-     * @throws InventoryFullException 
-     */
-    public void randomiseShop() throws InventoryFullException {
-    	shopMonsters.randomiseInventory();
-    	shopItems.randomiseInventory();
-    }
-    
-    
-    /**
-     * @param view
-     * @throws IllegalArgumentException
-     */
-    public void viewSwitch(View view) throws IllegalArgumentException {
-    	switch (view) {
-			case SHOP:
-				viewShop();
-				break;
-			case MONSTERS:
-				viewMonsters();
-				break;
-			case ITEMS:
-				viewItems();
-				break;
-			case BATTLES:
-				viewBattles();
-				break;
-			case STATS:
-				viewStats();
-				break;
-			}
-    }
-    
-    
-    /**
-     * @param select
-     * @param rest
-     * @throws InventoryFullException
-     * @throws NumberFormatException
-     * @throws IndexOutOfBoundsException
-     * @throws InvalidValueException
-     * @throws InvalidTargetException
-     */
-    public void selectSwitch(Select select, String rest) throws InventoryFullException, NumberFormatException, IndexOutOfBoundsException, InvalidValueException, InvalidTargetException {
-    	switch (select) {
-			case NAME:
-				selectPlayerName();
-				break;
-			case DAYS:
-				selectNumDays();
-				break;
-			case DIFFICULTY:
-				selectDifficulty();
-				break;
-			case MONSTER:
-				selectStartingMonster();
-				break;
-			case BATTLE:
-				selectBattle(rest);
-				break;
-    	}
-    }
-    
-    
-    /**
-     * @param shop
-     * @param rest
-     */
-    public void shopSwitch(Shop shop, String rest) {
-    	try {
-    		switch (shop) {
-	    		case BUY:
-	    			shopBuy(rest);
-	    			break;
-	    		case SELL:
-	    			shopSell(rest);
-	    			break;
-    		}
-    	}
-		catch (InventoryFullException | InsufficientFundsException | PurchasableNotFoundException e) {
-			System.out.println(e.getMessage() + " Try again:");
-		}
-    }
-    
-    
-    public void run() throws InventoryFullException {
-    	Scanner input = getScanner();
-    	outer:
-    	while (!isFinished()) {    		
-    		String[] inputArray = input.nextLine().toUpperCase().strip().split("\\s+");
-    		ArrayList<String> commands = new ArrayList<String>(Arrays.asList(inputArray));
-    		String rest;
-    		try {    		
-    			Command command = Command.valueOf(commands.get(0));
-    			switch (command) {
-	    			case VIEW:
-	    				View view = View.valueOf(commands.get(1));
-	    				viewSwitch(view);
-	    				break;
-	    			case SELECT:
-	    				Select select = Select.valueOf(commands.get(1));
-	    				rest = properCase(String.join(" ", commands.subList(2, commands.size())));
-	    				selectSwitch(select, rest);
-	    				break;
-	    			case SHOP:
-	    				Shop shop = Shop.valueOf(commands.get(1));
-	    				rest = properCase(String.join(" ", commands.subList(2, commands.size())));
-	    				shopSwitch(shop, rest);
-	    				break;
-	    			case SLEEP:
-	    				sleep();
-	    				break;
-	    			case QUIT:
-	    				break outer;
-    			}
-    		}
-    		catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-    			System.out.println("Command not found! Try again:");
-    		}
-    		catch (InvalidValueException | InvalidTargetException  e) {
-				e.printStackTrace();
-			}
-    	}
-    	input.close();
-    }
-    
-    
-    /**
-     * Returns a proper case version of the given phrase with all redundant whitespace removed.
-     * @param phrase to be formatted
-     * @return the formatted phrase
-     */
-    public String properCase(String phrase) {
-    	String[] words = phrase.toLowerCase().strip().split("\\s+");
-    	if (String.join("", words).equals("")) {
-    		return "";
-    	}
-    	for (int i = 0; i < words.length; i++) {
-    		String word = words[i];
-    		String first = word.substring(0, 1);
-    		if (first.matches("[a-zA-Z]")) {
-    			first = first.toUpperCase();
-    		}
-    		String rest = word.substring(1, word.length());   
-    		words[i] = first + rest;
-    	}
-    	String result = String.join(" ", words);
-		return result;
-    }
     
     
     public static void main(String[] args) throws InventoryFullException, InvalidValueException {
     	GameEnvironment game = new GameEnvironment();
+    	CommandLine commandLine = new CommandLine(game);
     	// The setup
-    	game.setupGame();
+    	commandLine.setupGame();
     	// The main command line
-    	game.run();
+    	commandLine.run();
     	// Game over
     	System.out.println("<<<<< Game over! >>>>>");
-    	game.viewStats();
+    	commandLine.viewStats();
     }
 
 }
