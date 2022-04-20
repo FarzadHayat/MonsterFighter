@@ -38,6 +38,7 @@ public class GameEnvironment {
     private enum Command {
     	VIEW,
     	SELECT,
+    	SHOP,
     	QUIT
     }
     
@@ -57,10 +58,9 @@ public class GameEnvironment {
     	MONSTER
     }
     
-    private enum Shop {
+    public enum Shop {
     	BUY,
-    	SELL,
-    	LEAVE
+    	SELL
     }
     
     
@@ -71,7 +71,7 @@ public class GameEnvironment {
      */
     public GameEnvironment () throws InventoryFullException, InvalidValueException {
     	setDay(1);
-    	setBalance(0);
+    	setBalance(100);
     	setMyMonsters(new MonsterInventory(this));
     	setMyItems(new ItemInventory(this));
 
@@ -381,68 +381,60 @@ public class GameEnvironment {
      * View the shop page
      */
     public void viewShop() {
-    	System.out.println("You have entered the shop.");
     	System.out.println("===== MONSTERS =====");
     	System.out.println(shopMonsters);
     	System.out.println("===== ITEMS =====");
     	System.out.println(shopItems);
-    	
-    	Scanner input = getScanner();
-    	outer:
-    	while (true) {
-    		String[] inputArray = input.nextLine().toUpperCase().strip().split("\\s+");
-    		ArrayList<String> commands = new ArrayList<String>(Arrays.asList(inputArray));
-    		String rest = format(String.join(" ", commands.subList(1, commands.size())));
-    		try {    		
-    			Shop shop = Shop.valueOf(commands.get(0));
-    			switch (shop) {
-    				case BUY:
-    					if (shopMonsters.contains(rest)) {
-    						Monster monster = shopMonsters.find(rest);
-    						monster.buy();
-    						shopMonsters.remove(monster);
-    						System.out.println("You bought: " + monster.getName());
-    					}
-    					else {
-    						if (shopItems.contains(rest)) {
-    							Item item = shopItems.find(rest);
-    							item.buy();
-    							shopItems.remove(item);
-    							System.out.println("You bought: " + item.getName());
-    						}
-    						else {
-    							throw new PurchasableNotFoundException("Purchasable not found in shop!");
-    						}
-    					}
-    					break;
-    				case SELL:
-    					if (myMonsters.contains(rest)) {
-    						Monster monster = myMonsters.find(rest); 
-    						monster.sell();
-    						System.out.println("You sold: " + monster.getName());
-    					}
-    					else {
-    						if (myItems.contains(rest)) {
-    							Item item = myItems.find(rest); 
-    							item.sell();
-    							System.out.println("You sold: " + item.getName());
-    						}
-    						else {
-    							throw new PurchasableNotFoundException("Purchasable not found in team or inventory!");
-    						}
-    					}
-    					break;
-    				case LEAVE:
-    					System.out.println("You have left the shop.");
-    					break outer;
-    			}
-    		}
-    		catch (IllegalArgumentException e) {
-    			System.out.println("Command not found! Try again:");
-    		}
-    		catch (InventoryFullException | InsufficientFundsException | PurchasableNotFoundException e) {
-    			System.out.println(e.getMessage() + " Try again:");
-    		}
+    }
+    
+    
+    /**
+     * Find the given purchasable name in the shop and buy it
+     * @param rest the name of the purchasable
+     * @throws PurchasableNotFoundException 
+     * @throws InventoryFullException 
+     * @throws InsufficientFundsException 
+     */
+    public void shopBuy(String rest) throws PurchasableNotFoundException, InsufficientFundsException, InventoryFullException {
+		if (shopMonsters.contains(rest)) {
+			Monster monster = shopMonsters.find(rest);
+			monster.buy();
+			shopMonsters.remove(monster);
+			System.out.println("You bought: " + monster.getName());
+		}
+		else {
+			if (shopItems.contains(rest)) {
+				Item item = shopItems.find(rest);
+				item.buy();
+				shopItems.remove(item);
+				System.out.println("You bought: " + item.getName());
+			}
+			else {
+				throw new PurchasableNotFoundException("Purchasable not found in shop!");
+			}
+		}
+    }
+    
+	/**
+	 * Find the given purchasable name in the player inventory and sell it
+	 * @param rest
+	 * @throws PurchasableNotFoundException 
+	 */
+    public void shopSell(String rest) throws PurchasableNotFoundException {  		
+		if (myMonsters.contains(rest)) {
+			Monster monster = myMonsters.find(rest); 
+			monster.sell();
+			System.out.println("You sold: " + monster.getName());
+		}
+		else {
+			if (myItems.contains(rest)) {
+				Item item = myItems.find(rest); 
+				item.sell();
+				System.out.println("You sold: " + item.getName());
+			}
+			else {
+				throw new PurchasableNotFoundException("Purchasable not found in inventory!");
+			}
 		}
     }
 
@@ -688,6 +680,82 @@ public class GameEnvironment {
     }
     
     
+    /**
+     * @param view
+     * @throws IllegalArgumentException
+     */
+    public void viewSwitch(View view) throws IllegalArgumentException {
+    	switch (view) {
+			case SHOP:
+				viewShop();
+				break;
+			case MONSTERS:
+				viewMonsters();
+				break;
+			case ITEMS:
+				viewItems();
+				break;
+			case BATTLES:
+				viewBattles();
+				break;
+			case STATS:
+				viewStats();
+				break;
+			}
+    }
+    
+    
+    /**
+     * @param select
+     * @param rest
+     * @throws InventoryFullException
+     * @throws NumberFormatException
+     * @throws IndexOutOfBoundsException
+     * @throws InvalidValueException
+     * @throws InvalidTargetException
+     */
+    public void selectSwitch(Select select, String rest) throws InventoryFullException, NumberFormatException, IndexOutOfBoundsException, InvalidValueException, InvalidTargetException {
+    	switch (select) {
+			case NAME:
+				selectPlayerName();
+				break;
+			case DAYS:
+				selectNumDays();
+				break;
+			case DIFFICULTY:
+				selectDifficulty();
+				break;
+			case MONSTER:
+				selectStartingMonster();
+				break;
+			case BATTLE:
+				selectBattle(rest);
+				break;
+    	}
+    }
+    
+    
+    /**
+     * @param shop
+     * @param rest
+     */
+    public void shopSwitch(Shop shop, String rest) {
+    	try {
+    		switch (shop) {
+	    		case BUY:
+	    			shopBuy(rest);
+	    			break;
+	    		case SELL:
+	    			shopSell(rest);
+	    			break;
+    		}
+    	}
+		catch (InventoryFullException | InsufficientFundsException | PurchasableNotFoundException e) {
+			System.out.println(e.getMessage() + " Try again:");
+		}
+    }
+    
+    
     public void run() throws InventoryFullException {
     	Scanner input = getScanner();
     	outer:
@@ -700,50 +768,21 @@ public class GameEnvironment {
     			switch (command) {
 	    			case VIEW:
 	    				View view = View.valueOf(commands.get(1));
-	    				switch (view) {
-	    					case SHOP:
-	    						viewShop();
-	    						break;
-	    					case MONSTERS:
-	    						viewMonsters();
-	    						break;
-	    					case ITEMS:
-	    						viewItems();
-	    						break;
-	    					case BATTLES:
-	    						viewBattles();
-	    						break;
-	    					case STATS:
-	    						viewStats();
-	    						break;
-	    				}
+	    				viewSwitch(view);
 	    				break;
 	    			case SELECT:
 	    				Select select = Select.valueOf(commands.get(1));
-	    				switch (select) {
-	    					case NAME:
-	    						selectPlayerName();
-	    						break;
-	    					case DAYS:
-	    						selectNumDays();
-	    						break;
-	    					case DIFFICULTY:
-	    						selectDifficulty();
-	    						break;
-	    					case MONSTER:
-	    						selectStartingMonster();
-	    						break;
-	    					case BATTLE:
-	    						selectBattle(rest);
-	    						break;
-	    				}
+	    				selectSwitch(select, rest);
+	    				break;
+	    			case SHOP:
+	    				Shop shop = Shop.valueOf(commands.get(1));
+	    				shopSwitch(shop, rest);
 	    				break;
 	    			case QUIT:
 	    				break outer;
     			}
     		}
     		catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-    			e.printStackTrace();
     			System.out.println("Command not found! Try again:");
     		}
     		catch (InvalidValueException | InvalidTargetException  e) {
@@ -780,8 +819,7 @@ public class GameEnvironment {
     
     public static void main(String[] args) throws InventoryFullException, InvalidValueException {
     	GameEnvironment game = new GameEnvironment();
-    	game.setBalance(100);
-    	game.setupGame();
+    	//game.setupGame();
     	game.run();
     }
 

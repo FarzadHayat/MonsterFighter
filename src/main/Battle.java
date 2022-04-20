@@ -239,7 +239,6 @@ public class Battle {
     	winner = Turn.ENEMY;
     	System.out.println("You lost!");
     	System.out.println(enemyMonsters);
-    	// add to player score
     }
     
     
