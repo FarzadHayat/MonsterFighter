@@ -158,6 +158,7 @@ public class CommandLine {
 				if (game.getAllMonsters().contains(monsterName)) {				
 					Class<? extends Monster> clazz = game.getAllMonsters().find(monsterName).getClass();
 					Monster monster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
+					selectMonsterName(monster);
 					game.getMyMonsters().add(monster);
 				}
 				else {
@@ -171,10 +172,55 @@ public class CommandLine {
 			}				
 		}
 		System.out.println(String.format("You chose:\n%s", game.getMyMonsters()));
-    }
-    
+	}
+	/**
+	 * Select the name of the monster 
+	 */
+	public void selectMonsterName(Monster monster) {
+		
+		//Player chooses to rename their monster or keep the default name 
+		Scanner choice = new Scanner(System.in);
+		System.out.println("Do you wish to rename your monster? Yes OR No?");
+		String givenChoice = choice.nextLine().toLowerCase();
+		while(!givenChoice.equals("yes") && !givenChoice.equals("no")) {
+			System.out.println("Invalid input, please try again.");
+			givenChoice = choice.nextLine().toLowerCase();
+		}
+		
+		//Player chooses to rename their monster 
+		if(givenChoice.equals("yes")) {
+			Scanner input = new Scanner(System.in);
+			System.out.println("Select a monster name (between 3 - 15 characters"
+					+ " containing no numbers or special characters):");
+			String monsterName = properCase(input.nextLine().replaceAll("\\s+", ""));
+			
+			//monsterName must meet the required length and regex and must not be a default monster name 
+			while(game.getMyMonsters().contains(monsterName) || !validName(monsterName)) {
+				System.out.println("You have entered an invalid monster name, please try again.");
+				monsterName = properCase(input.nextLine().replaceAll("\\s+", ""));;
+			}
+			monster.setName(monsterName);
+			input.close();
+		}
+		System.out.println(String.format("Welcome %s to the team!", monster.getName()));
+		choice.close();
+	}
 	
-
+	/**
+         * Check if given monster name meets the required length and regex
+         * @param monsterName name given by the player
+         */
+	public boolean validName (String monsterName) {
+        	monsterName = monsterName.strip();
+        	String regex = "(([a-z]|[A-Z])*(\\s)*)*([a-z]|[A-Z])+";
+        	if (3 <= monsterName.length() && monsterName.length() <= 15 && monsterName.matches(regex)) {
+        		return true;
+        	}
+        	else {    		
+        		return false;
+        	}
+	}
+	
 
     /**
      * View the shop page
@@ -399,5 +445,5 @@ public class CommandLine {
     	String result = String.join(" ", words);
 		return result;
     }
-	
+    
 }

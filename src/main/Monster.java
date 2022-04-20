@@ -8,7 +8,6 @@ public abstract class Monster implements Purchasable {
 	 *	Monster statistic variables 
 	 *
 	 */
-	private String[] monsterNames = {"averagejoe", "chunky", "lanky", "shanny", "zap", "raka"};
  	private String name;
 	private String description;
 	private int health;
@@ -381,67 +380,18 @@ public abstract class Monster implements Purchasable {
 		}
 	};
 	
-	/**
-	 * Select the name of the monster 
-	 */
-	public void selectMonsterName() {
-		
-		//Player chooses to rename their monster or keep the default name 
-		Scanner choice = new Scanner(System.in);
-		System.out.println("Do you wish to rename your monster? Yes OR No?");
-		String givenChoice = choice.nextLine().toLowerCase();
-		while(!givenChoice.equals("yes") && !givenChoice.equals("no")) {
-			System.out.println("Invalid input, please try again.");
-			givenChoice = choice.nextLine().toLowerCase();
-		}
-		
-		//Player chooses to rename their monster 
-		if(givenChoice.equals("yes")) {
-			Scanner input = new Scanner(System.in);
-			System.out.println("Select a monster name (between 3 - 15 characters"
-					+ " containing no numbers or special characters):");
-			String monsterName = input.nextLine().toLowerCase().replaceAll("\\s+", "");
-			
-			//monsterName must meet the required length and regex and must not be a default monster name 
-			while(Arrays.asList(monsterNames).contains(monsterName) || !validName(monsterName)) {
-				System.out.println("You have entered an invalid monster name, please try again.");
-				monsterName = input.nextLine().toLowerCase().replaceAll("\\s+", "");
-			}
-			setName(monsterName);
-			input.close();
-		}
-		System.out.println(String.format("Welcome %s to the team!", getName()));
-		choice.close();
-	}
-	
-	/**
-     * Check if given monster name meets the required length and regex
-     * @param monsterName name given by the player
-     */
-    public boolean validName (String monsterName) {
-    	monsterName = monsterName.strip();
-    	String regex = "(([a-z]|[A-Z])*(\s)*)*([a-z]|[A-Z])+";
-    	if (3 <= monsterName.length() && monsterName.length() <= 15 && monsterName.matches(regex)) {
-    		return true;
-    	}
-    	else {    		
-    		return false;
-    	}
-    }
-	
-	public String toString() {
-    	String result = "Monster: " + getClass().getSimpleName() + "\n";
-    	result += "Name: " + name + "\n";
-    	result += description + "\n";
-    	result += "Health: " + health + "\n";
-    	result += "Max Health: " + maxHealth + "\n";
-    	result += "Damage: " + damage + "\n";
-    	result += "Cost: " + cost + "\n";
-    	result += "Level: " + level + "\n";
-    	result += "Heal Amount: " + healAmount + "\n";
-    	result += "Crit Rate: " + critRate + "\n";
-    	result += "Fainted: " + isFainted + "\n";
-    	return result;
-    }
-	
+        public String toString() {
+        	String result = "Monster: " + getClass().getSimpleName() + "\n";
+        	result += "Name: " + name + "\n";
+        	result += description + "\n";
+        	result += "Health: " + health + "\n";
+        	result += "Max Health: " + maxHealth + "\n";
+        	result += "Damage: " + damage + "\n";
+        	result += "Cost: " + cost + "\n";
+        	result += "Level: " + level + "\n";
+        	result += "Heal Amount: " + healAmount + "\n";
+        	result += "Crit Rate: " + critRate + "\n";
+        	result += "Fainted: " + isFainted + "\n";
+        	return result;
+        }
 }
