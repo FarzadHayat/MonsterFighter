@@ -372,8 +372,8 @@ public class GameEnvironment {
 	 * Sleep
 	 * 
      */
-    public void sleep()
-    {
+    public void sleep() {
+    	
     }
 
 
@@ -450,8 +450,7 @@ public class GameEnvironment {
     /**
      * View the possible battles
      */
-    public void viewBattles()
-    {
+    public void viewBattles() {
     	System.out.println("===== BATTLES =====");
     	for (int i = 0; i < battleList.size(); i++)
     	{
@@ -465,8 +464,7 @@ public class GameEnvironment {
     /**
      * View my monsters
      */
-    public void viewMonsters()
-    {
+    public void viewMonsters() {
     	System.out.println("===== MY MONSTERS =====");
     	System.out.println(myMonsters);
     }
@@ -475,8 +473,7 @@ public class GameEnvironment {
     /**
 	 * View the game statistics
 	 */
-	public void viewStats()
-	{
+	public void viewStats() {
 		System.out.println("===== PLAYER STATS =====");
 		System.out.println("Balance: " + getBalance());
 		System.out.println("Player name: " + getPlayerName());
@@ -489,8 +486,7 @@ public class GameEnvironment {
 	/**
 	 * View my items
 	 */
-	public void viewItems()
-	{
+	public void viewItems() {
 		System.out.println("===== MY ITEMS =====");
 		System.out.println(myItems);
 	}
@@ -503,8 +499,7 @@ public class GameEnvironment {
 	 * 4. Select starting monster and set monster name if not using the default.
 	 * @throws InventoryFullException 
 	 */
-	public void setupGame() throws InventoryFullException
-	{
+	public void setupGame() throws InventoryFullException {
 		selectPlayerName();
 		selectNumDays();
 		selectDifficulty();
@@ -516,8 +511,7 @@ public class GameEnvironment {
 	 * Let the player pick a name.
 	 * 
 	 */
-	public void selectPlayerName()
-    {
+	public void selectPlayerName() {
     	Scanner input = getScanner();
 		System.out.println("Select a player name (between 3 - 15 characters"
 						+ " containing no numbers or special characters):");
@@ -538,8 +532,7 @@ public class GameEnvironment {
 	 * Let the player pick a number of days
 	 * 
 	 */
-    public void selectNumDays()
-    {
+    public void selectNumDays() {
     	Scanner input = getScanner();
 		System.out.println("Select a number of days (between 5 - 15):");
 		while (getNumDays() == 0) {
@@ -562,8 +555,7 @@ public class GameEnvironment {
      * Let the player pick a difficulty
      * 
      */
-    public void selectDifficulty()
-    {
+    public void selectDifficulty() {
     	Scanner input = getScanner();
 		System.out.println("Select a difficulty level (easy, normal, hard):");
 		while (difficulty == null) {
@@ -585,8 +577,7 @@ public class GameEnvironment {
      * @throws InventoryFullException 
      * 
      */
-	public void selectStartingMonster() throws InventoryFullException
-    {
+	public void selectStartingMonster() throws InventoryFullException {
 		Scanner input = getScanner();
 		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
 		while (getMyMonsters().getMonsterList().size() == 0) {
@@ -614,18 +605,45 @@ public class GameEnvironment {
 	
 	/**
 	 * Select a battle to fight.
+	 * @throws InvalidValueException 
+	 * @throws InvalidTargetException 
+	 * @throws NumberFormatException
+	 * @throws IndexOutOfBoundsException
 	 */
-	public void selectBattle()
-	{
-		
+	public void selectBattle(String battleString) throws InvalidValueException, InvalidTargetException, NumberFormatException, IndexOutOfBoundsException {
+		if (myMonsters.getMonsterList().size() == 0) {
+			throw new IllegalArgumentException();
+		}
+		try {
+			int index = Integer.parseInt(battleString);
+			if (1 <= index && index <= battleList.size()) {				
+				Battle battle = battleList.get(index - 1);
+				battle.play();			
+			}
+			else {
+				throw new IndexOutOfBoundsException();
+			}
+		}
+		catch (NumberFormatException | IndexOutOfBoundsException e) {
+			throw e;
+		}
 	}
 		
 
-    
+    /**
+     * Add to the player balance
+     * @param amount
+     */
     public void addBalance(double amount) {
 		balance += amount;
     }
     
+    
+    /**
+     * Remove from the player balance
+     * @param amount
+     * @throws InsufficientFundsException
+     */
     public void minusBalance(double amount) throws InsufficientFundsException {
 		if (balanceSufficient(amount)) {
 			balance -= amount;
@@ -636,6 +654,11 @@ public class GameEnvironment {
     }
     
     
+    /**
+     * Returns whether balance is sufficient for the given cost
+     * @param amount the cost
+     * @return whether balance is sufficient
+     */
     public boolean balanceSufficient(double amount) {
     	return balance >= amount;
     }
@@ -669,12 +692,14 @@ public class GameEnvironment {
     	Scanner input = getScanner();
     	outer:
     	while (true) {    		
-    		String[] commands = input.nextLine().toUpperCase().strip().split("\\s+");
+    		String[] inputArray = input.nextLine().toUpperCase().strip().split("\\s+");
+    		ArrayList<String> commands = new ArrayList<String>(Arrays.asList(inputArray));
+    		String rest = format(String.join(" ", commands.subList(2, commands.size())));
     		try {    		
-    			Command command = Command.valueOf(commands[0]);
+    			Command command = Command.valueOf(commands.get(0));
     			switch (command) {
 	    			case VIEW:
-	    				View view = View.valueOf(commands[1]);
+	    				View view = View.valueOf(commands.get(1));
 	    				switch (view) {
 	    					case SHOP:
 	    						viewShop();
@@ -694,7 +719,7 @@ public class GameEnvironment {
 	    				}
 	    				break;
 	    			case SELECT:
-	    				Select select = Select.valueOf(commands[1]);
+	    				Select select = Select.valueOf(commands.get(1));
 	    				switch (select) {
 	    					case NAME:
 	    						selectPlayerName();
@@ -705,11 +730,11 @@ public class GameEnvironment {
 	    					case DIFFICULTY:
 	    						selectDifficulty();
 	    						break;
-	    					case BATTLE:
-	    						selectBattle();
-	    						break;
 	    					case MONSTER:
 	    						selectStartingMonster();
+	    						break;
+	    					case BATTLE:
+	    						selectBattle(rest);
 	    						break;
 	    				}
 	    				break;
@@ -717,9 +742,13 @@ public class GameEnvironment {
 	    				break outer;
     			}
     		}
-    		catch (IllegalArgumentException e) {
+    		catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+    			e.printStackTrace();
     			System.out.println("Command not found! Try again:");
     		}
+    		catch (InvalidValueException | InvalidTargetException  e) {
+				e.printStackTrace();
+			}
     	}
     	input.close();
     }
@@ -752,7 +781,7 @@ public class GameEnvironment {
     public static void main(String[] args) throws InventoryFullException, InvalidValueException {
     	GameEnvironment game = new GameEnvironment();
     	game.setBalance(100);
-    	//game.setupGame();
+    	game.setupGame();
     	game.run();
     }
 

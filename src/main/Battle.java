@@ -132,10 +132,20 @@ public class Battle {
      */
     public void playerAttack() throws InvalidValueException, InvalidTargetException
     {
-    	Monster attackingMonster = getPlayerMonsters().random();
-    	Monster defendingMonster = getEnemyMonsters().random();
-    	attackingMonster.attack(defendingMonster);
+    	Monster playerMonster = getPlayerMonsters().random();
+    	Monster enemyMonster = getEnemyMonsters().random();
+    	playerMonster.attack(enemyMonster);
     	currentTurn = Turn.ENEMY;
+    	
+    	System.out.println(String.format("\nPlayer %s attacked enemy %s for %s damage.", 
+    			playerMonster.getName(), enemyMonster.getName(), 999));
+    	if (enemyMonster.getIsFainted()) {
+    		System.out.println(String.format("Enemy %s has fainted!", enemyMonster.getName()));
+    	}
+    	else {    		
+    		System.out.println(String.format("Enemy %s now has %s health.", 
+    				enemyMonster.getName(), enemyMonster.getHealth()));
+    	}
     }
 
 
@@ -147,10 +157,20 @@ public class Battle {
      */
     public void enemyAttack() throws InvalidValueException, InvalidTargetException
     {
-    	Monster attackingMonster = getEnemyMonsters().random();
-    	Monster defendingMonster = getPlayerMonsters().random();
-    	attackingMonster.attack(defendingMonster);
+    	Monster enemyMonster = getEnemyMonsters().random();
+    	Monster playerMonster = getPlayerMonsters().random();
+    	enemyMonster.attack(playerMonster);
     	currentTurn = Turn.PLAYER;
+    	
+    	System.out.println(String.format("\nEnemy %s attacked player %s for %s damage.", 
+    			enemyMonster.getName(), playerMonster.getName(), 999));
+    	if (playerMonster.getIsFainted()) {
+    		System.out.println(String.format("Player %s has fainted!", playerMonster.getName()));
+    	}
+    	else {    		
+    		System.out.println(String.format("Player %s now has %s health.", 
+    				playerMonster.getName(), playerMonster.getHealth()));
+    	}
     }
 
 
@@ -177,6 +197,7 @@ public class Battle {
     		}
     		checkStatus();
     	}
+    	game.getBattleList().remove(this);
     }
     
     
@@ -202,7 +223,10 @@ public class Battle {
     public void win()
     {
     	winner = Turn.PLAYER;
-    	// do some stuff here
+    	System.out.println("You won!");
+    	System.out.println(playerMonsters);
+    	// add to player balance
+    	// add to player score
     }
 
 
@@ -213,7 +237,9 @@ public class Battle {
     public void lose()
     {
     	winner = Turn.ENEMY;
-    	// do some stuff here
+    	System.out.println("You lost!");
+    	System.out.println(enemyMonsters);
+    	// add to player score
     }
     
     

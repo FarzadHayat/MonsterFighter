@@ -123,7 +123,7 @@ public class MonsterInventory {
     	Monster selectedMonster = null;
     	
     	while (!monsterFound) {
-    		int index = random.nextInt(inventorySize);
+    		int index = random.nextInt(monsterList.size());
     		selectedMonster = monsterList.get(index);
     		if (!selectedMonster.getIsFainted()) {
     			monsterFound = true;

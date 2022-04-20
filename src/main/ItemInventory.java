@@ -101,7 +101,7 @@ public class ItemInventory {
      */
     public Item random() {
     	Random random = new Random();
-    	int index = random.nextInt(inventorySize);
+    	int index = random.nextInt(itemList.size());
     	Item selectedItem = itemList.get(index);
 		return selectedItem;
     }
