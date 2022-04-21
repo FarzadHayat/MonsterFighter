@@ -323,14 +323,10 @@ public class GameEnvironment {
     		setDay(getDay() + 1);
     		getShop().randomise();
     		battles.randomise();
+    		randomEvent.runAllRandom();
     		myMonsters.healAll();
     		// Random events
     	}
-    	getShop().randomise();
-    	battles.randomise();
-    	randomEvent.runAllRandom();
-    	myMonsters.healAll();
-    	// Random events
     }
     
     
