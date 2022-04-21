@@ -145,7 +145,7 @@ public class ItemInventory {
      * Randomises the item inventory by selecting random items from the all items in the game.
      * @throws InventoryFullException
      */
-    public void randomiseInventory() throws InventoryFullException {
+    public void randomise() throws InventoryFullException {
     	Random random = new Random();
     	ArrayList<Item> allItemsList = game.getAllItems().getList();
     	ArrayList<Item> newItemList = new ArrayList<Item>(inventorySize);

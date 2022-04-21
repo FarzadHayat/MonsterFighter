@@ -117,16 +117,27 @@ public class BattleInventory {
 	}
 	
     
+	/**
+	 * @return
+	 * @throws InventoryFullException
+	 */
+	public Battle random() throws InventoryFullException {
+		MonsterInventory monsterInventory = new MonsterInventory(game);
+		monsterInventory.randomise();
+		Battle battle = new Battle(game, monsterInventory);
+		return battle;
+	}
+	
+	
+	
     /**
      * Randomise the battles in list.
      * @throws InventoryFullException 
      */
     public void randomise() throws InventoryFullException {
+    	list = new ArrayList<Battle>(inventorySize);
     	for (int i = 0; i < inventorySize; i++) {
-    		MonsterInventory monsterInventory = new MonsterInventory(game);
-    		monsterInventory.randomiseInventory();
-    		Battle battle = new Battle(game, monsterInventory);
-    		add(battle);
+    		add(random());
     	}
     }
     

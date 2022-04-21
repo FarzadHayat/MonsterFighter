@@ -51,8 +51,8 @@ public class Shop {
      * @throws InventoryFullException 
      */
     public void randomise() throws InventoryFullException {
-		monsters.randomiseInventory();
-    	items.randomiseInventory();
+		monsters.randomise();
+    	items.randomise();
     }
     
     

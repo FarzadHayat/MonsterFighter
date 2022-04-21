@@ -180,7 +180,7 @@ public class MonsterInventory {
      * Randomises the monster inventory by selecting random monsters from all monsters in the game.
      * @throws InventoryFullException
      */
-    public void randomiseInventory() throws InventoryFullException {
+    public void randomise() throws InventoryFullException {
     	Random random = new Random();
     	ArrayList<Monster> allMonstersList = game.getAllMonsters().getList();
     	ArrayList<Monster> newMonsterList = new ArrayList<Monster>(inventorySize);
