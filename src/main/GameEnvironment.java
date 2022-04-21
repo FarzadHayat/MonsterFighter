@@ -29,6 +29,8 @@ public class GameEnvironment {
     private Shop shop;
     private BattleInventory battles;
     
+    private RandomEvent randomEvent;
+    
     private boolean isFinished = false;
     
     
@@ -61,6 +63,7 @@ public class GameEnvironment {
     	myItems = new ItemInventory(this);
     	shop = new Shop(this);
     	battles = new BattleInventory(this);
+    	randomEvent = new RandomEvent(this);
     };
 
     
@@ -269,7 +272,21 @@ public class GameEnvironment {
 	public void setBattles(BattleInventory battles) {
 		this.battles = battles;
 	}
+	
+	/**
+	 * @return the randomEvent
+	 */
+	public RandomEvent getRandomEvent() {
+		return randomEvent;
+	}
 
+
+	/**
+	 * @param randomEvent the randomEvent to set
+	 */
+	public void setRandomEvent(RandomEvent randomEvent) {
+		this.randomEvent = randomEvent;
+	}
 
 	/**
 	 * @return the isFinished
@@ -296,9 +313,11 @@ public class GameEnvironment {
 	 * Sleep through the night. Randomises shop, randomises battles, and heals all player monsters once.
 	 * @throws InventoryFullException 
 	 * @throws InvalidValueException 
+	 * @throws PurchasableNotFoundException 
+	 * @throws StatMaxedOutException 
 	 * 
      */
-    public void sleep() throws InventoryFullException, InvalidValueException {
+    public void sleep() throws InventoryFullException, InvalidValueException, StatMaxedOutException, PurchasableNotFoundException {
     	setDay(getDay() + 1);
     	checkStatus();
     	if (isFinished() && day > numDays) {
@@ -306,6 +325,7 @@ public class GameEnvironment {
     	}
     	getShop().randomise();
     	battles.randomise();
+    	randomEvent.runAllRandom();
     	myMonsters.healAll();
     	// Random events
     }

@@ -304,10 +304,13 @@ public abstract class Monster implements Purchasable {
      * Heals the monster for the heal amount.
      */
 	public void heal() {
-		health += healAmount;
-		if(this.getHealth() > this.getMaxHealth()) {
-			this.setHealth(maxHealth);
-		}
+	    if(getIsFainted()) {
+		setIsFainted(false);
+	    }
+	    health += healAmount;
+	    if(this.getHealth() > this.getMaxHealth()) {
+		this.setHealth(maxHealth);
+	    }
 	}
 	
 	/**
