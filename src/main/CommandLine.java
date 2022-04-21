@@ -308,7 +308,7 @@ public class CommandLine {
     				selection = scanner.nextInt();
     				switch (selection) {
     					case 1:
-    						battle.play();
+    						game.pickBattle(battle);
     					case 2:
     						break outer;
     				}

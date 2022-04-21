@@ -23,7 +23,7 @@ public class Battle implements Storable {
     private Inventory<Monster> playerMonsters;
     
     
-    private enum Turn {
+    public enum Turn {
     	PLAYER,
     	ENEMY
     }

@@ -22,6 +22,7 @@ public class GameEnvironment {
     private Inventory<Battle> battles;
     
     private RandomEvent randomEvent;
+    private Score scoreSystem;
     
     private boolean isFinished = false;
     
@@ -55,6 +56,7 @@ public class GameEnvironment {
     	battles = new Inventory<Battle>(5, this);
     	Inventory.randomiseBattles(battles, this);
     	randomEvent = new RandomEvent(this);
+    	scoreSystem = new Score(this);
     };
 
     
@@ -322,6 +324,7 @@ public class GameEnvironment {
     		Inventory.randomiseBattles(battles, this);
 			randomEvent.runAllRandom();
     		Inventory.healAll(myMonsters);
+    		scoreSystem.resetDayBattles();
     	}
     }
     
@@ -394,6 +397,16 @@ public class GameEnvironment {
     	else {    		
     		return getBalance() >= amount;
     	}
+    }
+    
+    public void pickBattle(Battle battle) throws InvalidValueException, InvalidTargetException, PurchasableNotFoundException {
+	battle.play();
+	if(battle.getWinner().name().equals("PLAYER")) {
+	    scoreSystem.addBattlesWon();
+	}
+	else if(battle.getWinner().name().equals("ENEMY")) {
+	    scoreSystem.addBattlesLost();
+	}
     }
     
     
