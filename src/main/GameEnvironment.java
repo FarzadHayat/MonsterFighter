@@ -317,12 +317,7 @@ public class GameEnvironment {
 	 * @throws StatMaxedOutException 
 	 * 
      */
-<<<<<<< HEAD
     public void sleep() throws InventoryFullException, InvalidValueException, StatMaxedOutException, PurchasableNotFoundException {
-    	setDay(getDay() + 1);
-=======
-    public void sleep() throws InventoryFullException, InvalidValueException {
->>>>>>> f5da604c3a33bf6b10f0b6cf6efe2e25e77d96ba
     	checkStatus();
     	if (!getIsFinished()) {
     		setDay(getDay() + 1);
@@ -331,14 +326,11 @@ public class GameEnvironment {
     		myMonsters.healAll();
     		// Random events
     	}
-<<<<<<< HEAD
     	getShop().randomise();
     	battles.randomise();
     	randomEvent.runAllRandom();
     	myMonsters.healAll();
     	// Random events
-=======
->>>>>>> f5da604c3a33bf6b10f0b6cf6efe2e25e77d96ba
     }
     
     
@@ -413,7 +405,7 @@ public class GameEnvironment {
     }
     
     
-    public static void main(String[] args) throws InventoryFullException, InvalidValueException {
+    public static void main(String[] args) throws InventoryFullException, InvalidValueException, StatMaxedOutException, PurchasableNotFoundException {
     	GameEnvironment game = new GameEnvironment();
     	CommandLine commandLine = new CommandLine(game);
     	// The setup

@@ -417,8 +417,10 @@ public class CommandLine {
 	/**
 	 * 
 	 * @throws InventoryFullException
+	 * @throws PurchasableNotFoundException 
+	 * @throws StatMaxedOutException 
 	 */
-    public void run() throws InventoryFullException {
+    public void run() throws InventoryFullException, StatMaxedOutException, PurchasableNotFoundException {
     	while (!game.getIsFinished()) {
     		viewHome();
     		try {
