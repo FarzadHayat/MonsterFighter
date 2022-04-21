@@ -2,14 +2,14 @@ package main;
 
 public class Shop {
 
-    private MonsterInventory monsters;
-    private ItemInventory items;
+    private Inventory<Monster> monsters;
+    private Inventory<Item> items;
     private GameEnvironment game;
     
     
     public Shop(GameEnvironment game) throws InventoryFullException {
-    	monsters = new MonsterInventory(game);
-    	items = new ItemInventory(game);
+    	monsters = new Inventory<Monster> (4, game);
+    	items = new Inventory<Item>(4, game);
     	this.game = game;
     	randomise();
     }
@@ -17,7 +17,7 @@ public class Shop {
 	/**
 	 * @return the monsters
 	 */
-	public MonsterInventory getMonsters() {
+	public Inventory<Monster> getMonsters() {
 		return monsters;
 	}
 
@@ -25,7 +25,7 @@ public class Shop {
 	/**
 	 * @param monsters the monsters to set
 	 */
-	public void setMonsters(MonsterInventory monsters) {
+	public void setMonsters(Inventory<Monster> monsters) {
 		this.monsters = monsters;
 	}
 	
@@ -33,7 +33,7 @@ public class Shop {
 	/**
 	 * @return the items
 	 */
-	public ItemInventory getItems() {
+	public Inventory<Item> getItems() {
 		return items;
 	}
 
@@ -41,7 +41,7 @@ public class Shop {
 	/**
 	 * @param items the items to set
 	 */
-	public void setItems(ItemInventory items) {
+	public void setItems(Inventory<Item> items) {
 		this.items = items;
 	}
 	
@@ -51,8 +51,8 @@ public class Shop {
      * @throws InventoryFullException 
      */
     public void randomise() throws InventoryFullException {
-		monsters.randomise();
-    	items.randomise();
+		Inventory.randomiseMonsters(monsters, game.getAllMonsters());
+    	Inventory.randomiseItems(items, game.getAllItems());
     }
     
     

@@ -2,7 +2,7 @@ package main;
 
 import java.util.*;
 
-public abstract class Monster implements Purchasable {
+public abstract class Monster implements Storable {
 	/**
 	 *	Monster statistic variables 
 	 *
@@ -20,7 +20,7 @@ public abstract class Monster implements Purchasable {
 	private double maxCritRate = 1;
 	private double critMultiplier = 2;
 	private boolean isFainted = false;
-	private GameEnvironment game;
+	protected GameEnvironment game;
 	private double refundAmount = 0.5;
 	private boolean isBuffed = false;
 	
@@ -54,8 +54,7 @@ public abstract class Monster implements Purchasable {
 	public void setName(String name) throws InvalidValueException {
 		name = name.strip();
     	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
-    	if (3 <= name.length() && name.length() <= 15 && name.matches(regex) 
-			&& !game.getMyMonsters().contains(name) && !game.getAllMonsters().contains(name)) {
+    	if (3 <= name.length() && name.length() <= 15 && name.matches(regex)) {
     		this.name = name;
     	}
     	else {    		
@@ -442,4 +441,11 @@ public abstract class Monster implements Purchasable {
     	result += "\n2: Go back";
     	return result;
     }
+    
+    
+    /**
+     * @return monster
+     */
+    public abstract Monster clone();
+    
 }

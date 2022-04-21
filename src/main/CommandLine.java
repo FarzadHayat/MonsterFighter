@@ -1,6 +1,5 @@
 package main;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class CommandLine {
@@ -11,13 +10,6 @@ public class CommandLine {
 	 */
     private Scanner scanner = new Scanner(System.in);
     private GameEnvironment game;
-    private BattleInventory battles;
-    
-    private MonsterInventory myMonsters;
-    private ItemInventory myItems;
-    
-    private MonsterInventory shopMonsters;
-    private ItemInventory shopItems;
     private int selection;
     
     
@@ -31,11 +23,6 @@ public class CommandLine {
      */
     public CommandLine(GameEnvironment game) {
     	this.game = game;
-    	battles = game.getBattles();
-    	myMonsters = game.getMyMonsters();
-    	myItems = game.getMyItems();
-    	shopMonsters = game.getShop().getMonsters();
-    	shopItems = game.getShop().getItems();
     }
     
     
@@ -143,28 +130,28 @@ public class CommandLine {
      * 
      */
 	public void selectStartingMonster() throws InventoryFullException {
-		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
-		while (game.getMyMonsters().size() == 0) {
-			String inputStr = scanner.nextLine();
-			String monsterName = properCase(inputStr);
-			try {
-				if (game.getAllMonsters().contains(monsterName)) {				
-					Class<? extends Monster> clazz = game.getAllMonsters().find(monsterName).getClass();
-					Monster monster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
-					selectMonsterName(monster);
-					game.getMyMonsters().add(monster);
-				}
-				else {
-					throw new PurchasableNotFoundException("Invalid starting monster!");
-				}
-			}
-			catch (PurchasableNotFoundException | InstantiationException | IllegalAccessException
-					| IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-					| SecurityException e) {
-				System.out.println(e.getMessage() + " Try again:");
-			}				
-		}
-		System.out.println(String.format("You chose:\n%s", game.getMyMonsters()));
+//		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
+//		while (game.getMyMonsters().size() == 0) {
+//			String inputStr = scanner.nextLine();
+//			String monsterName = properCase(inputStr);
+//			try {
+//				if (game.getAllMonsters().contains(monsterName)) {				
+//					Class<? extends Monster> clazz = game.getAllMonsters().find(monsterName).getClass();
+//					Monster monster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
+//					selectMonsterName(monster);
+//					game.getMyMonsters().add(monster);
+//				}
+//				else {
+//					throw new PurchasableNotFoundException("Invalid starting monster!");
+//				}
+//			}
+//			catch (PurchasableNotFoundException | InstantiationException | IllegalAccessException
+//					| IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+//					| SecurityException e) {
+//				System.out.println(e.getMessage() + " Try again:");
+//			}				
+//		}
+//		System.out.println(String.format("You chose:\n%s", game.getMyMonsters()));
 	}
 	/**
 	 * Select the name of the monster 
@@ -207,10 +194,10 @@ public class CommandLine {
 					selection = scanner.nextInt();
 					switch (selection) {
 						case 1, 2, 3, 4:
-							viewMonster(shopMonsters.get(selection - 1));
+							viewMonster(game.getShop().getMonsters().get(selection - 1));
 							break;
 						case 5, 6, 7, 8:
-							viewItem(shopItems.get(selection - 5));
+							viewItem(game.getShop().getItems().get(selection - 5));
 							break;
 						case 9:
 							break outer;
@@ -235,10 +222,10 @@ public class CommandLine {
 					selection = scanner.nextInt();
 					switch (selection) {
 						case 1:
-							if (myMonsters.contains(monster)) {
+							if (game.getMyMonsters().contains(monster)) {
 								System.out.println(monster.sell());
 							}
-							if (shopMonsters.contains(monster)) {							
+							if (game.getShop().getMonsters().contains(monster)) {							
 								System.out.println(monster.buy());
 							}
 						case 2:
@@ -266,10 +253,10 @@ public class CommandLine {
 					selection = scanner.nextInt();
 					switch (selection) {
 						case 1:
-							if (myItems.contains(item)) {
+							if (game.getMyItems().contains(item)) {
 								System.out.println(item.sell());
 							}
-							if (shopItems.contains(item)) {							
+							if (game.getShop().getItems().contains(item)) {							
 								System.out.println(item.buy());
 							}
 						case 2:
@@ -288,14 +275,14 @@ public class CommandLine {
     
     public void viewBattles() {
 		while (true) {
-			System.out.println(battles);
+			System.out.println(game.getBattles());
 			try {
 				selection = scanner.nextInt();
-				if (battles.size() == selection - 1) {
+				if (game.getBattles().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= battles.size()) {
-					viewBattle(battles.get(selection - 1));
+				if (0 < selection && selection <= game.getBattles().size()) {
+					viewBattle(game.getBattles().get(selection - 1));
 				}
 				else {
 					throw new IllegalArgumentException();
@@ -327,7 +314,7 @@ public class CommandLine {
     				}
     			}
     			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
-    					InvalidValueException | InvalidTargetException e) {
+    					InvalidValueException | InvalidTargetException | PurchasableNotFoundException e) {
     				System.out.println("Command not found! Try again:");
     				scanner.next();
     			}
@@ -340,14 +327,14 @@ public class CommandLine {
      */
     public void viewTeam() {
 		while (true) {
-	    	System.out.println(myMonsters.view());
+	    	System.out.println(game.getMyMonsters().view("MY TEAM"));
 			try {
 				selection = scanner.nextInt();
-				if (myMonsters.size() == selection - 1) {
+				if (game.getMyMonsters().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= myMonsters.size()) {
-					viewMonster(myMonsters.get(selection - 1));
+				if (0 < selection && selection <= game.getMyMonsters().size()) {
+					viewMonster(game.getMyMonsters().get(selection - 1));
 				}
 				else {
 					throw new IllegalArgumentException();
@@ -366,14 +353,14 @@ public class CommandLine {
      */
     public void viewInventory() {
 		while (true) {
-	    	System.out.println(myItems.view());
+	    	System.out.println(game.getMyItems().view("MY INVENTORY"));
 			try {
 				selection = scanner.nextInt();
-				if (myItems.size() == selection - 1) {
+				if (game.getMyItems().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= myItems.size()) {
-					viewItem(myItems.get(selection - 1));
+				if (0 < selection && selection <= game.getMyItems().size()) {
+					viewItem(game.getMyItems().get(selection - 1));
 				}
 				else {
 					throw new IllegalArgumentException();

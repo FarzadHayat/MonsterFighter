@@ -12,7 +12,7 @@ import main.*;
 class ItemTest {
 	
 	private GameEnvironment game;
-	private ItemInventory myItems;
+	private Inventory<Item> myItems;
 	
 	
 	@BeforeEach
@@ -53,8 +53,8 @@ class ItemTest {
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
 		// Inventory full	
 		Item testItem = new IncreaseHealth(game);
-		game.setBalance(testItem.getCost() * (myItems.getInventorySize() + 1));
-		for (int i = 0; i < myItems.getInventorySize(); i++) {			
+		game.setBalance(testItem.getCost() * (myItems.getMaxSize() + 1));
+		for (int i = 0; i < myItems.getMaxSize(); i++) {			
 			testItem.buy();
 		}
 		try {    		
@@ -99,7 +99,7 @@ class ItemTest {
 	
 	@Test
 	public void testSell3() throws PurchasableNotFoundException, InsufficientFundsException, InventoryFullException, InvalidValueException {
-		// Purchasable not found in inventory
+		// Storable not found in inventory
 		Item testItem1 = new IncreaseHealth(game);
 		Item testItem2 = new IncreaseHealth(game);
 		game.setBalance(testItem1.getCost());

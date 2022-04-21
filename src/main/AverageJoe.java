@@ -48,4 +48,13 @@ public class AverageJoe extends Monster{
     	setHealAmount(getHealAmount()+levelUpHealAmount);
     	setHealth(getHealth()+levelUpHealth);
     }
+    
+    
+    /**
+     * @return new AverageJoe instance
+     */
+    public Monster clone() {
+    	return new AverageJoe(game);
+    }
+    
 }

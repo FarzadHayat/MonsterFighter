@@ -50,6 +50,13 @@ public class Zap extends Monster {
     	setCritRate(newCritRate);
     	setHealth(getHealth()+levelUpHealth);
     }
-
+    
+    
+    /**
+     * @return new Zap instance
+     */
+    public Monster clone() {
+    	return new Zap(game);
+    }
 
 }

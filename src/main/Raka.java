@@ -98,6 +98,13 @@ public class Raka extends Monster {
     	setHealAmount(getHealAmount()+levelUpHealAmount);
     	setHealth(getHealth()+levelUpHealth);
     }
-
-
+    
+    
+    /**
+     * @return new Raka instance
+     */
+    public Monster clone() {
+    	return new Raka(game);
+    }
+    
 }

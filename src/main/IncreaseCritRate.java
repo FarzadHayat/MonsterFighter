@@ -69,5 +69,13 @@ public class IncreaseCritRate extends Item {
     	monster.setCritRate(newCritRate);
     	game.getMyItems().remove(this);
     }
-
+    
+    
+    /**
+     * @return new IncreaseCritRate instance
+     */
+    public Item clone() {
+    	return new IncreaseCritRate(game);
+    }
+    
 }

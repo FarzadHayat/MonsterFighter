@@ -12,7 +12,7 @@ import main.*;
 class ItemInventoryTest {
 	
 	private GameEnvironment game;
-	private ItemInventory myItems;
+	private Inventory<Item> myItems;
 
 	
 	@BeforeEach
@@ -37,7 +37,7 @@ class ItemInventoryTest {
 	public void testAddItem2() throws InventoryFullException {
 		// Inventory full
 		Item testItem = new IncreaseHealth(game);
-		for (int i = 0; i < myItems.getInventorySize(); i++) {			
+		for (int i = 0; i < myItems.getMaxSize(); i++) {			
 			myItems.add(testItem);
 		}
 		try {    		
@@ -78,7 +78,7 @@ class ItemInventoryTest {
 	
 	@Test
 	public void testRemoveItem3() throws PurchasableNotFoundException, InventoryFullException {
-		// Purchasable not found in inventory
+		// Storable not found in inventory
 		Item testItem1 = new IncreaseHealth(game);
 		Item testItem2 = new IncreaseHealth(game);
 		myItems.add(testItem2);
@@ -94,13 +94,13 @@ class ItemInventoryTest {
 	@Test
 	void testItemsFull() throws InventoryFullException {
 		Item testItem = new IncreaseHealth(game);
-		assertFalse(myItems.isFull());
+		assertFalse(myItems.full());
 		myItems.add(testItem);
 		myItems.add(testItem);
 		myItems.add(testItem);
-		assertFalse(myItems.isFull());
+		assertFalse(myItems.full());
 		myItems.add(testItem);
-		assertTrue(myItems.isFull());
+		assertTrue(myItems.full());
 	}
 
 }

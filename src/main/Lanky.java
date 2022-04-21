@@ -48,6 +48,13 @@ public class Lanky extends Monster {
     	setHealAmount(getHealAmount()+levelUpHealAmount);
     	setHealth(getHealth()+levelUpHealth);
     }
-
-
+    
+    
+    /**
+     * @return new Lanky instance
+     */
+    public Monster clone() {
+    	return new Lanky(game);
+    }
+    
 }

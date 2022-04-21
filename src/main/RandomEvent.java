@@ -60,10 +60,9 @@ public class RandomEvent {
 
     public void randomMonsterJoin() throws InventoryFullException {
 	Monster randomMonster = game.getAllMonsters().random();
-		
 	double randomValue = rn.nextDouble(1);
 	
-	if(randomValue <= joinChance && !game.getMyMonsters().isFull()) {
+	if(randomValue <= joinChance && !game.getMyMonsters().full()) {
 	    game.getMyMonsters().add(randomMonster);
 	}	
     }
@@ -78,7 +77,7 @@ public class RandomEvent {
 	    }
 	    randomMonsterLeave(monster);
 	}
-	for(int i = 0; i < game.getMyMonsters().getInventorySize()-game.getMyMonsters().size(); i++) {
+	for(int i = 0; i < game.getMyMonsters().getMaxSize() - game.getMyMonsters().size(); i++) {
 	    randomMonsterJoin();
 	}
     }

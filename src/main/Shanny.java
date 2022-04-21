@@ -47,6 +47,13 @@ public class Shanny extends Monster {
     	setHealAmount(getHealAmount()+levelUpHealAmount);
     	setHealth(getHealth()+levelUpHealth);
     }
-
+    
+    
+    /**
+     * @return new Shanny instance
+     */
+    public Monster clone() {
+    	return new Shanny(game);
+    }
 
 }

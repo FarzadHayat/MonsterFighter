@@ -1,6 +1,6 @@
 package main;
 
-abstract public class Item implements Purchasable {
+abstract public class Item implements Storable {
 
 	/**
 	 * Fields
@@ -183,5 +183,11 @@ abstract public class Item implements Purchasable {
     	result += "\n2: Go back";
     	return result;
     }
+    
+    
+    /**
+     * @return item
+     */
+    public abstract Item clone();
     
 }

@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.AverageJoe;
-import main.GameEnvironment;
-import main.Monster;
-import main.StatMaxedOutException;
+import main.*;
 
 class AverageJoeTest {
 

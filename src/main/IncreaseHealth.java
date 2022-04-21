@@ -69,4 +69,13 @@ public class IncreaseHealth extends Item {
     	monster.setHealth(newHealth);
     	game.getMyItems().remove(this);
     }
+    
+    
+    /**
+     * @return new IncreaseHealth instance
+     */
+    public Item clone() {
+    	return new IncreaseHealth(game);
+    }
+    
 }

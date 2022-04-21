@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.Chunky;
-import main.GameEnvironment;
-import main.Lanky;
-import main.StatMaxedOutException;
+import main.*;
 
 class LankyTest {
 

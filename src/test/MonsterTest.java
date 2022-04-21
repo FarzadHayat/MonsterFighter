@@ -12,7 +12,7 @@ import main.*;
 class MonsterTest {
 
 	private GameEnvironment game;
-	private MonsterInventory myMonsters;
+	private Inventory<Monster> myMonsters;
 	private Monster monster;
 	
 	@BeforeEach
@@ -173,7 +173,7 @@ class MonsterTest {
 	
 	@Test
 	public void testSell3() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
-		//Purchasable not found in inventory
+		//Storable not found in inventory
 		game.setBalance(monster.getCost());
 		try {
 			monster.sell();

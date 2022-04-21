@@ -49,5 +49,13 @@ public class Chunky extends Monster {
     	setHealAmount(getHealAmount()+levelUpHealAmount);
     	setHealth(getHealth()+levelUpHealth);
     }
+    
+    
+    /**
+     * @return new Chunky instance
+     */
+    public Monster clone() {
+    	return new Chunky(game);
+    }
 
 }

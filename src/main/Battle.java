@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Random;
+
 /**
  * Class Battle
  * The player will have at most four monsters.
@@ -8,7 +10,7 @@ Once the player has picked a battle,
  * order. The attacks will take turn one by the player and one by the computer
  * until one team has fainted all monsters.
  */
-public class Battle {
+public class Battle implements Storable {
 	
     /** 
      * Variables
@@ -17,8 +19,8 @@ public class Battle {
     private Turn currentTurn;
     private Turn winner;
     private GameEnvironment game;
-    private MonsterInventory enemyMonsters;
-    private MonsterInventory playerMonsters;
+    private Inventory<Monster> enemyMonsters;
+    private Inventory<Monster> playerMonsters;
     
     
     private enum Turn {
@@ -34,11 +36,11 @@ public class Battle {
     public Battle (GameEnvironment game) {
     	this.game = game;
     	playerMonsters = game.getMyMonsters();
-    	enemyMonsters = new MonsterInventory(game);
+    	enemyMonsters = new Inventory<Monster>(4, game);
     };
     
     
-    public Battle (GameEnvironment game, MonsterInventory monsterInventory) {
+    public Battle (GameEnvironment game, Inventory<Monster> monsterInventory) {
     	this.game = game;
     	playerMonsters = game.getMyMonsters();
     	enemyMonsters = monsterInventory;
@@ -90,7 +92,7 @@ public class Battle {
     /**
 	 * @return the enemyMonsters
 	 */
-	public MonsterInventory getEnemyMonsters() {
+	public Inventory<Monster> getEnemyMonsters() {
 		return enemyMonsters;
 	}
 
@@ -98,7 +100,7 @@ public class Battle {
 	/**
 	 * @param enemyMonsters the enemyMonsters to set
 	 */
-	public void setEnemyMonsters(MonsterInventory enemyMonsters) {
+	public void setEnemyMonsters(Inventory<Monster> enemyMonsters) {
 		this.enemyMonsters = enemyMonsters;
 	}
 
@@ -106,7 +108,7 @@ public class Battle {
 	/**
 	 * @return the playerMonsters
 	 */
-	public MonsterInventory getPlayerMonsters() {
+	public Inventory<Monster> getPlayerMonsters() {
 		return playerMonsters;
 	}
 
@@ -114,7 +116,7 @@ public class Battle {
 	/**
 	 * @param playerMonsters the playerMonsters to set
 	 */
-	public void setPlayerMonsters(MonsterInventory playerMonsters) {
+	public void setPlayerMonsters(Inventory<Monster> playerMonsters) {
 		this.playerMonsters = playerMonsters;
 	}
 
@@ -124,6 +126,24 @@ public class Battle {
      * 
      * */
     
+	
+	public Monster random(Inventory<Monster> inventory) {
+		Random random = new Random();
+    	boolean found = false;
+    	Monster monster = null;
+    	
+    	while (!found) {
+    		int index = random.nextInt(inventory.size());
+    		monster = inventory.get(index);
+    		if (!monster.getIsFainted()) {
+    			found = true;
+    		}
+    	}
+    	
+		return monster;
+	}
+	
+	
     /**
      * choose a random player monster to attack a random enemy monster
 	 * and turn over to the enemy
@@ -132,8 +152,8 @@ public class Battle {
      */
     public void playerAttack() throws InvalidValueException, InvalidTargetException
     {
-    	Monster playerMonster = getPlayerMonsters().random();
-    	Monster enemyMonster = getEnemyMonsters().random();
+    	Monster playerMonster = random(getPlayerMonsters());
+    	Monster enemyMonster = random(getEnemyMonsters());
     	int damageDealt = playerMonster.attack(enemyMonster);
     	currentTurn = Turn.ENEMY;
     	
@@ -157,8 +177,8 @@ public class Battle {
      */
     public void enemyAttack() throws InvalidValueException, InvalidTargetException
     {
-    	Monster enemyMonster = getEnemyMonsters().random();
-    	Monster playerMonster = getPlayerMonsters().random();
+    	Monster enemyMonster = random(getEnemyMonsters());
+    	Monster playerMonster = random(getPlayerMonsters());
     	int damageDealt = enemyMonster.attack(playerMonster);
     	currentTurn = Turn.PLAYER;
     	
@@ -181,8 +201,9 @@ public class Battle {
      * Repeat until one side's team is all fainted.
      * @throws InvalidValueException 
      * @throws InvalidTargetException 
+     * @throws PurchasableNotFoundException 
      */
-    public void play() throws InvalidValueException, InvalidTargetException
+    public void play() throws InvalidValueException, InvalidTargetException, PurchasableNotFoundException
     {
     	currentTurn = Turn.PLAYER;
     	
@@ -207,10 +228,10 @@ public class Battle {
      * If the enemy's monsters have all fainted, then the player wins.
      */
     public void checkStatus() {
-    	if (playerMonsters.allFainted()) {
+    	if (Inventory.allFainted(enemyMonsters)) {
     		lose();
     	}
-    	if (enemyMonsters.allFainted()) {
+    	if (Inventory.allFainted(enemyMonsters)) {
     		win();
     	}
     }
@@ -254,5 +275,11 @@ public class Battle {
     	result += "\n2: Go back";
     	return result;
     }
+
+
+	@Override
+	public String getName() {
+		return null;
+	}
 
 }

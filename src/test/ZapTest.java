@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.GameEnvironment;
-import main.Shanny;
-import main.StatMaxedOutException;
-import main.Zap;
+import main.*;
 
 class ZapTest {
 

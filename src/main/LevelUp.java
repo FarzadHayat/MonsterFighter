@@ -39,6 +39,13 @@ public class LevelUp extends Item {
     	monster.levelUp();
     	game.getMyItems().remove(this);
     }
-
+    
+    
+    /**
+     * @return new LevelUp instance
+     */
+    public Item clone() {
+    	return new LevelUp(game);
+    }
 
 }

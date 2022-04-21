@@ -12,7 +12,7 @@ import main.*;
 class MonsterInventoryTest {
 	
 	private GameEnvironment game;
-	private MonsterInventory myMonsters;
+	private Inventory<Monster> myMonsters;
 
 	
 	@BeforeEach
@@ -37,7 +37,7 @@ class MonsterInventoryTest {
 	public void testAddMonster2() throws InventoryFullException {
 		// Inventory full
 		Monster testMonster = new Chunky(game);
-		for (int i = 0; i < myMonsters.getInventorySize(); i++) {			
+		for (int i = 0; i < myMonsters.getMaxSize(); i++) {			
 			myMonsters.add(testMonster);
 		}
 		try {    		
@@ -78,7 +78,7 @@ class MonsterInventoryTest {
 	
 	@Test
 	public void testRemoveMonster3() throws PurchasableNotFoundException, InventoryFullException {
-		// Purchasable not found in inventory
+		// Storable not found in inventory
 		Monster testMonster1 = new Chunky(game);
 		Monster testMonster2 = new Chunky(game);
 		myMonsters.add(testMonster2);
@@ -94,13 +94,13 @@ class MonsterInventoryTest {
 	@Test
 	void testMonstersFull() throws InventoryFullException {
 		Monster testMonster = new Chunky(game);
-		assertFalse(myMonsters.isFull());
+		assertFalse(myMonsters.full());
 		myMonsters.add(testMonster);
 		myMonsters.add(testMonster);
 		myMonsters.add(testMonster);
-		assertFalse(myMonsters.isFull());
+		assertFalse(myMonsters.full());
 		myMonsters.add(testMonster);
-		assertTrue(myMonsters.isFull());
+		assertTrue(myMonsters.full());
 	}
 
 }

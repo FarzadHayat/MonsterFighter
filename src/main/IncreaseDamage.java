@@ -56,5 +56,13 @@ public class IncreaseDamage extends Item {
     	monster.setDamage(monster.getDamage() + damageIncrease);
     	game.getMyItems().remove(this);
     }
+    
+    
+    /**
+     * @return new IncreaseDamage instance
+     */
+    public Item clone() {
+    	return new IncreaseDamage(game);
+    }
 
 }
