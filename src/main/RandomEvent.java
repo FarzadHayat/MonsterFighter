@@ -8,6 +8,7 @@ public class RandomEvent {
     private double leaveChance;
     private double joinChance;
     private GameEnvironment game;
+    private double leaveIncrement = 2.0;
     Random rn = new Random();
     
     public RandomEvent(GameEnvironment game) {
@@ -38,19 +39,18 @@ public class RandomEvent {
 	this.joinChance = joinChance;
     }
     
-    public void randomMonsterLevelUp() throws StatMaxedOutException {
+    public void randomMonsterLevelUp(Monster monster) throws StatMaxedOutException {
 	//Possible mechanism: levelUpChance increases with the number of battles won in a day
-	Monster randomMyMonster = game.getMyMonsters().random();
 	double randomValue = rn.nextDouble(1);
 	if(randomValue <= levelUpChance) {
-	    randomMyMonster.levelUp();
+	    monster.levelUp();
 	}
     }
     
     public void randomMonsterLeave(Monster monster) throws PurchasableNotFoundException {
 	//If monster fainted during any battle in the day, leaveChance is doubled 
 	if(monster.getIsFainted()) {
-	    leaveChance *= 2.0;
+	    leaveChance *= leaveIncrement;
 	}
 	double randomValue = rn.nextDouble(1);
 	if(randomValue <= leaveChance) {
@@ -60,30 +60,26 @@ public class RandomEvent {
 
     public void randomMonsterJoin() throws InventoryFullException {
 	Monster randomMonster = game.getAllMonsters().random();
-	
-	int currentTeamSize = game.getMyMonsters().size();
-	double resetValue = joinChance;
-	
-	//The chance of a monster joining the team increases with less monsters being in the team 
-	joinChance /= (currentTeamSize/game.getMyMonsters().getInventorySize());
+		
 	double randomValue = rn.nextDouble(1);
 	
 	if(randomValue <= joinChance && !game.getMyMonsters().isFull()) {
 	    game.getMyMonsters().add(randomMonster);
-	}
-	
-	setJoinChance(resetValue);
+	}	
     }
     
     public void runAllRandom() throws StatMaxedOutException, PurchasableNotFoundException, InventoryFullException {
-	randomMonsterLevelUp();
 	for(Monster monster: game.getMyMonsters().getList()) {
+	    randomMonsterLevelUp(monster);
+	}
+	for(Monster monster: game.getMyMonsters().getList()) {
+	    if(game.getMyMonsters().size() <= 1) {
+		break;
+	    }
 	    randomMonsterLeave(monster);
 	}
-	randomMonsterJoin();
-    }
-    
-    public static void main(String[]args) {
-	
+	for(int i = 0; i < game.getMyMonsters().getInventorySize()-game.getMyMonsters().size(); i++) {
+	    randomMonsterJoin();
+	}
     }
 }
