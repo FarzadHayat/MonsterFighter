@@ -3,8 +3,6 @@ package main;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-import main.GameEnvironment.Difficulty;
-
 public class CommandLine {
 
 	/**
@@ -248,7 +246,8 @@ public class CommandLine {
 					}
 				}
 				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
-						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException e) {
+						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException | 
+						InvalidValueException e) {
 					System.out.println("Command not found! Try again:");
 					scanner.next();
 				}
@@ -278,7 +277,8 @@ public class CommandLine {
 					}
 				}
 				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
-						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException e) {
+						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException | 
+						InvalidValueException e) {
 					System.out.println("Command not found! Try again:");
 					scanner.next();
 				}
@@ -419,7 +419,7 @@ public class CommandLine {
 	 * @throws InventoryFullException
 	 */
     public void run() throws InventoryFullException {
-    	while (!game.isFinished()) {
+    	while (!game.getIsFinished()) {
     		viewHome();
     		try {
     			selection = scanner.nextInt();

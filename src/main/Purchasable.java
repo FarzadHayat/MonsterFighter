@@ -8,15 +8,17 @@ public interface Purchasable {
 	 * @throws InventoryFullException 
 	 * @throws InsufficientFundsException 
 	 * @throws PurchasableNotFoundException 
+	 * @throws InvalidValueException 
      */
-	public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException;
+	public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException;
 	
 	
 	/**
      * Sell an purchasable to the shop and removes it from the player inventory.
 	 * @return 
 	 * @throws PurchasableNotFoundException 
+	 * @throws InvalidValueException 
      */
-	public String sell() throws PurchasableNotFoundException;
+	public String sell() throws PurchasableNotFoundException, InvalidValueException;
 
 }

@@ -120,8 +120,9 @@ abstract public class Item implements Purchasable {
      * @throws InsufficientFundsException cost of item is more than player balance error
      * @throws InventoryFullException inventory is full error
      * @throws PurchasableNotFoundException 
+     * @throws InvalidValueException 
      */
-    public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException
+    public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException
     {
     	game.minusBalance(cost);
 		game.getMyItems().add(this);
@@ -135,8 +136,9 @@ abstract public class Item implements Purchasable {
     /**
      * sell this item back to the shop for a partial refund and remove it from the player inventory
      * @throws PurchasableNotFoundException item was not found in the player inventory error
+     * @throws InvalidValueException 
      */
-    public String sell() throws PurchasableNotFoundException
+    public String sell() throws PurchasableNotFoundException, InvalidValueException
     {
     	game.addBalance(cost * refundAmount);
     	game.getMyItems().remove(this);
