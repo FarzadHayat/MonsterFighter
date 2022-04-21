@@ -13,6 +13,11 @@ public class CommandLine {
 	 */
     private Scanner scanner = new Scanner(System.in);
     private GameEnvironment game;
+    private BattleInventory battles;
+    
+    private MonsterInventory myMonsters;
+    private ItemInventory myItems;
+    
     private MonsterInventory shopMonsters;
     private ItemInventory shopItems;
     private int selection;
@@ -28,6 +33,9 @@ public class CommandLine {
      */
     public CommandLine(GameEnvironment game) {
     	this.game = game;
+    	battles = game.getBattles();
+    	myMonsters = game.getMyMonsters();
+    	myItems = game.getMyItems();
     	shopMonsters = game.getShop().getMonsters();
     	shopItems = game.getShop().getItems();
     }
@@ -229,7 +237,7 @@ public class CommandLine {
 					selection = scanner.nextInt();
 					switch (selection) {
 						case 1:
-							if (game.getMyMonsters().contains(monster)) {
+							if (myMonsters.contains(monster)) {
 								System.out.println(monster.sell());
 							}
 							if (shopMonsters.contains(monster)) {							
@@ -259,7 +267,7 @@ public class CommandLine {
 					selection = scanner.nextInt();
 					switch (selection) {
 						case 1:
-							if (game.getMyItems().contains(item)) {
+							if (myItems.contains(item)) {
 								System.out.println(item.sell());
 							}
 							if (shopItems.contains(item)) {							
@@ -279,27 +287,25 @@ public class CommandLine {
     
     
     public void viewBattles() {
-    	outer:
-			while (true) {
-				System.out.println(game.getBattles());
-				try {
-					selection = scanner.nextInt();
-					if (game.getMyItems().size() == selection - 1) {
-						break;
-					}
-					switch (selection) {
-						case 1, 2, 3, 4, 5:
-							viewBattle(game.getBattles().get(selection - 1));
-							break;
-						case 6:
-							break outer;
-					}
+		while (true) {
+			System.out.println(battles);
+			try {
+				selection = scanner.nextInt();
+				if (battles.size() == selection - 1) {
+					break;
 				}
-				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
-					System.out.println("Command not found! Try again:");
-					scanner.next();
+				if (0 < selection && selection <= battles.size()) {
+					viewBattle(battles.get(selection - 1));
+				}
+				else {
+					throw new IllegalArgumentException();
 				}
 			}
+			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
+				System.out.println("Command not found! Try again:");
+				scanner.next();
+			}
+		}
     }
     
     
@@ -333,27 +339,25 @@ public class CommandLine {
      * View my monsters
      */
     public void viewTeam() {
-    	outer:
-			while (true) {
-		    	System.out.println(game.getMyMonsters().view());
-				try {
-					selection = scanner.nextInt();
-					if (game.getMyMonsters().size() == selection - 1) {
-						break;
-					}
-					switch (selection) {
-						case 1, 2, 3, 4:
-							viewMonster(game.getMyMonsters().get(selection - 1));
-							break;
-						case 5:
-							break outer;
-					}
+		while (true) {
+	    	System.out.println(myMonsters.view());
+			try {
+				selection = scanner.nextInt();
+				if (myMonsters.size() == selection - 1) {
+					break;
 				}
-				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
-					System.out.println("Command not found! Try again:");
-					scanner.next();
+				if (0 < selection && selection <= myMonsters.size()) {
+					viewMonster(myMonsters.get(selection - 1));
+				}
+				else {
+					throw new IllegalArgumentException();
 				}
 			}
+			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
+				System.out.println("Command not found! Try again:");
+				scanner.next();
+			}
+		}
     }
 
 
@@ -361,27 +365,25 @@ public class CommandLine {
      * View my items
      */
     public void viewInventory() {
-    	outer:
-			while (true) {
-		    	System.out.println(game.getMyItems().view());
-				try {
-					selection = scanner.nextInt();
-					if (game.getMyItems().size() == selection - 1) {
-						break;
-					}
-					switch (selection) {
-						case 1, 2, 3, 4:							
-							viewItem(game.getMyItems().get(selection - 1));
-							break;
-						case 5:
-							break outer;
-					}
+		while (true) {
+	    	System.out.println(myItems.view());
+			try {
+				selection = scanner.nextInt();
+				if (myItems.size() == selection - 1) {
+					break;
 				}
-				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
-					System.out.println("Command not found! Try again:");
-					scanner.next();
+				if (0 < selection && selection <= myItems.size()) {
+					viewItem(myItems.get(selection - 1));
+				}
+				else {
+					throw new IllegalArgumentException();
 				}
 			}
+			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
+				System.out.println("Command not found! Try again:");
+				scanner.next();
+			}
+		}
     }
     
     
