@@ -363,8 +363,9 @@ public abstract class Monster implements Purchasable {
      * @throws InsufficientFundsException cost of item is more than player balance error
      * @throws InventoryFullException inventory is full error
      * @throws PurchasableNotFoundException 
+     * @throws InvalidValueException 
      */
-	public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException{
+	public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException{
 		game.minusBalance(cost);
 		game.getMyMonsters().add(this);
 		int index = game.getShop().getMonsters().indexOf(this);
@@ -376,8 +377,9 @@ public abstract class Monster implements Purchasable {
     /**
      * Sell monster back to the shop for a partial refund and removes the monster from the player's inventory
      * @throws PurchasableNotFoundException monster was not found in the player inventory error
+     * @throws InvalidValueException 
      */
-	public String sell() throws PurchasableNotFoundException {
+	public String sell() throws PurchasableNotFoundException, InvalidValueException {
 		game.addBalance(cost * refundAmount);
 		game.getMyMonsters().remove(this);
 		return "You sold: " + name;

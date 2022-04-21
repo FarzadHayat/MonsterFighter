@@ -75,9 +75,15 @@ public class GameEnvironment {
     /**
      * Set the value of balance
      * @param balance the new value of balance
+     * @throws InvalidValueException 
      */
-    public void setBalance (double balance) {
-    	this.balance = balance;
+    public void setBalance (double balance) throws InvalidValueException {
+    	if (0 > balance) {
+    		throw new InvalidValueException("Balance cannot be a negative value!");
+    	}
+    	else {
+    		this.balance = balance;    		
+    	}
     }
 
     
@@ -268,7 +274,7 @@ public class GameEnvironment {
 	/**
 	 * @return the isFinished
 	 */
-	public boolean isFinished() {
+	public boolean getIsFinished() {
 		return isFinished;
 	}
 
@@ -293,15 +299,14 @@ public class GameEnvironment {
 	 * 
      */
     public void sleep() throws InventoryFullException, InvalidValueException {
-    	setDay(getDay() + 1);
     	checkStatus();
-    	if (isFinished() && day > numDays) {
-    		setDay(getNumDays());
+    	if (!getIsFinished()) {
+    		setDay(getDay() + 1);
+    		getShop().randomise();
+    		battles.randomise();
+    		myMonsters.healAll();
+    		// Random events
     	}
-    	getShop().randomise();
-    	battles.randomise();
-    	myMonsters.healAll();
-    	// Random events
     }
     
     
@@ -322,18 +327,22 @@ public class GameEnvironment {
     	else {
     		stalemate = false;
     	}
-    	if (day > numDays || stalemate) {
-    		setFinished(true);
-    	}
+    	setFinished(day >= numDays || stalemate);
     }
 		
 
     /**
      * Add to the player balance
      * @param amount
+     * @throws InvalidValueException 
      */
-    public void addBalance(double amount) {
-		balance += amount;
+    public void addBalance(double amount) throws InvalidValueException {
+    	if (0 > amount) {
+    		throw new InvalidValueException("Cannot be a negative value!");
+    	}
+    	else {    		
+    		setBalance(getBalance() + amount);
+    	}
     }
     
     
@@ -341,10 +350,14 @@ public class GameEnvironment {
      * Remove from the player balance
      * @param amount
      * @throws InsufficientFundsException
+     * @throws InvalidValueException 
      */
-    public void minusBalance(double amount) throws InsufficientFundsException {
+    public void minusBalance(double amount) throws InsufficientFundsException, InvalidValueException {
+    	if (0 > amount) {
+    		throw new InvalidValueException("Cannot be a negative value!");
+    	}
 		if (balanceSufficient(amount)) {
-			balance -= amount;
+			setBalance(getBalance() - amount);
     	}
     	else {
     		throw new InsufficientFundsException("Insufficient funds!");
@@ -356,9 +369,15 @@ public class GameEnvironment {
      * Returns whether balance is sufficient for the given cost
      * @param amount the cost
      * @return whether balance is sufficient
+     * @throws InvalidValueException 
      */
-    public boolean balanceSufficient(double amount) {
-    	return balance >= amount;
+    public boolean balanceSufficient(double amount) throws InvalidValueException {
+    	if (0 > amount) {
+    		throw new InvalidValueException("Cannot be a negative value!");
+    	}
+    	else {    		
+    		return getBalance() >= amount;
+    	}
     }
     
     

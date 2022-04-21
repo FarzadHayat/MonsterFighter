@@ -106,7 +106,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy1() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException {
+	public void testBuy1() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
 		//Blue sky
 		game.setBalance(monster.getCost());
 		monster.buy();
@@ -117,7 +117,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy2() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException {
+	public void testBuy2() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
 		//Insufficient fund in player's balance 
 		game.setBalance(monster.getCost()/2);
 		try {
@@ -129,7 +129,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy3() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException {
+	public void testBuy3() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
 		//Inventory full
 		game.setBalance(monster.getCost()*5);
 		for(int i = 0; i < 4; i++) {
@@ -144,7 +144,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testSell1() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
+	public void testSell1() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Blue sky
 		game.setBalance(monster.getCost());
 		Monster testMonster = new AverageJoe(game);
@@ -156,7 +156,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testSell2() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
+	public void testSell2() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Multiple items of same type
 		game.setBalance(monster.getCost()*3);
 		Monster testMonster = new AverageJoe(game);
@@ -172,7 +172,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testSell3() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException {
+	public void testSell3() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Purchasable not found in inventory
 		game.setBalance(monster.getCost());
 		try {
