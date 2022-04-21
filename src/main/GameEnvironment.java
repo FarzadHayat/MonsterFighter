@@ -14,12 +14,6 @@ public class GameEnvironment {
     private int day;
     private Difficulty difficulty;
     
-    protected enum Difficulty {
-    	EASY,
-    	NORMAL,
-    	HARD
-    }
-    
     private MonsterInventory myMonsters;
     private ItemInventory myItems;
     

@@ -3,8 +3,6 @@ package main;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
-import main.GameEnvironment.Difficulty;
-
 public class CommandLine {
 
 	/**
