@@ -301,6 +301,20 @@ public class GameEnvironment {
 	public void setFinished(boolean isFinished) {
 		this.isFinished = isFinished;
 	}
+	
+	/**
+	 * @return the scoreSystem
+	 */
+	public Score getScoreSystem() {
+	    return scoreSystem;
+	}
+	
+	/**
+	 * @param scoreSystem the Score class to set
+	 */
+	public void setScoreSystem(Score scoreSystem) {
+	    this.scoreSystem = scoreSystem;
+	}
 
 	
 	/**
@@ -399,6 +413,13 @@ public class GameEnvironment {
     	}
     }
     
+    /**
+     * Plays a battle and adds the win/lost to the score 
+     * @param battle picked battle
+     * @throws InvalidValueException
+     * @throws InvalidTargetException
+     * @throws PurchasableNotFoundException
+     */
     public void pickBattle(Battle battle) throws InvalidValueException, InvalidTargetException, PurchasableNotFoundException {
 	battle.play();
 	if(battle.getWinner().name().equals("PLAYER")) {

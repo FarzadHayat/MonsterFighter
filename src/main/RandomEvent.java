@@ -9,6 +9,7 @@ public class RandomEvent {
     private double joinChance;
     private GameEnvironment game;
     private double leaveIncrement = 2.0;
+    private double levelUpIncrement = 0.1;
     Random rn = new Random();
     
     public RandomEvent(GameEnvironment game) {
@@ -40,14 +41,18 @@ public class RandomEvent {
     }
     
     public void randomMonsterLevelUp(Monster monster) throws StatMaxedOutException {
+	double resetValue = levelUpChance;
 	//Possible mechanism: levelUpChance increases with the number of battles won in a day
+	levelUpChance += levelUpIncrement*game.getScoreSystem().getDayBattlesWon();
 	double randomValue = rn.nextDouble(1);
 	if(randomValue <= levelUpChance) {
 	    monster.levelUp();
 	}
+	setLevelUpChance(resetValue);
     }
     
     public void randomMonsterLeave(Monster monster) throws PurchasableNotFoundException {
+	double resetValue = leaveChance;
 	//If monster fainted during any battle in the day, leaveChance is doubled 
 	if(monster.getIsFainted()) {
 	    leaveChance *= leaveIncrement;
@@ -56,6 +61,7 @@ public class RandomEvent {
 	if(randomValue <= leaveChance) {
 	    game.getMyMonsters().remove(monster);
 	}
+	setLeaveChance(resetValue);
     }
 
     public void randomMonsterJoin() throws InventoryFullException {

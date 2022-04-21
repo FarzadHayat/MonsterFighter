@@ -7,9 +7,10 @@ public class Score {
     private int score;
     private int totalBattlesWon;
     private int totalBattlesLost;
+    private GameEnvironment game;
     
     public Score(GameEnvironment game) {
-	
+	this.game = game;
     }
     
     public int getDayBattlesWon() {
