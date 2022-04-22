@@ -4,9 +4,9 @@ import java.util.*;
 
 public class RandomEvent {
     
-    private double levelUpChance;
-    private double leaveChance;
-    private double joinChance;
+    private double levelUpChance = 0.1;
+    private double leaveChance = 0.05;
+    private double joinChance = 0.1;
     private GameEnvironment game;
     private double leaveIncrement = 2.0;
     private double levelUpIncrement = 0.1;
@@ -68,7 +68,7 @@ public class RandomEvent {
 	Monster randomMonster = game.getAllMonsters().random();
 	double randomValue = rn.nextDouble(1);
 	
-	if(randomValue <= joinChance && !game.getMyMonsters().full()) {
+	if(randomValue <= joinChance) {
 	    game.getMyMonsters().add(randomMonster);
 	}	
     }
