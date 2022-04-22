@@ -228,7 +228,7 @@ public class Battle implements Storable {
      * If the enemy's monsters have all fainted, then the player wins.
      */
     public void checkStatus() {
-    	if (Inventory.allFainted(enemyMonsters)) {
+    	if (Inventory.allFainted(playerMonsters)) {
     		lose();
     	}
     	if (Inventory.allFainted(enemyMonsters)) {
