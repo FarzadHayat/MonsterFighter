@@ -163,16 +163,14 @@ public class CommandLine {
         	}	
     	}
 		
-		switch(choice) {
-		case 1:
+		if(choice == 1) {
 			GameManager.setDifficulty(Difficulty.EASY);
-			break;
-		case 2:
+		}
+		else if(choice == 2) {
 			GameManager.setDifficulty(Difficulty.NORMAL);
-			break;
-		case 3:
+		}
+		else {
 			GameManager.setDifficulty(Difficulty.HARD);
-			break;
 		}
 		
 		System.out.println(String.format("You chose: %s.", GameManager.getDifficulty()));
