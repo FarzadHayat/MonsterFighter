@@ -130,28 +130,27 @@ public class CommandLine {
      * 
      */
 	public void selectStartingMonster() throws InventoryFullException {
-//		System.out.println("Select a starting monster (average joe, chunky, lanky, shanny, raka, zap):");
-//		while (game.getMyMonsters().size() == 0) {
-//			String inputStr = scanner.nextLine();
-//			String monsterName = properCase(inputStr);
-//			try {
-//				if (game.getAllMonsters().contains(monsterName)) {				
-//					Class<? extends Monster> clazz = game.getAllMonsters().find(monsterName).getClass();
-//					Monster monster = clazz.getConstructor(GameEnvironment.class).newInstance(game);
-//					selectMonsterName(monster);
-//					game.getMyMonsters().add(monster);
-//				}
-//				else {
-//					throw new PurchasableNotFoundException("Invalid starting monster!");
-//				}
-//			}
-//			catch (PurchasableNotFoundException | InstantiationException | IllegalAccessException
-//					| IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-//					| SecurityException e) {
-//				System.out.println(e.getMessage() + " Try again:");
-//			}				
-//		}
-//		System.out.println(String.format("You chose:\n%s", game.getMyMonsters()));
+		while (true) {
+			System.out.println("\nSelect a starting monster:\n");
+	    	System.out.println(game.getAllMonsters().view());
+			try {
+				selection = scanner.nextInt();
+				scanner.nextLine();
+				if (0 < selection && selection <= game.getAllMonsters().size()) {
+					Monster monster = game.getAllMonsters().get(selection - 1).clone();
+					System.out.println("You chose: " + monster.getName());
+					selectMonsterName(monster);
+					game.getMyMonsters().add(monster);
+					break;
+				}
+				else {
+					throw new IllegalArgumentException();
+				}
+			}
+			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
+				System.out.println("Command not found! Try again:");
+			}
+		}
 	}
 	/**
 	 * Select the name of the monster 
