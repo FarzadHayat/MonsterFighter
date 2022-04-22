@@ -300,7 +300,7 @@ public class CommandLine {
      * 
      * @param battle
      */
-    private void viewBattle(Battle battle) {
+    public void viewBattle(Battle battle) {
     	outer:
     		while (true) {
     			System.out.println(battle.view());
