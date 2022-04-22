@@ -69,7 +69,7 @@ public abstract class Monster implements Storable {
 	public void setName(String name) throws InvalidValueException {
 		name = name.strip();
     	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
-    	if (3 <= name.length() && name.length() <= 15 && name.matches(regex)) {
+    	if (3 <= name.length() && name.length() <= 15 && name.matches(regex) && !game.getMyMonsters().contains(name) && !game.getAllMonsters().contains(name)) {
     		this.name = name;
     	}
     	else {    		
