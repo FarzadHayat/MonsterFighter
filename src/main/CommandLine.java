@@ -181,7 +181,6 @@ public class CommandLine {
 				}    		
 			}
 			System.out.println(String.format("Welcome %s to the team!", monster.getName()));
-			scanner.close();
 		}
 	}
     
@@ -192,6 +191,7 @@ public class CommandLine {
 				System.out.println(game.getShop());
 				try {
 					selection = scanner.nextInt();
+					scanner.nextLine();
 					switch (selection) {
 						case 1, 2, 3, 4:
 							viewMonster(game.getShop().getMonsters().get(selection - 1));
@@ -205,7 +205,6 @@ public class CommandLine {
 				}
 				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
 					System.out.println("Command not found! Try again:");
-					scanner.next();
 				}
 			}
     }
@@ -220,6 +219,7 @@ public class CommandLine {
 				System.out.println(monster.view());
 				try {
 					selection = scanner.nextInt();
+					scanner.nextLine();
 					switch (selection) {
 						case 1:
 							if (game.getMyMonsters().contains(monster)) {
@@ -236,7 +236,6 @@ public class CommandLine {
 						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException | 
 						InvalidValueException e) {
 					System.out.println("Command not found! Try again:");
-					scanner.next();
 				}
 			}
     }
@@ -251,6 +250,7 @@ public class CommandLine {
 				System.out.println(item.view());
 				try {
 					selection = scanner.nextInt();
+					scanner.nextLine();
 					switch (selection) {
 						case 1:
 							if (game.getMyItems().contains(item)) {
@@ -267,7 +267,6 @@ public class CommandLine {
 						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException | 
 						InvalidValueException e) {
 					System.out.println("Command not found! Try again:");
-					scanner.next();
 				}
 			}
     }
@@ -278,6 +277,7 @@ public class CommandLine {
 			System.out.println(game.getBattles());
 			try {
 				selection = scanner.nextInt();
+				scanner.nextLine();
 				if (game.getBattles().size() == selection - 1) {
 					break;
 				}
@@ -290,7 +290,6 @@ public class CommandLine {
 			}
 			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
 				System.out.println("Command not found! Try again:");
-				scanner.next();
 			}
 		}
     }
@@ -306,6 +305,7 @@ public class CommandLine {
     			System.out.println(battle.view());
     			try {
     				selection = scanner.nextInt();
+    				scanner.nextLine();
     				switch (selection) {
     					case 1:
     						game.pickBattle(battle);
@@ -316,7 +316,6 @@ public class CommandLine {
     			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
     					InvalidValueException | InvalidTargetException | PurchasableNotFoundException e) {
     				System.out.println("Command not found! Try again:");
-    				scanner.next();
     			}
     		}
 	}
@@ -330,6 +329,7 @@ public class CommandLine {
 	    	System.out.println(game.getMyMonsters().view("MY TEAM"));
 			try {
 				selection = scanner.nextInt();
+				scanner.nextLine();
 				if (game.getMyMonsters().size() == selection - 1) {
 					break;
 				}
@@ -342,7 +342,6 @@ public class CommandLine {
 			}
 			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
 				System.out.println("Command not found! Try again:");
-				scanner.next();
 			}
 		}
     }
@@ -356,6 +355,7 @@ public class CommandLine {
 	    	System.out.println(game.getMyItems().view("MY INVENTORY"));
 			try {
 				selection = scanner.nextInt();
+				scanner.nextLine();
 				if (game.getMyItems().size() == selection - 1) {
 					break;
 				}
@@ -368,7 +368,6 @@ public class CommandLine {
 			}
 			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
 				System.out.println("Command not found! Try again:");
-				scanner.next();
 			}
 		}
     }
@@ -412,6 +411,7 @@ public class CommandLine {
     		viewHome();
     		try {
     			selection = scanner.nextInt();
+    			scanner.nextLine();
     			switch (selection) {
     				case 1:
     					viewShop();
@@ -436,7 +436,6 @@ public class CommandLine {
     		catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException
     				| InvalidValueException e) {
     			System.out.println("Command not found! Try again:");
-    			scanner.next();
     		}
     	}
     	System.out.println("<<<<< Game over! >>>>>");
