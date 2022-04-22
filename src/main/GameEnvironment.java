@@ -10,7 +10,7 @@ public class GameEnvironment {
     private String playerName;
     private int numDays;
     private int day;
-    private Difficulty difficulty;
+    private Difficulty difficulty = Difficulty.EASY;
     
     private Inventory<Monster> myMonsters;
     private Inventory<Item> myItems;

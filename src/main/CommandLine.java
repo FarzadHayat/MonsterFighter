@@ -145,17 +145,36 @@ public class CommandLine {
      * 
      */
     public void selectDifficulty() {
-		System.out.println("Select a difficulty level (easy, normal, hard):");
-		while (GameManager.getDifficulty() == null) {
-			try {
-				String inputStr = scanner.nextLine().toUpperCase().strip();
-				Difficulty difficulty = Difficulty.valueOf(inputStr);
-				GameManager.setDifficulty(difficulty);
-			}
-			catch (IllegalArgumentException e) {
-				System.out.println("Invalid difficulty! Try again:");
-			}
+		System.out.println("Select a difficulty level\n1. Easy\n2. Normal\n3. Hard");
+		int choice = 0;
+		
+		while(choice != 1 && choice != 2 && choice != 3) {
+        	try {
+        		choice = Integer.parseInt(scanner.nextLine().strip());
+        		if(choice == (int)choice && (choice >= 4 || choice <= 0)) {
+        			throw new InvalidValueException("Invalid number, please try again.");
+        		}
+        	}
+        	catch (NumberFormatException e) {
+    			System.out.println("Please enter a number! Try again:");
+    		}
+        	catch(InvalidValueException e) {
+        		System.out.println(e.getMessage());
+        	}	
+    	}
+		
+		switch(choice) {
+		case 1:
+			GameManager.setDifficulty(Difficulty.EASY);
+			break;
+		case 2:
+			GameManager.setDifficulty(Difficulty.NORMAL);
+			break;
+		case 3:
+			GameManager.setDifficulty(Difficulty.HARD);
+			break;
 		}
+		
 		System.out.println(String.format("You chose: %s.", GameManager.getDifficulty()));
     }
 
@@ -192,17 +211,26 @@ public class CommandLine {
 	 * Select the name of the monster 
 	 */
 	public void selectMonsterName(Monster monster) {
-		
 		// Player can choose to rename their monster or keep the default name 
-		System.out.println("Do you wish to rename your monster? Yes OR No?");
-		String choice = scanner.nextLine().toLowerCase();
-		while(!(choice.equals("yes") || choice.equals("no"))) {
-			System.out.println("Invalid input, please try again.");
-			choice = scanner.nextLine().toLowerCase();
-		}
+		System.out.println("Do you wish to rename your monster?\n1. Yes\n2. No");
+		int choice = 0;
+		while(choice != 1 && choice != 2) {
+        	try {
+        		choice = Integer.parseInt(scanner.nextLine().strip());
+        		if(choice == (int)choice && (choice >= 3 || choice <= 0)) {
+        			throw new InvalidValueException("Invalid number, please try again.");
+        		}
+        	}
+        	catch (NumberFormatException e) {
+    			System.out.println("Please enter a number! Try again:");
+    		}
+        	catch(InvalidValueException e) {
+        		System.out.println(e.getMessage());
+        	}	
+    	}
 		
 		// Player chooses to rename their monster 
-		if(choice.equals("yes")) {
+		if(choice == 1) {
 			System.out.println("Select a unique monster name (3 - 15 characters"
 					+ " containing no numbers or special characters):");
 			while (true) {

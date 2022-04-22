@@ -2,9 +2,9 @@ package main;
 
 public class GameManager {
 	
-	private static String playerName = "";
-	private static int numDays = 5;
-	private static Difficulty difficulty = Difficulty.EASY;
+	private static String playerName;
+	private static int numDays;
+	private static Difficulty difficulty;
 	
 	/**
      * Set the value of difficulty
