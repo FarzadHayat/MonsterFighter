@@ -269,14 +269,13 @@ public class Inventory<T extends Storable> {
 	}
 	
 	
-	public String view(String title) {
-		String result = String.format("\n===== %s =====\n\n", title);
+	public String view() {
+		String result = "";
 		int start = 1;
     	for (T t : list) {
     		result += String.format("%s: %s\n", start, t);
     		start++;
     	}
-    	result += String.format("\n%s: Go back", start);
     	return result;
 	}
 

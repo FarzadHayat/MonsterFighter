@@ -274,7 +274,9 @@ public class CommandLine {
     
     public void viewBattles() {
 		while (true) {
-			System.out.println(game.getBattles());
+			System.out.println("\n===== BATTLES =====\n");
+			System.out.println(game.getBattles().view());
+	    	System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
@@ -326,7 +328,9 @@ public class CommandLine {
      */
     public void viewTeam() {
 		while (true) {
-	    	System.out.println(game.getMyMonsters().view("MY TEAM"));
+			System.out.println("\n===== MY TEAM =====\n");
+	    	System.out.println(game.getMyMonsters().view());
+	    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
@@ -352,7 +356,9 @@ public class CommandLine {
      */
     public void viewInventory() {
 		while (true) {
-	    	System.out.println(game.getMyItems().view("MY INVENTORY"));
+	    	System.out.println("\n===== MY INVENTORY =====\n");
+	    	System.out.println(game.getMyItems().view());
+	    	System.out.println(String.format("%s: Go back", game.getMyItems().size() + 1));
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
