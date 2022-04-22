@@ -4,7 +4,7 @@ public class GameManager {
 	
 	private static String playerName;
 	private static int numDays;
-	private static Difficulty difficulty;
+	private static Difficulty difficulty = Difficulty.EASY;
 	
 	/**
      * Set the value of difficulty
