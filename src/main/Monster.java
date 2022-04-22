@@ -36,9 +36,24 @@ public abstract class Monster implements Storable {
 		this.damage = damage;
 		this.cost = cost;
 		this.level = level;
+		changeMaxLevel(game.getDifficulty());
 		this.healAmount = healAmount;
 		this.critRate = critRate;
 		this.game = game;
+	}
+	
+	public void changeMaxLevel(Difficulty difficulty) {
+		switch(difficulty) {
+		case EASY:
+			setMaxLevel(4);
+			break;
+		case NORMAL:
+			setMaxLevel(6);
+			break;
+		case HARD:
+			setMaxLevel(8);
+			break;
+		}
 	}
 	
 	/**
@@ -406,8 +421,8 @@ public abstract class Monster implements Storable {
 	 */
 	public String toString() {
 		return String.format("%s (%s health: %s, max health: %s, damage: %s, cost: %s, "
-						+ "level: %s, heal amount: %s, crit rate: %s, fainted: %s)",
-				name, description, health, maxHealth, damage, cost, level, healAmount, critRate, isFainted);
+						+ "level: %s, max level: %s, heal amount: %s, crit rate: %s, fainted: %s)",
+				name, description, health, maxHealth, damage, cost, level, maxLevel, healAmount, critRate, isFainted);
 	}
 	
 	
@@ -432,6 +447,7 @@ public abstract class Monster implements Storable {
     	result += "Heal Amount: " + healAmount + "\n";
     	result += "Crit Rate: " + critRate + "\n";
     	result += "Fainted: " + isFainted + "\n";
+    	result += "Max Level: " + maxLevel + "\n";
     	if (game.getShop().getMonsters().contains(this)) {    		
     		result += "\n1: Buy";
     	}

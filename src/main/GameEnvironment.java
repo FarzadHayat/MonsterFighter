@@ -32,9 +32,22 @@ public class GameEnvironment {
      * @throws InventoryFullException 
      * @throws InvalidValueException 
      */
-    public GameEnvironment () throws InventoryFullException, InvalidValueException {
+    public GameEnvironment (Difficulty difficulty, String playerName, int numDays) throws InventoryFullException, InvalidValueException {
     	setDay(1);
-    	setBalance(100);
+    	switch(difficulty) {
+    	case EASY:
+    		setBalance(100);
+    		break;
+    	case NORMAL:
+    		setBalance(80);
+    		break;
+    	case HARD:
+    		setBalance(60);
+    		break;
+    	}
+    	setDifficulty(difficulty);
+    	setPlayerName(playerName);
+    	setNumDays(numDays);
 
     	allMonsters = new Inventory<Monster>(6, this);
     	allMonsters.add(new AverageJoe(this));
@@ -101,17 +114,9 @@ public class GameEnvironment {
     /**
      * Set the value of playerName
      * @param playerName the new value of playerName
-     * @throws InvalidValueException 
      */
-    public void setPlayerName (String playerName) throws InvalidValueException {
-    	playerName = playerName.strip();
-    	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
-    	if (3 <= playerName.length() && playerName.length() <= 15 && playerName.matches(regex)) {
-    		this.playerName = playerName;
-    	}
-    	else {    		
-    		throw new InvalidValueException("Invalid player name! Try again:");
-    	}
+    public void setPlayerName (String playerName) {
+    	this.playerName = playerName;
     }
 
     
@@ -127,15 +132,9 @@ public class GameEnvironment {
     /**
      * Set the value of numDays
      * @param numDays the new value of numDays
-     * @throws InvalidValueException 
      */
-    public void setNumDays (int numDays) throws InvalidValueException {
-    	if (5 <= numDays && numDays <= 15) {
-    		this.numDays = numDays;
-    	}
-    	else {    		
-    		throw new InvalidValueException("Invalid number of days! Try again:");
-    	}
+    public void setNumDays (int numDays) {
+    	this.numDays = numDays;
     }
 
     
@@ -432,14 +431,10 @@ public class GameEnvironment {
     
     
     public static void main(String[] args) throws InventoryFullException, InvalidValueException, StatMaxedOutException, PurchasableNotFoundException {
-    	GameEnvironment game = new GameEnvironment();
-    	CommandLine commandLine = new CommandLine(game);
+    	CommandLine commandLine = new CommandLine();
     	// The setup
-    	commandLine.setupGame();
     	// The main command line
-    	commandLine.run();
     	// Game over
-    	commandLine.viewStats();
     }
 
 }
