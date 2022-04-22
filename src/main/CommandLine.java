@@ -11,7 +11,6 @@ public class CommandLine {
     private Scanner scanner = new Scanner(System.in);
     private GameEnvironment game;
     private int selection;
-    private GameManager gameManager;
     
     private boolean forceStop = false;
         
@@ -28,7 +27,6 @@ public class CommandLine {
      * @throws InvalidValueException 
      */
     public CommandLine() throws InventoryFullException, StatMaxedOutException, PurchasableNotFoundException, InvalidValueException {
-    	gameManager = new GameManager();
     	start();
     	if(forceStop != true) {
         	run();
@@ -87,7 +85,8 @@ public class CommandLine {
 	 * 1. Set player name and request a different name if necessary.
 	 * 2. Set number of days and request a different input if necessary.
 	 * 3. Set difficulty.
-	 * 4. Select starting monster and set monster name if not using the default.
+	 * 4. Instantiate new GamEnvironment with the chosen difficulty, player name and number of days
+	 * 5. Select starting monster and set monster name if not using the default.
 	 * @throws InventoryFullException 
 	 * @throws InvalidValueException 
 	 */
@@ -95,7 +94,7 @@ public class CommandLine {
 		selectPlayerName();
 		selectNumDays();
 		selectDifficulty();
-		game = new GameEnvironment(gameManager.getDifficulty(), gameManager.getPlayerName(), gameManager.getNumDays());
+		game = new GameEnvironment();
 		selectStartingMonster();
 	}
 	
@@ -106,16 +105,16 @@ public class CommandLine {
 	public void selectPlayerName() {
 		System.out.println("Select a player name (3 - 15 characters"
 						+ " containing no numbers or special characters):");
-		while (gameManager.getPlayerName() == null) {
+		while (GameManager.getPlayerName() == null) {
 			String name = scanner.nextLine();
 			try {
-				gameManager.setPlayerName(name);
+				GameManager.setPlayerName(name);
 			}
 			catch (InvalidValueException e) {
 				System.out.println(e.getMessage());
 			}    		
 		}
-		System.out.println(String.format("Nice to meet you %s!", gameManager.getPlayerName()));
+		System.out.println(String.format("Nice to meet you %s!", GameManager.getPlayerName()));
     }
     
     
@@ -125,10 +124,10 @@ public class CommandLine {
 	 */
     public void selectNumDays() {
 		System.out.println("Select a number of days (between 5 - 15):");
-		while (gameManager.getNumDays() == 0) {
+		while (GameManager.getNumDays() == 0) {
 			try {
 				int numDays = Integer.parseInt(scanner.nextLine().strip());
-				gameManager.setNumDays(numDays);
+				GameManager.setNumDays(numDays);
 			}
 			catch (NumberFormatException e) {
 				System.out.println("Please enter a number! Try again:");
@@ -137,7 +136,7 @@ public class CommandLine {
 				System.out.println(e.getMessage());
 			}    		
 		}
-		System.out.println(String.format("You chose: %s days.", gameManager.getNumDays()));
+		System.out.println(String.format("You chose: %s days.", GameManager.getNumDays()));
     }
     
     
@@ -147,17 +146,17 @@ public class CommandLine {
      */
     public void selectDifficulty() {
 		System.out.println("Select a difficulty level (easy, normal, hard):");
-		while (gameManager.getDifficulty() == null) {
+		while (GameManager.getDifficulty() == null) {
 			try {
 				String inputStr = scanner.nextLine().toUpperCase().strip();
 				Difficulty difficulty = Difficulty.valueOf(inputStr);
-				gameManager.setDifficulty(difficulty);
+				GameManager.setDifficulty(difficulty);
 			}
 			catch (IllegalArgumentException e) {
 				System.out.println("Invalid difficulty! Try again:");
 			}
 		}
-		System.out.println(String.format("You chose: %s.", gameManager.getDifficulty()));
+		System.out.println(String.format("You chose: %s.", GameManager.getDifficulty()));
     }
 
 

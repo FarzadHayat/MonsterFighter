@@ -26,28 +26,38 @@ public class GameEnvironment {
     
     private boolean isFinished = false;
     
+    private int easyScore = 1000;
+    private int normalScore = 2000;
+    private int hardScore = 3000;
+    
     
     /**
      * Constructors
      * @throws InventoryFullException 
      * @throws InvalidValueException 
      */
-    public GameEnvironment (Difficulty difficulty, String playerName, int numDays) throws InventoryFullException, InvalidValueException {
+    public GameEnvironment () throws InventoryFullException, InvalidValueException {
+    	scoreSystem = new Score(this);
     	setDay(1);
-    	switch(difficulty) {
+    	
+    	switch(GameManager.getDifficulty()) {
     	case EASY:
     		setBalance(100);
+    		scoreSystem.setScore(easyScore);
     		break;
     	case NORMAL:
     		setBalance(80);
+    		scoreSystem.setScore(normalScore);
     		break;
     	case HARD:
     		setBalance(60);
+    		scoreSystem.setScore(hardScore);
     		break;
     	}
-    	setDifficulty(difficulty);
-    	setPlayerName(playerName);
-    	setNumDays(numDays);
+    	
+    	setDifficulty(GameManager.getDifficulty());
+    	setPlayerName(GameManager.getPlayerName());
+    	setNumDays(GameManager.getNumDays());
 
     	allMonsters = new Inventory<Monster>(6, this);
     	allMonsters.add(new AverageJoe(this));
@@ -69,7 +79,6 @@ public class GameEnvironment {
     	battles = new Inventory<Battle>(5, this);
     	Inventory.randomiseBattles(battles, this);
     	randomEvent = new RandomEvent(this);
-    	scoreSystem = new Score(this);
     };
 
     

@@ -17,7 +17,7 @@ class ScoreTest {
     @BeforeEach
     void setUp() throws Exception {
     	game = new GameEnvironment();
-    	scoreSystem = new Score(game);
+    	scoreSystem = game.getScoreSystem();
     }
 
     @Test
@@ -47,9 +47,8 @@ class ScoreTest {
    
     @Test
     public void testGetFinalScore() throws InvalidValueException {
-		game.setBalance(100);
 		scoreSystem.setTotalBattlesWon(10);
-		assertEquals(2000, scoreSystem.getFinalScore());
+		assertEquals(3000, scoreSystem.getFinalScore());
     }
 
 }
