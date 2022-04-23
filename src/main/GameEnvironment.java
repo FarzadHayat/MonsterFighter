@@ -45,7 +45,7 @@ public class GameEnvironment {
     	allMonsters.add(new Zap(this));
     	
     	allItems = new Inventory<Item>(4, this);
-    	allItems.add(new IncreaseHealth(this));
+    	allItems.add(new HealUp(this));
     	allItems.add(new IncreaseDamage(this));
     	allItems.add(new IncreaseCritRate(this));
     	allItems.add(new LevelUp(this));

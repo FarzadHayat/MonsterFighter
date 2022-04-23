@@ -1,14 +1,14 @@
 package main;
 
-public class IncreaseHealth extends Item {
+public class HealUp extends Item {
     
 	/**
 	 * Fields
 	 * 
 	 */
-	private static int healthIncrease = 20;
-	private static String name = "Increase Health";
-	private static String description = "Increase a monster's health by " + healthIncrease + ".";
+	private static int healAmount = 20;
+	private static String name = "Heal Up";
+	private static String description = "Heal a monster for " + healAmount + " health.";
 	private static int cost = 20;
 	
 	
@@ -18,18 +18,18 @@ public class IncreaseHealth extends Item {
 	 */
 	
 	/**
-	 * @return the healthIncrease
+	 * @return the healAmount
 	 */
-	public static int getHealthIncrease() {
-		return healthIncrease;
+	public static int getHealAmount() {
+		return healAmount;
 	}
 
 
 	/**
-	 * @param healthIncrease the healthIncrease to set
+	 * @param healAmount the healAmount to set
 	 */
-	public static void setHealthIncrease(int healthIncrease) {
-		IncreaseHealth.healthIncrease = healthIncrease;
+	public static void setHealAmount(int healthIncrease) {
+		HealUp.healAmount = healthIncrease;
 	}
 
 
@@ -37,13 +37,13 @@ public class IncreaseHealth extends Item {
 	 * Constructors
 	 * 
 	 */
-	public IncreaseHealth (GameEnvironment game) {
+	public HealUp (GameEnvironment game) {
 		super(name, description, cost, game);
 	};
 	
 
     /**
-     * Increase the monster's health by healthIncrease amount.
+     * Heal a monster for healAmount health.
      * @param monster
      * @throws PurchasableNotFoundException 
      * @throws StatMaxedOutException 
@@ -61,7 +61,7 @@ public class IncreaseHealth extends Item {
     		throw new StatMaxedOutException("Health is already full!");
     	}
     	
-    	int newHealth = health + healthIncrease;
+    	int newHealth = health + healAmount;
 
     	if (newHealth > maxHealth) {
     		newHealth = maxHealth;
@@ -73,10 +73,10 @@ public class IncreaseHealth extends Item {
     
     
     /**
-     * @return new IncreaseHealth instance
+     * @return new HealUp instance
      */
     public Item clone() {
-    	return new IncreaseHealth(game);
+    	return new HealUp(game);
     }
     
 }

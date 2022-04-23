@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import main.*;
 
-class IncreaseHealthTest {
+class HealUpTest {
 	
 	private GameEnvironment game;
 
@@ -25,13 +25,13 @@ class IncreaseHealthTest {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		monster.setHealth(0);
-		Item item = new IncreaseHealth(game);
+		Item item = new HealUp(game);
 		game.getMyMonsters().add(monster);
 		game.getMyItems().add(item);
 		item.use(monster);
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		assertEquals(itemList, game.getMyItems().getList());
-		assertEquals(IncreaseHealth.getHealthIncrease(), monster.getHealth());
+		assertEquals(HealUp.getHealAmount(), monster.getHealth());
 	}
 
 	
@@ -39,8 +39,8 @@ class IncreaseHealthTest {
 	void testUse2() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
 		// Monster is only partially healed
 		Monster monster = new Chunky(game);
-		monster.setHealth(monster.getHealth() - (IncreaseHealth.getHealthIncrease() / 2));
-		Item item = new IncreaseHealth(game);
+		monster.setHealth(monster.getHealth() - (HealUp.getHealAmount() / 2));
+		Item item = new HealUp(game);
 		game.getMyMonsters().add(monster);
 		game.getMyItems().add(item);
 		item.use(monster);
@@ -54,7 +54,7 @@ class IncreaseHealthTest {
 	void testUse3() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
 		// Monster is already max health
 		Monster monster = new Chunky(game);
-		Item item = new IncreaseHealth(game);
+		Item item = new HealUp(game);
 		game.getMyMonsters().add(monster);
 		game.getMyItems().add(item);
 		try {			
@@ -71,7 +71,7 @@ class IncreaseHealthTest {
 	void testUse4() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
 		// Item not owned
 		Monster monster = new Chunky(game);
-		Item item = new IncreaseHealth(game);
+		Item item = new HealUp(game);
 		game.getMyMonsters().add(monster);
 		try {			
 			item.use(monster);

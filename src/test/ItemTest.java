@@ -25,7 +25,7 @@ class ItemTest {
 	@Test
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
 		// Blue sky
-		Item testItem = new IncreaseHealth(game);
+		Item testItem = new HealUp(game);
 		game.setBalance(testItem.getCost());
 		testItem.buy();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
@@ -38,7 +38,7 @@ class ItemTest {
 	@Test
 	public void testBuy2() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
 		// Insufficient funds
-		Item testItem = new IncreaseHealth(game);
+		Item testItem = new HealUp(game);
 		game.setBalance(testItem.getCost() / 2);
 		try {    		
 			testItem.buy();
@@ -52,7 +52,7 @@ class ItemTest {
 	@Test
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
 		// Inventory full	
-		Item testItem = new IncreaseHealth(game);
+		Item testItem = new HealUp(game);
 		game.setBalance(testItem.getCost() * (myItems.getMaxSize() + 1));
 		for (int i = 0; i < myItems.getMaxSize(); i++) {			
 			testItem.buy();
@@ -69,7 +69,7 @@ class ItemTest {
 	@Test
 	public void testSell1() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Blue sky
-		Item testItem = new IncreaseHealth(game);
+		Item testItem = new HealUp(game);
 		game.setBalance(testItem.getCost());
 		testItem.buy();
 		testItem.sell();
@@ -82,8 +82,8 @@ class ItemTest {
 	@Test
 	public void testSell2() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Multiple items of the same type
-		Item testItem1 = new IncreaseHealth(game);
-		Item testItem2 = new IncreaseHealth(game);
+		Item testItem1 = new HealUp(game);
+		Item testItem2 = new HealUp(game);
 		game.setBalance(testItem1.getCost() * 3);
 		testItem1.buy();
 		testItem2.buy();
@@ -100,8 +100,8 @@ class ItemTest {
 	@Test
 	public void testSell3() throws PurchasableNotFoundException, InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Storable not found in inventory
-		Item testItem1 = new IncreaseHealth(game);
-		Item testItem2 = new IncreaseHealth(game);
+		Item testItem1 = new HealUp(game);
+		Item testItem2 = new HealUp(game);
 		game.setBalance(testItem1.getCost());
 		testItem1.buy();
 		try {    		
