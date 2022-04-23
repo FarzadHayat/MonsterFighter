@@ -421,8 +421,8 @@ public abstract class Monster implements Storable {
 	 */
 	public String toString() {
 		return String.format("%s (%s health: %s, max health: %s, damage: %s, cost: %s, "
-						+ "level: %s, max level: %s, heal amount: %s, crit rate: %s, fainted: %s)",
-				name, description, health, maxHealth, damage, cost, level, maxLevel, healAmount, critRate, isFainted);
+						+ "level: %s, max level: %s, heal amount: %s, crit rate: %%%s, fainted: %s)",
+				name, description, health, maxHealth, damage, cost, level, maxLevel, healAmount, (int) (critRate * 100), isFainted);
 	}
 	
 	
@@ -445,7 +445,7 @@ public abstract class Monster implements Storable {
     	result += "Cost: " + cost + "\n";
     	result += "Level: " + level + "\n";
     	result += "Heal Amount: " + healAmount + "\n";
-    	result += "Crit Rate: " + critRate + "\n";
+    	result += "Crit Rate: %" + (int) (critRate * 100) + "\n";
     	result += "Fainted: " + isFainted + "\n";
     	result += "Max Level: " + maxLevel + "\n";
     	if (game.getShop().getMonsters().contains(this)) {    		
