@@ -52,7 +52,7 @@ public class CommandLine {
         	
     	}
     	if(choice == 1) {
-    		setupGame();
+    		setupCmdGame();
     	}
     	else {
     		System.out.println("Bye!");
@@ -90,11 +90,12 @@ public class CommandLine {
 	 * @throws InventoryFullException 
 	 * @throws InvalidValueException 
 	 */
-	public void setupGame() throws InventoryFullException, InvalidValueException {
+	public void setupCmdGame() throws InventoryFullException, InvalidValueException {
+		game = new GameEnvironment();
 		selectPlayerName();
 		selectNumDays();
 		selectDifficulty();
-		game = new GameEnvironment();
+		game.setupGame();
 		selectStartingMonster();
 	}
 	
@@ -105,16 +106,16 @@ public class CommandLine {
 	public void selectPlayerName() {
 		System.out.println("Select a player name (3 - 15 characters"
 						+ " containing no numbers or special characters):");
-		while (GameManager.getPlayerName() == null) {
+		while (game.getPlayerName() == null) {
 			String name = scanner.nextLine();
 			try {
-				GameManager.setPlayerName(name);
+				game.setPlayerName(name);
 			}
 			catch (InvalidValueException e) {
 				System.out.println(e.getMessage());
 			}    		
 		}
-		System.out.println(String.format("Nice to meet you %s!", GameManager.getPlayerName()));
+		System.out.println(String.format("Nice to meet you %s!", game.getPlayerName()));
     }
     
     
@@ -124,10 +125,10 @@ public class CommandLine {
 	 */
     public void selectNumDays() {
 		System.out.println("Select a number of days (between 5 - 15):");
-		while (GameManager.getNumDays() == 0) {
+		while (game.getNumDays() == 0) {
 			try {
 				int numDays = Integer.parseInt(scanner.nextLine().strip());
-				GameManager.setNumDays(numDays);
+				game.setNumDays(numDays);
 			}
 			catch (NumberFormatException e) {
 				System.out.println("Please enter a number! Try again:");
@@ -136,7 +137,7 @@ public class CommandLine {
 				System.out.println(e.getMessage());
 			}    		
 		}
-		System.out.println(String.format("You chose: %s days.", GameManager.getNumDays()));
+		System.out.println(String.format("You chose: %s days.", game.getNumDays()));
     }
     
     
@@ -164,16 +165,16 @@ public class CommandLine {
     	}
 		
 		if(choice == 1) {
-			GameManager.setDifficulty(Difficulty.EASY);
+			game.setDifficulty(Difficulty.EASY);
 		}
 		else if(choice == 2) {
-			GameManager.setDifficulty(Difficulty.NORMAL);
+			game.setDifficulty(Difficulty.NORMAL);
 		}
 		else {
-			GameManager.setDifficulty(Difficulty.HARD);
+			game.setDifficulty(Difficulty.HARD);
 		}
 		
-		System.out.println(String.format("You chose: %s.", GameManager.getDifficulty()));
+		System.out.println(String.format("You chose: %s.", game.getDifficulty()));
     }
 
 
@@ -192,7 +193,6 @@ public class CommandLine {
 				if (0 < selection && selection <= game.getAllMonsters().size()) {
 					Monster monster = game.getAllMonsters().get(selection - 1).clone();
 					System.out.println("You chose: " + monster.getName());
-					selectMonsterName(monster);
 					game.getMyMonsters().add(monster);
 					break;
 				}
@@ -209,6 +209,7 @@ public class CommandLine {
 	 * Select the name of the monster 
 	 */
 	public void selectMonsterName(Monster monster) {
+		/**
 		// Player can choose to rename their monster or keep the default name 
 		System.out.println("Do you wish to rename your monster?\n1. Yes\n2. No");
 		int choice = 0;
@@ -225,24 +226,22 @@ public class CommandLine {
         	catch(InvalidValueException e) {
         		System.out.println(e.getMessage());
         	}	
-    	}
+    	}*/
 		
 		// Player chooses to rename their monster 
-		if(choice == 1) {
-			System.out.println("Select a unique monster name (3 - 15 characters"
-					+ " containing no numbers or special characters):");
-			while (true) {
-				String name = scanner.nextLine();
-				try {
-					monster.setName(name);
-					break;
-				}
-				catch (InvalidValueException e) {
-					System.out.println(e.getMessage());
-				}    		
+		System.out.println("Select a unique monster name (3 - 15 characters"
+				+ " containing no numbers or special characters):");
+		while (true) {
+			String name = scanner.nextLine();
+			try {
+				monster.setName(name);
+				break;
 			}
-			System.out.println(String.format("Welcome %s to the team!", monster.getName()));
+			catch (InvalidValueException e) {
+				System.out.println(e.getMessage());
+			}    		
 		}
+		System.out.println(String.format("Welcome %s to the team!", monster.getName()));
 	}
     
     

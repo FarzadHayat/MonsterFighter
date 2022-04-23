@@ -36,11 +36,19 @@ public class GameEnvironment {
      * @throws InventoryFullException 
      * @throws InvalidValueException 
      */
-    public GameEnvironment () throws InventoryFullException, InvalidValueException {
+    
+    public GameEnvironment() throws InvalidValueException {
     	scoreSystem = new Score(this);
+    	setDifficulty(Difficulty.EASY);
+    	setBalance(100);
+    	scoreSystem.setScore(easyScore);
     	setDay(1);
+    }
+    
+
+    public void setupGame() throws InventoryFullException, InvalidValueException {
     	
-    	switch(GameManager.getDifficulty()) {
+    	switch(difficulty) {
     	case EASY:
     		setBalance(100);
     		scoreSystem.setScore(easyScore);
@@ -53,12 +61,8 @@ public class GameEnvironment {
     		setBalance(60);
     		scoreSystem.setScore(hardScore);
     		break;
-    	}
+    	} 	
     	
-    	setDifficulty(GameManager.getDifficulty());
-    	setPlayerName(GameManager.getPlayerName());
-    	setNumDays(GameManager.getNumDays());
-
     	allMonsters = new Inventory<Monster>(6, this);
     	allMonsters.add(new AverageJoe(this));
     	allMonsters.add(new Chunky(this));
@@ -79,8 +83,7 @@ public class GameEnvironment {
     	battles = new Inventory<Battle>(5, this);
     	Inventory.randomiseBattles(battles, this);
     	randomEvent = new RandomEvent(this);
-    };
-
+    }
     
     /**
      * Getters and setters
@@ -123,9 +126,31 @@ public class GameEnvironment {
     /**
      * Set the value of playerName
      * @param playerName the new value of playerName
+     * @throws InvalidValueException 
      */
-    public void setPlayerName (String playerName) {
-    	this.playerName = playerName;
+    public void setPlayerName (String playerName) throws InvalidValueException {
+    	playerName = playerName.strip();
+    	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
+    	if (3 <= playerName.length() && playerName.length() <= 15 && playerName.matches(regex)) {
+    		this.playerName = playerName;
+    	}
+    	else {    		
+    		throw new InvalidValueException("Invalid player name! Try again:");
+    	}
+    }
+    
+    /**
+     * Set the value of numDays
+     * @param numDays the new value of numDays
+     * @throws InvalidValueException 
+     */
+    public void setNumDays (int numDays) throws InvalidValueException {
+    	if (5 <= numDays && numDays <= 15) {
+    		this.numDays = numDays;
+    	}
+    	else {    		
+    		throw new InvalidValueException("Invalid number of days! Try again:");
+    	}
     }
 
     
@@ -135,15 +160,6 @@ public class GameEnvironment {
      */
     public int getNumDays () {
         return numDays;
-    }
-    
-    
-    /**
-     * Set the value of numDays
-     * @param numDays the new value of numDays
-     */
-    public void setNumDays (int numDays) {
-    	this.numDays = numDays;
     }
 
     
