@@ -39,7 +39,6 @@ public class GameEnvironment {
     
     public GameEnvironment() throws InvalidValueException {
     	scoreSystem = new Score(this);
-    	setDifficulty(Difficulty.EASY);
     	setBalance(100);
     	scoreSystem.setScore(easyScore);
     	setDay(1);
