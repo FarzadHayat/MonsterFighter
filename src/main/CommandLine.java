@@ -219,16 +219,21 @@ public class CommandLine {
 				try {
 					selection = scanner.nextInt();
 					scanner.nextLine();
-					switch (selection) {
-						case 1:
-							if (game.getMyMonsters().contains(monster)) {
+					if (game.getMyMonsters().contains(monster)) {
+						switch (selection) {
+							case 1:
 								System.out.println(monster.sell());
-							}
-							if (game.getShop().getMonsters().contains(monster)) {							
+							case 2:
+								break outer;
+						}
+					}
+					if (game.getShop().getMonsters().contains(monster)) {	
+						switch (selection) {
+							case 1:
 								System.out.println(monster.buy());
-							}
-						case 2:
-							break outer;
+							case 2:
+								break outer;
+						}
 					}
 				}
 				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
@@ -250,16 +255,24 @@ public class CommandLine {
 				try {
 					selection = scanner.nextInt();
 					scanner.nextLine();
-					switch (selection) {
-						case 1:
-							if (game.getMyItems().contains(item)) {
+					if (game.getMyItems().contains(item)) {
+						switch (selection) {
+							case 1:
+								useItem(item);
+								break outer;
+							case 2:
 								System.out.println(item.sell());
-							}
-							if (game.getShop().getItems().contains(item)) {							
-								System.out.println(item.buy());
-							}
+							case 3:
+								break outer;
+						}
+					}
+					if (game.getShop().getItems().contains(item)) {
+						switch (selection) {
+						case 1:
+							System.out.println(item.buy());
 						case 2:
 							break outer;
+						}
 					}
 				}
 				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
@@ -268,6 +281,37 @@ public class CommandLine {
 					System.out.println("Command not found! Try again:");
 				}
 			}
+    }
+    
+    
+    public void useItem(Item item) {
+    	while (true) {
+    		System.out.println("Choose a monster to use it on:");
+			System.out.println("\n===== MY TEAM =====\n");
+	    	System.out.println(game.getMyMonsters().view());
+	    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
+			try {
+				selection = scanner.nextInt();
+				scanner.nextLine();
+				if (game.getMyMonsters().size() == selection - 1) {
+					break;
+				}
+				if (0 < selection && selection <= game.getMyMonsters().size()) {
+					Monster monster = game.getMyMonsters().get(selection - 1);
+					System.out.println(String.format("You used %s on %s:", item.getName(), monster.getName()));
+					item.use(monster);
+					System.out.println(monster);
+					break;
+				}
+				else {
+					throw new IllegalArgumentException();
+				}
+			}
+			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
+					PurchasableNotFoundException | StatMaxedOutException e) {
+				System.out.println("Command not found! Try again:");
+			}
+		}
     }
     
     

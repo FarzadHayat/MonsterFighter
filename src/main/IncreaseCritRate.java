@@ -61,7 +61,7 @@ public class IncreaseCritRate extends Item {
 			throw new StatMaxedOutException("Crit Rate is already maxed out!");
 		}
 		
-    	double newCritRate = critRate + critIncrease;
+    	double newCritRate = ((double) Math.round((critRate + critIncrease) * 100)) / 100;
     	if (newCritRate > maxCritRate) {
     		newCritRate = maxCritRate;
     	}

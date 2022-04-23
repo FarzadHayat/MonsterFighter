@@ -56,12 +56,13 @@ public class IncreaseHealth extends Item {
     	
     	int health = monster.getHealth();
     	int maxHealth = monster.getMaxHealth();
-    	
-		if (health == maxHealth) {
-			throw new StatMaxedOutException("Health is already full!");
-		}
 		
+    	if (health == maxHealth) {
+    		throw new StatMaxedOutException("Health is already full!");
+    	}
+    	
     	int newHealth = health + healthIncrease;
+
     	if (newHealth > maxHealth) {
     		newHealth = maxHealth;
     	}

@@ -174,13 +174,15 @@ abstract public class Item implements Storable {
     	result += "Item: " + name + "\n";
     	result += description + "\n";
     	result += "Cost: " + cost + "\n";
+    	if (game.getMyItems().contains(this)) {
+    		result += "\n1: Use";
+    		result += "\n2: Sell";
+    		result += "\n3: Go back";
+    	}
     	if (game.getShop().getItems().contains(this)) {    		
     		result += "\n1: Buy";
+    		result += "\n2: Go back";
     	}
-    	if (game.getMyItems().contains(this)) {    		
-    		result += "\n1: Sell";
-    	}
-    	result += "\n2: Go back";
     	return result;
     }
     
