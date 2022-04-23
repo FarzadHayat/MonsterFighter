@@ -26,16 +26,43 @@ public class GameEnvironment {
     
     private boolean isFinished = false;
     
+    private int easyScore = 1000;
+    private int normalScore = 2000;
+    private int hardScore = 3000;
+    
     
     /**
      * Constructors
      * @throws InventoryFullException 
      * @throws InvalidValueException 
      */
-    public GameEnvironment () throws InventoryFullException, InvalidValueException {
-    	setDay(1);
+    
+    public GameEnvironment() throws InvalidValueException {
+    	scoreSystem = new Score(this);
+    	setDifficulty(Difficulty.EASY);
     	setBalance(100);
+    	scoreSystem.setScore(easyScore);
+    	setDay(1);
+    }
+    
 
+    public void setupGame() throws InventoryFullException, InvalidValueException {
+    	
+    	switch(difficulty) {
+    	case EASY:
+    		setBalance(100);
+    		scoreSystem.setScore(easyScore);
+    		break;
+    	case NORMAL:
+    		setBalance(80);
+    		scoreSystem.setScore(normalScore);
+    		break;
+    	case HARD:
+    		setBalance(60);
+    		scoreSystem.setScore(hardScore);
+    		break;
+    	} 	
+    	
     	allMonsters = new Inventory<Monster>(6, this);
     	allMonsters.add(new AverageJoe(this));
     	allMonsters.add(new Chunky(this));
@@ -56,9 +83,7 @@ public class GameEnvironment {
     	battles = new Inventory<Battle>(5, this);
     	Inventory.randomiseBattles(battles, this);
     	randomEvent = new RandomEvent(this);
-    	scoreSystem = new Score(this);
-    };
-
+    }
     
     /**
      * Getters and setters
@@ -113,16 +138,6 @@ public class GameEnvironment {
     		throw new InvalidValueException("Invalid player name! Try again:");
     	}
     }
-
-    
-    /**
-     * Get the value of numDays
-     * @return the value of numDays
-     */
-    public int getNumDays () {
-        return numDays;
-    }
-    
     
     /**
      * Set the value of numDays
@@ -136,6 +151,15 @@ public class GameEnvironment {
     	else {    		
     		throw new InvalidValueException("Invalid number of days! Try again:");
     	}
+    }
+
+    
+    /**
+     * Get the value of numDays
+     * @return the value of numDays
+     */
+    public int getNumDays () {
+        return numDays;
     }
 
     
@@ -432,14 +456,10 @@ public class GameEnvironment {
     
     
     public static void main(String[] args) throws InventoryFullException, InvalidValueException, StatMaxedOutException, PurchasableNotFoundException {
-    	GameEnvironment game = new GameEnvironment();
-    	CommandLine commandLine = new CommandLine(game);
+    	CommandLine commandLine = new CommandLine();
     	// The setup
-    	//commandLine.setupGame();
     	// The main command line
-    	commandLine.run();
     	// Game over
-    	commandLine.viewStats();
     }
 
 }
