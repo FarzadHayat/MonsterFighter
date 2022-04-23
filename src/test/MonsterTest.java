@@ -18,6 +18,7 @@ class MonsterTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
+		game.setupGame();
 		myMonsters = game.getMyMonsters();
 		monster = new AverageJoe(game);
 	}

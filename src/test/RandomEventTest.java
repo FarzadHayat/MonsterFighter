@@ -23,6 +23,7 @@ class RandomEventTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
+		game.setupGame();
 		randEvent = new RandomEvent(game);
 		monster = new Chunky(game);
 	}
@@ -85,7 +86,7 @@ class RandomEventTest {
 			assertEquals(game.getMyMonsters().getMaxSize(), game.getMyMonsters().size());
 		}
 		catch(InventoryFullException e) {
-			assertEquals(e.getMessage(), "Inventory is full!");
+			assertEquals(e.getMessage(), "Inventory full!");
 		}
 	}
 	
