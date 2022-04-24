@@ -449,23 +449,6 @@ public class GameEnvironment {
     	}
     }
     
-    /**
-     * Plays a battle and adds the win/lost to the score 
-     * @param battle picked battle
-     * @throws InvalidValueException
-     * @throws InvalidTargetException
-     * @throws PurchasableNotFoundException
-     */
-    public void pickBattle(Battle battle) throws InvalidValueException, InvalidTargetException, PurchasableNotFoundException {
-	battle.play();
-	if(battle.getWinner().name().equals("PLAYER")) {
-	    scoreSystem.addBattlesWon();
-	}
-	else if(battle.getWinner().name().equals("ENEMY")) {
-	    scoreSystem.addBattlesLost();
-	}
-    }
-    
     
     public static void main(String[] args) throws InventoryFullException, InvalidValueException, StatMaxedOutException, PurchasableNotFoundException {
     	CommandLine commandLine = new CommandLine();

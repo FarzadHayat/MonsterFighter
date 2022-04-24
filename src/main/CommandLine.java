@@ -450,7 +450,7 @@ public class CommandLine {
     				scanner.nextLine();
     				switch (selection) {
 					case 1:
-						game.pickBattle(battle);
+						playBattle(battle);
 						break outer;
 					case 2:
 						break outer;
@@ -461,15 +461,28 @@ public class CommandLine {
     			catch (IllegalArgumentException e) {
     				System.out.println(e.getMessage());
     			}
-    			catch (InvalidValueException | PurchasableNotFoundException | InvalidTargetException e) {
-					System.out.println(e.getMessage());
-				}
     			catch (InputMismatchException e) {
 	    			System.out.println("Command not found! Try again:");
 	    			scanner.nextLine();
 	    		}
     		}
 	}
+    
+    
+    public void playBattle(Battle battle) {
+    	System.out.println("Press Enter to play next turn...");
+    	while (battle.getWinner() == null) {
+    		scanner.nextLine();
+    		System.out.println(battle.playTurn());
+    		System.out.println(battle.checkStatus());
+    	}
+    	try {
+    		game.getBattles().remove(battle);
+    	}
+    	catch (PurchasableNotFoundException e) {
+    		e.printStackTrace();
+    	}
+    }
 
 
 	/**

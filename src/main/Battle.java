@@ -16,7 +16,7 @@ public class Battle implements Storable {
      * Variables
      * 
      * */
-    private Turn currentTurn;
+    private Turn currentTurn = Turn.PLAYER;
     private Turn winner;
     private GameEnvironment game;
     private Inventory<Monster> enemyMonsters;
@@ -147,78 +147,95 @@ public class Battle implements Storable {
     /**
      * choose a random player monster to attack a random enemy monster
 	 * and turn over to the enemy
-     * @throws InvalidValueException 
-     * @throws InvalidTargetException 
      */
-    public void playerAttack() throws InvalidValueException, InvalidTargetException
-    {
+    public String playerAttack() {
     	Monster playerMonster = random(getPlayerMonsters());
     	Monster enemyMonster = random(getEnemyMonsters());
-    	int damageDealt = playerMonster.attack(enemyMonster);
+    	int damageDealt = 0;
+    	try {
+    		damageDealt = playerMonster.attack(enemyMonster);
+    	}
+    	catch (InvalidValueException | InvalidTargetException e) {
+    		e.printStackTrace();
+    	}
     	currentTurn = Turn.ENEMY;
     	
-    	System.out.println(String.format("\nPlayer %s attacked enemy %s for %s damage.", 
-    			playerMonster.getName(), enemyMonster.getName(), damageDealt));
+    	String result = String.format("Player %s attacked enemy %s for %s damage.\n", 
+    			playerMonster.getName(), enemyMonster.getName(), damageDealt);
     	if (enemyMonster.getIsFainted()) {
-    		System.out.println(String.format("Enemy %s has fainted!", enemyMonster.getName()));
+    		result += String.format("Enemy %s has fainted!", enemyMonster.getName());
     	}
     	else {    		
-    		System.out.println(String.format("Enemy %s now has %s health.", 
-    				enemyMonster.getName(), enemyMonster.getHealth()));
+    		result += String.format("Enemy %s now has %s health.", 
+    				enemyMonster.getName(), enemyMonster.getHealth());
     	}
+		return result;
     }
 
 
     /**
      * choose a random enemy monster to attack a random player monster
 	 * turn over to the player
-     * @throws InvalidValueException 
-     * @throws InvalidTargetException 
      */
-    public void enemyAttack() throws InvalidValueException, InvalidTargetException
-    {
+    public String enemyAttack() {
     	Monster enemyMonster = random(getEnemyMonsters());
     	Monster playerMonster = random(getPlayerMonsters());
-    	int damageDealt = enemyMonster.attack(playerMonster);
+    	int damageDealt = 0;
+    	try {    		
+    		damageDealt = enemyMonster.attack(playerMonster);
+    	}
+    	catch (InvalidValueException | InvalidTargetException e) {
+    		e.printStackTrace();
+    	}
     	currentTurn = Turn.PLAYER;
     	
-    	System.out.println(String.format("\nEnemy %s attacked player %s for %s damage.", 
-    			enemyMonster.getName(), playerMonster.getName(), damageDealt));
+    	String result = String.format("Enemy %s attacked player %s for %s damage.\n", 
+    			enemyMonster.getName(), playerMonster.getName(), damageDealt);
     	if (playerMonster.getIsFainted()) {
-    		System.out.println(String.format("Player %s has fainted!", playerMonster.getName()));
+    		result += String.format("Player %s has fainted!", playerMonster.getName());
     	}
     	else {    		
-    		System.out.println(String.format("Player %s now has %s health.", 
-    				playerMonster.getName(), playerMonster.getHealth()));
+    		result += String.format("Player %s now has %s health.", 
+    				playerMonster.getName(), playerMonster.getHealth());
     	}
+		return result;
     }
 
+    
+    public String playTurn() {
+    	String result = "";
+    	switch (currentTurn) {
+		case PLAYER:
+			result += playerAttack();
+			break;
+		case ENEMY:
+			result += enemyAttack();
+			break;
+		}
+    	return result;
+    }
+    
 
     /**
      * Play the game.
      * Start with the player attacking and takes turns going to enemy and back to player.
      * Checks status after each attack.
      * Repeat until one side's team is all fainted.
-     * @throws InvalidValueException 
-     * @throws InvalidTargetException 
      * @throws PurchasableNotFoundException 
      */
-    public void play() throws InvalidValueException, InvalidTargetException, PurchasableNotFoundException
-    {
-    	currentTurn = Turn.PLAYER;
-    	
+    public String playGame() {
+    	String result = "";
     	while (winner == null) {
-    		switch (currentTurn) {
-	    		case PLAYER:
-	    			playerAttack();
-	    			break;
-	    		case ENEMY:
-	    			enemyAttack();
-	    			break;
-    		}
-    		checkStatus();
+    		playTurn();
+    		result += checkStatus();
     	}
-    	game.getBattles().remove(this);
+    	try {
+    		game.getBattles().remove(this);
+    	}
+    	catch (PurchasableNotFoundException e) {
+    		e.printStackTrace();
+    	}
+    	return result;
     }
     
     
@@ -227,13 +244,15 @@ public class Battle implements Storable {
      * If the player's monsters have all fainted, then the player loses.
      * If the enemy's monsters have all fainted, then the player wins.
      */
-    public void checkStatus() {
+    public String checkStatus() {
+    	String result = "";
     	if (Inventory.allFainted(playerMonsters)) {
-    		lose();
+    		result = lose();
     	}
     	if (Inventory.allFainted(enemyMonsters)) {
-    		win();
+    		result = win();
     	}
+    	return result;
     }
 
     
@@ -241,13 +260,21 @@ public class Battle implements Storable {
      * Player wins the game
      * 
      */
-    public void win()
+    public String win()
     {
     	winner = Turn.PLAYER;
-    	System.out.println("You won!");
-    	System.out.println(playerMonsters);
-    	// add to player balance
-    	// add to player score
+    	String result = "You won!";
+    	result += "\nYour monsters:";
+    	result += playerMonsters;
+    	game.getScoreSystem().addBattlesWon();
+    	try {    		
+    		game.addBalance(0);
+    		game.getScoreSystem().addScore(0);
+    	}
+    	catch (InvalidValueException e) {
+    		e.printStackTrace();
+    	}
+    	return result;
     }
 
 
@@ -255,11 +282,14 @@ public class Battle implements Storable {
      * Player loses the game
      * 
      */
-    public void lose()
+    public String lose()
     {
     	winner = Turn.ENEMY;
-    	System.out.println("You lost!");
-    	System.out.println(enemyMonsters);
+    	String result = "You lost!";
+    	result += "\nEnemy monsters:";
+    	result += enemyMonsters;
+    	game.getScoreSystem().addBattlesLost();
+    	return result;
     }
     
     
