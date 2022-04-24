@@ -464,12 +464,20 @@ public class CommandLine {
     			catch (InputMismatchException e) {
 	    			System.out.println("Command not found! Try again:");
 	    			scanner.nextLine();
-	    		}
+	    		} catch (PurchasableNotFoundException e) {
+					System.out.println(e.getMessage());
+				}
     		}
 	}
     
     
-    public void playBattle(Battle battle) {
+    /**
+     * 
+     * @param battle
+     * @throws PurchasableNotFoundException
+     */
+    public void playBattle(Battle battle) throws PurchasableNotFoundException {
+    	battle.setup();
     	System.out.println("Press Enter to play next turn...");
     	while (battle.getWinner() == null) {
     		scanner.nextLine();

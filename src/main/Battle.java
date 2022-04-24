@@ -144,6 +144,13 @@ public class Battle implements Storable {
 	}
 	
 	
+	public void setup() throws PurchasableNotFoundException {
+		if (game.getMyMonsters().isEmpty()) {
+    		throw new PurchasableNotFoundException("Player has no monsters! Try again:");
+    	}
+	}
+	
+	
     /**
      * choose a random player monster to attack a random enemy monster
 	 * and turn over to the enemy
@@ -223,7 +230,8 @@ public class Battle implements Storable {
      * Repeat until one side's team is all fainted.
      * @throws PurchasableNotFoundException 
      */
-    public String playGame() {
+    public String play() throws PurchasableNotFoundException {
+    	setup();
     	String result = "";
     	while (winner == null) {
     		playTurn();
