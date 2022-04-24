@@ -94,13 +94,13 @@ class ItemInventoryTest {
 	@Test
 	void testItemsFull() throws InventoryFullException {
 		Item testItem = new HealUp(game);
-		assertFalse(myItems.full());
+		assertFalse(myItems.isFull());
 		myItems.add(testItem);
 		myItems.add(testItem);
 		myItems.add(testItem);
-		assertFalse(myItems.full());
+		assertFalse(myItems.isFull());
 		myItems.add(testItem);
-		assertTrue(myItems.full());
+		assertTrue(myItems.isFull());
 	}
 
 }

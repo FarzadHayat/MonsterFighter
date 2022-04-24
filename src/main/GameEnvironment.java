@@ -360,13 +360,8 @@ public class GameEnvironment {
 
 	/**
 	 * Sleep through the night. Randomises shop, randomises battles, and heals all player monsters once.
-	 * @throws InventoryFullException 
-	 * @throws InvalidValueException 
-	 * @throws PurchasableNotFoundException 
-	 * @throws StatMaxedOutException 
-	 * 
      */
-    public void sleep() throws InventoryFullException, InvalidValueException, StatMaxedOutException, PurchasableNotFoundException {
+    public void sleep() {
     	checkStatus();
     	if (!getIsFinished()) {
     		setDay(getDay() + 1);
@@ -450,7 +445,7 @@ public class GameEnvironment {
     }
     
     
-    public static void main(String[] args) throws InventoryFullException, InvalidValueException, StatMaxedOutException, PurchasableNotFoundException {
+    public static void main(String[] args) {
     	CommandLine commandLine = new CommandLine();
     	// The setup
     	// The main command line

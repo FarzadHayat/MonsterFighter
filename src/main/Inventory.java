@@ -57,7 +57,7 @@ public class Inventory<T extends Storable> {
      */
     public void add(T t) throws InventoryFullException
     {
-    	if (!full()) {
+    	if (!isFull()) {
     		list.add(t);
     	}
     	else {
@@ -72,7 +72,7 @@ public class Inventory<T extends Storable> {
      */
     public void add(int index, T t) throws InventoryFullException
     {
-    	if (!full()) {
+    	if (!isFull()) {
     		list.add(index, t);
     	}
     	else {
@@ -116,7 +116,7 @@ public class Inventory<T extends Storable> {
 	/**
 	 * @return
 	 */
-    public boolean full() {
+    public boolean isFull() {
 		return list.size() >= maxSize;
     }
     
@@ -159,9 +159,8 @@ public class Inventory<T extends Storable> {
     
     /**
      * Randomises the monster inventory by selecting random monsters from all monster in the game.
-     * @throws InventoryFullException
      */
-    public static void randomiseMonsters(Inventory<Monster> inventory, Inventory<Monster> allMonsters) throws InventoryFullException {
+    public static void randomiseMonsters(Inventory<Monster> inventory, Inventory<Monster> allMonsters) {
     	Random random = new Random();
     	ArrayList<Monster> newList = new ArrayList<Monster>(inventory.getMaxSize());
     	for (int i = 0; i < inventory.getMaxSize(); i++) {
@@ -175,9 +174,8 @@ public class Inventory<T extends Storable> {
     
     /**
      * Randomises the monster inventory by selecting random monsters from all monster in the game.
-     * @throws InventoryFullException
      */
-    public static void randomiseItems(Inventory<Item> inventory, Inventory<Item> allItems) throws InventoryFullException {
+    public static void randomiseItems(Inventory<Item> inventory, Inventory<Item> allItems) {
     	Random random = new Random();
     	ArrayList<Item> newList = new ArrayList<Item>(inventory.getMaxSize());
     	for (int i = 0; i < inventory.getMaxSize(); i++) {
@@ -191,9 +189,8 @@ public class Inventory<T extends Storable> {
 	
     /**
      * Randomise the battles in list.
-     * @throws InventoryFullException 
      */
-    public static void randomiseBattles(Inventory<Battle> inventory, GameEnvironment game) throws InventoryFullException {
+    public static void randomiseBattles(Inventory<Battle> inventory, GameEnvironment game) {
     	ArrayList<Battle> battleList = new ArrayList<Battle>(inventory.getMaxSize());
     	for (int i = 0; i < inventory.getMaxSize(); i++) {
     		Inventory<Monster> monsterInventory = new Inventory<Monster>(4, game);

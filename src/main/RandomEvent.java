@@ -13,78 +13,89 @@ public class RandomEvent {
     Random rn = new Random();
     
     public RandomEvent(GameEnvironment game) {
-	this.game = game;
+    	this.game = game;
     }
     
     public double getLevelUpChance() {
-	return levelUpChance;
+    	return levelUpChance;
     }
     
     public void setLevelUpChance(double levelUpChance) {
-	this.levelUpChance = levelUpChance;
+    	this.levelUpChance = levelUpChance;
     }
 
     public double getLeaveChance() {
-	return leaveChance;
+    	return leaveChance;
     }
     
     public void setLeaveChance(double leaveChance) {
-	this.leaveChance = leaveChance;
+    	this.leaveChance = leaveChance;
     }
     
     public double getJoinChance() {
-	return joinChance;
+    	return joinChance;
     }
     
     public void setJoinChance(double joinChance) {
-	this.joinChance = joinChance;
+    	this.joinChance = joinChance;
     }
     
-    public void randomMonsterLevelUp(Monster monster) throws StatMaxedOutException {
-	double resetValue = levelUpChance;
-	//Possible mechanism: levelUpChance increases with the number of battles won in a day
-	levelUpChance += levelUpIncrement*game.getScoreSystem().getDayBattlesWon();
-	double randomValue = rn.nextDouble(1);
-	if(randomValue <= levelUpChance) {
-	    monster.levelUp();
-	}
-	setLevelUpChance(resetValue);
+    public void randomMonsterLevelUp(Monster monster) {
+		double resetValue = levelUpChance;
+		//Possible mechanism: levelUpChance increases with the number of battles won in a day
+		levelUpChance += levelUpIncrement*game.getScoreSystem().getDayBattlesWon();
+		double randomValue = rn.nextDouble(1);
+		if(randomValue <= levelUpChance) {
+			try {
+				monster.levelUp();			
+			}
+			catch (StatMaxedOutException e) {}
+		}
+		setLevelUpChance(resetValue);
     }
     
     public void randomMonsterLeave(Monster monster) throws PurchasableNotFoundException {
-	double resetValue = leaveChance;
-	//If monster fainted during any battle in the day, leaveChance is doubled 
-	if(monster.getIsFainted()) {
-	    leaveChance *= leaveIncrement;
-	}
-	double randomValue = rn.nextDouble(1);
-	if(randomValue <= leaveChance) {
-	    game.getMyMonsters().remove(monster);
-	}
-	setLeaveChance(resetValue);
+		double resetValue = leaveChance;
+		//If monster fainted during any battle in the day, leaveChance is doubled 
+		if(monster.getIsFainted()) {
+		    leaveChance *= leaveIncrement;
+		}
+		double randomValue = rn.nextDouble(1);
+		if(randomValue <= leaveChance) {
+		    game.getMyMonsters().remove(monster);
+		}
+		setLeaveChance(resetValue);
     }
 
-    public void randomMonsterJoin() throws InventoryFullException {
-	Monster randomMonster = game.getAllMonsters().random();
-	double randomValue = rn.nextDouble(1);
-	
-	if(randomValue <= joinChance) {
-	    game.getMyMonsters().add(randomMonster);
-	}	
+    public void randomMonsterJoin() {
+		Monster randomMonster = game.getAllMonsters().random();
+		double randomValue = rn.nextDouble(1);
+		
+		if(randomValue <= joinChance) {
+			try {				
+				game.getMyMonsters().add(randomMonster);
+			}
+			catch (InventoryFullException e) {}
+		}	
     }
     
-    public void runAllRandom() throws StatMaxedOutException, PurchasableNotFoundException, InventoryFullException {
-	for(Monster monster: game.getMyMonsters().getList()) {
-	    randomMonsterLevelUp(monster);
-	}
-	for(Monster monster: game.getMyMonsters().getList()) {
-	    if(game.getMyMonsters().size() <= 1) {
-		break;
-	    }
-	    randomMonsterLeave(monster);
-	}
-	for(int i = 0; i < game.getMyMonsters().getMaxSize() - game.getMyMonsters().size(); i++) {
-	    randomMonsterJoin();
-	}
+    public void runAllRandom() {
+		for(Monster monster: game.getMyMonsters().getList()) {
+		    randomMonsterLevelUp(monster);
+		}
+		for(Monster monster: game.getMyMonsters().getList()) {
+		    if(game.getMyMonsters().size() <= 1) {
+		    	break;
+		    }
+		    try {		    	
+		    	randomMonsterLeave(monster);
+		    }
+		    catch (PurchasableNotFoundException e) {
+		    	e.printStackTrace();
+		    }
+		}
+		for(int i = 0; i < game.getMyMonsters().getMaxSize() - game.getMyMonsters().size(); i++) {
+		    randomMonsterJoin();
+		}
     }
 }

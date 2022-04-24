@@ -668,11 +668,7 @@ public class CommandLine {
     		}
     		catch (IllegalArgumentException e) {
     			System.out.println(e.getMessage());
-    		} catch (InvalidValueException | InventoryFullException | 
-    				 StatMaxedOutException | PurchasableNotFoundException e) {
-				System.out.println(e.getMessage());
-			}
-    		catch (InputMismatchException e) {
+    		} catch (InputMismatchException e) {
     			System.out.println("Command not found! Try again:");
     			scanner.nextLine();
     		}

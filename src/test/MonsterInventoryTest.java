@@ -94,13 +94,13 @@ class MonsterInventoryTest {
 	@Test
 	void testMonstersFull() throws InventoryFullException {
 		Monster testMonster = new Chunky(game);
-		assertFalse(myMonsters.full());
+		assertFalse(myMonsters.isFull());
 		myMonsters.add(testMonster);
 		myMonsters.add(testMonster);
 		myMonsters.add(testMonster);
-		assertFalse(myMonsters.full());
+		assertFalse(myMonsters.isFull());
 		myMonsters.add(testMonster);
-		assertTrue(myMonsters.full());
+		assertTrue(myMonsters.isFull());
 	}
 
 }

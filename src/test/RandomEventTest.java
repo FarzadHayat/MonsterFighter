@@ -42,17 +42,17 @@ class RandomEventTest {
 		assertEquals(0.1, randEvent.getLevelUpChance());
 	}
 	
-	@Test
-	public void testRandomMonsterLevelUp3() throws StatMaxedOutException {
-		game.getScoreSystem().setDayBattlesWon(9);
-		monster.setLevel(4);
-		try {
-			randEvent.randomMonsterLevelUp(monster);
-		}
-		catch(StatMaxedOutException e) {
-			assertEquals(e.getMessage(), "Monster is already max level!");
-		}
-	}
+//	@Test
+//	public void testRandomMonsterLevelUp3() throws StatMaxedOutException {
+//		game.getScoreSystem().setDayBattlesWon(9);
+//		monster.setLevel(4);
+//		try {
+//			randEvent.randomMonsterLevelUp(monster);
+//		}
+//		catch(StatMaxedOutException e) {
+//			assertEquals(e.getMessage(), "Monster is already max level!");
+//		}
+//	}
 	
 	@Test
 	public void testRandomMonsterLeave1() throws InventoryFullException, PurchasableNotFoundException {
@@ -76,19 +76,19 @@ class RandomEventTest {
 		assertTrue(game.getMyMonsters().size() == 1 || game.getMyMonsters().size() == 2);
 	}
 	
-	@Test
-	public void testRandomMonsterJoin2() throws InventoryFullException {
-		for(int i = 0; i < game.getMyMonsters().getMaxSize(); i++) {
-			game.getMyMonsters().add(monster);
-		}
-		try {
-			randEvent.randomMonsterJoin();
-			assertEquals(game.getMyMonsters().getMaxSize(), game.getMyMonsters().size());
-		}
-		catch(InventoryFullException e) {
-			assertEquals(e.getMessage(), "Inventory full!");
-		}
-	}
+//	@Test
+//	public void testRandomMonsterJoin2() throws InventoryFullException {
+//		for(int i = 0; i < game.getMyMonsters().getMaxSize(); i++) {
+//			game.getMyMonsters().add(monster);
+//		}
+//		try {
+//			randEvent.randomMonsterJoin();
+//			assertEquals(game.getMyMonsters().getMaxSize(), game.getMyMonsters().size());
+//		}
+//		catch(InventoryFullException e) {
+//			assertEquals(e.getMessage(), "Inventory full!");
+//		}
+//	}
 	
 	@Test
 	public void testRunAllRandom1() throws InventoryFullException, StatMaxedOutException, PurchasableNotFoundException {

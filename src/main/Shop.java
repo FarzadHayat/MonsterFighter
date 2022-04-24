@@ -7,7 +7,7 @@ public class Shop {
     private GameEnvironment game;
     
     
-    public Shop(GameEnvironment game) throws InventoryFullException {
+    public Shop(GameEnvironment game) {
     	monsters = new Inventory<Monster> (4, game);
     	items = new Inventory<Item>(4, game);
     	this.game = game;
@@ -48,9 +48,8 @@ public class Shop {
 	
     /**
      * Randomise the purchasables in the shop.
-     * @throws InventoryFullException 
      */
-    public void randomise() throws InventoryFullException {
+    public void randomise() {
 		Inventory.randomiseMonsters(monsters, game.getAllMonsters());
     	Inventory.randomiseItems(items, game.getAllItems());
     }
