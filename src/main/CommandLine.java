@@ -532,6 +532,31 @@ public class CommandLine {
      * View the game statistics
      */
     public void viewStats() {
+    	printStats();
+    	outer:
+	    	while (true) {
+	    		try {
+	    			int selection = scanner.nextInt();
+	    			scanner.nextLine();
+	    			switch (selection) {
+	    			case 1:
+	    				break outer;
+	    			default:
+	    				throw new IllegalArgumentException("Command not found! Try again:");
+	    			}
+	    		}
+	    		catch (IllegalArgumentException e) {
+	    			System.out.println(e.getMessage());
+	    		}
+	    		catch (InputMismatchException e) {
+	    			System.out.println("Command not found! Try again:");
+	    			scanner.nextLine();
+	    		}
+	    	}
+    }
+    
+    
+    public void printStats() {
     	System.out.println("\n===== PLAYER STATS =====");
     	System.out.println("Balance: " + game.getBalance());
     	System.out.println("Player name: " + game.getPlayerName());
@@ -543,6 +568,7 @@ public class CommandLine {
     			game.getScoreSystem().getDayBattlesWon() + game.getScoreSystem().getDayBattlesLost()));
     	System.out.println(String.format("Total: %s battles won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
     			game.getScoreSystem().getTotalBattlesWon() + game.getScoreSystem().getTotalBattlesLost()));
+    	System.out.println("\n1. Go back");
     }
     
 	
@@ -550,7 +576,7 @@ public class CommandLine {
 	 * 
 	 */
 	public void viewHome() {
-		System.out.println("\nHome (select a number):");
+		System.out.println("\nHome:");
 		System.out.println("1: Shop");
 		System.out.println("2: Team");
 		System.out.println("3: Inventory");
