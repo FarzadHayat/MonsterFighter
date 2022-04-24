@@ -537,7 +537,12 @@ public class CommandLine {
     	System.out.println("Player name: " + game.getPlayerName());
     	System.out.println(String.format("Day %s out of %s", game.getDay(), game.getNumDays()));
     	System.out.println("Difficulty: " + game.getDifficulty());
-    	// print current score and other stats about past battles
+    	System.out.println("Today score: " + game.getScoreSystem().getScore());
+    	System.out.println("Total score: " + game.getScoreSystem().getFinalScore());
+    	System.out.println(String.format("Today: %s battles won out of %s", game.getScoreSystem().getDayBattlesWon(), 
+    			game.getScoreSystem().getDayBattlesWon() + game.getScoreSystem().getDayBattlesLost()));
+    	System.out.println(String.format("Total: %s battles won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
+    			game.getScoreSystem().getTotalBattlesWon() + game.getScoreSystem().getTotalBattlesLost()));
     }
     
 	
