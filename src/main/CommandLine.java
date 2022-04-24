@@ -234,18 +234,22 @@ public class CommandLine {
     
     
     public void viewShop() {
+    	System.out.println(game.getShop());
     	outer:
 			while (true) {
-				System.out.println(game.getShop());
 				try {
 					selection = scanner.nextInt();
 					scanner.nextLine();
 					switch (selection) {
 					case 1, 2, 3, 4:
-						viewMonster(game.getShop().getMonsters().get(selection - 1));
+						Monster monster = game.getShop().getMonsters().get(selection - 1);
+						viewMonster(monster);
+			    		System.out.println(game.getShop());
 						break;
 					case 5, 6, 7, 8:
-						viewItem(game.getShop().getItems().get(selection - 5));
+						Item item = game.getShop().getItems().get(selection - 5);
+						viewItem(item);
+			    		System.out.println(game.getShop());
 						break;
 					case 9:
 						break outer;
@@ -268,9 +272,9 @@ public class CommandLine {
      * @param monster
      */
     public void viewMonster(Monster monster) {
+    	System.out.println(monster.view());
     	outer:
 			while (true) {
-				System.out.println(monster.view());
 				try {
 					selection = scanner.nextInt();
 					scanner.nextLine();
@@ -278,6 +282,7 @@ public class CommandLine {
 						switch (selection) {
 						case 1:
 							selectMonsterName(monster);
+							System.out.println(monster.view());
 							break;
 						case 2:
 							System.out.println(monster.sell());
@@ -321,9 +326,9 @@ public class CommandLine {
      * @param item
      */
     public void viewItem(Item item) {
+    	System.out.println(item.view());
     	outer:
 			while (true) {
-				System.out.println(item.view());
 				try {
 					selection = scanner.nextInt();
 					scanner.nextLine();
@@ -371,11 +376,11 @@ public class CommandLine {
     
     
     public void useItem(Item item) {
+    	System.out.println("Choose a monster to use it on:");
+    	System.out.println("\n===== MY TEAM =====\n");
+    	System.out.println(game.getMyMonsters().view());
+    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
     	while (true) {
-    		System.out.println("Choose a monster to use it on:");
-			System.out.println("\n===== MY TEAM =====\n");
-	    	System.out.println(game.getMyMonsters().view());
-	    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
@@ -409,10 +414,10 @@ public class CommandLine {
     
     
     public void viewBattles() {
+    	System.out.println("\n===== BATTLES =====\n");
+    	System.out.println(game.getBattles().view());
+    	System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
 		while (true) {
-			System.out.println("\n===== BATTLES =====\n");
-			System.out.println(game.getBattles().view());
-	    	System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
@@ -420,7 +425,11 @@ public class CommandLine {
 					break;
 				}
 				if (0 < selection && selection <= game.getBattles().size()) {
-					viewBattle(game.getBattles().get(selection - 1));
+					Battle battle = game.getBattles().get(selection - 1); 
+					viewBattle(battle);
+					System.out.println("\n===== BATTLES =====\n");
+			    	System.out.println(game.getBattles().view());
+			    	System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
 				}
 				else {
 					throw new IllegalArgumentException("Command not found! Try again:");
@@ -442,9 +451,9 @@ public class CommandLine {
      * @param battle
      */
     public void viewBattle(Battle battle) {
+    	System.out.println(battle.view());
     	outer:
     		while (true) {
-    			System.out.println(battle.view());
     			try {
     				selection = scanner.nextInt();
     				scanner.nextLine();
@@ -498,10 +507,10 @@ public class CommandLine {
      * View my monsters
      */
     public void viewTeam() {
+    	System.out.println("\n===== MY TEAM =====\n");
+    	System.out.println(game.getMyMonsters().view());
+    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
 		while (true) {
-			System.out.println("\n===== MY TEAM =====\n");
-	    	System.out.println(game.getMyMonsters().view());
-	    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
@@ -509,7 +518,11 @@ public class CommandLine {
 					break;
 				}
 				if (0 < selection && selection <= game.getMyMonsters().size()) {
-					viewMonster(game.getMyMonsters().get(selection - 1));
+					Monster monster = game.getMyMonsters().get(selection - 1);
+					viewMonster(monster);
+					System.out.println("\n===== MY TEAM =====\n");
+			    	System.out.println(game.getMyMonsters().view());
+			    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
 				}
 				else {
 					throw new IllegalArgumentException("Command not found! Try again:");
@@ -530,10 +543,10 @@ public class CommandLine {
      * View my items
      */
     public void viewInventory() {
+    	System.out.println("\n===== MY INVENTORY =====\n");
+    	System.out.println(game.getMyItems().view());
+    	System.out.println(String.format("%s: Go back", game.getMyItems().size() + 1));
 		while (true) {
-	    	System.out.println("\n===== MY INVENTORY =====\n");
-	    	System.out.println(game.getMyItems().view());
-	    	System.out.println(String.format("%s: Go back", game.getMyItems().size() + 1));
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
@@ -541,7 +554,11 @@ public class CommandLine {
 					break;
 				}
 				if (0 < selection && selection <= game.getMyItems().size()) {
-					viewItem(game.getMyItems().get(selection - 1));
+					Item item = game.getMyItems().get(selection - 1);
+					viewItem(item);
+			    	System.out.println("\n===== MY INVENTORY =====\n");
+			    	System.out.println(game.getMyItems().view());
+			    	System.out.println(String.format("%s: Go back", game.getMyItems().size() + 1));
 				}
 				else {
 					throw new IllegalArgumentException("Command not found! Try again:");
@@ -620,8 +637,8 @@ public class CommandLine {
 	 * 
 	 */
     public void run() {
+    	viewHome();
     	while (!game.getIsFinished()) {
-    		viewHome();
     		try {
     			selection = scanner.nextInt();
     			scanner.nextLine();
@@ -647,6 +664,7 @@ public class CommandLine {
 					default:
 						throw new IllegalArgumentException("Command not found! Try again:");
 				}
+    			viewHome();
     		}
     		catch (IllegalArgumentException e) {
     			System.out.println(e.getMessage());
@@ -659,6 +677,7 @@ public class CommandLine {
     			scanner.nextLine();
     		}
     	}
+    	viewStats();
     	System.out.println("<<<<< Game over! >>>>>");
     }
     

@@ -146,10 +146,10 @@ public class Battle implements Storable {
 	
 	public void setup() throws PurchasableNotFoundException {
 		if (game.getMyMonsters().isEmpty()) {
-    		throw new PurchasableNotFoundException("Player has no monsters! Try again:");
+    		throw new PurchasableNotFoundException("Battle not available: Player has no monsters! Try again...");
     	}
 		if (Inventory.allFainted(game.getMyMonsters())) {
-    		throw new PurchasableNotFoundException("Player monsters are all fainted! Try again:");
+    		throw new PurchasableNotFoundException("Battle not available: Player monsters are all fainted! Try again...");
     	}
 	}
 	
