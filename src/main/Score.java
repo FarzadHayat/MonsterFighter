@@ -118,4 +118,19 @@ public class Score {
 		score += totalBattlesWon*battlesWeight + game.getBalance()*balanceWeight;
 		return score;
     }
+    
+    
+    /**
+     * 
+     * @param amount
+     * @throws InvalidValueException
+     */
+    public void addScore(int amount) throws InvalidValueException {
+    	if (0 > amount) {
+    		throw new InvalidValueException("Cannot be a negative value!");
+    	}
+    	else {    		
+    		setScore(getScore() + amount);
+    	}
+    }
 }
