@@ -148,6 +148,9 @@ public class Battle implements Storable {
 		if (game.getMyMonsters().isEmpty()) {
     		throw new PurchasableNotFoundException("Player has no monsters! Try again:");
     	}
+		if (Inventory.allFainted(game.getMyMonsters())) {
+    		throw new PurchasableNotFoundException("Player monsters are all fainted! Try again:");
+    	}
 	}
 	
 	
