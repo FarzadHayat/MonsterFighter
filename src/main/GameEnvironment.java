@@ -37,51 +37,64 @@ public class GameEnvironment {
      * @throws InvalidValueException 
      */
     
-    public GameEnvironment() throws InvalidValueException {
+    public GameEnvironment() {
     	scoreSystem = new Score(this);
-    	setBalance(100);
+    	try {
+			setBalance(100);
+		} catch (InvalidValueException e) {
+			e.printStackTrace();
+		}
     	scoreSystem.setScore(easyScore);
     	setDay(1);
     }
     
 
-    public void setupGame() throws InventoryFullException, InvalidValueException {
+    public void setupGame() {
     	
-    	switch(difficulty) {
-    	case EASY:
-    		setBalance(100);
-    		scoreSystem.setScore(easyScore);
-    		break;
-    	case NORMAL:
-    		setBalance(80);
-    		scoreSystem.setScore(normalScore);
-    		break;
-    	case HARD:
-    		setBalance(60);
-    		scoreSystem.setScore(hardScore);
-    		break;
-    	} 	
+    	try {
+    		switch(difficulty) {
+	    	case EASY:
+	    		setBalance(100);
+	    		scoreSystem.setScore(easyScore);
+	    		break;
+	    	case NORMAL:
+	    		setBalance(80);
+	    		scoreSystem.setScore(normalScore);
+	    		break;
+	    	case HARD:
+	    		setBalance(60);
+	    		scoreSystem.setScore(hardScore);
+	    		break;
+    		}
+    	} catch (InvalidValueException e) {
+    		e.printStackTrace();
+    	}
     	
-    	allMonsters = new Inventory<Monster>(6, this);
-    	allMonsters.add(new AverageJoe(this));
-    	allMonsters.add(new Chunky(this));
-    	allMonsters.add(new Lanky(this));
-    	allMonsters.add(new Shanny(this));
-    	allMonsters.add(new Raka(this));
-    	allMonsters.add(new Zap(this));
-    	
-    	allItems = new Inventory<Item>(4, this);
-    	allItems.add(new HealUp(this));
-    	allItems.add(new IncreaseDamage(this));
-    	allItems.add(new IncreaseCritRate(this));
-    	allItems.add(new LevelUp(this));
-    	
-    	myMonsters = new Inventory<Monster>(4, this);
-    	myItems = new Inventory<Item>(4, this);
-    	shop = new Shop(this);
-    	battles = new Inventory<Battle>(5, this);
-    	Inventory.randomiseBattles(battles, this);
-    	randomEvent = new RandomEvent(this);
+    	try {    		
+    		allMonsters = new Inventory<Monster>(6, this);
+    		allMonsters.add(new AverageJoe(this));
+    		allMonsters.add(new Chunky(this));
+    		allMonsters.add(new Lanky(this));
+    		allMonsters.add(new Shanny(this));
+    		allMonsters.add(new Raka(this));
+    		allMonsters.add(new Zap(this));
+    		
+    		allItems = new Inventory<Item>(4, this);
+    		allItems.add(new HealUp(this));
+    		allItems.add(new IncreaseDamage(this));
+    		allItems.add(new IncreaseCritRate(this));
+    		allItems.add(new LevelUp(this));
+    		
+    		myMonsters = new Inventory<Monster>(4, this);
+    		myItems = new Inventory<Item>(4, this);
+    		shop = new Shop(this);
+    		battles = new Inventory<Battle>(5, this);
+    		Inventory.randomiseBattles(battles, this);
+    		randomEvent = new RandomEvent(this);
+    	}
+    	catch (InventoryFullException e) {
+    		e.printStackTrace();
+    	}
     }
     
     /**

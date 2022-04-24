@@ -21,19 +21,15 @@ public class CommandLine {
     
     /**
      * @param game
-     * @throws InventoryFullException 
-     * @throws PurchasableNotFoundException 
-     * @throws StatMaxedOutException 
-     * @throws InvalidValueException 
      */
-    public CommandLine() throws InventoryFullException, StatMaxedOutException, PurchasableNotFoundException, InvalidValueException {
+    public CommandLine() {
     	start();
     	if(forceStop != true) {
         	run();
     	}
     }
     
-    public void start() throws InventoryFullException, InvalidValueException {
+    public void start() {
     	System.out.println("Would you like to play the game?\n1. Yes\n2. No");
     	outer:
 	    	while (true) {    		
@@ -85,10 +81,8 @@ public class CommandLine {
 	 * 3. Set difficulty.
 	 * 4. Instantiate new GamEnvironment with the chosen difficulty, player name and number of days
 	 * 5. Select starting monster and set monster name if not using the default.
-	 * @throws InventoryFullException 
-	 * @throws InvalidValueException 
 	 */
-	public void setupCmdGame() throws InventoryFullException, InvalidValueException {
+	public void setupCmdGame() {
 		game = new GameEnvironment();
 		selectPlayerName();
 		selectNumDays();
