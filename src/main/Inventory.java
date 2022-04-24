@@ -280,4 +280,8 @@ public class Inventory<T extends Storable> {
     	return result;
 	}
 
+	
+	public boolean isEmpty() {
+		return size() == 0;
+	}
 }
