@@ -229,14 +229,15 @@ public class Inventory<T extends Storable> {
 	
     
     /**
-     * Return whether the inventory contains an t with the given tName.
+     * Return whether the inventory contains an t with the given tName. Not case sensitive.
      * @param tName
      * @return whether the inventory contains the t
      */
     public boolean contains(String tName) {
+    	tName = tName.toLowerCase();
     	boolean hasT = false;
     	for (T t: getList()) {
-    		if (t.getName().equals(tName)) {
+    		if (t.getName().toLowerCase().equals(tName)) {
     			hasT = true;
     		}
     	}
