@@ -482,6 +482,7 @@ public class CommandLine {
     	catch (PurchasableNotFoundException e) {
     		e.printStackTrace();
     	}
+    	goBack();
     }
 
 
