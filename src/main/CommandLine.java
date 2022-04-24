@@ -220,7 +220,10 @@ public class CommandLine {
 		while (true) {
 			String name = scanner.nextLine();
 			try {
+				String nameBefore = monster.getName();
 				monster.setName(name);
+				System.out.println(String.format("%s has been renamed to %s.", nameBefore, monster.getName()));
+				goBack();
 				break;
 			}
 			catch (InvalidValueException e) {
@@ -278,6 +281,7 @@ public class CommandLine {
 							break;
 						case 2:
 							System.out.println(monster.sell());
+							goBack();
 							break outer;
 						case 3:
 							break outer;
@@ -289,6 +293,7 @@ public class CommandLine {
 						switch (selection) {
 						case 1:
 							System.out.println(monster.buy());
+							goBack();
 							break outer;
 						case 2:
 							break outer;
@@ -329,6 +334,7 @@ public class CommandLine {
 							break outer;
 						case 2:
 							System.out.println(item.sell());
+							goBack();
 							break outer;
 						case 3:
 							break outer;
@@ -340,6 +346,7 @@ public class CommandLine {
 						switch (selection) {
 						case 1:
 							System.out.println(item.buy());
+							goBack();
 							break outer;
 						case 2:
 							break outer;
@@ -380,6 +387,7 @@ public class CommandLine {
 					System.out.println(String.format("You used %s on %s:", item.getName(), monster.getName()));
 					item.use(monster);
 					System.out.println(monster);
+					goBack();
 					break;
 				}
 				else {
@@ -532,7 +540,23 @@ public class CommandLine {
      * View the game statistics
      */
     public void viewStats() {
-    	printStats();
+    	System.out.println("\n===== PLAYER STATS =====");
+    	System.out.println("Balance: " + game.getBalance());
+    	System.out.println("Player name: " + game.getPlayerName());
+    	System.out.println(String.format("Day %s out of %s", game.getDay(), game.getNumDays()));
+    	System.out.println("Difficulty: " + game.getDifficulty());
+    	System.out.println("Today score: " + game.getScoreSystem().getScore());
+    	System.out.println("Total score: " + game.getScoreSystem().getFinalScore());
+    	System.out.println(String.format("Today: %s battles won out of %s", game.getScoreSystem().getDayBattlesWon(), 
+    			game.getScoreSystem().getDayBattlesWon() + game.getScoreSystem().getDayBattlesLost()));
+    	System.out.println(String.format("Total: %s battles won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
+    			game.getScoreSystem().getTotalBattlesWon() + game.getScoreSystem().getTotalBattlesLost()));
+    	goBack();
+    }
+    
+    
+    public void goBack() {
+    	System.out.println("\n1. Go back");
     	outer:
 	    	while (true) {
 	    		try {
@@ -553,22 +577,6 @@ public class CommandLine {
 	    			scanner.nextLine();
 	    		}
 	    	}
-    }
-    
-    
-    public void printStats() {
-    	System.out.println("\n===== PLAYER STATS =====");
-    	System.out.println("Balance: " + game.getBalance());
-    	System.out.println("Player name: " + game.getPlayerName());
-    	System.out.println(String.format("Day %s out of %s", game.getDay(), game.getNumDays()));
-    	System.out.println("Difficulty: " + game.getDifficulty());
-    	System.out.println("Today score: " + game.getScoreSystem().getScore());
-    	System.out.println("Total score: " + game.getScoreSystem().getFinalScore());
-    	System.out.println(String.format("Today: %s battles won out of %s", game.getScoreSystem().getDayBattlesWon(), 
-    			game.getScoreSystem().getDayBattlesWon() + game.getScoreSystem().getDayBattlesLost()));
-    	System.out.println(String.format("Total: %s battles won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
-    			game.getScoreSystem().getTotalBattlesWon() + game.getScoreSystem().getTotalBattlesLost()));
-    	System.out.println("\n1. Go back");
     }
     
 	
