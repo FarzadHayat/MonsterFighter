@@ -579,6 +579,12 @@ public class CommandLine {
      * View the game statistics
      */
     public void viewStats() {
+    	printStats();
+    	goBack();
+    }
+    
+    
+    public void printStats() {
     	System.out.println("\n===== PLAYER STATS =====");
     	System.out.println("Balance: " + game.getBalance());
     	System.out.println("Player name: " + game.getPlayerName());
@@ -590,7 +596,7 @@ public class CommandLine {
     			game.getScoreSystem().getDayBattlesWon() + game.getScoreSystem().getDayBattlesLost()));
     	System.out.println(String.format("Total: %s battles won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
     			game.getScoreSystem().getTotalBattlesWon() + game.getScoreSystem().getTotalBattlesLost()));
-    	goBack();
+
     }
     
     
@@ -633,6 +639,14 @@ public class CommandLine {
 	}
 	
     
+	public void viewSleep() {
+		System.out.println(game.sleep());
+		if (!game.getIsFinished()) {			
+			goBack();
+		}
+	}
+	
+	
 	/**
 	 * 
 	 */
@@ -659,12 +673,14 @@ public class CommandLine {
     					viewStats();
     					break;
     				case 6:
-    					game.sleep();
+    					viewSleep();
     					break;
 					default:
 						throw new IllegalArgumentException("Command not found! Try again:");
 				}
-    			viewHome();
+    			if (!game.getIsFinished()) {
+    				viewHome();
+    			}
     		}
     		catch (IllegalArgumentException e) {
     			System.out.println(e.getMessage());
@@ -673,7 +689,7 @@ public class CommandLine {
     			scanner.nextLine();
     		}
     	}
-    	viewStats();
+    	printStats();
     	System.out.println("<<<<< Game over! >>>>>");
     }
     

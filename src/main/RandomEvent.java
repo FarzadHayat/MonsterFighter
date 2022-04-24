@@ -40,21 +40,25 @@ public class RandomEvent {
     	this.joinChance = joinChance;
     }
     
-    public void randomMonsterLevelUp(Monster monster) {
+    public String randomMonsterLevelUp(Monster monster) {
+    	String event = "";
 		double resetValue = levelUpChance;
 		//Possible mechanism: levelUpChance increases with the number of battles won in a day
 		levelUpChance += levelUpIncrement*game.getScoreSystem().getDayBattlesWon();
 		double randomValue = rn.nextDouble(1);
 		if(randomValue <= levelUpChance) {
 			try {
-				monster.levelUp();			
+				monster.levelUp();
+				event = String.format("%s has leveled up over night!\n", monster.getName());
 			}
 			catch (StatMaxedOutException e) {}
 		}
 		setLevelUpChance(resetValue);
+		return event;
     }
     
-    public void randomMonsterLeave(Monster monster) throws PurchasableNotFoundException {
+    public String randomMonsterLeave(Monster monster) throws PurchasableNotFoundException {
+    	String event = "";
 		double resetValue = leaveChance;
 		//If monster fainted during any battle in the day, leaveChance is doubled 
 		if(monster.getIsFainted()) {
@@ -63,39 +67,49 @@ public class RandomEvent {
 		double randomValue = rn.nextDouble(1);
 		if(randomValue <= leaveChance) {
 		    game.getMyMonsters().remove(monster);
+		    event = String.format("Sadly, %s left the team over night...\n", monster.getName());
 		}
 		setLeaveChance(resetValue);
+		return event;
     }
 
-    public void randomMonsterJoin() {
+    public String randomMonsterJoin() {
+    	String event = "";
 		Monster randomMonster = game.getAllMonsters().random();
 		double randomValue = rn.nextDouble(1);
 		
 		if(randomValue <= joinChance) {
 			try {				
 				game.getMyMonsters().add(randomMonster);
+				event = String.format("A new monster has joined the team over night. Welcome %s!\n", randomMonster.getName());
 			}
 			catch (InventoryFullException e) {}
-		}	
+		}
+		return event;
     }
     
-    public void runAllRandom() {
+    public String runAllRandom() {
+    	String events = "";
 		for(Monster monster: game.getMyMonsters().getList()) {
-		    randomMonsterLevelUp(monster);
+			events += randomMonsterLevelUp(monster);
 		}
 		for(Monster monster: game.getMyMonsters().getList()) {
 		    if(game.getMyMonsters().size() <= 1) {
 		    	break;
 		    }
 		    try {		    	
-		    	randomMonsterLeave(monster);
+		    	events += randomMonsterLeave(monster);
 		    }
 		    catch (PurchasableNotFoundException e) {
 		    	e.printStackTrace();
 		    }
 		}
 		for(int i = 0; i < game.getMyMonsters().getMaxSize() - game.getMyMonsters().size(); i++) {
-		    randomMonsterJoin();
+			events += randomMonsterJoin();
 		}
+		if (events.equals("")) {
+			events = "Nothing interesting happened over night...\n";
+		}
+		return events;
     }
 }

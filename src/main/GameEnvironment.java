@@ -361,16 +361,21 @@ public class GameEnvironment {
 	/**
 	 * Sleep through the night. Randomises shop, randomises battles, and heals all player monsters once.
      */
-    public void sleep() {
+    public String sleep() {
+    	String result = "";
     	checkStatus();
     	if (!getIsFinished()) {
     		setDay(getDay() + 1);
     		getShop().randomise();
     		Inventory.randomiseBattles(battles, this);
-			randomEvent.runAllRandom();
+			result += randomEvent.runAllRandom();
     		Inventory.healAll(myMonsters);
     		scoreSystem.resetDayBattles();
+    		result += "The shop has been randomised.\n";
+    		result +="The battles have been randomised.\n";
+    		result +="Your monsters have healed.\n";
     	}
+    	return result;
     }
     
     
