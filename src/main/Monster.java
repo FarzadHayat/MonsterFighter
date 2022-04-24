@@ -382,7 +382,7 @@ public abstract class Monster implements Storable {
      * @throws PurchasableNotFoundException 
      * @throws InvalidValueException 
      */
-	public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException{
+	public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException  {
 		game.minusBalance(cost);
 		game.getMyMonsters().add(this);
 		int index = game.getShop().getMonsters().indexOf(this);
@@ -450,11 +450,13 @@ public abstract class Monster implements Storable {
     	result += "Max Level: " + maxLevel + "\n";
     	if (game.getShop().getMonsters().contains(this)) {    		
     		result += "\n1: Buy";
+    		result += "\n2: Go back";
     	}
     	if (game.getMyMonsters().contains(this)) {    		
-    		result += "\n1: Sell";
+    		result += "\n1: Rename";
+    		result += "\n2: Sell";
+    		result += "\n3: Go back";
     	}
-    	result += "\n2: Go back";
     	return result;
     }
     

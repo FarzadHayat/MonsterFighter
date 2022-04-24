@@ -35,29 +35,27 @@ public class CommandLine {
     
     public void start() throws InventoryFullException, InvalidValueException {
     	System.out.println("Would you like to play the game?\n1. Yes\n2. No");
-    	int choice = 0;
-    	while(choice != 1 && choice != 2) {
-        	try {
-        		choice = Integer.parseInt(scanner.nextLine().strip());
-        		if(choice == (int)choice && (choice >= 3 || choice <= 0)) {
-        			throw new InvalidValueException("Invalid number, please try again.");
-        		}
-        	}
-        	catch (NumberFormatException e) {
-    			System.out.println("Please enter a number! Try again:");
-    		}
-        	catch(InvalidValueException e) {
-        		System.out.println(e.getMessage());
-        	}
-        	
-    	}
-    	if(choice == 1) {
-    		setupCmdGame();
-    	}
-    	else {
-    		System.out.println("Bye!");
-    		forceStop = true;
-    	}
+    	outer:
+	    	while (true) {    		
+	    		try {
+	    			int choice = scanner.nextInt();
+	    			scanner.nextLine();
+	    			switch (choice) {
+	    			case 1:
+	    				setupCmdGame();
+	    				break outer;
+	    			case 2:
+	    				System.out.println("Bye!");
+	    				forceStop = true;
+	    				break outer;
+	    			default:
+	    				throw new IllegalArgumentException("Command not found! Try again:");
+	    			}
+	    		}
+	    		catch (IllegalArgumentException e) {
+	    			System.out.println(e.getMessage());
+	    		}
+	    	}
     }
     
 	/**
@@ -106,14 +104,15 @@ public class CommandLine {
 	public void selectPlayerName() {
 		System.out.println("Select a player name (3 - 15 characters"
 						+ " containing no numbers or special characters):");
-		while (game.getPlayerName() == null) {
+		while (true) {
 			String name = scanner.nextLine();
 			try {
 				game.setPlayerName(name);
+				break;
 			}
 			catch (InvalidValueException e) {
 				System.out.println(e.getMessage());
-			}    		
+			}
 		}
 		System.out.println(String.format("Nice to meet you %s!", game.getPlayerName()));
     }
@@ -125,18 +124,21 @@ public class CommandLine {
 	 */
     public void selectNumDays() {
 		System.out.println("Select a number of days (between 5 - 15):");
-		while (game.getNumDays() == 0) {
-			try {
-				int numDays = Integer.parseInt(scanner.nextLine().strip());
-				game.setNumDays(numDays);
+		outer:
+			while (true) {
+				int numDays = scanner.nextInt();
+				scanner.nextLine();
+				try {
+					game.setNumDays(numDays);
+					break outer;
+				}
+				catch (IllegalArgumentException e) {
+					System.out.println("Command not found! Try again:");
+				}
+				catch (InvalidValueException e) {
+					System.out.println(e.getMessage());
+				}    		
 			}
-			catch (NumberFormatException e) {
-				System.out.println("Please enter a number! Try again:");
-			}
-			catch (InvalidValueException e) {
-				System.out.println(e.getMessage());
-			}    		
-		}
 		System.out.println(String.format("You chose: %s days.", game.getNumDays()));
     }
     
@@ -147,43 +149,37 @@ public class CommandLine {
      */
     public void selectDifficulty() {
 		System.out.println("Select a difficulty level\n1. Easy\n2. Normal\n3. Hard");
-		int choice = 0;
-		
-		while(choice != 1 && choice != 2 && choice != 3) {
-        	try {
-        		choice = Integer.parseInt(scanner.nextLine().strip());
-        		if(choice == (int)choice && (choice >= 4 || choice <= 0)) {
-        			throw new InvalidValueException("Invalid number, please try again.");
-        		}
-        	}
-        	catch (NumberFormatException e) {
-    			System.out.println("Please enter a number! Try again:");
-    		}
-        	catch(InvalidValueException e) {
-        		System.out.println(e.getMessage());
-        	}	
-    	}
-		
-		if(choice == 1) {
-			game.setDifficulty(Difficulty.EASY);
-		}
-		else if(choice == 2) {
-			game.setDifficulty(Difficulty.NORMAL);
-		}
-		else {
-			game.setDifficulty(Difficulty.HARD);
-		}
-		
+		int choice = scanner.nextInt();
+		scanner.nextLine();
+		outer:
+			while(true) {
+	        	try {
+	        		switch (choice) {
+	        		case 1:
+	        			game.setDifficulty(Difficulty.EASY);
+	        			break outer;
+	        		case 2:
+	        			game.setDifficulty(Difficulty.NORMAL);
+	        			break outer;
+	        		case 3:
+	        			game.setDifficulty(Difficulty.HARD);
+	        			break outer;
+	        		default:
+	        			throw new IllegalArgumentException("Command not found! Try again:");
+	        		}
+	        	}
+	        	catch (IllegalArgumentException e) {
+	    			System.out.println(e.getMessage());
+	    		}
+	    	}
 		System.out.println(String.format("You chose: %s.", game.getDifficulty()));
     }
 
 
     /**
      * Let the player pick a starting monster
-     * @throws InventoryFullException 
-     * 
      */
-	public void selectStartingMonster() throws InventoryFullException {
+	public void selectStartingMonster() {
 		while (true) {
 			System.out.println("\nSelect a starting monster:\n");
 	    	System.out.println(game.getAllMonsters().view());
@@ -197,11 +193,13 @@ public class CommandLine {
 					break;
 				}
 				else {
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException("Command not found! Try again:");
 				}
 			}
-			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
-				System.out.println("Command not found! Try again:");
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			} catch (InventoryFullException e) {
+				System.out.println(e.getMessage());
 			}
 		}
 	}
@@ -209,26 +207,6 @@ public class CommandLine {
 	 * Select the name of the monster 
 	 */
 	public void selectMonsterName(Monster monster) {
-		/**
-		// Player can choose to rename their monster or keep the default name 
-		System.out.println("Do you wish to rename your monster?\n1. Yes\n2. No");
-		int choice = 0;
-		while(choice != 1 && choice != 2) {
-        	try {
-        		choice = Integer.parseInt(scanner.nextLine().strip());
-        		if(choice == (int)choice && (choice >= 3 || choice <= 0)) {
-        			throw new InvalidValueException("Invalid number, please try again.");
-        		}
-        	}
-        	catch (NumberFormatException e) {
-    			System.out.println("Please enter a number! Try again:");
-    		}
-        	catch(InvalidValueException e) {
-        		System.out.println(e.getMessage());
-        	}	
-    	}*/
-		
-		// Player chooses to rename their monster 
 		System.out.println("Select a unique monster name (3 - 15 characters"
 				+ " containing no numbers or special characters):");
 		while (true) {
@@ -239,7 +217,7 @@ public class CommandLine {
 			}
 			catch (InvalidValueException e) {
 				System.out.println(e.getMessage());
-			}    		
+			}
 		}
 		System.out.println(String.format("Welcome %s to the team!", monster.getName()));
 	}
@@ -253,18 +231,20 @@ public class CommandLine {
 					selection = scanner.nextInt();
 					scanner.nextLine();
 					switch (selection) {
-						case 1, 2, 3, 4:
-							viewMonster(game.getShop().getMonsters().get(selection - 1));
-							break;
-						case 5, 6, 7, 8:
-							viewItem(game.getShop().getItems().get(selection - 5));
-							break;
-						case 9:
-							break outer;
+					case 1, 2, 3, 4:
+						viewMonster(game.getShop().getMonsters().get(selection - 1));
+						break;
+					case 5, 6, 7, 8:
+						viewItem(game.getShop().getItems().get(selection - 5));
+						break;
+					case 9:
+						break outer;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
 					}
 				}
-				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
-					System.out.println("Command not found! Try again:");
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
 				}
 			}
     }
@@ -282,25 +262,35 @@ public class CommandLine {
 					scanner.nextLine();
 					if (game.getMyMonsters().contains(monster)) {
 						switch (selection) {
-							case 1:
-								System.out.println(monster.sell());
-							case 2:
-								break outer;
+						case 1:
+							selectMonsterName(monster);
+							break;
+						case 2:
+							System.out.println(monster.sell());
+							break outer;
+						case 3:
+							break outer;
+						default:
+							throw new IllegalArgumentException("Command not found! Try again:");
 						}
 					}
 					if (game.getShop().getMonsters().contains(monster)) {	
 						switch (selection) {
-							case 1:
-								System.out.println(monster.buy());
-							case 2:
-								break outer;
+						case 1:
+							System.out.println(monster.buy());
+							break outer;
+						case 2:
+							break outer;
+						default:
+							throw new IllegalArgumentException("Command not found! Try again:");
 						}
 					}
 				}
-				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
-						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException | 
-						InvalidValueException e) {
-					System.out.println("Command not found! Try again:");
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				} catch (PurchasableNotFoundException | InvalidValueException | 
+						   InsufficientFundsException | InventoryFullException e) {
+					System.out.println(e.getMessage());
 				}
 			}
     }
@@ -318,28 +308,35 @@ public class CommandLine {
 					scanner.nextLine();
 					if (game.getMyItems().contains(item)) {
 						switch (selection) {
-							case 1:
-								useItem(item);
-								break outer;
-							case 2:
-								System.out.println(item.sell());
-							case 3:
-								break outer;
+						case 1:
+							useItem(item);
+							break outer;
+						case 2:
+							System.out.println(item.sell());
+							break outer;
+						case 3:
+							break outer;
+						default:
+							throw new IllegalArgumentException("Command not found! Try again:");
 						}
 					}
 					if (game.getShop().getItems().contains(item)) {
 						switch (selection) {
 						case 1:
 							System.out.println(item.buy());
+							break outer;
 						case 2:
 							break outer;
+						default:
+							throw new IllegalArgumentException("Command not found! Try again:");
 						}
 					}
 				}
-				catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
-						InsufficientFundsException | InventoryFullException | PurchasableNotFoundException | 
-						InvalidValueException e) {
-					System.out.println("Command not found! Try again:");
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				} catch (PurchasableNotFoundException | InvalidValueException | 
+						   InsufficientFundsException | InventoryFullException e) {
+					System.out.println(e.getMessage());
 				}
 			}
     }
@@ -365,12 +362,13 @@ public class CommandLine {
 					break;
 				}
 				else {
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException("Command not found! Try again:");
 				}
 			}
-			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
-					PurchasableNotFoundException | StatMaxedOutException e) {
-				System.out.println("Command not found! Try again:");
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			} catch (PurchasableNotFoundException | StatMaxedOutException e) {
+				System.out.println(e.getMessage());
 			}
 		}
     }
@@ -391,11 +389,11 @@ public class CommandLine {
 					viewBattle(game.getBattles().get(selection - 1));
 				}
 				else {
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException("Command not found! Try again:");
 				}
 			}
-			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
-				System.out.println("Command not found! Try again:");
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
 			}
 		}
     }
@@ -413,16 +411,20 @@ public class CommandLine {
     				selection = scanner.nextInt();
     				scanner.nextLine();
     				switch (selection) {
-    					case 1:
-    						game.pickBattle(battle);
-    					case 2:
-    						break outer;
+					case 1:
+						game.pickBattle(battle);
+						break outer;
+					case 2:
+						break outer;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
     				}
     			}
-    			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException | 
-    					InvalidValueException | InvalidTargetException | PurchasableNotFoundException e) {
-    				System.out.println("Command not found! Try again:");
-    			}
+    			catch (IllegalArgumentException e) {
+    				System.out.println(e.getMessage());
+    			} catch (InvalidValueException | PurchasableNotFoundException | InvalidTargetException e) {
+					System.out.println(e.getMessage());
+				}
     		}
 	}
 
@@ -445,11 +447,11 @@ public class CommandLine {
 					viewMonster(game.getMyMonsters().get(selection - 1));
 				}
 				else {
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException("Command not found! Try again:");
 				}
 			}
-			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
-				System.out.println("Command not found! Try again:");
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
 			}
 		}
     }
@@ -473,11 +475,11 @@ public class CommandLine {
 					viewItem(game.getMyItems().get(selection - 1));
 				}
 				else {
-					throw new IllegalArgumentException();
+					throw new IllegalArgumentException("Command not found! Try again:");
 				}
 			}
-			catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException e) {
-				System.out.println("Command not found! Try again:");
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
 			}
 		}
     }
@@ -512,11 +514,8 @@ public class CommandLine {
     
 	/**
 	 * 
-	 * @throws InventoryFullException
-	 * @throws PurchasableNotFoundException 
-	 * @throws StatMaxedOutException 
 	 */
-    public void run() throws InventoryFullException, StatMaxedOutException, PurchasableNotFoundException {
+    public void run() {
     	while (!game.getIsFinished()) {
     		viewHome();
     		try {
@@ -541,12 +540,16 @@ public class CommandLine {
     				case 6:
     					game.sleep();
     					break;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
 				}
     		}
-    		catch (IllegalArgumentException | InputMismatchException | IndexOutOfBoundsException
-    				| InvalidValueException e) {
-    			System.out.println("Command not found! Try again:");
-    		}
+    		catch (IllegalArgumentException e) {
+    			System.out.println(e.getMessage());
+    		} catch (InvalidValueException | InventoryFullException | 
+    				 StatMaxedOutException | PurchasableNotFoundException e) {
+				System.out.println(e.getMessage());
+			}
     	}
     	System.out.println("<<<<< Game over! >>>>>");
     }
