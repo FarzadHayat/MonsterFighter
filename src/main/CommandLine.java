@@ -717,4 +717,13 @@ public class CommandLine {
 		return result;
     }
     
+    
+    /**
+     * the main call to start the command line game
+     * @param args 
+     */
+    public static void main(String[] args) {
+    	new CommandLine();
+    }
+    
 }
