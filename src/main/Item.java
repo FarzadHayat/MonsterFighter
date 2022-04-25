@@ -4,7 +4,6 @@ abstract public class Item implements Storable {
 
 	/**
 	 * Fields
-	 * 
 	 */
     private String name;
     private String description;
@@ -15,14 +14,27 @@ abstract public class Item implements Storable {
     
     /**
 	 * Constructors
-	 * 
 	 */
     
+    /**
+     * Create a new Item object.
+     * Set the value of game to the given GameEnvironment object.
+     * @param game the given GameEnvironment object.
+     */
     public Item (GameEnvironment game) {
     	this.game = game;
     }
     
     
+    /**
+     * Create a new Item object.
+     * Set the value of game to the given GameEnvironment object.
+     * Set the item's name, description, and cost with the given values.
+     * @param name the given name
+     * @param description the given description
+     * @param cost the given cost
+     * @param game the given GameEnvironment object.
+     */
     public Item (String name, String description, int cost, GameEnvironment game) {
     	this.name = name;
     	this.description = description;
@@ -33,9 +45,7 @@ abstract public class Item implements Storable {
     
     /**
 	 * Getters and Setters methods 
-	 * 
 	 */
-    
     
     /**
      * Get the value of name
@@ -111,16 +121,14 @@ abstract public class Item implements Storable {
     
     /**
 	 * Functional methods
-	 * 
 	 */
-
     
     /**
-     * buy this item from the shop and add it to the player inventory
-     * @throws InsufficientFundsException cost of item is more than player balance error
-     * @throws InventoryFullException inventory is full error
-     * @throws StorableNotFoundException 
-     * @throws InvalidValueException 
+     * Buy this item from the shop and add it to the player inventory.
+     * @throws InsufficientFundsException if cost of item is more than player balance
+     * @throws InventoryFullException if the player inventory is full
+     * @throws StorableNotFoundException if item was not found in the shop
+     * @throws InvalidValueException if cost is a negative value 
      */
     public String buy() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException
     {
@@ -132,11 +140,11 @@ abstract public class Item implements Storable {
 		return "You bought: " + name;
     }
 
-
+    
     /**
-     * sell this item back to the shop for a partial refund and remove it from the player inventory
-     * @throws StorableNotFoundException item was not found in the player inventory error
-     * @throws InvalidValueException 
+     * Sell this item back to the shop for a partial refund and remove the item from the player inventory.
+     * @throws StorableNotFoundException if item was not found in the player inventory
+     * @throws InvalidValueException if (cost * refundAmount) is a negative value
      */
     public String sell() throws StorableNotFoundException, InvalidValueException
     {
@@ -147,16 +155,16 @@ abstract public class Item implements Storable {
 
 
     /**
-     * use this item on the given Monster
-     * @param monster
-     * @throws StorableNotFoundException 
-     * @throws StatMaxedOutException 
+     * Use this item on the given Monster
+     * @param monster the given monster
+     * @throws StorableNotFoundException if the given monster was not found in the player inventory or the item was not found in the shop
+     * @throws StatMaxedOutException if the monster is already maxed out in the stat that the item is upgrading
      */
     abstract public void use(Monster monster) throws StorableNotFoundException, StatMaxedOutException;
 
     
     /**
-	 * @return
+	 * @return the string representation of the Item object.
 	 */
     public String toString() {
     	return String.format("%s (%s cost: %s)", name, description, cost);
@@ -164,7 +172,7 @@ abstract public class Item implements Storable {
     
     
     /**
-	 * @return
+	 * @return a string representation of the Item object with full details and command line options.
 	 */
     public String view() {
     	String result = "";
@@ -188,7 +196,8 @@ abstract public class Item implements Storable {
     
     
     /**
-     * @return item
+     * Get a new instance of the Item class.
+     * @return item the new Item object.
      */
     public abstract Item clone();
     
