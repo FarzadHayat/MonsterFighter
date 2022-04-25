@@ -8,6 +8,10 @@ Tanky but low damage and expensive
 public class Chunky extends Monster {
 	
 	/**
+	 * Fields
+	 */
+	
+	/**
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Chunky";
@@ -27,18 +31,25 @@ public class Chunky extends Monster {
 	private int levelUpCost = 10;
 	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
 	
+	/**
+	 * Constructors
+	 */
 	
 	/**
-	 * Constructor for Chunky class 
-	 * Note: Need to change to default values later on 
+	 * Creates Chunky object by calling superclass constructor and passing in the default values
+	 * @param game given GameEnvironment object
 	 */
     public Chunky(GameEnvironment game) {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
 
     /**
+     * Functional
+     */
+
+    /**
      * Level up monster statistics relevant to the monster 
-     * @throws StatMaxedOutException 
+     * @throws StatMaxedOutException if monster is already at maximum level
      */
     public void levelUp() throws StatMaxedOutException
     {

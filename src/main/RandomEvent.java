@@ -4,42 +4,93 @@ import java.util.*;
 
 public class RandomEvent {
     
+	/**
+	 * Fields
+	 */
+	
     private double levelUpChance = 0.1;
     private double leaveChance = 0.05;
     private double joinChance = 0.1;
     private GameEnvironment game;
     private double leaveIncrement = 2.0;
     private double levelUpIncrement = 0.1;
+    
     Random rn = new Random();
     
+    /**
+     * Constructors 
+     */
+    
+    /**
+     * Creates RandomEvent object 
+     * Sets game to the given GameEnvironment object
+     * @param game given GameEnvironment object
+     */
     public RandomEvent(GameEnvironment game) {
     	this.game = game;
     }
     
+    /**
+     * Getters and Setters
+     */
+    
+    /**
+     * Get the value of levelUpChance
+     * @return the value of levelUpChance
+     */
     public double getLevelUpChance() {
     	return levelUpChance;
     }
     
+    /**
+     * Set the value of levelUpChance
+     * @param levelUpChance the new value of levelUpChance
+     */
     public void setLevelUpChance(double levelUpChance) {
     	this.levelUpChance = levelUpChance;
     }
-
+    
+    /**
+     * Get the value of leaveChance
+     * @return the value of leaveChance
+     */
     public double getLeaveChance() {
     	return leaveChance;
     }
     
+    /**
+     * Set the value of leaveChance
+     * @param leaveChance the new value of leaveChance
+     */
     public void setLeaveChance(double leaveChance) {
     	this.leaveChance = leaveChance;
     }
     
+    /**
+     * Get the value of joinChance
+     * @return the value of joinChance
+     */
     public double getJoinChance() {
     	return joinChance;
     }
     
+    /**
+     * Set the value of joinChance
+     * @param joinChance the new value of joinChance
+     */
     public void setJoinChance(double joinChance) {
     	this.joinChance = joinChance;
     }
     
+    /**
+     * Functional
+     */
+    
+    /**
+     * Level up given Monster object based on the levelUpChance
+     * @param monster given Monster object 
+     * @return event the string representing a successful level up
+     */
     public String randomMonsterLevelUp(Monster monster) {
     	String event = "";
 		double resetValue = levelUpChance;
@@ -57,6 +108,12 @@ public class RandomEvent {
 		return event;
     }
     
+    /**
+     * Monster leaves the player's team based on the leaveChance
+     * @param monster given Monster object 
+     * @return event the string representing when a monster leaves the team
+     * @throws StorableNotFoundException if monster not found in player's inventory
+     */
     public String randomMonsterLeave(Monster monster) throws StorableNotFoundException {
     	String event = "";
 		double resetValue = leaveChance;
@@ -73,6 +130,10 @@ public class RandomEvent {
 		return event;
     }
 
+    /**
+     * Random monster joins the player's team based on the joinChance
+     * @return event the string representing when a monster joins the team 
+     */
     public String randomMonsterJoin() {
     	String event = "";
 		Monster randomMonster = game.getAllMonsters().random();
@@ -88,6 +149,12 @@ public class RandomEvent {
 		return event;
     }
     
+    /**
+     * Runs randomMonsterLevelUp based on the number of monsters in the player's team 
+     * Runs randomMonsterLeave based on the number of monsters in the player's team but stops when there is only 1 monster in the team
+     * Runs randomMonsterJoin based on the number of free slots in the player's team 
+     * @return event the string representing the events occured  
+     */
     public String runAllRandom() {
     	String events = "";
 		for(Monster monster: game.getMyMonsters().getList()) {

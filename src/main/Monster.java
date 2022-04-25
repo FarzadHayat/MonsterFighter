@@ -358,6 +358,7 @@ public abstract class Monster implements Storable {
 	 * Damage to deal is calulated in finalDamage method
      * @param other given Monster object 
 	 * @throws InvalidValueException if given Monster object is fainted 
+	 * @return damageDealt the final damage dealt to the given Monster object
      */
 	public int attack(Monster other) throws InvalidValueException, InvalidTargetException {
 	    int damageDealt = finalDamage();
@@ -406,10 +407,11 @@ public abstract class Monster implements Storable {
 	
     /**
      * Buy a monster from the shop and add it to the player inventory.
-     * @throws InsufficientFundsException if cost of item is more than player balance
+     * @throws InsufficientFundsException if cost of monster is more than player balance
      * @throws InventoryFullException if inventory is full
-     * @throws StorableNotFoundException if monster not found in player's inventory
+     * @throws StorableNotFoundException if monster not found in the shop
      * @throws InvalidValueException if value of balance to minus is invalid
+     * @return the string representing what the player bought
      */
 	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException, StorableNotFoundException {
 		game.minusBalance(cost);
@@ -422,8 +424,9 @@ public abstract class Monster implements Storable {
 	
     /**
      * Sell monster back to the shop for a partial refund and removes the monster from the player's inventory
-     * @throws StorableNotFoundException if monster not found in the player inventory
+     * @throws StorableNotFoundException if monster not found in the player's inventory
      * @throws InvalidValueException if value of balance to add is invalid
+     * @return the string representing what the player sold
      */
 	public String sell() throws StorableNotFoundException, InvalidValueException {
 		game.addBalance(cost * refundAmount);
@@ -456,7 +459,7 @@ public abstract class Monster implements Storable {
 	
 	
 	/**
-	 * @return the string representation of the Monster object followed by command line options
+	 * @return result the string representation of the Monster object followed by command line options
 	 */
     public String view() {
     	String result = "";

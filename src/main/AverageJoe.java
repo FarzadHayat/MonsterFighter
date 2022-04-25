@@ -7,6 +7,10 @@ package main;
 public class AverageJoe extends Monster{
 	
 	/**
+	 * Fields
+	 */
+	
+	/**
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Average Joe";
@@ -27,17 +31,24 @@ public class AverageJoe extends Monster{
 	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
 	
 	/**
-	 * Constructor for AverageJoe class 
-	 * Note: Need to change to default values later on 
+	 * Constructors
+	 */
+	
+	/**
+	 * Creates AverageJoe object by calling superclass constructor and passing in the default values
+	 * @param game given GameEnvironment object
 	 */
 	public AverageJoe(GameEnvironment game) {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
     
+    /**
+     * Functional
+     */
 
     /**
      * Level up monster statistics relevant to the monster 
-     * @throws StatMaxedOutException 
+     * @throws StatMaxedOutException if monster is already at maximum level
      */
     public void levelUp() throws StatMaxedOutException
     {

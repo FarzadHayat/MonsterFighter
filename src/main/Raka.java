@@ -7,6 +7,10 @@ package main;
 public class Raka extends Monster {
 	
 	/**
+	 * Fields
+	 */
+	
+	/**
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Raka";
@@ -32,31 +36,61 @@ public class Raka extends Monster {
 	private int damageBefore;
 	
 	/**
-	 * Constructor for Raka class 
-	 * Note: Need to change to default values later on 
+	 * Constructors
+	 */
+	
+	/**
+	 * Creates Raka object by calling superclass constructor and passing in the default values
+	 * @param game given GameEnvironment object
 	 */
 	public Raka(GameEnvironment game) {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
     
     /**
-     * Getters and Setters methods 
+     * Getters and Setters 
+     */
+    
+    /**
+     * Get the value of damageBefore
+     * @return the value of damageBefore
      */
     public int getDamageBefore() {
     	return damageBefore;
     }
     
+    /**
+     * Sets the value of damageBefore
+     * @param damageBefore the new value of damageBefore
+     */
+    public void setDamageBefore(int damageBefore) {
+    	this.damageBefore = damageBefore;
+    }
+    
+
+    /**
+     * Functional
+     */
+    
+    /**
+     * Get the value of healingAmount 
+     * @return the value of healingAmount
+     */
     public int getHealingAmount() {
     	return getHealAmount();
     }
 
+    /**
+     * Get the value of monster's damage to buff 
+     * @return the value of damage to buff
+     */
     public int getBuffAmount() {
     	return getDamage();
     }
     
     /**
-     * Heals one monster for the healingAmount 
-     * @param other monster to heal 
+     * Heals given Monster object
+     * @param other given Monster object
      */
     public void healAllies(Monster other) throws InvalidTargetException {
     	if(!other.getIsFainted()) {
@@ -69,8 +103,8 @@ public class Raka extends Monster {
     }
     
     /**
-     * Increase damage of ally monster by buffAmount 
-     * @param other monster to buff 
+     * Increase damage of given Monster object
+     * @param other given Monster object
      */
     public void increaseDamage(Monster other) throws InvalidTargetException {
     	if(!other.getIsFainted() && !other.getIsBuffed()) {
@@ -87,7 +121,7 @@ public class Raka extends Monster {
 
     /**
      * Level up monster statistics relevant to the monster 
-     * @throws StatMaxedOutException 
+     * @throws StatMaxedOutException if monster is already at maximum level
      */
     public void levelUp() throws StatMaxedOutException
     {
