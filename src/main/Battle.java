@@ -2,20 +2,11 @@ package main;
 
 import java.util.Random;
 
-/**
- * Class Battle
- * The player will have at most four monsters.
-Once the player has picked a battle,
- * his monsters will fight against the enemy monsters by attacking in a random
- * order. The attacks will take turn one by the player and one by the computer
- * until one team has fainted all monsters.
- */
 public class Battle implements Storable {
 	
     /** 
-     * Variables
-     * 
-     * */
+     * Fields
+     */
     private Turn currentTurn = Turn.PLAYER;
     private Turn winner;
     private GameEnvironment game;
@@ -25,8 +16,13 @@ public class Battle implements Storable {
     
     /** 
      * Constructors
-     * 
-     * */
+     */
+    
+    /**
+     * Create a new Battle object.
+     * Set the value of game to the given GameEnvironment object.
+     * @param game the given GameEnvironment object
+     */
     public Battle (GameEnvironment game) {
     	this.game = game;
     	playerMonsters = game.getMyMonsters();
@@ -34,6 +30,13 @@ public class Battle implements Storable {
     };
     
     
+    /**
+     * Create a new Battle object.
+     * Set the value of game to the given GameEnvironment object.
+     * Set the value of enemyMonsters to the given Inventory object.
+     * @param game the given GameEnvironment object
+     * @param monsterInventory the given Monster Inventory
+     */
     public Battle (GameEnvironment game, Inventory<Monster> monsterInventory) {
     	this.game = game;
     	playerMonsters = game.getMyMonsters();
@@ -43,9 +46,7 @@ public class Battle implements Storable {
 
     /** 
      * Getters and Setters
-     * 
-     * */
-
+     */
 
 	/**
      * Get the value of currentTurn
@@ -84,7 +85,8 @@ public class Battle implements Storable {
 
     
     /**
-	 * @return the enemyMonsters
+     * Get the value of enemyMonsters
+	 * @return the value of enemyMonsters
 	 */
 	public Inventory<Monster> getEnemyMonsters() {
 		return enemyMonsters;
@@ -92,7 +94,8 @@ public class Battle implements Storable {
 
 
 	/**
-	 * @param enemyMonsters the enemyMonsters to set
+	 * Set the value of enemyMonsters
+	 * @param enemyMonsters the new value of enemyMonsters
 	 */
 	public void setEnemyMonsters(Inventory<Monster> enemyMonsters) {
 		this.enemyMonsters = enemyMonsters;
@@ -100,7 +103,8 @@ public class Battle implements Storable {
 
 
 	/**
-	 * @return the playerMonsters
+	 * Get the value of playerMonsters
+	 * @return the value of playerMonsters
 	 */
 	public Inventory<Monster> getPlayerMonsters() {
 		return playerMonsters;
@@ -108,7 +112,8 @@ public class Battle implements Storable {
 
 
 	/**
-	 * @param playerMonsters the playerMonsters to set
+	 * Set the value of playerMonsters
+	 * @param playerMonsters the new value of playerMonsters
 	 */
 	public void setPlayerMonsters(Inventory<Monster> playerMonsters) {
 		this.playerMonsters = playerMonsters;
@@ -120,7 +125,11 @@ public class Battle implements Storable {
      * 
      * */
     
-	
+	/**
+	 * Get a random non fainted monster from the given Monster Inventory.
+	 * @param inventory the given Monster Inventory
+	 * @return the randomly selected monster
+	 */
 	public Monster random(Inventory<Monster> inventory) {
 		Random random = new Random();
     	boolean found = false;
@@ -138,6 +147,10 @@ public class Battle implements Storable {
 	}
 	
 	
+	/**
+	 * Check that the player monster inventory contains at least one non fainted monster.
+	 * @throws PurchasableNotFoundException if the player has no non fainted monsters in their team
+	 */
 	public void setup() throws PurchasableNotFoundException {
 		if (game.getMyMonsters().isEmpty()) {
     		throw new PurchasableNotFoundException("Battle not available: Player has no monsters! Try again...");
@@ -149,8 +162,9 @@ public class Battle implements Storable {
 	
 	
     /**
-     * choose a random player monster to attack a random enemy monster
-	 * and turn over to the enemy
+     * choose a random player monster to attack a random enemy monster.
+	 * Turn over to the enemy.
+	 * @return result the commentary of the events that occurred during the attack
      */
     public String playerAttack() {
     	Monster playerMonster = random(getPlayerMonsters());
@@ -178,8 +192,9 @@ public class Battle implements Storable {
 
 
     /**
-     * choose a random enemy monster to attack a random player monster
-	 * turn over to the player
+     * choose a random enemy monster to attack a random player monster.
+	 * Turn over to the player.
+	 * @return result the commentary of the events that occurred during the attack
      */
     public String enemyAttack() {
     	Monster enemyMonster = random(getEnemyMonsters());
@@ -206,6 +221,10 @@ public class Battle implements Storable {
     }
 
     
+    /**
+     * Play the next turn in the battle.
+     * @return result the commentary of the events that happened during the turn
+     */
     public String playTurn() {
     	String result = "";
     	switch (currentTurn) {
@@ -221,11 +240,13 @@ public class Battle implements Storable {
     
 
     /**
-     * Play the game.
-     * Start with the player attacking and takes turns going to enemy and back to player.
-     * Checks status after each attack.
-     * Repeat until one side's team is all fainted.
-     * @throws PurchasableNotFoundException 
+     * Play the battle.
+     * Start with the player attacking and take turns alternating between enemy and player.
+     * Checks the player team before the game to make sure they have at least one non fainted monster.
+     * Checks the status of the battle after each turn.
+     * Stop when one team's monsters have all fainted.
+     * @param result the commentary of the battle
+     * @throws PurchasableNotFoundException if the player has no non fainted monsters in their team
      */
     public String play() throws PurchasableNotFoundException {
     	setup();
@@ -245,9 +266,10 @@ public class Battle implements Storable {
     
     
     /**
-     * checks the status of the two sides.
+     * checks the status of the battle.
      * If the player's monsters have all fainted, then the player loses.
      * If the enemy's monsters have all fainted, then the player wins.
+     * @result result the commentary of the battle's outcome
      */
     public String checkStatus() {
     	String result = "";
@@ -262,8 +284,10 @@ public class Battle implements Storable {
 
     
     /**
-     * Player wins the game
-     * 
+     * Player wins the game.
+     * Add to the battles won.
+     * Add rewards to the player balance and score.
+     * @return result the commentary of the player winning the battle
      */
     public String win()
     {
@@ -284,8 +308,9 @@ public class Battle implements Storable {
 
 
     /**
-     * Player loses the game
-     * 
+     * Player loses the game.
+     * Add to the battles lost.
+     * @return result the commentary of the player losing the battle
      */
     public String lose()
     {
@@ -298,12 +323,19 @@ public class Battle implements Storable {
     }
     
     
+    /**
+     * @return result the string representation of the battle object
+     */
     public String toString() {
     	int index = game.getBattles().indexOf(this);
-    	return String.format("Battle %s\n %s\n", index + 1, enemyMonsters);
+    	String result = String.format("Battle %s\n %s\n", index + 1, enemyMonsters);
+    	return result;
     }
     
     
+    /**
+     * @return result the string representation of the battle object followed by command line options
+     */
     public String view() {
     	String result = toString();
     	result += "\n1: Fight";
@@ -312,6 +344,10 @@ public class Battle implements Storable {
     }
 
 
+    /**
+     * Battles do not have names.
+     * @return null
+     */
 	@Override
 	public String getName() {
 		return null;

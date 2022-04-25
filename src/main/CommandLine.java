@@ -528,7 +528,7 @@ public class CommandLine {
      * Checks the player team before the game to make sure they have at least one non fainted monster.
      * Checks the status of the battle after each turn.
      * @param battle the given battle currently being played
-     * @throws PurchasableNotFoundException if the player has no monsters in their team
+     * @throws PurchasableNotFoundException if the player has no non fainted monsters in their team
      */
     public void playBattle(Battle battle) throws PurchasableNotFoundException {
     	battle.setup();
