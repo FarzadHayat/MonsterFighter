@@ -335,52 +335,12 @@ public class CommandLine {
     
     
     /**
-     * Print the full details of the given monster and allow the user to either rename, sell, or go back to my team page.
-     * @param monster the given monster
-     */
-    public void viewPlayerMonster(Monster monster) {
-    	System.out.println(monster.view());
-    	outer:
-			while (true) {
-				try {
-					selection = scanner.nextInt();
-					scanner.nextLine();
-					switch (selection) {
-					case 1:
-						selectMonsterName(monster);
-						System.out.println(monster.view());
-						break;
-					case 2:
-						System.out.println(monster.sell());
-						goBack();
-						break outer;
-					case 3:
-						break outer;
-					default:
-						throw new IllegalArgumentException("Command not found! Try again:");
-					}
-				}
-				catch (IllegalArgumentException e) {
-					System.out.println(e.getMessage());
-				}
-				catch (StorableNotFoundException | InvalidValueException e) {
-					System.out.println(e.getMessage());
-				}
-				catch (InputMismatchException e) {
-	    			System.out.println("Command not found! Try again:");
-	    			scanner.nextLine();
-	    		}
-			}
-    }
-    
-    
-    /**
-     * Print the full details of the given item and allow the user to either buy or go back to the shop page.
-     * @param item the given item
-     */
-    public void viewShopItem(Item item) {
-    	System.out.println(item.view());
-    	outer:
+	 * Print the full details of the given item and allow the user to either buy or go back to the shop page.
+	 * @param item the given item
+	 */
+	public void viewShopItem(Item item) {
+		System.out.println(item.view());
+		outer:
 			while (true) {
 				try {
 					selection = scanner.nextInt();
@@ -408,184 +368,7 @@ public class CommandLine {
 	    			scanner.nextLine();
 	    		}
 			}
-    }
-    
-    
-    /**
-     * Print the full details of the given item and allow the user to either use, sell, or go back to my inventory page.
-     * @param item the given item
-     */
-    public void viewPlayerItem(Item item) {
-    	System.out.println(item.view());
-    	outer:
-			while (true) {
-				try {
-					selection = scanner.nextInt();
-					scanner.nextLine();
-					switch (selection) {
-					case 1:
-						useItem(item);
-						break outer;
-					case 2:
-						System.out.println(item.sell());
-						goBack();
-						break outer;
-					case 3:
-						break outer;
-					default:
-						throw new IllegalArgumentException("Command not found! Try again:");
-					}
-				}
-				catch (IllegalArgumentException e) {
-					System.out.println(e.getMessage());
-				}
-				catch (StorableNotFoundException | InvalidValueException e) {
-					System.out.println(e.getMessage());
-				}
-				catch (InputMismatchException e) {
-	    			System.out.println("Command not found! Try again:");
-	    			scanner.nextLine();
-	    		}
-			}
-    }
-    
-    
-    /**
-     * Print the player's team and allow the user to pick a monster to either apply the item to or go back to the item page.
-     * @param item the given item
-     */
-    public void useItem(Item item) {
-    	System.out.println("Choose a monster to use it on:");
-    	System.out.println("\n===== MY TEAM =====\n");
-    	System.out.println(game.getMyMonsters().view());
-    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
-    	while (true) {
-			try {
-				selection = scanner.nextInt();
-				scanner.nextLine();
-				if (game.getMyMonsters().size() == selection - 1) {
-					break;
-				}
-				if (0 < selection && selection <= game.getMyMonsters().size()) {
-					Monster monster = game.getMyMonsters().get(selection - 1);
-					System.out.println(String.format("You used %s on %s:", item.getName(), monster.getName()));
-					item.use(monster);
-					System.out.println(monster);
-					goBack();
-					break;
-				}
-				else {
-					throw new IllegalArgumentException("Command not found! Try again:");
-				}
-			}
-			catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-			catch (StorableNotFoundException | StatMaxedOutException e) {
-				System.out.println(e.getMessage());
-			}
-			catch (InputMismatchException e) {
-    			System.out.println("Command not found! Try again:");
-    			scanner.nextLine();
-    		}
-		}
-    }
-    
-    
-    /**
-     * Print a list of all the battles and allow the user to either view a battle or go back to the home page.
-     */
-    public void viewBattles() {
-    	System.out.println("\n===== BATTLES =====\n");
-    	System.out.println(game.getBattles().view());
-    	System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
-		while (true) {
-			try {
-				selection = scanner.nextInt();
-				scanner.nextLine();
-				if (game.getBattles().size() == selection - 1) {
-					break;
-				}
-				if (0 < selection && selection <= game.getBattles().size()) {
-					Battle battle = game.getBattles().get(selection - 1); 
-					viewBattle(battle);
-					System.out.println("\n===== BATTLES =====\n");
-			    	System.out.println(game.getBattles().view());
-			    	System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
-				}
-				else {
-					throw new IllegalArgumentException("Command not found! Try again:");
-				}
-			}
-			catch (IllegalArgumentException e) {
-				System.out.println(e.getMessage());
-			}
-			catch (InputMismatchException e) {
-    			System.out.println("Command not found! Try again:");
-    			scanner.nextLine();
-    		}
-		}
-    }
-    
-    
-    /**
-     * Print the full details of the given battle and allow the user to either fight the battle or go back the battles page.
-     * @param battle the given battle
-     */
-    public void viewBattle(Battle battle) {
-    	System.out.println(battle.view());
-    	outer:
-    		while (true) {
-    			try {
-    				selection = scanner.nextInt();
-    				scanner.nextLine();
-    				switch (selection) {
-					case 1:
-						playBattle(battle);
-						break outer;
-					case 2:
-						break outer;
-					default:
-						throw new IllegalArgumentException("Command not found! Try again:");
-    				}
-    			}
-    			catch (IllegalArgumentException e) {
-    				System.out.println(e.getMessage());
-    			}
-    			catch (InputMismatchException e) {
-	    			System.out.println("Command not found! Try again:");
-	    			scanner.nextLine();
-	    		} catch (StorableNotFoundException e) {
-					System.out.println(e.getMessage());
-				}
-    		}
 	}
-    
-    
-    /**
-     * Play the given battle using command line to control the pace of the battle.
-     * The player must press Enter to play the next turn in the battle and continue until the battle is over.
-     * Checks the player team before the game to make sure they have at least one non fainted monster.
-     * Checks the status of the battle after each turn.
-     * @param battle the given battle currently being played
-     * @throws StorableNotFoundException if the player has no non fainted monsters in their team
-     */
-    public void playBattle(Battle battle) throws StorableNotFoundException {
-    	battle.setup();
-    	System.out.println("Press Enter to play next turn...");
-    	while (battle.getWinner() == null) {
-    		scanner.nextLine();
-    		System.out.println(battle.playTurn());
-    		System.out.println(battle.checkStatus());
-    	}
-    	try {
-    		game.getBattles().remove(battle);
-    	}
-    	catch (StorableNotFoundException e) {
-    		e.printStackTrace();
-    	}
-    	goBack();
-    }
 
 
 	/**
@@ -625,6 +408,46 @@ public class CommandLine {
 
 
     /**
+	 * Print the full details of the given monster and allow the user to either rename, sell, or go back to my team page.
+	 * @param monster the given monster
+	 */
+	public void viewPlayerMonster(Monster monster) {
+		System.out.println(monster.view());
+		outer:
+			while (true) {
+				try {
+					selection = scanner.nextInt();
+					scanner.nextLine();
+					switch (selection) {
+					case 1:
+						selectMonsterName(monster);
+						System.out.println(monster.view());
+						break;
+					case 2:
+						System.out.println(monster.sell());
+						goBack();
+						break outer;
+					case 3:
+						break outer;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
+					}
+				}
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+				catch (StorableNotFoundException | InvalidValueException e) {
+					System.out.println(e.getMessage());
+				}
+				catch (InputMismatchException e) {
+	    			System.out.println("Command not found! Try again:");
+	    			scanner.nextLine();
+	    		}
+			}
+	}
+
+
+	/**
      * Print a list of the player's items and allow them to either view an item or go back to the home page.
      */
     public void viewInventory() {
@@ -661,6 +484,183 @@ public class CommandLine {
     
     
     /**
+	 * Print the full details of the given item and allow the user to either use, sell, or go back to my inventory page.
+	 * @param item the given item
+	 */
+	public void viewPlayerItem(Item item) {
+		System.out.println(item.view());
+		outer:
+			while (true) {
+				try {
+					selection = scanner.nextInt();
+					scanner.nextLine();
+					switch (selection) {
+					case 1:
+						useItem(item);
+						break outer;
+					case 2:
+						System.out.println(item.sell());
+						goBack();
+						break outer;
+					case 3:
+						break outer;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
+					}
+				}
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+				catch (StorableNotFoundException | InvalidValueException e) {
+					System.out.println(e.getMessage());
+				}
+				catch (InputMismatchException e) {
+	    			System.out.println("Command not found! Try again:");
+	    			scanner.nextLine();
+	    		}
+			}
+	}
+
+
+	/**
+	 * Print the player's team and allow the user to pick a monster to either apply the item to or go back to the item page.
+	 * @param item the given item
+	 */
+	public void useItem(Item item) {
+		System.out.println("Choose a monster to use it on:");
+		System.out.println("\n===== MY TEAM =====\n");
+		System.out.println(game.getMyMonsters().view());
+		System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
+		while (true) {
+			try {
+				selection = scanner.nextInt();
+				scanner.nextLine();
+				if (game.getMyMonsters().size() == selection - 1) {
+					break;
+				}
+				if (0 < selection && selection <= game.getMyMonsters().size()) {
+					Monster monster = game.getMyMonsters().get(selection - 1);
+					System.out.println(String.format("You used %s on %s:", item.getName(), monster.getName()));
+					item.use(monster);
+					System.out.println(monster);
+					goBack();
+					break;
+				}
+				else {
+					throw new IllegalArgumentException("Command not found! Try again:");
+				}
+			}
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+			catch (StorableNotFoundException | StatMaxedOutException e) {
+				System.out.println(e.getMessage());
+			}
+			catch (InputMismatchException e) {
+				System.out.println("Command not found! Try again:");
+				scanner.nextLine();
+			}
+		}
+	}
+
+
+	/**
+	 * Print a list of all the battles and allow the user to either view a battle or go back to the home page.
+	 */
+	public void viewBattles() {
+		System.out.println("\n===== BATTLES =====\n");
+		System.out.println(game.getBattles().view());
+		System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
+		while (true) {
+			try {
+				selection = scanner.nextInt();
+				scanner.nextLine();
+				if (game.getBattles().size() == selection - 1) {
+					break;
+				}
+				if (0 < selection && selection <= game.getBattles().size()) {
+					Battle battle = game.getBattles().get(selection - 1); 
+					viewBattle(battle);
+					System.out.println("\n===== BATTLES =====\n");
+			    	System.out.println(game.getBattles().view());
+			    	System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
+				}
+				else {
+					throw new IllegalArgumentException("Command not found! Try again:");
+				}
+			}
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+			catch (InputMismatchException e) {
+				System.out.println("Command not found! Try again:");
+				scanner.nextLine();
+			}
+		}
+	}
+
+
+	/**
+	 * Print the full details of the given battle and allow the user to either fight the battle or go back the battles page.
+	 * @param battle the given battle
+	 */
+	public void viewBattle(Battle battle) {
+		System.out.println(battle.view());
+		outer:
+			while (true) {
+				try {
+					selection = scanner.nextInt();
+					scanner.nextLine();
+					switch (selection) {
+					case 1:
+						playBattle(battle);
+						break outer;
+					case 2:
+						break outer;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
+					}
+				}
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+				catch (InputMismatchException e) {
+	    			System.out.println("Command not found! Try again:");
+	    			scanner.nextLine();
+	    		} catch (StorableNotFoundException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+	}
+
+
+	/**
+	 * Play the given battle using command line to control the pace of the battle.
+	 * The player must press Enter to play the next turn in the battle and continue until the battle is over.
+	 * Checks the player team before the game to make sure they have at least one non fainted monster.
+	 * Checks the status of the battle after each turn.
+	 * @param battle the given battle currently being played
+	 * @throws StorableNotFoundException if the player has no non fainted monsters in their team
+	 */
+	public void playBattle(Battle battle) throws StorableNotFoundException {
+		battle.setup();
+		System.out.println("Press Enter to play next turn...");
+		while (battle.getWinner() == null) {
+			scanner.nextLine();
+			System.out.println(battle.playTurn());
+			System.out.println(battle.checkStatus());
+		}
+		try {
+			game.getBattles().remove(battle);
+		}
+		catch (StorableNotFoundException e) {
+			e.printStackTrace();
+		}
+		goBack();
+	}
+
+
+	/**
      * Print the game statistics and allow the player to go back to the home page.
      */
     public void viewStats() {
@@ -695,6 +695,17 @@ public class CommandLine {
     
     
     /**
+	 * Print the events that occurred over night and allow the user to go back to the home page.
+	 */
+	public void viewSleep() {
+		System.out.println(game.sleep());
+		if (!game.getIsFinished()) {			
+			goBack();
+		}
+	}
+
+
+	/**
      * Allow the player to go back to the previous page by entering a certain key.
      * This method can be added to an other method in order to add a go back buffer.
      */
@@ -737,17 +748,6 @@ public class CommandLine {
 	}
 	
     
-	/**
-	 * Print the events that occurred over night and allow the user to go back to the home page.
-	 */
-	public void viewSleep() {
-		System.out.println(game.sleep());
-		if (!game.getIsFinished()) {			
-			goBack();
-		}
-	}
-	
-	
 	/**
 	 * Print the home page and run the main command line loop.
 	 * The loop continues until the game has finished.

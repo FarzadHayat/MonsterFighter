@@ -177,7 +177,7 @@ abstract public class Item implements Storable {
     public String view() {
     	String result = "";
     	if (game.getShop().getItems().contains(this)) {
-    		result += String.format("\nBalance: %s\n", game.getBalance());
+    		result += String.format("\nBalance: %s\n\n", game.getBalance());
     	}
     	result += "Item: " + name + "\n";
     	result += description + "\n";

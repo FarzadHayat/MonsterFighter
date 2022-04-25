@@ -464,10 +464,10 @@ public abstract class Monster implements Storable {
     public String view() {
     	String result = "";
     	if (game.getShop().getMonsters().contains(this)) {
-    		result += String.format("\nBalance: %s\n", game.getBalance());
+    		result += String.format("\nBalance: %s\n\n", game.getBalance());
     	}
-    	result = "Monster: " + getClass().getSimpleName() + "\n";
-    	if (!name.equals(getClass().getSimpleName())){    		
+    	result += "Monster: " + getClass().getSimpleName() + "\n";
+    	if (!name.equals(getClass().getSimpleName())){
     		result += "Name: " + name + "\n";
     	}
     	result += description + "\n";
@@ -480,11 +480,11 @@ public abstract class Monster implements Storable {
     	result += "Crit Rate: " + (int) (critRate * 100) + "%\n";
     	result += "Fainted: " + isFainted + "\n";
     	result += "Max Level: " + maxLevel + "\n";
-    	if (game.getShop().getMonsters().contains(this)) {    		
+    	if (game.getShop().getMonsters().contains(this)) {
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}
-    	if (game.getMyMonsters().contains(this)) {    		
+    	if (game.getMyMonsters().contains(this)) {
     		result += "\n1: Rename";
     		result += "\n2: Sell";
     		result += "\n3: Go back";

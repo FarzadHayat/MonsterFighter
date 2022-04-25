@@ -78,7 +78,7 @@ public class Shop {
     
     
     /**
-     * @return result the string representation of the Shop object with by command line options
+     * @return result the string representation of the Shop object with command line options.
      */
     public String toString() {
     	String result = String.format("\nBalance: %s\n", game.getBalance());
