@@ -3,9 +3,9 @@ package main;
 import java.util.*;
 
 public abstract class Monster implements Storable {
+	
 	/**
-	 *	Monster statistic variables 
-	 *
+	 * Fields
 	 */
  	private String name;
 	private String description;
@@ -25,8 +25,24 @@ public abstract class Monster implements Storable {
 	private boolean isBuffed = false;
 	
 	/**
-	 * Constructor method 
-	 * FOR SUBCLASS: super(name, description, maxHealth, damage, cost, level, healAmount, critRate)
+	 * Constructors
+	 */
+	
+	/**
+	 * Creates a new Monster object
+	 * Sets the monster's name, description, maxHealth, damage, cost, level, healAmount and critRate with the given values 
+	 * Sets the monster's initial health to the maxHealth 
+	 * Sets the monster's maximum level based on the difficulty of the GameEnvironment object 
+	 * Sets the game variable to the given GameEnvironment object 
+	 * @param name given String for the monster's name 
+	 * @param description given String for the monster's description
+	 * @param maxHealth given int for the monster's maximum health
+	 * @param damage given int for the monster's damage
+	 * @param cost given int for the monster's cost
+	 * @param level given int for the monster's current level 
+	 * @param healAmount given int for the monster's heal amount overnight
+	 * @param critRate given double for the monster's critical rate 
+	 * @param game given GameEnvironment object
 	 */
 	public Monster(String name, String description, int maxHealth, int damage, int cost, int level, int healAmount, double critRate, GameEnvironment game) {
 		this.name = name;
@@ -42,28 +58,14 @@ public abstract class Monster implements Storable {
 		this.game = game;
 	}
 	
-	public void changeMaxLevel(Difficulty difficulty) {
-		switch(difficulty) {
-		case EASY:
-			setMaxLevel(4);
-			break;
-		case NORMAL:
-			setMaxLevel(6);
-			break;
-		case HARD:
-			setMaxLevel(8);
-			break;
-		}
-	}
 	
 	/**
-	 * Getters and Setters methods 
-	 * 
+	 * Getters and Setters 
 	 */
 	
 	/**
-	 * Set the name of the monster
-	 * @param name of the monster
+	 * Checks if given string passes the criteria and sets the name of the monster 
+	 * @param name the new value of name 
 	 * @throws InvalidValueException 
 	 */
 	public void setName(String name) throws InvalidValueException {
@@ -86,7 +88,7 @@ public abstract class Monster implements Storable {
     }
 
     /**
-     * Set the value of health
+     * Set the value of health 
      * @param health the new value of health
      */
     public void setHealth (int health) {
@@ -187,14 +189,16 @@ public abstract class Monster implements Storable {
     }
 
     /**
-	 * @return the maxLevel
+     * Get the value of maxLevel
+	 * @return the value of maxLevel
 	 */
 	public int getMaxLevel() {
 		return maxLevel;
 	}
 
 	/**
-	 * @param maxLevel the maxLevel to set
+	 * Set the value of maxLevel
+	 * @param maxLevel the new value of maxLevel
 	 */
 	public void setMaxLevel(int maxLevel) {
 		this.maxLevel = maxLevel;
@@ -234,28 +238,32 @@ public abstract class Monster implements Storable {
     
     
     /**
-	 * @return the maxCritRate
+     * Get the value of maxCritRate
+	 * @return the value of maxCritRate
 	 */
 	public double getMaxCritRate() {
 		return maxCritRate;
 	}
 
 	/**
-	 * @param maxCritRate the maxCritRate to set
+	 * Set the value of maxCritRate
+	 * @param maxCritRate the new value of maxCritRate
 	 */
 	public void setMaxCritRate(double maxCritRate) {
 		this.maxCritRate = maxCritRate;
 	}
 
 	/**
-	 * @return the critMultiplier
+	 * Get the value of critMultiplier
+	 * @return the value of critMultiplier
 	 */
 	public double getCritMultiplier() {
 		return critMultiplier;
 	}
 
 	/**
-	 * @param critMultiplier the critMultiplier to set
+	 * Set the value of critMultiplier 
+	 * @param critMultiplier the new value of critMultiplier
 	 */
 	public void setCritMultiplier(double critMultiplier) {
 		this.critMultiplier = critMultiplier;
@@ -310,12 +318,30 @@ public abstract class Monster implements Storable {
     }
 	
 	/**
-	 * Functional methods
-	 * 
+	 * Functional 
 	 */
+    
+    /**
+	 * Sets the maximum level of the monster to a value based on the difficulty given 
+	 * @param difficulty given Difficulty value 
+	 */
+	public void changeMaxLevel(Difficulty difficulty) {
+		switch(difficulty) {
+		case EASY:
+			setMaxLevel(4);
+			break;
+		case NORMAL:
+			setMaxLevel(6);
+			break;
+		case HARD:
+			setMaxLevel(8);
+			break;
+		}
+	}
 
     /**
-     * Heals the monster for the heal amount.
+     * If monster is fainted, set the new value of isFainted to false 
+     * Increase the monster health by the healAmount value 
      */
 	public void heal() {
 	    if(getIsFainted()) {
@@ -328,8 +354,10 @@ public abstract class Monster implements Storable {
 	}
 	
 	/**
-     * @param other the monster that should take damage
-	 * @throws InvalidValueException 
+	 * Deal damage to the given Monster object 
+	 * Damage to deal is calulated in finalDamage method
+     * @param other given Monster object 
+	 * @throws InvalidValueException if given Monster object is fainted 
      */
 	public int attack(Monster other) throws InvalidValueException, InvalidTargetException {
 	    int damageDealt = finalDamage();
@@ -344,8 +372,9 @@ public abstract class Monster implements Storable {
 	}
 	
 	/**
-     * @param damageReceived the amount of damage this monster took
-     * @throws InvalidValueException
+	 * Reduce monster's health based on given value 
+     * @param damageReceived given int value to reduce from monster's health
+     * @throws InvalidValueException if given value is less than 0 
      */
 	public void takeDamage(int damageReceived) throws InvalidValueException {
 		if(damageReceived < 0) {
@@ -361,8 +390,8 @@ public abstract class Monster implements Storable {
 	}
 	
 	/**
-	 * Return the damage the monster deals based on whether it was a critical hit
-	 * @return the final damage after calculations 
+	 * Calculate totalDamage to deal based on the critical rate and critical multiplier
+	 * @return the totalDamage after taking into account the critical rate 
 	 */
 	public int finalDamage() {
 		Random rn = new Random();
@@ -377,12 +406,12 @@ public abstract class Monster implements Storable {
 	
     /**
      * Buy a monster from the shop and add it to the player inventory.
-     * @throws InsufficientFundsException cost of item is more than player balance error
-     * @throws InventoryFullException inventory is full error
-     * @throws StorableNotFoundException 
-     * @throws InvalidValueException 
+     * @throws InsufficientFundsException if cost of item is more than player balance
+     * @throws InventoryFullException if inventory is full
+     * @throws StorableNotFoundException if monster not found in player's inventory
+     * @throws InvalidValueException if value of balance to minus is invalid
      */
-	public String buy() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException  {
+	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException, StorableNotFoundException {
 		game.minusBalance(cost);
 		game.getMyMonsters().add(this);
 		int index = game.getShop().getMonsters().indexOf(this);
@@ -393,8 +422,8 @@ public abstract class Monster implements Storable {
 	
     /**
      * Sell monster back to the shop for a partial refund and removes the monster from the player's inventory
-     * @throws StorableNotFoundException monster was not found in the player inventory error
-     * @throws InvalidValueException 
+     * @throws StorableNotFoundException if monster not found in the player inventory
+     * @throws InvalidValueException if value of balance to add is invalid
      */
 	public String sell() throws StorableNotFoundException, InvalidValueException {
 		game.addBalance(cost * refundAmount);
@@ -403,8 +432,8 @@ public abstract class Monster implements Storable {
 	}
 	
 	/**
-     * Level up the monster's statistics.
-	 * @throws StatMaxedOutException 
+     * Level up the monster by 1 level
+	 * @throws StatMaxedOutException if monster's level value is the same as maxLevel value 
      */
 	public void levelUp( ) throws StatMaxedOutException {
 		if (level == maxLevel) {
@@ -417,7 +446,7 @@ public abstract class Monster implements Storable {
 	
 	
 	/**
-	 * @return
+	 * @return the string representation of the Monster object
 	 */
 	public String toString() {
 		return String.format("%s (%s health: %s, max health: %s, damage: %s, cost: %s, "
@@ -427,7 +456,7 @@ public abstract class Monster implements Storable {
 	
 	
 	/**
-	 * @return
+	 * @return the string representation of the Monster object followed by command line options
 	 */
     public String view() {
     	String result = "";
