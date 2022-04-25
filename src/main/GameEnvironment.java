@@ -4,7 +4,6 @@ public class GameEnvironment {
 
 	/**
 	 * Fields
-	 * 
 	 */
     private double balance;
     private String playerName;
@@ -33,8 +32,6 @@ public class GameEnvironment {
     
     /**
      * Constructors
-     * @throws InventoryFullException 
-     * @throws InvalidValueException 
      */
     
     /**
@@ -50,62 +47,6 @@ public class GameEnvironment {
 			e.printStackTrace();
 		}
     	scoreSystem.setScore(easyScore);
-    }
-    
-
-    /**
-     * Setup the necessary game information.
-     * 1. Set starting balance and starting score based on the level of difficulty selected by the player.
-     * 2. Setup allMonsters and allItems.
-     * 3. Setup the shop.
-     * 4. Randomize battles.
-     */
-    public void setupGame() {
-    	
-    	try {
-    		switch(difficulty) {
-	    	case EASY:
-	    		setBalance(100);
-	    		scoreSystem.setScore(easyScore);
-	    		break;
-	    	case NORMAL:
-	    		setBalance(80);
-	    		scoreSystem.setScore(normalScore);
-	    		break;
-	    	case HARD:
-	    		setBalance(60);
-	    		scoreSystem.setScore(hardScore);
-	    		break;
-    		}
-    	} catch (InvalidValueException e) {
-    		e.printStackTrace();
-    	}
-    	
-    	try {    		
-    		allMonsters = new Inventory<Monster>(6, this);
-    		allMonsters.add(new AverageJoe(this));
-    		allMonsters.add(new Chunky(this));
-    		allMonsters.add(new Lanky(this));
-    		allMonsters.add(new Shanny(this));
-    		allMonsters.add(new Raka(this));
-    		allMonsters.add(new Zap(this));
-    		
-    		allItems = new Inventory<Item>(4, this);
-    		allItems.add(new HealUp(this));
-    		allItems.add(new IncreaseDamage(this));
-    		allItems.add(new IncreaseCritRate(this));
-    		allItems.add(new LevelUp(this));
-    		
-    		myMonsters = new Inventory<Monster>(4, this);
-    		myItems = new Inventory<Item>(4, this);
-    		shop = new Shop(this);
-    		battles = new Inventory<Battle>(5, this);
-    		Inventory.randomiseBattles(battles, this);
-    		randomEvent = new RandomEvent(this);
-    	}
-    	catch (InventoryFullException e) {
-    		e.printStackTrace();
-    	}
     }
     
     
@@ -385,9 +326,64 @@ public class GameEnvironment {
 	
 	/**
 	 * Functional
-	 * 
 	 */
 
+    /**
+     * Setup the necessary game information.
+     * 1. Set starting balance and starting score based on the level of difficulty selected by the player.
+     * 2. Setup allMonsters and allItems.
+     * 3. Setup the shop.
+     * 4. Randomize battles.
+     */
+    public void setupGame() {
+    	
+    	try {
+    		switch(difficulty) {
+	    	case EASY:
+	    		setBalance(100);
+	    		scoreSystem.setScore(easyScore);
+	    		break;
+	    	case NORMAL:
+	    		setBalance(80);
+	    		scoreSystem.setScore(normalScore);
+	    		break;
+	    	case HARD:
+	    		setBalance(60);
+	    		scoreSystem.setScore(hardScore);
+	    		break;
+    		}
+    	} catch (InvalidValueException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	try {    		
+    		allMonsters = new Inventory<Monster>(6, this);
+    		allMonsters.add(new AverageJoe(this));
+    		allMonsters.add(new Chunky(this));
+    		allMonsters.add(new Lanky(this));
+    		allMonsters.add(new Shanny(this));
+    		allMonsters.add(new Raka(this));
+    		allMonsters.add(new Zap(this));
+    		
+    		allItems = new Inventory<Item>(4, this);
+    		allItems.add(new HealUp(this));
+    		allItems.add(new IncreaseDamage(this));
+    		allItems.add(new IncreaseCritRate(this));
+    		allItems.add(new LevelUp(this));
+    		
+    		myMonsters = new Inventory<Monster>(4, this);
+    		myItems = new Inventory<Item>(4, this);
+    		shop = new Shop(this);
+    		battles = new Inventory<Battle>(5, this);
+    		Inventory.randomiseBattles(battles, this);
+    		randomEvent = new RandomEvent(this);
+    	}
+    	catch (InventoryFullException e) {
+    		e.printStackTrace();
+    	}
+    }
+    
+	
 	/**
 	 * Sleep through the night.
 	 * 1. Check the status of the game.
@@ -471,7 +467,7 @@ public class GameEnvironment {
     
     /**
      * Returns whether balance is sufficient to afford the given amount.
-     * @param amount 
+     * @param amount the given amount
      * @return whether balance is bigger or equal to amount
      * @throws InvalidValueException if amount is negative value
      */

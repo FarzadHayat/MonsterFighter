@@ -6,7 +6,6 @@ public class CommandLine {
 
 	/**
 	 * Fields
-	 * 
 	 */
     private Scanner scanner = new Scanner(System.in);
     private GameEnvironment game;
@@ -16,11 +15,11 @@ public class CommandLine {
         
     /**
      * Constructors
-     * 
      */
     
     /**
-     * @param game
+     * Creates a new CommandLine object.
+     * Start the command line game.
      */
     public CommandLine() {
     	start();
@@ -28,7 +27,39 @@ public class CommandLine {
         	run();
     	}
     }
+
     
+    /**
+     * Getters and setters
+     */
+    
+	/**
+	 * Get the value of scanner
+	 * @return the value of scanner
+	 */
+	public Scanner getScanner() {
+		return scanner;
+	}
+	
+	
+	/**
+	 * set the value of scanner
+	 * @param scanner the new value of scanner
+	 */
+	public void setScanner(Scanner scanner) {
+		this.scanner = scanner;
+	}
+	
+
+	/**
+	 * Functional
+	 */
+	
+    /**
+     * Ask the player if they want to play or not.
+     * If yes, then run the command line game setup.
+     * If no, then quit the game.
+     */
     public void start() {
     	System.out.println("Would you like to play the game?\n1. Yes\n2. No");
     	outer:
@@ -57,34 +88,15 @@ public class CommandLine {
 	    		}
 	    	}
     }
-    
-	/**
-	 * @return the scanner
-	 */
-	public Scanner getScanner() {
-		return scanner;
-	}
 	
 	
 	/**
-	 * @param scanner the scanner to set
-	 */
-	public void setScanner(Scanner scanner) {
-		this.scanner = scanner;
-	}
-	
-
-	/**
-	 * Functional
-	 * 
-	 */
-	
-	/**
-	 * 1. Set player name and request a different name if necessary.
-	 * 2. Set number of days and request a different input if necessary.
-	 * 3. Set difficulty.
-	 * 4. Instantiate new GamEnvironment with the chosen difficulty, player name and number of days
-	 * 5. Select starting monster and set monster name if not using the default.
+	 * Setup the command line game.
+	 * 1. Set the player name.
+	 * 2. Set the number of days.
+	 * 3. Set the difficulty.
+	 * 4. Run game setup to populate necessary game information.
+	 * 5. Select a starting monster.
 	 */
 	public void setupCmdGame() {
 		game = new GameEnvironment();
@@ -95,9 +107,10 @@ public class CommandLine {
 		selectStartingMonster();
 	}
 	
+	
 	/**
-	 * Let the player pick a name.
-	 * 
+	 * Ask the player to pick a player name.
+	 * The name must be between 3 to 15 characters long and contain no numbers or special characters.
 	 */
 	public void selectPlayerName() {
 		System.out.println("Select a player name (3 - 15 characters"
@@ -117,8 +130,8 @@ public class CommandLine {
     
     
 	/**
-	 * Let the player pick a number of days
-	 * 
+	 * Ask the player to pick a number of days to play for.
+	 * The number of days must be between 5 to 15 days.
 	 */
     public void selectNumDays() {
 		System.out.println("Select a number of days (between 5 - 15):");
@@ -143,8 +156,8 @@ public class CommandLine {
     
     
     /**
-     * Let the player pick a difficulty
-     * 
+     * Ask the player to pick a difficulty.
+     * The options are Easy, Normal, or Hard.
      */
     public void selectDifficulty() {
 		System.out.println("Select a difficulty level\n1. Easy\n2. Normal\n3. Hard");
@@ -180,7 +193,8 @@ public class CommandLine {
 
 
     /**
-     * Let the player pick a starting monster
+     * Print a list of all monsters and ask the player to pick a starting monster.
+     * The choices are Average Joe, Chunky, Lanky, Shanny, Raka, or Zap.
      */
 	public void selectStartingMonster() {
 		System.out.println("\nSelect a starting monster:\n");
@@ -203,7 +217,7 @@ public class CommandLine {
 				System.out.println(e.getMessage());
 			}
 			catch (InventoryFullException e) {
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}
 			catch (InputMismatchException e) {
     			System.out.println("Command not found! Try again:");
@@ -211,8 +225,12 @@ public class CommandLine {
     		}
 		}
 	}
+	
+	
 	/**
-	 * Select the name of the monster 
+	 * Rename of the given monster
+	 * The monster name must be between 3 to 15 characters long and contain no numbers or special characters.
+	 * @param monster the monster to be renamed
 	 */
 	public void selectMonsterName(Monster monster) {
 		System.out.println("Select a unique monster name (3 - 15 characters"
@@ -233,6 +251,9 @@ public class CommandLine {
 	}
     
     
+	/**
+	 * Print the shop contents and allow the user to either view a monster, view an item, or go back to the home page.
+	 */
     public void viewShop() {
     	System.out.println(game.getShop());
     	outer:
@@ -269,7 +290,10 @@ public class CommandLine {
     
     
     /**
-     * @param monster
+     * Print the full details of the given monster and allow the user to either:
+     * 1. Rename, sell, or go back to my team page if they own the monster.
+     * 2. Buy or go back to the shop page if they do not own the monster.
+     * @param monster the given monster
      */
     public void viewMonster(Monster monster) {
     	System.out.println(monster.view());
@@ -323,7 +347,10 @@ public class CommandLine {
     
     
     /**
-     * @param item
+     * Print the full details of the given item and allow the user to either:
+     * 1. Use, sell, or go back to my inventory page if they own the item.
+     * 2. Buy or go back to the shop page if they do not own the item.
+     * @param item the given item
      */
     public void viewItem(Item item) {
     	System.out.println(item.view());
@@ -375,6 +402,10 @@ public class CommandLine {
     }
     
     
+    /**
+     * Print the player's team and allow the user to pick a monster to either apply the item to or go back to the item page.
+     * @param item the given item
+     */
     public void useItem(Item item) {
     	System.out.println("Choose a monster to use it on:");
     	System.out.println("\n===== MY TEAM =====\n");
@@ -413,6 +444,9 @@ public class CommandLine {
     }
     
     
+    /**
+     * Print a list of all the battles and allow the user to either view a battle or go back to the home page.
+     */
     public void viewBattles() {
     	System.out.println("\n===== BATTLES =====\n");
     	System.out.println(game.getBattles().view());
@@ -447,8 +481,8 @@ public class CommandLine {
     
     
     /**
-     * 
-     * @param battle
+     * Print the full details of the given battle and allow the user to either fight the battle or go back the battles page.
+     * @param battle the given battle
      */
     public void viewBattle(Battle battle) {
     	System.out.println(battle.view());
@@ -481,9 +515,12 @@ public class CommandLine {
     
     
     /**
-     * 
-     * @param battle
-     * @throws PurchasableNotFoundException
+     * Play the given battle using command line to control the pace of the battle.
+     * The player must press Enter to play the next turn in the battle and continue until the battle is over.
+     * Checks the player team before the game to make sure they have at least one non fainted monster.
+     * Checks the status of the battle after each turn.
+     * @param battle the given battle currently being played
+     * @throws PurchasableNotFoundException if the player has no monsters in their team
      */
     public void playBattle(Battle battle) throws PurchasableNotFoundException {
     	battle.setup();
@@ -504,7 +541,7 @@ public class CommandLine {
 
 
 	/**
-     * View my monsters
+     * Print a list of the player's monsters and allow them to either view a monster or go back to the home page.
      */
     public void viewTeam() {
     	System.out.println("\n===== MY TEAM =====\n");
@@ -539,8 +576,8 @@ public class CommandLine {
     }
 
 
-	/**
-     * View my items
+    /**
+     * Print a list of the player's items and allow them to either view an item or go back to the home page.
      */
     public void viewInventory() {
     	System.out.println("\n===== MY INVENTORY =====\n");
@@ -576,7 +613,7 @@ public class CommandLine {
     
     
     /**
-     * View the game statistics
+     * Print the game statistics and allow the player to go back to the home page.
      */
     public void viewStats() {
     	printStats();
@@ -584,6 +621,15 @@ public class CommandLine {
     }
     
     
+    /**
+     * Print the following:
+     * 1. Balance
+     * 2. Player name
+     * 3. The current day
+     * 4. Difficulty
+     * 5. Today's score and total score
+     * 6. Today's battles won and total battles won
+     */
     public void printStats() {
     	System.out.println("\n===== PLAYER STATS =====");
     	System.out.println("Balance: " + game.getBalance());
@@ -600,6 +646,10 @@ public class CommandLine {
     }
     
     
+    /**
+     * Allow the player to go back to the previous page by entering a certain key.
+     * This method can be added to an other method in order to add a go back buffer.
+     */
     public void goBack() {
     	System.out.println("\n1. Go back");
     	outer:
@@ -626,7 +676,7 @@ public class CommandLine {
     
 	
 	/**
-	 * 
+	 * Print a list of the home page menu.
 	 */
 	public void viewHome() {
 		System.out.println("\nHome:");
@@ -639,6 +689,9 @@ public class CommandLine {
 	}
 	
     
+	/**
+	 * Print the events that occurred over night and allow the user to go back to the home page.
+	 */
 	public void viewSleep() {
 		System.out.println(game.sleep());
 		if (!game.getIsFinished()) {			
@@ -648,7 +701,9 @@ public class CommandLine {
 	
 	
 	/**
-	 * 
+	 * Print the home page and run the main command line loop.
+	 * The loop continues until the game has finished.
+	 * The final stats will be printed once the loop has stopped.
 	 */
     public void run() {
     	viewHome();
@@ -695,7 +750,7 @@ public class CommandLine {
     
     
     /**
-     * Returns a proper case version of the given phrase with all redundant whitespace removed.
+     * Returns a proper case version of the given phrase with the first letter of each word in upper case and all redundant whitespace removed.
      * @param phrase to be formatted
      * @return the formatted phrase
      */
