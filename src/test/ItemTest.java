@@ -23,7 +23,7 @@ class ItemTest {
 
 	
 	@Test
-	public void testBuy1() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
+	public void testBuy1() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
 		// Blue sky
 		Item testItem = new HealUp(game);
 		game.setBalance(testItem.getCost());
@@ -36,7 +36,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testBuy2() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
+	public void testBuy2() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
 		// Insufficient funds
 		Item testItem = new HealUp(game);
 		game.setBalance(testItem.getCost() / 2);
@@ -50,7 +50,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testBuy3() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
+	public void testBuy3() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
 		// Inventory full	
 		Item testItem = new HealUp(game);
 		game.setBalance(testItem.getCost() * (myItems.getMaxSize() + 1));
@@ -67,7 +67,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testSell1() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell1() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Blue sky
 		Item testItem = new HealUp(game);
 		game.setBalance(testItem.getCost());
@@ -80,7 +80,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testSell2() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell2() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Multiple items of the same type
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);
@@ -98,7 +98,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testSell3() throws PurchasableNotFoundException, InsufficientFundsException, InventoryFullException, InvalidValueException {
+	public void testSell3() throws StorableNotFoundException, InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Storable not found in inventory
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);
@@ -107,7 +107,7 @@ class ItemTest {
 		try {    		
 			testItem2.sell();
 		}
-		catch (PurchasableNotFoundException e){
+		catch (StorableNotFoundException e){
 			assertEquals(e.getMessage(), "Item not found in inventory!");
 		}
 	}

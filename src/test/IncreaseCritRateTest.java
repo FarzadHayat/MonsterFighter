@@ -21,7 +21,7 @@ class IncreaseCritRateTest {
 
 	
 	@Test
-	void testUse1() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse1() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		monster.setCritRate(0);
@@ -36,7 +36,7 @@ class IncreaseCritRateTest {
 
 	
 	@Test
-	void testUse2() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse2() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Monster crit rate is only partially increased
 		Monster monster = new Chunky(game);
 		monster.setCritRate(monster.getMaxCritRate() - (IncreaseCritRate.getCritIncrease() / 2));
@@ -51,7 +51,7 @@ class IncreaseCritRateTest {
 	
 	
 	@Test
-	void testUse3() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse3() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Monster is already at max crit rate
 		Monster monster = new Chunky(game);
 		monster.setCritRate(1);
@@ -69,7 +69,7 @@ class IncreaseCritRateTest {
 	
 	
 	@Test
-	void testUse4() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse4() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Item not owned
 		Monster monster = new Chunky(game);
 		Item item = new IncreaseCritRate(game);
@@ -77,7 +77,7 @@ class IncreaseCritRateTest {
 		try {			
 			item.use(monster);
 		}
-		catch (PurchasableNotFoundException e) {
+		catch (StorableNotFoundException e) {
 			assertEquals(e.getMessage(), "You do not own this item!");
 		}
 	}

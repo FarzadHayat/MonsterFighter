@@ -149,14 +149,14 @@ public class Battle implements Storable {
 	
 	/**
 	 * Check that the player monster inventory contains at least one non fainted monster.
-	 * @throws PurchasableNotFoundException if the player has no non fainted monsters in their team
+	 * @throws StorableNotFoundException if the player has no non fainted monsters in their team
 	 */
-	public void setup() throws PurchasableNotFoundException {
+	public void setup() throws StorableNotFoundException {
 		if (game.getMyMonsters().isEmpty()) {
-    		throw new PurchasableNotFoundException("Battle not available: Player has no monsters! Try again...");
+    		throw new StorableNotFoundException("Battle not available: Player has no monsters! Try again...");
     	}
 		if (Inventory.allFainted(game.getMyMonsters())) {
-    		throw new PurchasableNotFoundException("Battle not available: Player monsters are all fainted! Try again...");
+    		throw new StorableNotFoundException("Battle not available: Player monsters are all fainted! Try again...");
     	}
 	}
 	
@@ -246,9 +246,9 @@ public class Battle implements Storable {
      * Checks the status of the battle after each turn.
      * Stop when one team's monsters have all fainted.
      * @param result the commentary of the battle
-     * @throws PurchasableNotFoundException if the player has no non fainted monsters in their team
+     * @throws StorableNotFoundException if the player has no non fainted monsters in their team
      */
-    public String play() throws PurchasableNotFoundException {
+    public String play() throws StorableNotFoundException {
     	setup();
     	String result = "";
     	while (winner == null) {
@@ -258,7 +258,7 @@ public class Battle implements Storable {
     	try {
     		game.getBattles().remove(this);
     	}
-    	catch (PurchasableNotFoundException e) {
+    	catch (StorableNotFoundException e) {
     		e.printStackTrace();
     	}
     	return result;

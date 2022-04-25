@@ -107,7 +107,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy1() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
+	public void testBuy1() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
 		//Blue sky
 		game.setBalance(monster.getCost());
 		game.getShop().setMonsters(new Inventory<Monster>(4));
@@ -120,7 +120,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy2() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
+	public void testBuy2() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
 		//Insufficient fund in player's balance 
 		game.setBalance(monster.getCost()/2);
 		try {
@@ -132,7 +132,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy3() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
+	public void testBuy3() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
 		//Inventory full
 		game.setBalance(monster.getCost()*5);
 		game.getShop().setMonsters(new Inventory<Monster>(4));
@@ -149,7 +149,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testSell1() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell1() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Blue sky
 		game.setBalance(monster.getCost());
 		Monster testMonster = new AverageJoe(game);
@@ -163,7 +163,7 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testSell2() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell2() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Multiple items of same type
 		game.setBalance(monster.getCost()*3);
 		Monster testMonster = new AverageJoe(game);
@@ -183,13 +183,13 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testSell3() throws PurchasableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell3() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Storable not found in inventory
 		game.setBalance(monster.getCost());
 		try {
 			monster.sell();
 		}
-		catch(PurchasableNotFoundException e) {
+		catch(StorableNotFoundException e) {
 			assertEquals(e.getMessage(), "Not found in inventory!");
 		}
 	}

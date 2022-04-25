@@ -27,13 +27,13 @@ public class LevelUp extends Item {
     /**
      * Level up the monster by one level.
      * @param monster
-     * @throws PurchasableNotFoundException
+     * @throws StorableNotFoundException
      * @throws StatMaxedOutException 
      */
-    public void use(Monster monster) throws PurchasableNotFoundException, StatMaxedOutException
+    public void use(Monster monster) throws StorableNotFoundException, StatMaxedOutException
     {
     	if (!game.getMyItems().contains(this)) {
-    		throw new PurchasableNotFoundException("You do not own this item!");
+    		throw new StorableNotFoundException("You do not own this item!");
     	}
     	
     	monster.levelUp();

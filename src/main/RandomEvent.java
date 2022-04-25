@@ -57,7 +57,7 @@ public class RandomEvent {
 		return event;
     }
     
-    public String randomMonsterLeave(Monster monster) throws PurchasableNotFoundException {
+    public String randomMonsterLeave(Monster monster) throws StorableNotFoundException {
     	String event = "";
 		double resetValue = leaveChance;
 		//If monster fainted during any battle in the day, leaveChance is doubled 
@@ -100,7 +100,7 @@ public class RandomEvent {
 		    try {		    	
 		    	events += randomMonsterLeave(monster);
 		    }
-		    catch (PurchasableNotFoundException e) {
+		    catch (StorableNotFoundException e) {
 		    	e.printStackTrace();
 		    }
 		}

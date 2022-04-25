@@ -9,7 +9,7 @@ import main.Chunky;
 import main.GameEnvironment;
 import main.InventoryFullException;
 import main.Monster;
-import main.PurchasableNotFoundException;
+import main.StorableNotFoundException;
 import main.RandomEvent;
 import main.StatMaxedOutException;
 import main.Zap;
@@ -55,7 +55,7 @@ class RandomEventTest {
 //	}
 	
 	@Test
-	public void testRandomMonsterLeave1() throws InventoryFullException, PurchasableNotFoundException {
+	public void testRandomMonsterLeave1() throws InventoryFullException, StorableNotFoundException {
 		game.getMyMonsters().add(monster);
 		randEvent.randomMonsterLeave(monster);
 		assertTrue(game.getMyMonsters().contains(monster) || !game.getMyMonsters().contains(monster));
@@ -91,7 +91,7 @@ class RandomEventTest {
 //	}
 	
 	@Test
-	public void testRunAllRandom1() throws InventoryFullException, StatMaxedOutException, PurchasableNotFoundException {
+	public void testRunAllRandom1() throws InventoryFullException, StatMaxedOutException, StorableNotFoundException {
 		game.getMyMonsters().add(monster);
 		randEvent.runAllRandom();
 		assertTrue(monster.getLevel() == 1 || monster.getLevel() == 2);
@@ -100,7 +100,7 @@ class RandomEventTest {
 	}
 	
 	@Test
-	public void testRunAllRandom2() throws InventoryFullException, StatMaxedOutException, PurchasableNotFoundException {
+	public void testRunAllRandom2() throws InventoryFullException, StatMaxedOutException, StorableNotFoundException {
 		Monster zap = new Zap(game);
 		game.getMyMonsters().add(zap);
 		game.getMyMonsters().add(monster);
