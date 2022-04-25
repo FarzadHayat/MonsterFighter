@@ -21,7 +21,7 @@ class HealUpTest {
 
 	
 	@Test
-	void testUse1() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse1() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		monster.setHealth(0);
@@ -36,7 +36,7 @@ class HealUpTest {
 
 	
 	@Test
-	void testUse2() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse2() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Monster is only partially healed
 		Monster monster = new Chunky(game);
 		monster.setHealth(monster.getHealth() - (HealUp.getHealAmount() / 2));
@@ -51,7 +51,7 @@ class HealUpTest {
 	
 	
 	@Test
-	void testUse3() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse3() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Monster is already max health
 		Monster monster = new Chunky(game);
 		Item item = new HealUp(game);
@@ -68,7 +68,7 @@ class HealUpTest {
 	
 	
 	@Test
-	void testUse4() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse4() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Item not owned
 		Monster monster = new Chunky(game);
 		Item item = new HealUp(game);
@@ -76,7 +76,7 @@ class HealUpTest {
 		try {			
 			item.use(monster);
 		}
-		catch (PurchasableNotFoundException e) {
+		catch (StorableNotFoundException e) {
 			assertEquals(e.getMessage(), "You do not own this item!");
 		}
 	}

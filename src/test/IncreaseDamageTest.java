@@ -21,7 +21,7 @@ class IncreaseDamageTest {
 
 	
 	@Test
-	void testUse1() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse1() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		int damageBefore = monster.getDamage();
@@ -36,7 +36,7 @@ class IncreaseDamageTest {
 	
 	
 	@Test
-	void testUse2() throws InventoryFullException, PurchasableNotFoundException, StatMaxedOutException {
+	void testUse2() throws InventoryFullException, StorableNotFoundException, StatMaxedOutException {
 		// Item not owned
 		Monster monster = new Chunky(game);
 		Item item = new IncreaseDamage(game);
@@ -44,7 +44,7 @@ class IncreaseDamageTest {
 		try {			
 			item.use(monster);
 		}
-		catch (PurchasableNotFoundException e) {
+		catch (StorableNotFoundException e) {
 			assertEquals(e.getMessage(), "You do not own this item!");
 		}
 	}

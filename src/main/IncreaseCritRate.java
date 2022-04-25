@@ -45,13 +45,13 @@ public class IncreaseCritRate extends Item {
     /**
      * Increase the monster's crit rate by critIncrease amount.
      * @param monster
-     * @throws PurchasableNotFoundException 
+     * @throws StorableNotFoundException 
      * @throws StatMaxedOutException 
      */
-    public void use(Monster monster) throws PurchasableNotFoundException, StatMaxedOutException
+    public void use(Monster monster) throws StorableNotFoundException, StatMaxedOutException
     {
     	if (!game.getMyItems().contains(this)) {
-    		throw new PurchasableNotFoundException("You do not own this item!");
+    		throw new StorableNotFoundException("You do not own this item!");
     	}
     	
     	double critRate = monster.getCritRate();

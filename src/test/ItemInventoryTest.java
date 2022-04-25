@@ -50,7 +50,7 @@ class ItemInventoryTest {
 
 	
 	@Test
-	public void testRemoveItem1() throws PurchasableNotFoundException, InventoryFullException {
+	public void testRemoveItem1() throws StorableNotFoundException, InventoryFullException {
 		// Blue sky
 		Item testItem = new HealUp(game);
 		myItems.add(testItem);
@@ -61,7 +61,7 @@ class ItemInventoryTest {
 	
 	
 	@Test
-	public void testRemoveItem2() throws PurchasableNotFoundException, InventoryFullException {
+	public void testRemoveItem2() throws StorableNotFoundException, InventoryFullException {
 		// Multiple items of the same type
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);
@@ -77,7 +77,7 @@ class ItemInventoryTest {
 	
 	
 	@Test
-	public void testRemoveItem3() throws PurchasableNotFoundException, InventoryFullException {
+	public void testRemoveItem3() throws StorableNotFoundException, InventoryFullException {
 		// Storable not found in inventory
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);
@@ -85,7 +85,7 @@ class ItemInventoryTest {
 		try {    		
 			myItems.remove(testItem1);
 		}
-		catch (PurchasableNotFoundException e){
+		catch (StorableNotFoundException e){
 			assertEquals(e.getMessage(), "Item not found in inventory!");
 		}
 	}

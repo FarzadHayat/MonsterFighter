@@ -408,10 +408,10 @@ public abstract class Monster implements Storable {
      * Buy a monster from the shop and add it to the player inventory.
      * @throws InsufficientFundsException if cost of item is more than player balance
      * @throws InventoryFullException if inventory is full
-     * @throws PurchasableNotFoundException if monster not found in player's inventory
+     * @throws StorableNotFoundException if monster not found in player's inventory
      * @throws InvalidValueException if value of balance to minus is invalid
      */
-	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException, PurchasableNotFoundException {
+	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException, StorableNotFoundException {
 		game.minusBalance(cost);
 		game.getMyMonsters().add(this);
 		int index = game.getShop().getMonsters().indexOf(this);
@@ -422,10 +422,10 @@ public abstract class Monster implements Storable {
 	
     /**
      * Sell monster back to the shop for a partial refund and removes the monster from the player's inventory
-     * @throws PurchasableNotFoundException if monster not found in the player inventory
+     * @throws StorableNotFoundException if monster not found in the player inventory
      * @throws InvalidValueException if value of balance to add is invalid
      */
-	public String sell() throws PurchasableNotFoundException, InvalidValueException {
+	public String sell() throws StorableNotFoundException, InvalidValueException {
 		game.addBalance(cost * refundAmount);
 		game.getMyMonsters().remove(this);
 		return "You sold: " + name;

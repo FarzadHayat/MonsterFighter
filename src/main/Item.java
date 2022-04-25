@@ -119,10 +119,10 @@ abstract public class Item implements Storable {
      * buy this item from the shop and add it to the player inventory
      * @throws InsufficientFundsException cost of item is more than player balance error
      * @throws InventoryFullException inventory is full error
-     * @throws PurchasableNotFoundException 
+     * @throws StorableNotFoundException 
      * @throws InvalidValueException 
      */
-    public String buy() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException
+    public String buy() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException
     {
     	game.minusBalance(cost);
 		game.getMyItems().add(this);
@@ -135,10 +135,10 @@ abstract public class Item implements Storable {
 
     /**
      * sell this item back to the shop for a partial refund and remove it from the player inventory
-     * @throws PurchasableNotFoundException item was not found in the player inventory error
+     * @throws StorableNotFoundException item was not found in the player inventory error
      * @throws InvalidValueException 
      */
-    public String sell() throws PurchasableNotFoundException, InvalidValueException
+    public String sell() throws StorableNotFoundException, InvalidValueException
     {
     	game.addBalance(cost * refundAmount);
     	game.getMyItems().remove(this);
@@ -149,10 +149,10 @@ abstract public class Item implements Storable {
     /**
      * use this item on the given Monster
      * @param monster
-     * @throws PurchasableNotFoundException 
+     * @throws StorableNotFoundException 
      * @throws StatMaxedOutException 
      */
-    abstract public void use(Monster monster) throws PurchasableNotFoundException, StatMaxedOutException;
+    abstract public void use(Monster monster) throws StorableNotFoundException, StatMaxedOutException;
 
     
     /**

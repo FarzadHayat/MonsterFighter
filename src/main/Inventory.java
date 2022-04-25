@@ -105,15 +105,15 @@ public class Inventory<T extends Storable> {
     /**
      * Remove the given t from the inventory.
      * @param t the given t
-     * @throws PurchasableNotFoundException if the t was not found in the inventory
+     * @throws StorableNotFoundException if the t was not found in the inventory
      */
-    public void remove(T t) throws PurchasableNotFoundException
+    public void remove(T t) throws StorableNotFoundException
     {
     	if (contains(t)) {    		
     		list.remove(t);
     	}
     	else {
-    		throw new PurchasableNotFoundException("Not found in inventory!");
+    		throw new StorableNotFoundException("Not found in inventory!");
     	}
     }
     

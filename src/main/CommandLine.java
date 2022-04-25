@@ -342,7 +342,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (PurchasableNotFoundException | InvalidValueException | 
+				catch (StorableNotFoundException | InvalidValueException | 
 						   InsufficientFundsException | InventoryFullException e) {
 					System.out.println(e.getMessage());
 				}
@@ -398,7 +398,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (PurchasableNotFoundException | InvalidValueException | 
+				catch (StorableNotFoundException | InvalidValueException | 
 						   InsufficientFundsException | InventoryFullException e) {
 					System.out.println(e.getMessage());
 				}
@@ -441,7 +441,7 @@ public class CommandLine {
 			catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 			}
-			catch (PurchasableNotFoundException | StatMaxedOutException e) {
+			catch (StorableNotFoundException | StatMaxedOutException e) {
 				System.out.println(e.getMessage());
 			}
 			catch (InputMismatchException e) {
@@ -515,7 +515,7 @@ public class CommandLine {
     			catch (InputMismatchException e) {
 	    			System.out.println("Command not found! Try again:");
 	    			scanner.nextLine();
-	    		} catch (PurchasableNotFoundException e) {
+	    		} catch (StorableNotFoundException e) {
 					System.out.println(e.getMessage());
 				}
     		}
@@ -528,9 +528,9 @@ public class CommandLine {
      * Checks the player team before the game to make sure they have at least one non fainted monster.
      * Checks the status of the battle after each turn.
      * @param battle the given battle currently being played
-     * @throws PurchasableNotFoundException if the player has no non fainted monsters in their team
+     * @throws StorableNotFoundException if the player has no non fainted monsters in their team
      */
-    public void playBattle(Battle battle) throws PurchasableNotFoundException {
+    public void playBattle(Battle battle) throws StorableNotFoundException {
     	battle.setup();
     	System.out.println("Press Enter to play next turn...");
     	while (battle.getWinner() == null) {
@@ -541,7 +541,7 @@ public class CommandLine {
     	try {
     		game.getBattles().remove(battle);
     	}
-    	catch (PurchasableNotFoundException e) {
+    	catch (StorableNotFoundException e) {
     		e.printStackTrace();
     	}
     	goBack();
