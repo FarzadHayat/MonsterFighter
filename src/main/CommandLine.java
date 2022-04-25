@@ -271,14 +271,14 @@ public class CommandLine {
 				if (0 < selection && selection <= monstersSize) {
 					int index = selection - 1;
 					Monster monster = game.getShop().getMonsters().get(index);
-					viewMonster(monster);
+					viewShopMonster(monster);
 		    		System.out.println(game.getShop());
 				}
 				else {						
 					if (monstersSize < selection && selection <= combinedSize) {
 						int index = selection - monstersSize - 1;
 						Item item = game.getShop().getItems().get(index);
-						viewItem(item);
+						viewShopItem(item);
 						System.out.println(game.getShop());
 					}
 					else {
@@ -298,45 +298,25 @@ public class CommandLine {
     
     
     /**
-     * Print the full details of the given monster and allow the user to either:
-     * 1. Rename, sell, or go back to my team page if they own the monster.
-     * 2. Buy or go back to the shop page if they do not own the monster.
+     * Print the full details of the given monster and allow the user to either buy or go back to the shop page.
      * @param monster the given monster
      */
-    public void viewMonster(Monster monster) {
+    public void viewShopMonster(Monster monster) {
     	System.out.println(monster.view());
     	outer:
 			while (true) {
 				try {
 					selection = scanner.nextInt();
 					scanner.nextLine();
-					if (game.getMyMonsters().contains(monster)) {
-						switch (selection) {
-						case 1:
-							selectMonsterName(monster);
-							System.out.println(monster.view());
-							break;
-						case 2:
-							System.out.println(monster.sell());
-							goBack();
-							break outer;
-						case 3:
-							break outer;
-						default:
-							throw new IllegalArgumentException("Command not found! Try again:");
-						}
-					}
-					if (game.getShop().getMonsters().contains(monster)) {	
-						switch (selection) {
-						case 1:
-							System.out.println(monster.buy());
-							goBack();
-							break outer;
-						case 2:
-							break outer;
-						default:
-							throw new IllegalArgumentException("Command not found! Try again:");
-						}
+					switch (selection) {
+					case 1:
+						System.out.println(monster.buy());
+						goBack();
+						break outer;
+					case 2:
+						break outer;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
 					}
 				}
 				catch (IllegalArgumentException e) {
@@ -355,44 +335,65 @@ public class CommandLine {
     
     
     /**
-     * Print the full details of the given item and allow the user to either:
-     * 1. Use, sell, or go back to my inventory page if they own the item.
-     * 2. Buy or go back to the shop page if they do not own the item.
+     * Print the full details of the given monster and allow the user to either rename, sell, or go back to my team page.
+     * @param monster the given monster
+     */
+    public void viewPlayerMonster(Monster monster) {
+    	System.out.println(monster.view());
+    	outer:
+			while (true) {
+				try {
+					selection = scanner.nextInt();
+					scanner.nextLine();
+					switch (selection) {
+					case 1:
+						selectMonsterName(monster);
+						System.out.println(monster.view());
+						break;
+					case 2:
+						System.out.println(monster.sell());
+						goBack();
+						break outer;
+					case 3:
+						break outer;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
+					}
+				}
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+				catch (StorableNotFoundException | InvalidValueException e) {
+					System.out.println(e.getMessage());
+				}
+				catch (InputMismatchException e) {
+	    			System.out.println("Command not found! Try again:");
+	    			scanner.nextLine();
+	    		}
+			}
+    }
+    
+    
+    /**
+     * Print the full details of the given item and allow the user to either buy or go back to the shop page.
      * @param item the given item
      */
-    public void viewItem(Item item) {
+    public void viewShopItem(Item item) {
     	System.out.println(item.view());
     	outer:
 			while (true) {
 				try {
 					selection = scanner.nextInt();
 					scanner.nextLine();
-					if (game.getMyItems().contains(item)) {
-						switch (selection) {
-						case 1:
-							useItem(item);
-							break outer;
-						case 2:
-							System.out.println(item.sell());
-							goBack();
-							break outer;
-						case 3:
-							break outer;
-						default:
-							throw new IllegalArgumentException("Command not found! Try again:");
-						}
-					}
-					if (game.getShop().getItems().contains(item)) {
-						switch (selection) {
-						case 1:
-							System.out.println(item.buy());
-							goBack();
-							break outer;
-						case 2:
-							break outer;
-						default:
-							throw new IllegalArgumentException("Command not found! Try again:");
-						}
+					switch (selection) {
+					case 1:
+						System.out.println(item.buy());
+						goBack();
+						break outer;
+					case 2:
+						break outer;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
 					}
 				}
 				catch (IllegalArgumentException e) {
@@ -400,6 +401,45 @@ public class CommandLine {
 				}
 				catch (StorableNotFoundException | InvalidValueException | 
 						   InsufficientFundsException | InventoryFullException e) {
+					System.out.println(e.getMessage());
+				}
+				catch (InputMismatchException e) {
+	    			System.out.println("Command not found! Try again:");
+	    			scanner.nextLine();
+	    		}
+			}
+    }
+    
+    
+    /**
+     * Print the full details of the given item and allow the user to either use, sell, or go back to my inventory page.
+     * @param item the given item
+     */
+    public void viewPlayerItem(Item item) {
+    	System.out.println(item.view());
+    	outer:
+			while (true) {
+				try {
+					selection = scanner.nextInt();
+					scanner.nextLine();
+					switch (selection) {
+					case 1:
+						useItem(item);
+						break outer;
+					case 2:
+						System.out.println(item.sell());
+						goBack();
+						break outer;
+					case 3:
+						break outer;
+					default:
+						throw new IllegalArgumentException("Command not found! Try again:");
+					}
+				}
+				catch (IllegalArgumentException e) {
+					System.out.println(e.getMessage());
+				}
+				catch (StorableNotFoundException | InvalidValueException e) {
 					System.out.println(e.getMessage());
 				}
 				catch (InputMismatchException e) {
@@ -564,7 +604,7 @@ public class CommandLine {
 				}
 				if (0 < selection && selection <= game.getMyMonsters().size()) {
 					Monster monster = game.getMyMonsters().get(selection - 1);
-					viewMonster(monster);
+					viewPlayerMonster(monster);
 					System.out.println("\n===== MY TEAM =====\n");
 			    	System.out.println(game.getMyMonsters().view());
 			    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
@@ -600,7 +640,7 @@ public class CommandLine {
 				}
 				if (0 < selection && selection <= game.getMyItems().size()) {
 					Item item = game.getMyItems().get(selection - 1);
-					viewItem(item);
+					viewPlayerItem(item);
 			    	System.out.println("\n===== MY INVENTORY =====\n");
 			    	System.out.println(game.getMyItems().view());
 			    	System.out.println(String.format("%s: Go back", game.getMyItems().size() + 1));
