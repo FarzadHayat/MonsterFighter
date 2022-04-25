@@ -334,7 +334,7 @@ public class Battle implements Storable {
     
     
     /**
-     * @return result the string representation of the battle object followed by command line options
+     * @return result the string representation of the battle object with by command line options
      */
     public String view() {
     	String result = toString();

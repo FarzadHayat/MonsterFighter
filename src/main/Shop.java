@@ -2,11 +2,23 @@ package main;
 
 public class Shop {
 
+	/**
+	 * Fields
+	 */
     private Inventory<Monster> monsters;
     private Inventory<Item> items;
     private GameEnvironment game;
     
     
+    /**
+     * Constructors
+     */
+    
+    /**
+     * Create a new Shop object.
+     * Set the value of game to the given GameEnvironment object.
+     * @param game the given GameEnvironment object
+     */
     public Shop(GameEnvironment game) {
     	monsters = new Inventory<Monster> (4, game);
     	items = new Inventory<Item>(4, game);
@@ -14,8 +26,13 @@ public class Shop {
     	randomise();
     }
     
+    /**
+     * Getters and setters
+     */
+    
 	/**
-	 * @return the monsters
+	 * get the value of monsters
+	 * @return the value of monsters
 	 */
 	public Inventory<Monster> getMonsters() {
 		return monsters;
@@ -23,7 +40,8 @@ public class Shop {
 
 
 	/**
-	 * @param monsters the monsters to set
+	 * Set the value of monsters
+	 * @param monsters the new value of monsters
 	 */
 	public void setMonsters(Inventory<Monster> monsters) {
 		this.monsters = monsters;
@@ -31,7 +49,8 @@ public class Shop {
 	
 	
 	/**
-	 * @return the items
+	 * Get the value of items
+	 * @return the value of items
 	 */
 	public Inventory<Item> getItems() {
 		return items;
@@ -39,15 +58,19 @@ public class Shop {
 
 
 	/**
-	 * @param items the items to set
+	 * Set the value of items
+	 * @param items the new value of items
 	 */
 	public void setItems(Inventory<Item> items) {
 		this.items = items;
 	}
 	
+	/**
+	 * Functional
+	 */
 	
     /**
-     * Randomise the purchasables in the shop.
+     * Randomize the monsters and items in the shop.
      */
     public void randomise() {
 		Inventory.randomiseMonsters(monsters, game.getAllMonsters());
@@ -56,7 +79,7 @@ public class Shop {
     
     
     /**
-     * 
+     * @return result the string representation of the Shop object with by command line options
      */
     public String toString() {
     	String result = String.format("\nBalance: %s\n", game.getBalance());
