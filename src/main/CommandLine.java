@@ -50,6 +50,24 @@ public class CommandLine {
 		this.scanner = scanner;
 	}
 	
+	
+	/**
+	 * Get the value of game
+	 * @return the value of game
+	 */
+	public GameEnvironment getGame() {
+		return game;
+	}
+	
+	
+	/**
+	 * set the value of game
+	 * @param game the new value of game
+	 */
+	public void setGame(GameEnvironment game) {
+		this.game = game;
+	}
+	
 
 	/**
 	 * Functional
