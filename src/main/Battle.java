@@ -26,7 +26,7 @@ public class Battle implements Storable {
     public Battle (GameEnvironment game) {
     	this.game = game;
     	playerMonsters = game.getMyMonsters();
-    	enemyMonsters = new Inventory<Monster>(4, game);
+    	enemyMonsters = new Inventory<Monster>(4);
     };
     
     
@@ -334,7 +334,7 @@ public class Battle implements Storable {
     
     
     /**
-     * @return result the string representation of the battle object followed by command line options
+     * @return result the string representation of the battle object with by command line options
      */
     public String view() {
     	String result = toString();

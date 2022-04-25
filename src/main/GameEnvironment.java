@@ -332,8 +332,8 @@ public class GameEnvironment {
      * Setup the necessary game information.
      * 1. Set starting balance and starting score based on the level of difficulty selected by the player.
      * 2. Setup allMonsters and allItems.
-     * 3. Setup the shop.
-     * 4. Randomize battles.
+     * 3. Setup the shop and randomize it.
+     * 4. Setup battles and randomize it.
      */
     public void setupGame() {
     	
@@ -357,7 +357,7 @@ public class GameEnvironment {
     	}
     	
     	try {    		
-    		allMonsters = new Inventory<Monster>(6, this);
+    		allMonsters = new Inventory<Monster>(6);
     		allMonsters.add(new AverageJoe(this));
     		allMonsters.add(new Chunky(this));
     		allMonsters.add(new Lanky(this));
@@ -365,16 +365,17 @@ public class GameEnvironment {
     		allMonsters.add(new Raka(this));
     		allMonsters.add(new Zap(this));
     		
-    		allItems = new Inventory<Item>(4, this);
+    		allItems = new Inventory<Item>(4);
     		allItems.add(new HealUp(this));
     		allItems.add(new IncreaseDamage(this));
     		allItems.add(new IncreaseCritRate(this));
     		allItems.add(new LevelUp(this));
     		
-    		myMonsters = new Inventory<Monster>(4, this);
-    		myItems = new Inventory<Item>(4, this);
+    		myMonsters = new Inventory<Monster>(4);
+    		myItems = new Inventory<Item>(4);
     		shop = new Shop(this);
-    		battles = new Inventory<Battle>(5, this);
+    		shop.randomise();
+    		battles = new Inventory<Battle>(5);
     		Inventory.randomiseBattles(battles, this);
     		randomEvent = new RandomEvent(this);
     	}
