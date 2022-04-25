@@ -20,8 +20,8 @@ public class Shop {
      * @param game the given GameEnvironment object
      */
     public Shop(GameEnvironment game) {
-    	monsters = new Inventory<Monster> (4, game);
-    	items = new Inventory<Item>(4, game);
+    	monsters = new Inventory<Monster> (4);
+    	items = new Inventory<Item>(4);
     	this.game = game;
     	randomise();
     }

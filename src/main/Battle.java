@@ -26,7 +26,7 @@ public class Battle implements Storable {
     public Battle (GameEnvironment game) {
     	this.game = game;
     	playerMonsters = game.getMyMonsters();
-    	enemyMonsters = new Inventory<Monster>(4, game);
+    	enemyMonsters = new Inventory<Monster>(4);
     };
     
     
