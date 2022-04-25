@@ -110,6 +110,8 @@ class MonsterTest {
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
 		//Blue sky
 		game.setBalance(monster.getCost());
+		game.getShop().setMonsters(new Inventory<Monster>(4));
+		game.getShop().getMonsters().add(monster);
 		monster.buy();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(monster);
@@ -133,14 +135,16 @@ class MonsterTest {
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException, PurchasableNotFoundException, InvalidValueException {
 		//Inventory full
 		game.setBalance(monster.getCost()*5);
+		game.getShop().setMonsters(new Inventory<Monster>(4));
 		for(int i = 0; i < 4; i++) {
+			game.getShop().getMonsters().add(monster);
 			monster.buy();
 		}
 		try {
 			monster.buy();
 		}
 		catch(InventoryFullException e) {
-			assertEquals(e.getMessage(), "Monster inventory is full!");
+			assertEquals(e.getMessage(), "Inventory full!");
 		}
 	}
 	
@@ -149,6 +153,8 @@ class MonsterTest {
 		//Blue sky
 		game.setBalance(monster.getCost());
 		Monster testMonster = new AverageJoe(game);
+		game.getShop().setMonsters(new Inventory<Monster>(4));
+		game.getShop().getMonsters().add(testMonster);
 		testMonster.buy();
 		testMonster.sell();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
@@ -161,6 +167,10 @@ class MonsterTest {
 		//Multiple items of same type
 		game.setBalance(monster.getCost()*3);
 		Monster testMonster = new AverageJoe(game);
+		game.getShop().setMonsters(new Inventory<Monster>(4));
+		game.getShop().getMonsters().add(monster);
+		game.getShop().getMonsters().add(testMonster);
+		game.getShop().getMonsters().add(testMonster);
 		monster.buy();
 		testMonster.buy();
 		testMonster.buy();
@@ -180,7 +190,7 @@ class MonsterTest {
 			monster.sell();
 		}
 		catch(PurchasableNotFoundException e) {
-			assertEquals(e.getMessage(), "Monster not found in inventory!");
+			assertEquals(e.getMessage(), "Not found in inventory!");
 		}
 	}
 	

@@ -23,7 +23,6 @@ public class Shop {
     	monsters = new Inventory<Monster> (4);
     	items = new Inventory<Item>(4);
     	this.game = game;
-    	randomise();
     }
     
     /**
