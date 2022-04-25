@@ -8,6 +8,10 @@ Squishy but high damage
 public class Lanky extends Monster {
 	
 	/**
+	 * Fields
+	 */
+	
+	/**
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Lanky";
@@ -28,16 +32,24 @@ public class Lanky extends Monster {
 	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
 	
 	/**
-	 * Constructor for Lanky class 
-	 * Note: Need to change to default values later on 
+	 * Constructors
+	 */
+	
+	/**
+	 * Creates Lanky object by calling superclass constructor and passing in the default values
+	 * @param game given GameEnvironment object
 	 */
 	public Lanky(GameEnvironment game) {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
-
+    
+    /**
+     * Functional
+     */
+    
     /**
      * Level up monster statistics relevant to the monster 
-     * @throws StatMaxedOutException 
+     * @throws StatMaxedOutException if monster is already at maximum level
      */
     public void levelUp() throws StatMaxedOutException
     {

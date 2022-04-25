@@ -7,6 +7,10 @@ package main;
 public class Shanny extends Monster {
 	
 	/**
+	 * Fields
+	 */
+	
+	/**
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Shanny";
@@ -27,16 +31,24 @@ public class Shanny extends Monster {
 	private int levelUpHealAmount = (int)(0.2*getMaxHealth());
 	
 	/**
-	 * Constructor for Shanny class 
-	 * Note: Need to change to default values later on 
+	 * Constructors
+	 */
+	
+	/**
+	 * Creates Shanny object by calling superclass constructor and passing in the default values
+	 * @param game given GameEnvironment object
 	 */
 	public Shanny(GameEnvironment game) {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
     
     /**
+     * Functional
+     */
+    
+    /**
      * Level up monster statistics relevant to the monster 
-     * @throws StatMaxedOutException 
+     * @throws StatMaxedOutException if monster is already at maximum level
      */
     public void levelUp() throws StatMaxedOutException
     {
