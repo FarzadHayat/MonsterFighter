@@ -256,36 +256,44 @@ public class CommandLine {
 	 */
     public void viewShop() {
     	System.out.println(game.getShop());
-    	outer:
-			while (true) {
-				try {
-					selection = scanner.nextInt();
-					scanner.nextLine();
-					switch (selection) {
-					case 1, 2, 3, 4:
-						Monster monster = game.getShop().getMonsters().get(selection - 1);
-						viewMonster(monster);
-			    		System.out.println(game.getShop());
-						break;
-					case 5, 6, 7, 8:
-						Item item = game.getShop().getItems().get(selection - 5);
+		while (true) {
+			try {
+				selection = scanner.nextInt();
+				scanner.nextLine();
+				
+				int monstersSize = game.getShop().getMonsters().size();
+				int itemsSize = game.getShop().getItems().size();
+				int combinedSize = monstersSize + itemsSize; 
+				
+				if (combinedSize == selection - 1) {
+					break;
+				}
+				if (0 < selection && selection <= monstersSize) {
+					int index = selection - 1;
+					Monster monster = game.getShop().getMonsters().get(index);
+					viewMonster(monster);
+		    		System.out.println(game.getShop());
+				}
+				else {						
+					if (monstersSize < selection && selection <= combinedSize) {
+						int index = selection - monstersSize - 1;
+						Item item = game.getShop().getItems().get(index);
 						viewItem(item);
-			    		System.out.println(game.getShop());
-						break;
-					case 9:
-						break outer;
-					default:
+						System.out.println(game.getShop());
+					}
+					else {
 						throw new IllegalArgumentException("Command not found! Try again:");
 					}
 				}
-				catch (IllegalArgumentException e) {
-					System.out.println(e.getMessage());
-				}
-				catch (InputMismatchException e) {
-	    			System.out.println("Command not found! Try again:");
-	    			scanner.nextLine();
-	    		}
 			}
+			catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+			catch (InputMismatchException e) {
+    			System.out.println("Command not found! Try again:");
+    			scanner.nextLine();
+    		}
+		}
     }
     
     
