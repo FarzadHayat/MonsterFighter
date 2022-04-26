@@ -174,11 +174,12 @@ public class RandomEvent {
 		for(Monster monster: player.getMonsters().getList()) {
 			events += randomMonsterLevelUp(monster);
 		}
-		for(Monster monster: player.getMonsters().getList()) {
+		ArrayList<Monster> playerMonsterList = new ArrayList<Monster>(player.getMonsters().getList());
+		for(Monster monster: playerMonsterList) {
 		    if(player.getMonsters().getList().size() <= 1) {
 		    	break;
 		    }
-		    try {		    	
+		    try {
 		    	events += randomMonsterLeave(monster);
 		    }
 		    catch (NotFoundException e) {
