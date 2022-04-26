@@ -8,7 +8,8 @@ public class Score {
 	
     private int dayBattlesWon;
     private int dayBattlesLost;
-    private int score;
+    private int dayScore;
+    private int totalScore;
     private int totalBattlesWon;
     private int totalBattlesLost;
     private Player player;
@@ -65,19 +66,35 @@ public class Score {
     }
    
     /**
-     * Get the value of score
-     * @return the value of score
+     * Get the value of dayScore
+     * @return the value of dayScore
      */
-    public int getScore() {
-    	return score;
+    public int getDayScore() {
+    	return dayScore;
     }
    
     /**
-     * Set the value of score
-     * @param score the new value of score
+     * Set the value of dayScore
+     * @param dayScore the new value of dayScore
      */
-    public void setScore(int score) {
-    	this.score = score;
+    public void setDayScore(int dayScore) {
+    	this.dayScore = dayScore;
+    }
+    
+    /**
+     * Get the value of totalScore
+     * @return the value of totalScore
+     */
+    public int getTotalScore() {
+    	return totalScore;
+    }
+   
+    /**
+     * Set the value of totalScore
+     * @param totalScore the new value of totalScore
+     */
+    public void setTotalScore(int totalScore) {
+    	this.totalScore = totalScore;
     }
    
     /**
@@ -173,16 +190,23 @@ public class Score {
     }
    
     /**
-     * Add to the value of score based on the value of totalBattlesWon and the remaining balance
-     * @return score the value of score
+     * @return the bonus score based on the value of totalBattlesWon and the remaining balance
      */
-    public int getFinalScore() {
-		score += totalBattlesWon * battlesWeight + player.getBalance() * balanceWeight;
+    public int scoreBonus() {
+    	int bonus = (int) (totalBattlesWon * battlesWeight + player.getBalance() * balanceWeight);
+    	return bonus;
+    }
+    
+    /**
+     * @return score the final score based on total score plus the bonus
+     */
+    public int finalScore() {
+    	int score = getTotalScore() + scoreBonus();
 		return score;
     }
     
     /**
-     * Add to the value of score based on the given value
+     * Add to the value of dayScore and totalScore based on the given value
      * @param amount the value to add to the score 
      * @throws InvalidValueException if given value is less than 0
      */
@@ -191,7 +215,8 @@ public class Score {
     		throw new InvalidValueException("Cannot be a negative value!");
     	}
     	else {    		
-    		setScore(getScore() + amount);
+    		setDayScore(getDayScore() + amount);
+    		setTotalScore(getTotalScore() + amount);
     	}
     }
 }

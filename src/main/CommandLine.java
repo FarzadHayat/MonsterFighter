@@ -713,13 +713,12 @@ public class CommandLine {
     	System.out.println("Player name: " + player.getName());
     	System.out.println(String.format("Day %s out of %s", game.getDay(), game.getNumDays()));
     	System.out.println("Difficulty: " + game.getDifficulty());
-    	System.out.println("Today score: " + game.getScoreSystem().getScore());
-    	System.out.println("Total score: " + game.getScoreSystem().getFinalScore());
+    	System.out.println("Today score: " + game.getScoreSystem().getDayScore());
+    	System.out.println("Total score: " + game.getScoreSystem().getTotalScore());
     	System.out.println(String.format("Today: %s battles won out of %s", game.getScoreSystem().getDayBattlesWon(), 
     			game.getScoreSystem().getDayBattlesWon() + game.getScoreSystem().getDayBattlesLost()));
     	System.out.println(String.format("Total: %s battles won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
     			game.getScoreSystem().getTotalBattlesWon() + game.getScoreSystem().getTotalBattlesLost()));
-
     }
     
     
@@ -822,7 +821,11 @@ public class CommandLine {
     		}
     	}
     	printStats();
-    	System.out.println("<<<<< Game over! >>>>>");
+    	System.out.println(String.format("\nFinal score: %s (score) + %s (bonus) = %s", 
+    					game.getScoreSystem().getTotalScore(), 
+    					game.getScoreSystem().scoreBonus(), 
+    					game.getScoreSystem().finalScore()));
+    	System.out.println("\n<<<<< Game over! >>>>>");
     }
     
     

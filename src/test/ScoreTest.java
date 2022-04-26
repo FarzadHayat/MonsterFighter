@@ -48,7 +48,7 @@ class ScoreTest {
     @Test
     public void testGetFinalScore() throws InvalidValueException {
 		scoreSystem.setTotalBattlesWon(10);
-		assertEquals(3000, scoreSystem.getFinalScore());
+		assertEquals(3000, scoreSystem.finalScore());
     }
 
 }

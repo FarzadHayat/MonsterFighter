@@ -46,7 +46,7 @@ public class GameEnvironment {
 		} catch (InvalidValueException e) {
 			e.printStackTrace();
 		}
-    	scoreSystem.setScore(easyScore);
+    	scoreSystem.setTotalScore(easyScore);
     }
     
     
@@ -276,15 +276,15 @@ public class GameEnvironment {
     		switch(difficulty) {
 	    	case EASY:
 	    		player.setBalance(100);
-	    		scoreSystem.setScore(easyScore);
+	    		scoreSystem.setTotalScore(easyScore);
 	    		break;
 	    	case NORMAL:
 	    		player.setBalance(80);
-	    		scoreSystem.setScore(normalScore);
+	    		scoreSystem.setTotalScore(normalScore);
 	    		break;
 	    	case HARD:
 	    		player.setBalance(60);
-	    		scoreSystem.setScore(hardScore);
+	    		scoreSystem.setTotalScore(hardScore);
 	    		break;
     		}
     	} catch (InvalidValueException e) {
@@ -337,6 +337,7 @@ public class GameEnvironment {
 			result += randomEvent.runAllRandom();
     		player.getMonsters().healAll();
     		scoreSystem.resetDayBattles();
+    		scoreSystem.setDayScore(0);
     		result += "The shop has been randomised.\n";
     		result +="The battles have been randomised.\n";
     		result +="Your monsters have healed.\n";

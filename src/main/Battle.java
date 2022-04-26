@@ -32,7 +32,7 @@ public class Battle {
     public Battle (GameEnvironment game) {
     	this.game = game;
     	player = game.getPlayer();
-    	size = randomSize();
+    	size = inventorySize();
     	monsters = new MonsterInventory(size, game);
     	monsters.randomise();
     };
@@ -284,8 +284,8 @@ public class Battle {
     }
     
     
-    public int randomSize() {
-    	int minSize = Math.max(1, player.getMonsters().getList().size());
+    public int inventorySize() {
+    	int minSize = 1;
     	int maxsize = player.getMonsters().getMaxSize();
     	Random random = new Random();
     	int size = random.nextInt(minSize, maxsize + 1);
