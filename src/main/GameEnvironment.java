@@ -25,8 +25,6 @@ public class GameEnvironment {
     private int normalScore = 2000;
     private int hardScore = 3000;
     
-    private boolean levelUpBefore;
-    
     
     /**
      * Constructors
@@ -362,41 +360,6 @@ public class GameEnvironment {
     		stalemate = false;
     	}
     	setFinished(day >= numDays || stalemate);
-    }
-    
-    
-    /**
-     * Level up monsters in battles and in shops based on the number of day and the max level of monsters
-     */
-    public void levelUpOnDay() {
-    	int monsterMaxLevel = allMonsters.random().getMaxLevel();
-    	int dayToLevelUp = numDays/monsterMaxLevel;
-    	int loopInt = day/dayToLevelUp;
-    	
-    	if(dayToLevelUp == 1) {
-    		loopInt -= 1;
-    	}
-    	if(day%dayToLevelUp == 0 || levelUpBefore){
-    		for(Battle battle: battles.getList()) {
-    			for(Monster monster: battle.getEnemyMonsters().getList()) {
-    				for(int i = 0; i < loopInt; i++) {
-    					try {
-        					monster.levelUp();
-        					levelUpBefore = true;
-    					}
-    					catch(StatMaxedOutException e) {}
-    				}
-    			}
-    		}
-    		for(Monster monster: getShop().getMonsters().getList()) {
-    			for(int i = 0; i < loopInt; i++) {
-    				try {
-    					monster.levelUp();
-    				}
-    				catch(StatMaxedOutException e) {}
-    			}
-    		}
-    	}
     }
 
 }

@@ -13,6 +13,8 @@ public class MonsterInventory {
     protected GameEnvironment game;
     protected Player player;
 	
+    private boolean levelUpBefore;
+    
     
     /**
      * Constructors
@@ -195,8 +197,33 @@ public class MonsterInventory {
     		newList.add(monster);
     	}
     	setList(newList);
+    	levelUpOnDay();
     }
-		
+	
+    
+    /**
+     * Level up monsters based on the number of day and the max level of monsters
+     */
+    public void levelUpOnDay() {
+    	int maxLevel = random().getMaxLevel();
+    	int dayToLevelUp = game.getNumDays()/maxLevel;
+    	int loopInt = game.getDay()/dayToLevelUp;
+    	
+    	if(dayToLevelUp == 1) {
+    		loopInt -= 1;
+    	}
+    	if(game.getDay() % dayToLevelUp == 0 || levelUpBefore){
+    		for(Monster monster: list) {
+    			for(int i = 0; i < loopInt; i++) {
+    				try {
+    					monster.levelUp();
+    				}
+    				catch(StatMaxedOutException e) {}
+    			}
+    		}
+    	}
+    }
+    
 		
 	/**
 	 * @return result a string representation of the inventory object
