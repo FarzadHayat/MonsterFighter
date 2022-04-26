@@ -498,9 +498,9 @@ public abstract class Monster implements Purchasable {
 	 * @return the string representation of the Monster object
 	 */
 	public String toString() {
-		return String.format("%s (%s health: %s, max health: %s, damage: %s, cost: %s, "
-						+ "level: %s, max level: %s, heal amount: %s, crit rate: %s%%, fainted: %s)",
-				name, description, health, maxHealth, damage, cost, level, maxLevel, healAmount, (int) (critRate * 100), isFainted);
+		return String.format("%-14s[ health: %-3s    max health: %-3s    damage: %-3s    cost: %-3s    "
+						+ "level: %-1s    max level: %-1s    heal amount: %-3s    crit rate: %-3s%%    fainted: %-5s ]",
+				name, health, maxHealth, damage, cost, level, maxLevel, healAmount, (int) (critRate * 100), isFainted);
 	}
 	
 	

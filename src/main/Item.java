@@ -162,7 +162,7 @@ abstract public class Item implements Purchasable {
 	 * @return the string representation of the Item object.
 	 */
     public String toString() {
-    	return String.format("%s (%s cost: %s)", name, description, cost);
+    	return String.format("%-20s[ cost: %-3s    %-50s ]", name, cost, description);
     }
     
     
