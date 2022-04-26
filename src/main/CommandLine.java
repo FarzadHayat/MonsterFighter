@@ -397,9 +397,7 @@ public class CommandLine {
      * Print a list of the player's monsters and allow them to either view a monster or go back to the home page.
      */
     public void viewTeam() {
-    	System.out.println("\n===== MY TEAM =====\n");
-    	System.out.println(player.getMonsters().view());
-    	System.out.println(String.format("%s: Go back", player.getMonsters().getList().size() + 1));
+    	System.out.println(player.viewMonsters());
 		while (true) {
 			try {
 				selection = scanner.nextInt();
@@ -410,9 +408,7 @@ public class CommandLine {
 				if (0 < selection && selection <= player.getMonsters().getList().size()) {
 					Monster monster = player.getMonsters().getList().get(selection - 1);
 					viewPlayerMonster(monster);
-					System.out.println("\n===== MY TEAM =====\n");
-			    	System.out.println(player.getMonsters().view());
-			    	System.out.println(String.format("%s: Go back", player.getMonsters().getList().size() + 1));
+					System.out.println(player.viewMonsters());
 				}
 				else {
 					throw new IllegalArgumentException("Command not found! Try again:");
@@ -473,9 +469,7 @@ public class CommandLine {
      * Print a list of the player's items and allow them to either view an item or go back to the home page.
      */
     public void viewInventory() {
-    	System.out.println("\n===== MY INVENTORY =====\n");
-    	System.out.println(player.getItems().view());
-    	System.out.println(String.format("%s: Go back", player.getItems().getList().size() + 1));
+    	System.out.println(player.viewItems());
 		while (true) {
 			try {
 				selection = scanner.nextInt();
@@ -486,9 +480,7 @@ public class CommandLine {
 				if (0 < selection && selection <= player.getItems().getList().size()) {
 					Item item = player.getItems().getList().get(selection - 1);
 					viewPlayerItem(item);
-			    	System.out.println("\n===== MY INVENTORY =====\n");
-			    	System.out.println(player.getItems().view());
-			    	System.out.println(String.format("%s: Go back", player.getItems().getList().size() + 1));
+					System.out.println(player.viewItems());
 				}
 				else {
 					throw new IllegalArgumentException("Command not found! Try again:");
@@ -550,9 +542,7 @@ public class CommandLine {
 	 */
 	public void useItem(Item item) {
 		System.out.println("Choose a monster to use it on:");
-		System.out.println("\n===== MY TEAM =====\n");
-		System.out.println(player.getMonsters().view());
-		System.out.println(String.format("%s: Go back", player.getMonsters().getList().size() + 1));
+		System.out.println(player.viewMonsters());
 		while (true) {
 			try {
 				selection = scanner.nextInt();
@@ -581,9 +571,7 @@ public class CommandLine {
 			catch (StatMaxedOutException e) {
 				System.out.println("\n" + e.getMessage() + "\n");
 				System.out.println("Choose a monster to use it on:");
-				System.out.println("\n===== MY TEAM =====\n");
-				System.out.println(player.getMonsters().view());
-				System.out.println(String.format("%s: Go back", player.getMonsters().getList().size() + 1));
+				System.out.println(player.viewMonsters());
 			}
 			catch (InputMismatchException e) {
 				System.out.println("Command not found! Try again:");
@@ -597,9 +585,7 @@ public class CommandLine {
 	 * Print a list of all the battles and allow the user to either view a battle or go back to the home page.
 	 */
 	public void viewBattles() {
-		System.out.println("\n===== BATTLES =====\n");
 		System.out.println(game.getBattles().view());
-		System.out.println(String.format("%s: Go back", game.getBattles().getList().size() + 1));
 		while (true) {
 			try {
 				selection = scanner.nextInt();
@@ -610,9 +596,7 @@ public class CommandLine {
 				if (0 < selection && selection <= game.getBattles().getList().size()) {
 					Battle battle = game.getBattles().getList().get(selection - 1); 
 					viewBattle(battle);
-					System.out.println("\n===== BATTLES =====\n");
 			    	System.out.println(game.getBattles().view());
-			    	System.out.println(String.format("%s: Go back", game.getBattles().getList().size() + 1));
 				}
 				else {
 					throw new IllegalArgumentException("Command not found! Try again:");
@@ -708,7 +692,7 @@ public class CommandLine {
      * 6. Today's battles won and total battles won
      */
     public void printStats() {
-    	System.out.println("\n===== PLAYER STATS =====");
+    	System.out.println("\n===== PLAYER STATS =====\n");
     	System.out.println("Balance: " + player.getBalance());
     	System.out.println("Player name: " + player.getName());
     	System.out.println(String.format("Day %s out of %s", game.getDay(), game.getNumDays()));
@@ -719,6 +703,13 @@ public class CommandLine {
     			game.getScoreSystem().getDayBattlesWon() + game.getScoreSystem().getDayBattlesLost()));
     	System.out.println(String.format("Total: %s battles won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
     			game.getScoreSystem().getTotalBattlesWon() + game.getScoreSystem().getTotalBattlesLost()));
+    	if (game.getIsFinished()) {
+    		System.out.println(String.format("\nFinal score: %s (score) + %s (bonus) = %s", 
+					game.getScoreSystem().getTotalScore(), 
+					game.getScoreSystem().scoreBonus(), 
+					game.getScoreSystem().finalScore()));
+    		System.out.println("\n<<<<< Game over! >>>>>");
+    	}
     }
     
     
@@ -821,11 +812,6 @@ public class CommandLine {
     		}
     	}
     	printStats();
-    	System.out.println(String.format("\nFinal score: %s (score) + %s (bonus) = %s", 
-    					game.getScoreSystem().getTotalScore(), 
-    					game.getScoreSystem().scoreBonus(), 
-    					game.getScoreSystem().finalScore()));
-    	System.out.println("\n<<<<< Game over! >>>>>");
     }
     
     

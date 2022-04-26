@@ -170,4 +170,20 @@ public class Player {
     	}
     }
     
+    
+    public String viewMonsters() {
+    	String result = "\n===== MY TEAM =====\n\n";
+    	result += monsters.view();
+    	result += String.format("\n%s: Go back", monsters.getList().size() + 1);
+    	return result;
+    }
+    
+    
+    public String viewItems() {
+    	String result = "\n===== MY INVENTORY =====\n\n";
+    	result += items.view();
+    	result += String.format("\n%s: Go back", items.getList().size() + 1);
+    	return result;
+    }
+    
 }

@@ -327,20 +327,19 @@ public class GameEnvironment {
 	 * @return the commentary of events that happened over night.
      */
     public String sleep() {
-    	String result = "";
+    	String result = "\n";
     	checkStatus();
     	if (!getIsFinished()) {
     		setDay(getDay() + 1);
     		getShop().randomise();
     		battles.randomise();
-    		levelUpOnDay();
 			result += randomEvent.runAllRandom();
     		player.getMonsters().healAll();
     		scoreSystem.resetDayBattles();
     		scoreSystem.setDayScore(0);
     		result += "The shop has been randomised.\n";
     		result +="The battles have been randomised.\n";
-    		result +="Your monsters have healed.\n";
+    		result +="Your monsters have healed.";
     	}
     	return result;
     }

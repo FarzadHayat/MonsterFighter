@@ -168,12 +168,13 @@ public class BattleInventory {
 	 * @return result a string representation of the inventory object with command line options
 	 */
 	public String view() {
-		String result = "";
+		String result = "\n===== BATTLES =====\n\n";
 		int start = 1;
     	for (Battle battle : list) {
     		result += String.format("%s: %s\n", start, battle);
     		start++;
     	}
+    	result += String.format("%s: Go back", start);
     	return result;
 	}
 
