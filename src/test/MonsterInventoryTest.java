@@ -12,13 +12,13 @@ import main.*;
 class MonsterInventoryTest {
 	
 	private GameEnvironment game;
-	private Inventory<Monster> myMonsters;
+	private MonsterInventory myMonsters;
 
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
-		myMonsters = game.getMyMonsters();
+		myMonsters = game.getPlayer().getMonsters();
 	}
 	
 	
@@ -50,7 +50,7 @@ class MonsterInventoryTest {
 
 	
 	@Test
-	public void testRemoveMonster1() throws StorableNotFoundException, InventoryFullException {
+	public void testRemoveMonster1() throws NotFoundException, InventoryFullException {
 		// Blue sky
 		Monster testMonster = new Chunky(game);
 		myMonsters.add(testMonster);
@@ -61,7 +61,7 @@ class MonsterInventoryTest {
 	
 	
 	@Test
-	public void testRemoveMonster2() throws StorableNotFoundException, InventoryFullException {
+	public void testRemoveMonster2() throws NotFoundException, InventoryFullException {
 		// Multiple items of the same type
 		Monster testMonster1 = new Chunky(game);
 		Monster testMonster2 = new Chunky(game);
@@ -77,15 +77,15 @@ class MonsterInventoryTest {
 	
 	
 	@Test
-	public void testRemoveMonster3() throws StorableNotFoundException, InventoryFullException {
-		// Storable not found in inventory
+	public void testRemoveMonster3() throws NotFoundException, InventoryFullException {
+		// Purchasable not found in inventory
 		Monster testMonster1 = new Chunky(game);
 		Monster testMonster2 = new Chunky(game);
 		myMonsters.add(testMonster2);
 		try {    		
 			myMonsters.remove(testMonster1);
 		}
-		catch (StorableNotFoundException e){
+		catch (NotFoundException e){
 			assertEquals(e.getMessage(), "Monster not found in inventory!");
 		}
 	}

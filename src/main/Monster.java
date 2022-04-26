@@ -2,13 +2,14 @@ package main;
 
 import java.util.*;
 
-public abstract class Monster implements Storable {
+public abstract class Monster implements Purchasable {
 	
 	/**
 	 * Fields
 	 */
  	private String name;
 	private String description;
+	
 	private int health;
 	private int maxHealth;
 	private int damage;
@@ -16,13 +17,19 @@ public abstract class Monster implements Storable {
 	private int level;
 	private int maxLevel = 4;
 	private int healAmount;
+	
 	private double critRate;
 	private double maxCritRate = 1;
 	private double critMultiplier = 2;
-	private boolean isFainted = false;
-	protected GameEnvironment game;
 	private double refundAmount = 0.5;
+	
+	private boolean isFainted = false;
 	private boolean isBuffed = false;
+
+	protected GameEnvironment game;
+	protected Player player;
+	private Shop shop;
+	
 	
 	/**
 	 * Constructors
@@ -56,6 +63,8 @@ public abstract class Monster implements Storable {
 		this.healAmount = healAmount;
 		this.critRate = critRate;
 		this.game = game;
+		player = game.getPlayer();
+		shop = game.getShop();
 	}
 	
 	
@@ -71,13 +80,15 @@ public abstract class Monster implements Storable {
 	public void setName(String name) throws InvalidValueException {
 		name = name.strip();
     	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
-    	if (3 <= name.length() && name.length() <= 15 && name.matches(regex) && !game.getMyMonsters().contains(name) && !game.getAllMonsters().contains(name)) {
+    	if (3 <= name.length() && name.length() <= 15 && name.matches(regex) && 
+			!player.getMonsters().contains(name) && !game.getAllMonsters().contains(name)) {
     		this.name = name;
     	}
     	else {    		
     		throw new InvalidValueException("Invalid monster name! Try again:");
     	}
 	}
+	
 	
     /**
      * Get the value of name
@@ -87,6 +98,7 @@ public abstract class Monster implements Storable {
         return name;
     }
 
+    
     /**
      * Set the value of health 
      * @param health the new value of health
@@ -100,6 +112,7 @@ public abstract class Monster implements Storable {
     	}
     }
 
+    
     /**
      * Get the value of health
      * @return the value of health
@@ -108,6 +121,7 @@ public abstract class Monster implements Storable {
         return health;
     }
 
+    
     /**
      * Set the value of maxHealth
      * @param maxHealth the new value of maxHealth
@@ -116,6 +130,7 @@ public abstract class Monster implements Storable {
         this.maxHealth = maxHealth;
     }
 
+    
     /**
      * Get the value of maxHealth
      * @return the value of maxHealth
@@ -124,6 +139,7 @@ public abstract class Monster implements Storable {
         return maxHealth;
     }
 
+    
     /**
      * Set the value of healAmount
      * @param healAmount the new value of healAmount
@@ -131,6 +147,7 @@ public abstract class Monster implements Storable {
     public void setHealAmount (int healAmount) {
         this.healAmount = healAmount;
     }
+    
 
     /**
      * Get the value of healAmount
@@ -139,6 +156,7 @@ public abstract class Monster implements Storable {
     public int getHealAmount () {
         return healAmount;
     }
+    
 
     /**
      * Set the value of damage
@@ -147,6 +165,7 @@ public abstract class Monster implements Storable {
     public void setDamage (int damage) {
         this.damage = damage;
     }
+    
 
     /**
      * Get the value of damage
@@ -155,6 +174,7 @@ public abstract class Monster implements Storable {
     public int getDamage () {
         return damage;
     }
+    
 
     /**
      * Set the value of cost
@@ -163,6 +183,7 @@ public abstract class Monster implements Storable {
     public void setCost (int cost) {
         this.cost = cost;
     }
+    
 
     /**
      * Get the value of cost
@@ -171,6 +192,7 @@ public abstract class Monster implements Storable {
     public int getCost () {
         return cost;
     }
+    
 
     /**
      * Set the value of description
@@ -179,6 +201,7 @@ public abstract class Monster implements Storable {
     public void setDescription (String description) {
         this.description = description;
     }
+    
 
     /**
      * Get the value of description
@@ -188,6 +211,7 @@ public abstract class Monster implements Storable {
         return description;
     }
 
+    
     /**
      * Get the value of maxLevel
 	 * @return the value of maxLevel
@@ -196,6 +220,7 @@ public abstract class Monster implements Storable {
 		return maxLevel;
 	}
 
+	
 	/**
 	 * Set the value of maxLevel
 	 * @param maxLevel the new value of maxLevel
@@ -204,6 +229,7 @@ public abstract class Monster implements Storable {
 		this.maxLevel = maxLevel;
 	}
 
+	
 	/**
      * Set the value of level
      * @param level the new value of level
@@ -212,6 +238,7 @@ public abstract class Monster implements Storable {
         this.level = level;
     }
 
+    
     /**
      * Get the value of level
      * @return the value of level
@@ -219,6 +246,7 @@ public abstract class Monster implements Storable {
     public int getLevel () {
         return level;
     }
+    
 
     /**
      * Set the value of critRate
@@ -227,6 +255,7 @@ public abstract class Monster implements Storable {
     public void setCritRate (double critRate) {
         this.critRate = critRate;
     }
+    
 
     /**
      * Get the value of critRate
@@ -244,6 +273,7 @@ public abstract class Monster implements Storable {
 	public double getMaxCritRate() {
 		return maxCritRate;
 	}
+	
 
 	/**
 	 * Set the value of maxCritRate
@@ -252,6 +282,7 @@ public abstract class Monster implements Storable {
 	public void setMaxCritRate(double maxCritRate) {
 		this.maxCritRate = maxCritRate;
 	}
+	
 
 	/**
 	 * Get the value of critMultiplier
@@ -261,6 +292,7 @@ public abstract class Monster implements Storable {
 		return critMultiplier;
 	}
 
+	
 	/**
 	 * Set the value of critMultiplier 
 	 * @param critMultiplier the new value of critMultiplier
@@ -268,6 +300,7 @@ public abstract class Monster implements Storable {
 	public void setCritMultiplier(double critMultiplier) {
 		this.critMultiplier = critMultiplier;
 	}
+	
 
 	/**
      * Set the value of isFainted
@@ -276,6 +309,7 @@ public abstract class Monster implements Storable {
     public void setIsFainted (boolean isFainted) {
         this.isFainted = isFainted;
     }
+    
 
     /**
      * Get the value of isFainted
@@ -284,6 +318,7 @@ public abstract class Monster implements Storable {
     public boolean getIsFainted () {
         return isFainted;
     }
+    
 
 	/**
      * Set the value of refundAmount
@@ -292,6 +327,7 @@ public abstract class Monster implements Storable {
     public void setRefundAmount (double refundAmount) {
         this.refundAmount = refundAmount;
     }
+    
 
     /**
      * Get the value of refundAmount
@@ -301,6 +337,7 @@ public abstract class Monster implements Storable {
         return refundAmount;
     }
     
+    
 	/**
      * Set the value of isFainted
      * @param isFainted the new value of isFainted
@@ -309,6 +346,7 @@ public abstract class Monster implements Storable {
         this.isBuffed = buffed;
     }
 
+    
     /**
      * Get the value of isFainted
      * @return the value of isFainted
@@ -317,6 +355,7 @@ public abstract class Monster implements Storable {
         return isBuffed;
     }
 	
+    
 	/**
 	 * Functional 
 	 */
@@ -338,6 +377,7 @@ public abstract class Monster implements Storable {
 			break;
 		}
 	}
+	
 
     /**
      * If monster is fainted, set the new value of isFainted to false 
@@ -352,6 +392,7 @@ public abstract class Monster implements Storable {
 		this.setHealth(maxHealth);
 	    }
 	}
+	
 	
 	/**
 	 * Deal damage to the given Monster object 
@@ -372,6 +413,7 @@ public abstract class Monster implements Storable {
 		
 	}
 	
+	
 	/**
 	 * Reduce monster's health based on given value 
      * @param damageReceived given int value to reduce from monster's health
@@ -390,6 +432,7 @@ public abstract class Monster implements Storable {
 		}
 	}
 	
+	
 	/**
 	 * Calculate totalDamage to deal based on the critical rate and critical multiplier
 	 * @return the totalDamage after taking into account the critical rate 
@@ -405,34 +448,37 @@ public abstract class Monster implements Storable {
 		return totalDamage;
 	}
 	
+	
     /**
      * Buy a monster from the shop and add it to the player inventory.
      * @throws InsufficientFundsException if cost of monster is more than player balance
      * @throws InventoryFullException if inventory is full
-     * @throws StorableNotFoundException if monster not found in the shop
+     * @throws NotFoundException if monster not found in the shop
      * @throws InvalidValueException if value of balance to minus is invalid
      * @return the string representing what the player bought
      */
-	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException, StorableNotFoundException {
-		game.minusBalance(cost);
-		game.getMyMonsters().add(this);
-		int index = game.getShop().getMonsters().indexOf(this);
-		game.getShop().getMonsters().remove(this);
-		game.getShop().getMonsters().add(index, game.getAllMonsters().random());
+	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException, NotFoundException {
+		player.minusBalance(cost);
+		player.getMonsters().add(this);
+		int index = shop.getMonsters().getList().indexOf(this);
+		shop.getMonsters().remove(this);
+		shop.getMonsters().add(index, game.getAllMonsters().random());
 		return "You bought: " + name;
 	}
 	
+	
     /**
      * Sell monster back to the shop for a partial refund and removes the monster from the player's inventory
-     * @throws StorableNotFoundException if monster not found in the player's inventory
+     * @throws NotFoundException if monster not found in the player's inventory
      * @throws InvalidValueException if value of balance to add is invalid
      * @return the string representing what the player sold
      */
-	public String sell() throws StorableNotFoundException, InvalidValueException {
-		game.addBalance(cost * refundAmount);
-		game.getMyMonsters().remove(this);
+	public String sell() throws NotFoundException, InvalidValueException {
+		player.addBalance(cost * refundAmount);
+		player.getMonsters().remove(this);
 		return "You sold: " + name;
 	}
+	
 	
 	/**
      * Level up the monster by 1 level
@@ -463,8 +509,8 @@ public abstract class Monster implements Storable {
 	 */
     public String view() {
     	String result = "";
-    	if (game.getShop().getMonsters().contains(this)) {
-    		result += String.format("\nBalance: %s\n\n", game.getBalance());
+    	if (shop.getMonsters().getList().contains(this)) {
+    		result += String.format("\nBalance: %s\n\n", player.getBalance());
     	}
     	result += "Monster: " + getClass().getSimpleName() + "\n";
     	if (!name.equals(getClass().getSimpleName())){
@@ -480,11 +526,11 @@ public abstract class Monster implements Storable {
     	result += "Crit Rate: " + (int) (critRate * 100) + "%\n";
     	result += "Fainted: " + isFainted + "\n";
     	result += "Max Level: " + maxLevel + "\n";
-    	if (game.getShop().getMonsters().contains(this)) {
+    	if (shop.getMonsters().getList().contains(this)) {
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}
-    	if (game.getMyMonsters().contains(this)) {
+    	if (player.getMonsters().getList().contains(this)) {
     		result += "\n1: Rename";
     		result += "\n2: Sell";
     		result += "\n3: Go back";

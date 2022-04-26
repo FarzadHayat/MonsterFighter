@@ -5,20 +5,16 @@ public class GameEnvironment {
 	/**
 	 * Fields
 	 */
-    private double balance;
-    private String playerName;
     private int numDays;
     private int day = 1;
     private Difficulty difficulty = Difficulty.EASY;
     
-    private Inventory<Monster> myMonsters;
-    private Inventory<Item> myItems;
+    private MonsterInventory allMonsters;
+    private ItemInventory allItems;
     
-    private Inventory<Monster> allMonsters;
-    private Inventory<Item> allItems;
-    
+    private Player player;
     private Shop shop;
-    private Inventory<Battle> battles;
+    private BattleInventory battles;
     
     private RandomEvent randomEvent;
     private Score scoreSystem;
@@ -42,9 +38,11 @@ public class GameEnvironment {
      * 2. Sets default score.
      */
     public GameEnvironment() {
+    	player = new Player(this);
+    	shop = new Shop(this);
     	scoreSystem = new Score(this);
     	try {
-			setBalance(100);
+			player.setBalance(100);
 		} catch (InvalidValueException e) {
 			e.printStackTrace();
 		}
@@ -55,58 +53,9 @@ public class GameEnvironment {
     /**
      * Getters and setters
      */
-    
-    /**
-     * Get the value of balance
-     * @return the value of balance
-     */
-    public double getBalance () {
-        return balance;
-    }
-    
-    
-    /**
-     * Set the value of balance
-     * @param balance the new value of balance
-     * @throws InvalidValueException 
-     */
-    public void setBalance (double balance) throws InvalidValueException {
-    	if (0 > balance) {
-    		throw new InvalidValueException("Balance cannot be a negative value!");
-    	}
-    	else {
-    		this.balance = balance;    		
-    	}
-    }
 
-    
-    /**
-     * Get the value of playerName
-     * @return the value of playerName
-     */
-    public String getPlayerName () {
-        return playerName;
-    }
-    
-    
-    /**
-     * Set the value of playerName
-     * @param playerName the new value of playerName
-     * @throws InvalidValueException 
-     */
-    public void setPlayerName (String playerName) throws InvalidValueException {
-    	playerName = playerName.strip();
-    	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
-    	if (3 <= playerName.length() && playerName.length() <= 15 && playerName.matches(regex)) {
-    		this.playerName = playerName;
-    	}
-    	else {    		
-    		throw new InvalidValueException("Invalid player name! Try again:");
-    	}
-    }
-    
-    
-    /**
+
+	/**
      * Get the value of numDays
      * @return the value of numDays
      */
@@ -131,7 +80,8 @@ public class GameEnvironment {
 
     
     /**
-	 * @return the day
+     * Get the value of day
+	 * @return the value of day
 	 */
 	public int getDay() {
 		return day;
@@ -139,7 +89,8 @@ public class GameEnvironment {
 
 
 	/**
-	 * @param day the day to set
+	 * Set the value of day
+	 * @param day the new value of day
 	 */
 	public void setDay(int day) {
 		this.day = day;
@@ -165,46 +116,10 @@ public class GameEnvironment {
 
 
 	/**
-     * Get the value of myMonsters
-     * @return the value of myMonsters
-     */
-    public Inventory<Monster> getMyMonsters () {
-        return myMonsters;
-    }
-    
-    
-    /**
-     * Set the value of myMonsters
-     * @param myMonsters the new value of myMonsters
-     */
-    public void setMyMonsters (Inventory<Monster> myMonsters) {
-    	this.myMonsters = myMonsters;
-    }
-
-    
-    /**
-     * Get the value of myItems
-     * @return the value of myItems
-     */
-    public Inventory<Item> getMyItems () {
-        return myItems;
-    }
-    
-    
-    /**
-     * Set the value of myItems
-     * @param myItems the new value of myItems
-     */
-    public void setMyItems (Inventory<Item> myItems) {
-    	this.myItems = myItems;
-    }
-
-
-	/**
 	 * Get the value of allMonsters
 	 * @return the value of allMonsters
 	 */
-	public Inventory<Monster> getAllMonsters() {
+	public MonsterInventory getAllMonsters() {
 		return allMonsters;
 	}
 
@@ -213,7 +128,7 @@ public class GameEnvironment {
 	 * Set the value of allMonsters
 	 * @param allMonsters the new value of allMonsters
 	 */
-	public void setAllMonsters(Inventory<Monster> allMonsters) {
+	public void setAllMonsters(MonsterInventory allMonsters) {
 		this.allMonsters = allMonsters;
 	}
 
@@ -222,7 +137,7 @@ public class GameEnvironment {
 	 * Get the value of allItems
 	 * @return the value of allItems
 	 */
-	public Inventory<Item> getAllItems() {
+	public ItemInventory getAllItems() {
 		return allItems;
 	}
 	
@@ -231,8 +146,26 @@ public class GameEnvironment {
 	 * Set the value of allItems
 	 * @param allItems the new value of allItems
 	 */
-	public void setAllItems(Inventory<Item> allItems) {
+	public void setAllItems(ItemInventory allItems) {
 		this.allItems = allItems;
+	}
+
+    
+	/**
+	 * Get the value of player
+	 * @return the value of player
+	 */
+    public Player getPlayer() {
+		return player;
+	}
+
+
+    /**
+	 * Set the value of player
+	 * @param player the new value of player
+	 */
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 	
 	
@@ -258,7 +191,7 @@ public class GameEnvironment {
 	 * Get the value of battles
 	 * @return the value of battles
 	 */
-	public Inventory<Battle> getBattles() {
+	public BattleInventory getBattles() {
 		return battles;
 	}
 
@@ -267,7 +200,7 @@ public class GameEnvironment {
 	 * Set the value of battles
 	 * @param battles the new value of battles
 	 */
-	public void setBattles(Inventory<Battle> battles) {
+	public void setBattles(BattleInventory battles) {
 		this.battles = battles;
 	}
 	
@@ -342,15 +275,15 @@ public class GameEnvironment {
     	try {
     		switch(difficulty) {
 	    	case EASY:
-	    		setBalance(100);
+	    		player.setBalance(100);
 	    		scoreSystem.setScore(easyScore);
 	    		break;
 	    	case NORMAL:
-	    		setBalance(80);
+	    		player.setBalance(80);
 	    		scoreSystem.setScore(normalScore);
 	    		break;
 	    	case HARD:
-	    		setBalance(60);
+	    		player.setBalance(60);
 	    		scoreSystem.setScore(hardScore);
 	    		break;
     		}
@@ -359,7 +292,7 @@ public class GameEnvironment {
     	}
     	
     	try {    		
-    		allMonsters = new Inventory<Monster>(6);
+    		allMonsters = new MonsterInventory(6, this);
     		allMonsters.add(new AverageJoe(this));
     		allMonsters.add(new Chunky(this));
     		allMonsters.add(new Lanky(this));
@@ -367,18 +300,15 @@ public class GameEnvironment {
     		allMonsters.add(new Raka(this));
     		allMonsters.add(new Zap(this));
     		
-    		allItems = new Inventory<Item>(4);
+    		allItems = new ItemInventory(4, this);
     		allItems.add(new HealUp(this));
     		allItems.add(new IncreaseDamage(this));
     		allItems.add(new IncreaseCritRate(this));
     		allItems.add(new LevelUp(this));
     		
-    		myMonsters = new Inventory<Monster>(4);
-    		myItems = new Inventory<Item>(4);
-    		shop = new Shop(this);
     		shop.randomise();
-    		battles = new Inventory<Battle>(5);
-    		Inventory.randomiseBattles(battles, this);
+    		battles = new BattleInventory(5, this);
+    		battles.randomise();
     		randomEvent = new RandomEvent(this);
     	}
     	catch (InventoryFullException e) {
@@ -402,10 +332,10 @@ public class GameEnvironment {
     	if (!getIsFinished()) {
     		setDay(getDay() + 1);
     		getShop().randomise();
-    		Inventory.randomiseBattles(battles, this);
+    		battles.randomise();
     		levelUpOnDay();
 			result += randomEvent.runAllRandom();
-    		Inventory.healAll(myMonsters);
+    		player.getMonsters().healAll();
     		scoreSystem.resetDayBattles();
     		result += "The shop has been randomised.\n";
     		result +="The battles have been randomised.\n";
@@ -421,9 +351,9 @@ public class GameEnvironment {
      */
     public void checkStatus() {
     	boolean stalemate = true;
-    	if (myMonsters.size() == 0) {
+    	if (player.getMonsters().getList().size() == 0) {
     		for (Monster monster : getShop().getMonsters().getList()) {
-    			if (balance >= monster.getCost()) {
+    			if (player.getBalance() >= monster.getCost()) {
     				stalemate = false;
     			}
     		}
@@ -433,56 +363,7 @@ public class GameEnvironment {
     	}
     	setFinished(day >= numDays || stalemate);
     }
-		
-
-    /**
-     * Add the given amount to balance.
-     * @param amount to be added to balance
-     * @throws InvalidValueException if amount is a negative value
-     */
-    public void addBalance(double amount) throws InvalidValueException {
-    	if (0 > amount) {
-    		throw new InvalidValueException("Cannot be a negative value!");
-    	}
-    	else {    		
-    		setBalance(getBalance() + amount);
-    	}
-    }
     
-    
-    /**
-     * Subtract the given amount from balance.
-     * @param amount to be subtracted from balance.
-     * @throws InsufficientFundsException if balance is less than the amount to be subtracted
-     * @throws InvalidValueException if amount is a negative value
-     */
-    public void minusBalance(double amount) throws InsufficientFundsException, InvalidValueException {
-    	if (0 > amount) {
-    		throw new InvalidValueException("Cannot be a negative value!");
-    	}
-		if (balanceSufficient(amount)) {
-			setBalance(getBalance() - amount);
-    	}
-    	else {
-    		throw new InsufficientFundsException("Insufficient funds!");
-    	}
-    }
-    
-    
-    /**
-     * Returns whether balance is sufficient to afford the given amount.
-     * @param amount the given amount
-     * @return whether balance is bigger or equal to amount
-     * @throws InvalidValueException if amount is negative value
-     */
-    public boolean balanceSufficient(double amount) throws InvalidValueException {
-    	if (0 > amount) {
-    		throw new InvalidValueException("Cannot be a negative value!");
-    	}
-    	else {    		
-    		return getBalance() >= amount;
-    	}
-    }
     
     /**
      * Level up monsters in battles and in shops based on the number of day and the max level of monsters

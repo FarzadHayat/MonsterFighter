@@ -11,7 +11,7 @@ public class Score {
     private int score;
     private int totalBattlesWon;
     private int totalBattlesLost;
-    private GameEnvironment game;
+    private Player player;
    
     private int battlesWeight = 100;
     private int balanceWeight = 10;
@@ -22,11 +22,10 @@ public class Score {
     
     /**
      * Creates new Score object 
-     * Sets game to given GameEnvironment object
      * @param game given GameEnvironment object
      */
     public Score(GameEnvironment game) {
-    	this.game = game;
+    	player = game.getPlayer();
     }
     
     /**
@@ -178,7 +177,7 @@ public class Score {
      * @return score the value of score
      */
     public int getFinalScore() {
-		score += totalBattlesWon*battlesWeight + game.getBalance()*balanceWeight;
+		score += totalBattlesWon * battlesWeight + player.getBalance() * balanceWeight;
 		return score;
     }
     

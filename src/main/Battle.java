@@ -2,16 +2,21 @@ package main;
 
 import java.util.Random;
 
-public class Battle implements Storable {
+public class Battle {
 	
     /** 
      * Fields
      */
     private Turn currentTurn = Turn.PLAYER;
     private Turn winner;
+    
     private GameEnvironment game;
-    private Inventory<Monster> enemyMonsters;
-    private Inventory<Monster> playerMonsters;
+    private Player player;
+    private MonsterInventory monsters;
+    
+    private int size;
+    private int balanceMultiplier = 25;
+    private int scoreMultiplier = 50;
     
     
     /** 
@@ -21,26 +26,15 @@ public class Battle implements Storable {
     /**
      * Create a new Battle object.
      * Set the value of game to the given GameEnvironment object.
+     * Randomize the enemy monsters inventory.
      * @param game the given GameEnvironment object
      */
     public Battle (GameEnvironment game) {
     	this.game = game;
-    	playerMonsters = game.getMyMonsters();
-    	enemyMonsters = new Inventory<Monster>(4);
-    };
-    
-    
-    /**
-     * Create a new Battle object.
-     * Set the value of game to the given GameEnvironment object.
-     * Set the value of enemyMonsters to the given Inventory object.
-     * @param game the given GameEnvironment object
-     * @param monsterInventory the given Monster Inventory
-     */
-    public Battle (GameEnvironment game, Inventory<Monster> monsterInventory) {
-    	this.game = game;
-    	playerMonsters = game.getMyMonsters();
-    	enemyMonsters = monsterInventory;
+    	player = game.getPlayer();
+    	size = randomSize();
+    	monsters = new MonsterInventory(size, game);
+    	monsters.randomise();
     };
     
 
@@ -85,78 +79,37 @@ public class Battle implements Storable {
 
     
     /**
-     * Get the value of enemyMonsters
-	 * @return the value of enemyMonsters
+     * Get the value of monsters
+	 * @return the value of monsters
 	 */
-	public Inventory<Monster> getEnemyMonsters() {
-		return enemyMonsters;
+	public MonsterInventory getEnemyMonsters() {
+		return monsters;
 	}
 
 
 	/**
-	 * Set the value of enemyMonsters
-	 * @param enemyMonsters the new value of enemyMonsters
+	 * Set the value of monsters
+	 * @param monsters the new value of monsters
 	 */
-	public void setEnemyMonsters(Inventory<Monster> enemyMonsters) {
-		this.enemyMonsters = enemyMonsters;
+	public void setEnemyMonsters(MonsterInventory enemyMonsters) {
+		this.monsters = enemyMonsters;
 	}
-
-
-	/**
-	 * Get the value of playerMonsters
-	 * @return the value of playerMonsters
-	 */
-	public Inventory<Monster> getPlayerMonsters() {
-		return playerMonsters;
-	}
-
-
-	/**
-	 * Set the value of playerMonsters
-	 * @param playerMonsters the new value of playerMonsters
-	 */
-	public void setPlayerMonsters(Inventory<Monster> playerMonsters) {
-		this.playerMonsters = playerMonsters;
-	}
-
+	
 
     /** 
      * Functional
-     * 
-     * */
-    
-	/**
-	 * Get a random non fainted monster from the given Monster Inventory.
-	 * @param inventory the given Monster Inventory
-	 * @return the randomly selected monster
-	 */
-	public Monster random(Inventory<Monster> inventory) {
-		Random random = new Random();
-    	boolean found = false;
-    	Monster monster = null;
-    	
-    	while (!found) {
-    		int index = random.nextInt(inventory.size());
-    		monster = inventory.get(index);
-    		if (!monster.getIsFainted()) {
-    			found = true;
-    		}
-    	}
-    	
-		return monster;
-	}
-	
+     */
 	
 	/**
 	 * Check that the player monster inventory contains at least one non fainted monster.
-	 * @throws StorableNotFoundException if the player has no non fainted monsters in their team
+	 * @throws NotFoundException if the player has no non fainted monsters in their team
 	 */
-	public void setup() throws StorableNotFoundException {
-		if (game.getMyMonsters().isEmpty()) {
-    		throw new StorableNotFoundException("Battle not available: Player has no monsters! Try again...");
+	public void setup() throws NotFoundException {
+		if (player.getMonsters().isEmpty()) {
+    		throw new NotFoundException("Battle not available: Player has no monsters! Try again...");
     	}
-		if (Inventory.allFainted(game.getMyMonsters())) {
-    		throw new StorableNotFoundException("Battle not available: Player monsters are all fainted! Try again...");
+		if (player.getMonsters().allFainted()) {
+    		throw new NotFoundException("Battle not available: Player monsters are all fainted! Try again...");
     	}
 	}
 	
@@ -167,8 +120,8 @@ public class Battle implements Storable {
 	 * @return result the commentary of the events that occurred during the attack
      */
     public String playerAttack() {
-    	Monster playerMonster = random(getPlayerMonsters());
-    	Monster enemyMonster = random(getEnemyMonsters());
+    	Monster playerMonster = player.getMonsters().random();
+    	Monster enemyMonster = monsters.random();
     	int damageDealt = 0;
     	try {
     		damageDealt = playerMonster.attack(enemyMonster);
@@ -197,8 +150,8 @@ public class Battle implements Storable {
 	 * @return result the commentary of the events that occurred during the attack
      */
     public String enemyAttack() {
-    	Monster enemyMonster = random(getEnemyMonsters());
-    	Monster playerMonster = random(getPlayerMonsters());
+    	Monster enemyMonster = monsters.random();
+    	Monster playerMonster = player.getMonsters().random();
     	int damageDealt = 0;
     	try {    		
     		damageDealt = enemyMonster.attack(playerMonster);
@@ -246,9 +199,9 @@ public class Battle implements Storable {
      * Checks the status of the battle after each turn.
      * Stop when one team's monsters have all fainted.
      * @param result the commentary of the battle
-     * @throws StorableNotFoundException if the player has no non fainted monsters in their team
+     * @throws NotFoundException if the player has no non fainted monsters in their team
      */
-    public String play() throws StorableNotFoundException {
+    public String play() throws NotFoundException {
     	setup();
     	String result = "";
     	while (winner == null) {
@@ -258,7 +211,7 @@ public class Battle implements Storable {
     	try {
     		game.getBattles().remove(this);
     	}
-    	catch (StorableNotFoundException e) {
+    	catch (NotFoundException e) {
     		e.printStackTrace();
     	}
     	return result;
@@ -273,10 +226,10 @@ public class Battle implements Storable {
      */
     public String checkStatus() {
     	String result = "";
-    	if (Inventory.allFainted(playerMonsters)) {
+    	if (player.getMonsters().allFainted()) {
     		result = lose();
     	}
-    	if (Inventory.allFainted(enemyMonsters)) {
+    	if (monsters.allFainted()) {
     		result = win();
     	}
     	return result;
@@ -292,17 +245,25 @@ public class Battle implements Storable {
     public String win()
     {
     	winner = Turn.PLAYER;
-    	String result = "You won!";
+    	String result = "\nYou won!";
     	result += "\nYour monsters:";
-    	result += playerMonsters;
+    	result += player.getMonsters();
     	game.getScoreSystem().addBattlesWon();
+    	
+    	int balanceReward = balanceMultiplier * size;
+    	int scoreReward = scoreMultiplier * size;
+    	
     	try {    		
-    		game.addBalance(0);
-    		game.getScoreSystem().addScore(0);
+    		player.addBalance(balanceReward);
+    		game.getScoreSystem().addScore(scoreReward);
     	}
     	catch (InvalidValueException e) {
     		e.printStackTrace();
     	}
+    	
+    	result += String.format("\nYou have gained %s gold!", balanceReward);
+    	result += String.format("\nYou have gained %s score!", scoreReward);
+    	
     	return result;
     }
 
@@ -315,11 +276,20 @@ public class Battle implements Storable {
     public String lose()
     {
     	winner = Turn.ENEMY;
-    	String result = "You lost!";
+    	String result = "\nYou lost!";
     	result += "\nEnemy monsters:";
-    	result += enemyMonsters;
+    	result += monsters;
     	game.getScoreSystem().addBattlesLost();
     	return result;
+    }
+    
+    
+    public int randomSize() {
+    	int minSize = Math.max(1, player.getMonsters().getList().size());
+    	int maxsize = player.getMonsters().getMaxSize();
+    	Random random = new Random();
+    	int size = random.nextInt(minSize, maxsize + 1);
+    	return size;
     }
     
     
@@ -327,8 +297,8 @@ public class Battle implements Storable {
      * @return result the string representation of the battle object
      */
     public String toString() {
-    	int index = game.getBattles().indexOf(this);
-    	String result = String.format("Battle %s\n %s\n", index + 1, enemyMonsters);
+    	int index = game.getBattles().getList().indexOf(this);
+    	String result = String.format("Battle %s\n %s\n", index + 1, monsters);
     	return result;
     }
     
@@ -342,15 +312,5 @@ public class Battle implements Storable {
     	result += "\n2: Go back";
     	return result;
     }
-
-
-    /**
-     * Battles do not have names.
-     * @return null
-     */
-	@Override
-	public String getName() {
-		return null;
-	}
 
 }

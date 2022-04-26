@@ -54,16 +54,16 @@ public class IncreaseDamage extends Item {
     /**
      * Increase the monster's damage by damageIncrease amount.
      * @param monster the given monster
-     * @throws StorableNotFoundException if the given monster was not found in the player inventory or the item was not found in the shop
+     * @throws NotFoundException if the given monster was not found in the player inventory or the item was not found in the shop
      */
-    public void use(Monster monster) throws StorableNotFoundException
+    public void use(Monster monster) throws NotFoundException
     {	
-    	if (!game.getMyItems().contains(this)) {
-    		throw new StorableNotFoundException("You do not own this item!");
+    	if (!player.getItems().getList().contains(this)) {
+    		throw new NotFoundException("You do not own this item!");
     	}
     	
     	monster.setDamage(monster.getDamage() + damageIncrease);
-    	game.getMyItems().remove(this);
+    	player.getItems().remove(this);
     }
     
     

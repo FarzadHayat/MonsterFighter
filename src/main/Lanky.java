@@ -1,10 +1,5 @@
 package main;
 
-/**
- * Class Lanky
- * Lanky
-Squishy but high damage
- */
 public class Lanky extends Monster {
 	
 	/**
@@ -31,6 +26,7 @@ public class Lanky extends Monster {
 	private int levelUpCost = 10;
 	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
 	
+	
 	/**
 	 * Constructors
 	 */
@@ -42,6 +38,7 @@ public class Lanky extends Monster {
 	public Lanky(GameEnvironment game) {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
+    
     
     /**
      * Functional

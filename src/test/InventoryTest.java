@@ -10,18 +10,18 @@ import main.*;
 class InventoryTest {
 
 	private GameEnvironment game;
-	private Inventory<Monster> monsters;
-	private Inventory<Item> items;
-	private Inventory<Battle> battles;
+	private MonsterInventory monsters;
+	private ItemInventory items;
+	private BattleInventory battles;
 	
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
 		game.setupGame();
-		monsters = new Inventory<Monster>(4);
-		items = new Inventory<Item>(4);
-		battles = new Inventory<Battle>(5);
+		monsters = new MonsterInventory(4, game);
+		items = new ItemInventory(4, game);
+		battles = new BattleInventory(5, game);
 	}
 	
 
@@ -36,9 +36,7 @@ class InventoryTest {
 		items.add(item);
 		
 		// Blue sky
-		Inventory<Monster> monsterInventory = new Inventory<Monster>(4);
-		Inventory.randomiseMonsters(monsterInventory, game.getAllMonsters());
-		Battle battle = new Battle(game, monsterInventory);
+		Battle battle = new Battle(game);
 		battles.add(battle);
 	}
 	
@@ -70,9 +68,7 @@ class InventoryTest {
 		}
 		
 		// Inventory full
-		Inventory<Monster> monsterInventory = new Inventory<Monster>(4);
-		Inventory.randomiseMonsters(monsterInventory, game.getAllMonsters());
-		Battle battle = new Battle(game, monsterInventory);
+		Battle battle = new Battle(game);
 		for (int i = 0; i < battles.getMaxSize(); i++) {
 			battles.add(battle);
 		}

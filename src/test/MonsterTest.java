@@ -12,14 +12,18 @@ import main.*;
 class MonsterTest {
 
 	private GameEnvironment game;
-	private Inventory<Monster> myMonsters;
+	private MonsterInventory myMonsters;
 	private Monster monster;
+	private Player player;
+	private Shop shop;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
 		game.setupGame();
-		myMonsters = game.getMyMonsters();
+		player = game.getPlayer();
+		shop = game.getShop();
+		myMonsters = player.getMonsters();
 		monster = new AverageJoe(game);
 	}
 
@@ -107,22 +111,22 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy1() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
+	public void testBuy1() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
 		//Blue sky
-		game.setBalance(monster.getCost());
-		game.getShop().setMonsters(new Inventory<Monster>(4));
-		game.getShop().getMonsters().add(monster);
+		player.setBalance(monster.getCost());
+		shop.setMonsters(new MonsterInventory(4, game));
+		shop.getMonsters().add(monster);
 		monster.buy();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(monster);
-		assertEquals(0, game.getBalance());
+		assertEquals(0, player.getBalance());
 		assertEquals(monsterList, myMonsters.getList());
 	}
 	
 	@Test
-	public void testBuy2() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
+	public void testBuy2() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
 		//Insufficient fund in player's balance 
-		game.setBalance(monster.getCost()/2);
+		player.setBalance(monster.getCost()/2);
 		try {
 			monster.buy();
 		}
@@ -132,12 +136,12 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testBuy3() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
+	public void testBuy3() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
 		//Inventory full
-		game.setBalance(monster.getCost()*5);
-		game.getShop().setMonsters(new Inventory<Monster>(4));
+		player.setBalance(monster.getCost()*5);
+		shop.setMonsters(new MonsterInventory(4, game));
 		for(int i = 0; i < 4; i++) {
-			game.getShop().getMonsters().add(monster);
+			shop.getMonsters().add(monster);
 			monster.buy();
 		}
 		try {
@@ -149,28 +153,28 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testSell1() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell1() throws NotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Blue sky
-		game.setBalance(monster.getCost());
+		player.setBalance(monster.getCost());
 		Monster testMonster = new AverageJoe(game);
-		game.getShop().setMonsters(new Inventory<Monster>(4));
-		game.getShop().getMonsters().add(testMonster);
+		shop.setMonsters(new MonsterInventory(4, game));
+		shop.getMonsters().add(testMonster);
 		testMonster.buy();
 		testMonster.sell();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
-		assertEquals(30, game.getBalance());
+		assertEquals(30, player.getBalance());
 		assertEquals(monsterList, myMonsters.getList());
 	}
 	
 	@Test
-	public void testSell2() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell2() throws NotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Multiple items of same type
-		game.setBalance(monster.getCost()*3);
+		player.setBalance(monster.getCost()*3);
 		Monster testMonster = new AverageJoe(game);
-		game.getShop().setMonsters(new Inventory<Monster>(4));
-		game.getShop().getMonsters().add(monster);
-		game.getShop().getMonsters().add(testMonster);
-		game.getShop().getMonsters().add(testMonster);
+		shop.setMonsters(new MonsterInventory(4, game));
+		shop.getMonsters().add(monster);
+		shop.getMonsters().add(testMonster);
+		shop.getMonsters().add(testMonster);
 		monster.buy();
 		testMonster.buy();
 		testMonster.buy();
@@ -178,18 +182,18 @@ class MonsterTest {
 		monster.sell();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(testMonster);
-		assertEquals(60, game.getBalance());
+		assertEquals(60, player.getBalance());
 		assertEquals(monsterList, myMonsters.getList());
 	}
 	
 	@Test
-	public void testSell3() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
-		//Storable not found in inventory
-		game.setBalance(monster.getCost());
+	public void testSell3() throws NotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+		//Purchasable not found in inventory
+		player.setBalance(monster.getCost());
 		try {
 			monster.sell();
 		}
-		catch(StorableNotFoundException e) {
+		catch(NotFoundException e) {
 			assertEquals(e.getMessage(), "Not found in inventory!");
 		}
 	}
