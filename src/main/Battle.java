@@ -9,9 +9,14 @@ public class Battle {
      */
     private Turn currentTurn = Turn.PLAYER;
     private Turn winner;
+    
     private GameEnvironment game;
     private Player player;
     private MonsterInventory monsters;
+    
+    private int size;
+    private int balanceMultiplier = 25;
+    private int scoreMultiplier = 50;
     
     
     /** 
@@ -27,7 +32,8 @@ public class Battle {
     public Battle (GameEnvironment game) {
     	this.game = game;
     	player = game.getPlayer();
-    	monsters = new MonsterInventory(inventorySize(), game);
+    	size = randomSize();
+    	monsters = new MonsterInventory(size, game);
     	monsters.randomise();
     };
     
@@ -239,17 +245,25 @@ public class Battle {
     public String win()
     {
     	winner = Turn.PLAYER;
-    	String result = "You won!";
+    	String result = "\nYou won!";
     	result += "\nYour monsters:";
     	result += player.getMonsters();
     	game.getScoreSystem().addBattlesWon();
+    	
+    	int balanceReward = balanceMultiplier * size;
+    	int scoreReward = scoreMultiplier * size;
+    	
     	try {    		
-    		player.addBalance(0);
-    		game.getScoreSystem().addScore(0);
+    		player.addBalance(balanceReward);
+    		game.getScoreSystem().addScore(scoreReward);
     	}
     	catch (InvalidValueException e) {
     		e.printStackTrace();
     	}
+    	
+    	result += String.format("\nYou have gained %s gold!", balanceReward);
+    	result += String.format("\nYou have gained %s score!", scoreReward);
+    	
     	return result;
     }
 
@@ -262,7 +276,7 @@ public class Battle {
     public String lose()
     {
     	winner = Turn.ENEMY;
-    	String result = "You lost!";
+    	String result = "\nYou lost!";
     	result += "\nEnemy monsters:";
     	result += monsters;
     	game.getScoreSystem().addBattlesLost();
@@ -270,7 +284,7 @@ public class Battle {
     }
     
     
-    public int inventorySize() {
+    public int randomSize() {
     	int minSize = Math.max(1, player.getMonsters().getList().size());
     	int maxsize = player.getMonsters().getMaxSize();
     	Random random = new Random();
