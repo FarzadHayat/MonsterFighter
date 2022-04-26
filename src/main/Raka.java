@@ -1,9 +1,5 @@
 package main;
 
-/**
- * Class Raka
- * low damage and health but heals allies slightly or increases their damage
- */
 public class Raka extends Monster {
 	
 	/**
@@ -35,6 +31,7 @@ public class Raka extends Monster {
 	 */
 	private int damageBefore;
 	
+	
 	/**
 	 * Constructors
 	 */
@@ -47,6 +44,7 @@ public class Raka extends Monster {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
     
+    
     /**
      * Getters and Setters 
      */
@@ -58,6 +56,7 @@ public class Raka extends Monster {
     public int getDamageBefore() {
     	return damageBefore;
     }
+    
     
     /**
      * Sets the value of damageBefore
@@ -79,6 +78,7 @@ public class Raka extends Monster {
     public int getHealingAmount() {
     	return getHealAmount();
     }
+    
 
     /**
      * Get the value of monster's damage to buff 
@@ -87,6 +87,7 @@ public class Raka extends Monster {
     public int getBuffAmount() {
     	return getDamage();
     }
+    
     
     /**
      * Heals given Monster object
@@ -101,6 +102,7 @@ public class Raka extends Monster {
     	}
     	
     }
+    
     
     /**
      * Increase damage of given Monster object
@@ -119,6 +121,7 @@ public class Raka extends Monster {
     	}
     }
 
+    
     /**
      * Level up monster statistics relevant to the monster 
      * @throws StatMaxedOutException if monster is already at maximum level

@@ -1,9 +1,5 @@
 package main;
 
-/**
- * Class AverageJoe
- * Medium damage and health
- */
 public class AverageJoe extends Monster{
 	
 	/**
@@ -30,6 +26,7 @@ public class AverageJoe extends Monster{
 	private int levelUpCost = 10;
 	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
 	
+	
 	/**
 	 * Constructors
 	 */
@@ -41,6 +38,7 @@ public class AverageJoe extends Monster{
 	public AverageJoe(GameEnvironment game) {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
+    
     
     /**
      * Functional

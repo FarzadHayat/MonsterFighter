@@ -8,10 +8,12 @@ public class CommandLine {
 	 * Fields
 	 */
     private Scanner scanner = new Scanner(System.in);
-    private GameEnvironment game;
     private int selection;
-    
     private boolean forceStop = false;
+
+    private GameEnvironment game;
+    private Player player;
+    private Shop shop;
         
     /**
      * Constructors
@@ -118,6 +120,8 @@ public class CommandLine {
 	 */
 	public void setupCmdGame() {
 		game = new GameEnvironment();
+    	player = game.getPlayer();
+    	shop = game.getShop();
 		selectPlayerName();
 		selectNumDays();
 		selectDifficulty();
@@ -136,14 +140,14 @@ public class CommandLine {
 		while (true) {
 			String name = scanner.nextLine();
 			try {
-				game.setPlayerName(name);
+				player.SetName(name);
 				break;
 			}
 			catch (InvalidValueException e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		System.out.println(String.format("Nice to meet you %s!", game.getPlayerName()));
+		System.out.println(String.format("Nice to meet you %s!", player.getName()));
     }
     
     
@@ -221,10 +225,10 @@ public class CommandLine {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (0 < selection && selection <= game.getAllMonsters().size()) {
-					Monster monster = (Monster) game.getAllMonsters().get(selection - 1).clone();
+				if (0 < selection && selection <= game.getAllMonsters().getList().size()) {
+					Monster monster = game.getAllMonsters().getList().get(selection - 1).clone();
 					System.out.println("You chose: " + monster.getName());
-					game.getMyMonsters().add(monster);
+					player.getMonsters().add(monster);
 					break;
 				}
 				else {
@@ -273,14 +277,14 @@ public class CommandLine {
 	 * Print the shop contents and allow the user to either view a monster, view an item, or go back to the home page.
 	 */
     public void viewShop() {
-    	System.out.println(game.getShop());
+    	System.out.println(shop);
 		while (true) {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
 				
-				int monstersSize = game.getShop().getMonsters().size();
-				int itemsSize = game.getShop().getItems().size();
+				int monstersSize = shop.getMonsters().getList().size();
+				int itemsSize = shop.getItems().getList().size();
 				int combinedSize = monstersSize + itemsSize; 
 				
 				if (combinedSize == selection - 1) {
@@ -288,16 +292,16 @@ public class CommandLine {
 				}
 				if (0 < selection && selection <= monstersSize) {
 					int index = selection - 1;
-					Monster monster = (Monster) game.getShop().getMonsters().get(index);
+					Monster monster = shop.getMonsters().getList().get(index);
 					viewShopMonster(monster);
-		    		System.out.println(game.getShop());
+		    		System.out.println(shop);
 				}
 				else {						
 					if (monstersSize < selection && selection <= combinedSize) {
 						int index = selection - monstersSize - 1;
-						Item item = (Item) game.getShop().getItems().get(index);
+						Item item = shop.getItems().getList().get(index);
 						viewShopItem(item);
-						System.out.println(game.getShop());
+						System.out.println(shop);
 					}
 					else {
 						throw new IllegalArgumentException("Command not found! Try again:");
@@ -340,7 +344,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (StorableNotFoundException | InvalidValueException | 
+				catch (NotFoundException | InvalidValueException | 
 						   InsufficientFundsException | InventoryFullException e) {
 					System.out.println(e.getMessage());
 				}
@@ -377,7 +381,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (StorableNotFoundException | InvalidValueException | 
+				catch (NotFoundException | InvalidValueException | 
 						   InsufficientFundsException | InventoryFullException e) {
 					System.out.println(e.getMessage());
 				}
@@ -394,21 +398,21 @@ public class CommandLine {
      */
     public void viewTeam() {
     	System.out.println("\n===== MY TEAM =====\n");
-    	System.out.println(game.getMyMonsters().view());
-    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
+    	System.out.println(player.getMonsters().view());
+    	System.out.println(String.format("%s: Go back", player.getMonsters().getList().size() + 1));
 		while (true) {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (game.getMyMonsters().size() == selection - 1) {
+				if (player.getMonsters().getList().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= game.getMyMonsters().size()) {
-					Monster monster = (Monster) game.getMyMonsters().get(selection - 1);
+				if (0 < selection && selection <= player.getMonsters().getList().size()) {
+					Monster monster = player.getMonsters().getList().get(selection - 1);
 					viewPlayerMonster(monster);
 					System.out.println("\n===== MY TEAM =====\n");
-			    	System.out.println(game.getMyMonsters().view());
-			    	System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
+			    	System.out.println(player.getMonsters().view());
+			    	System.out.println(String.format("%s: Go back", player.getMonsters().getList().size() + 1));
 				}
 				else {
 					throw new IllegalArgumentException("Command not found! Try again:");
@@ -454,7 +458,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (StorableNotFoundException | InvalidValueException e) {
+				catch (NotFoundException | InvalidValueException e) {
 					System.out.println(e.getMessage());
 				}
 				catch (InputMismatchException e) {
@@ -470,21 +474,21 @@ public class CommandLine {
      */
     public void viewInventory() {
     	System.out.println("\n===== MY INVENTORY =====\n");
-    	System.out.println(game.getMyItems().view());
-    	System.out.println(String.format("%s: Go back", game.getMyItems().size() + 1));
+    	System.out.println(player.getItems().view());
+    	System.out.println(String.format("%s: Go back", player.getItems().getList().size() + 1));
 		while (true) {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (game.getMyItems().size() == selection - 1) {
+				if (player.getItems().getList().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= game.getMyItems().size()) {
-					Item item = (Item) game.getMyItems().get(selection - 1);
+				if (0 < selection && selection <= player.getItems().getList().size()) {
+					Item item = player.getItems().getList().get(selection - 1);
 					viewPlayerItem(item);
 			    	System.out.println("\n===== MY INVENTORY =====\n");
-			    	System.out.println(game.getMyItems().view());
-			    	System.out.println(String.format("%s: Go back", game.getMyItems().size() + 1));
+			    	System.out.println(player.getItems().view());
+			    	System.out.println(String.format("%s: Go back", player.getItems().getList().size() + 1));
 				}
 				else {
 					throw new IllegalArgumentException("Command not found! Try again:");
@@ -529,7 +533,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (StorableNotFoundException | InvalidValueException e) {
+				catch (NotFoundException | InvalidValueException e) {
 					System.out.println(e.getMessage());
 				}
 				catch (InputMismatchException e) {
@@ -547,19 +551,19 @@ public class CommandLine {
 	public void useItem(Item item) {
 		System.out.println("Choose a monster to use it on:");
 		System.out.println("\n===== MY TEAM =====\n");
-		System.out.println(game.getMyMonsters().view());
-		System.out.println(String.format("%s: Go back", game.getMyMonsters().size() + 1));
+		System.out.println(player.getMonsters().view());
+		System.out.println(String.format("%s: Go back", player.getMonsters().getList().size() + 1));
 		while (true) {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (game.getMyMonsters().size() == selection - 1) {
+				if (player.getMonsters().getList().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= game.getMyMonsters().size()) {
-					Monster monster = (Monster) game.getMyMonsters().get(selection - 1);
-					System.out.println(String.format("You used %s on %s:", item.getName(), monster.getName()));
+				if (0 < selection && selection <= player.getMonsters().getList().size()) {
+					Monster monster = player.getMonsters().getList().get(selection - 1);
 					item.use(monster);
+					System.out.println(String.format("You used %s on %s:", item.getName(), monster.getName()));
 					System.out.println(monster);
 					goBack();
 					break;
@@ -571,8 +575,15 @@ public class CommandLine {
 			catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
 			}
-			catch (StorableNotFoundException | StatMaxedOutException e) {
-				System.out.println(e.getMessage());
+			catch (NotFoundException e) {
+				e.printStackTrace();
+			}
+			catch (StatMaxedOutException e) {
+				System.out.println("\n" + e.getMessage() + "\n");
+				System.out.println("Choose a monster to use it on:");
+				System.out.println("\n===== MY TEAM =====\n");
+				System.out.println(player.getMonsters().view());
+				System.out.println(String.format("%s: Go back", player.getMonsters().getList().size() + 1));
 			}
 			catch (InputMismatchException e) {
 				System.out.println("Command not found! Try again:");
@@ -588,20 +599,20 @@ public class CommandLine {
 	public void viewBattles() {
 		System.out.println("\n===== BATTLES =====\n");
 		System.out.println(game.getBattles().view());
-		System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
+		System.out.println(String.format("%s: Go back", game.getBattles().getList().size() + 1));
 		while (true) {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (game.getBattles().size() == selection - 1) {
+				if (game.getBattles().getList().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= game.getBattles().size()) {
-					Battle battle = (Battle) game.getBattles().get(selection - 1); 
+				if (0 < selection && selection <= game.getBattles().getList().size()) {
+					Battle battle = game.getBattles().getList().get(selection - 1); 
 					viewBattle(battle);
 					System.out.println("\n===== BATTLES =====\n");
 			    	System.out.println(game.getBattles().view());
-			    	System.out.println(String.format("%s: Go back", game.getBattles().size() + 1));
+			    	System.out.println(String.format("%s: Go back", game.getBattles().getList().size() + 1));
 				}
 				else {
 					throw new IllegalArgumentException("Command not found! Try again:");
@@ -645,7 +656,7 @@ public class CommandLine {
 				catch (InputMismatchException e) {
 	    			System.out.println("Command not found! Try again:");
 	    			scanner.nextLine();
-	    		} catch (StorableNotFoundException e) {
+	    		} catch (NotFoundException e) {
 					System.out.println(e.getMessage());
 				}
 			}
@@ -658,9 +669,9 @@ public class CommandLine {
 	 * Checks the player team before the game to make sure they have at least one non fainted monster.
 	 * Checks the status of the battle after each turn.
 	 * @param battle the given battle currently being played
-	 * @throws StorableNotFoundException if the player has no non fainted monsters in their team
+	 * @throws NotFoundException if the player has no non fainted monsters in their team
 	 */
-	public void playBattle(Battle battle) throws StorableNotFoundException {
+	public void playBattle(Battle battle) throws NotFoundException {
 		battle.setup();
 		System.out.println("Press Enter to play next turn...");
 		while (battle.getWinner() == null) {
@@ -671,7 +682,7 @@ public class CommandLine {
 		try {
 			game.getBattles().remove(battle);
 		}
-		catch (StorableNotFoundException e) {
+		catch (NotFoundException e) {
 			e.printStackTrace();
 		}
 		goBack();
@@ -698,8 +709,8 @@ public class CommandLine {
      */
     public void printStats() {
     	System.out.println("\n===== PLAYER STATS =====");
-    	System.out.println("Balance: " + game.getBalance());
-    	System.out.println("Player name: " + game.getPlayerName());
+    	System.out.println("Balance: " + player.getBalance());
+    	System.out.println("Player name: " + player.getName());
     	System.out.println(String.format("Day %s out of %s", game.getDay(), game.getNumDays()));
     	System.out.println("Difficulty: " + game.getDifficulty());
     	System.out.println("Today score: " + game.getScoreSystem().getScore());

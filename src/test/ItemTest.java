@@ -13,33 +13,35 @@ class ItemTest {
 	
 	private GameEnvironment game;
 	private ItemInventory myItems;
-	
+	private Player player;
+
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
-		myItems = game.getMyItems();
+		player = game.getPlayer();
+		myItems = player.getItems();
 	}
 
 	
 	@Test
-	public void testBuy1() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
+	public void testBuy1() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
 		// Blue sky
 		Item testItem = new HealUp(game);
-		game.setBalance(testItem.getCost());
+		player.setBalance(testItem.getCost());
 		testItem.buy();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
-		assertEquals(0, game.getBalance());
+		assertEquals(0, player.getBalance());
 		assertEquals(testItemList, myItems.getList());
 	}
 	
 	
 	@Test
-	public void testBuy2() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
+	public void testBuy2() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
 		// Insufficient funds
 		Item testItem = new HealUp(game);
-		game.setBalance(testItem.getCost() / 2);
+		player.setBalance(testItem.getCost() / 2);
 		try {    		
 			testItem.buy();
 		}
@@ -50,10 +52,10 @@ class ItemTest {
 	
 	
 	@Test
-	public void testBuy3() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
+	public void testBuy3() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
 		// Inventory full	
 		Item testItem = new HealUp(game);
-		game.setBalance(testItem.getCost() * (myItems.getMaxSize() + 1));
+		player.setBalance(testItem.getCost() * (myItems.getMaxSize() + 1));
 		for (int i = 0; i < myItems.getMaxSize(); i++) {			
 			testItem.buy();
 		}
@@ -67,24 +69,24 @@ class ItemTest {
 	
 	
 	@Test
-	public void testSell1() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell1() throws NotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Blue sky
 		Item testItem = new HealUp(game);
-		game.setBalance(testItem.getCost());
+		player.setBalance(testItem.getCost());
 		testItem.buy();
 		testItem.sell();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
-		assertEquals(testItem.getCost() * testItem.getRefundAmount(), game.getBalance());
+		assertEquals(testItem.getCost() * testItem.getRefundAmount(), player.getBalance());
 		assertEquals(testItemList, myItems.getList());
 	}
 	
 	
 	@Test
-	public void testSell2() throws StorableNotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell2() throws NotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Multiple items of the same type
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);
-		game.setBalance(testItem1.getCost() * 3);
+		player.setBalance(testItem1.getCost() * 3);
 		testItem1.buy();
 		testItem2.buy();
 		testItem2.buy();
@@ -92,22 +94,22 @@ class ItemTest {
 		testItem1.sell();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem2);
-		assertEquals(testItem1.getCost(), game.getBalance());
+		assertEquals(testItem1.getCost(), player.getBalance());
 		assertEquals(testItemList, myItems.getList());
 	}
 	
 	
 	@Test
-	public void testSell3() throws StorableNotFoundException, InsufficientFundsException, InventoryFullException, InvalidValueException {
-		// Storable not found in inventory
+	public void testSell3() throws NotFoundException, InsufficientFundsException, InventoryFullException, InvalidValueException {
+		// Purchasable not found in inventory
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);
-		game.setBalance(testItem1.getCost());
+		player.setBalance(testItem1.getCost());
 		testItem1.buy();
 		try {    		
 			testItem2.sell();
 		}
-		catch (StorableNotFoundException e){
+		catch (NotFoundException e){
 			assertEquals(e.getMessage(), "Item not found in inventory!");
 		}
 	}

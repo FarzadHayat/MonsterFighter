@@ -1,6 +1,6 @@
 package main;
 
-abstract public class Item implements Storable {
+abstract public class Item implements Purchasable {
 
 	/**
 	 * Fields
@@ -9,21 +9,14 @@ abstract public class Item implements Storable {
     private String description;
     private int cost;
     protected GameEnvironment game;
+    protected Player player;
+    private Shop shop;
     private double refundAmount = 0.5;
     
     
     /**
 	 * Constructors
 	 */
-    
-    /**
-     * Create a new Item object.
-     * Set the value of game to the given GameEnvironment object.
-     * @param game the given GameEnvironment object.
-     */
-    public Item (GameEnvironment game) {
-    	this.game = game;
-    }
     
     
     /**
@@ -40,6 +33,8 @@ abstract public class Item implements Storable {
     	this.description = description;
     	this.cost = cost;
     	this.game = game;
+    	player = game.getPlayer();
+    	shop = game.getShop();
     };
     
     
@@ -127,29 +122,29 @@ abstract public class Item implements Storable {
      * Buy this item from the shop and add it to the player inventory.
      * @throws InsufficientFundsException if cost of item is more than player balance
      * @throws InventoryFullException if the player inventory is full
-     * @throws StorableNotFoundException if item was not found in the shop
+     * @throws NotFoundException if item was not found in the shop
      * @throws InvalidValueException if cost is a negative value 
+     * @return the string representing what the player bought
      */
-    public String buy() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException
-    {
-    	game.minusBalance(cost);
-		game.getMyItems().add(this);
-		int index = game.getShop().getItems().indexOf(this);
-		game.getShop().getItems().remove(this);
-		game.getShop().getItems().add(index, game.getAllItems().random());
+    public String buy() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
+    	player.minusBalance(cost);
+    	player.getItems().add(this);
+		int index = shop.getItems().getList().indexOf(this);
+		shop.getItems().remove(this);
+		shop.getItems().add(index, game.getAllItems().random());
 		return "You bought: " + name;
     }
 
     
     /**
      * Sell this item back to the shop for a partial refund and remove the item from the player inventory.
-     * @throws StorableNotFoundException if item was not found in the player inventory
+     * @throws NotFoundException if item was not found in the player inventory
      * @throws InvalidValueException if (cost * refundAmount) is a negative value
+     * @return the string representing what the player sold
      */
-    public String sell() throws StorableNotFoundException, InvalidValueException
-    {
-    	game.addBalance(cost * refundAmount);
-    	game.getMyItems().remove(this);
+    public String sell() throws NotFoundException, InvalidValueException {
+    	player.addBalance(cost * refundAmount);
+    	player.getItems().remove(this);
     	return "You sold: " + name;
     }
 
@@ -157,10 +152,10 @@ abstract public class Item implements Storable {
     /**
      * Use this item on the given Monster
      * @param monster the given monster
-     * @throws StorableNotFoundException if the given monster was not found in the player inventory or the item was not found in the shop
+     * @throws NotFoundException if the given monster was not found in the player inventory or the item was not found in the shop
      * @throws StatMaxedOutException if the monster is already maxed out in the stat that the item is upgrading
      */
-    abstract public void use(Monster monster) throws StorableNotFoundException, StatMaxedOutException;
+    abstract public void use(Monster monster) throws NotFoundException, StatMaxedOutException;
 
     
     /**
@@ -176,18 +171,18 @@ abstract public class Item implements Storable {
 	 */
     public String view() {
     	String result = "";
-    	if (game.getShop().getItems().contains(this)) {
-    		result += String.format("\nBalance: %s\n\n", game.getBalance());
+    	if (shop.getItems().getList().contains(this)) {
+    		result += String.format("\nBalance: %s\n\n", player.getBalance());
     	}
     	result += "Item: " + name + "\n";
     	result += description + "\n";
     	result += "Cost: " + cost + "\n";
-    	if (game.getMyItems().contains(this)) {
+    	if (player.getItems().getList().contains(this)) {
     		result += "\n1: Use";
     		result += "\n2: Sell";
     		result += "\n3: Go back";
     	}
-    	if (game.getShop().getItems().contains(this)) {    		
+    	if (shop.getItems().getList().contains(this)) {    		
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}

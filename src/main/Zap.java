@@ -1,9 +1,5 @@
 package main;
 
-/**
- * Class Zap
- * cheap, high crit rate, low health
- */
 public class Zap extends Monster {
 	
 	/**
@@ -31,6 +27,7 @@ public class Zap extends Monster {
 	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
 	private double levelUpCritRate = 0.2;
 	
+	
 	/**
 	 * Constructors
 	 */
@@ -43,6 +40,7 @@ public class Zap extends Monster {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
 
+    
     /**
      * Functional
      */

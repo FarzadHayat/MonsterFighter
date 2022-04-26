@@ -11,11 +11,14 @@ public class RandomEvent {
     private double levelUpChance = 0.1;
     private double leaveChance = 0.05;
     private double joinChance = 0.1;
-    private GameEnvironment game;
     private double leaveIncrement = 2.0;
     private double levelUpIncrement = 0.1;
     
-    Random rn = new Random();
+    private GameEnvironment game;
+    private Player player;
+    
+    private Random rn = new Random();
+    
     
     /**
      * Constructors 
@@ -28,7 +31,9 @@ public class RandomEvent {
      */
     public RandomEvent(GameEnvironment game) {
     	this.game = game;
+    	player = game.getPlayer();
     }
+    
     
     /**
      * Getters and Setters
@@ -42,6 +47,7 @@ public class RandomEvent {
     	return levelUpChance;
     }
     
+    
     /**
      * Set the value of levelUpChance
      * @param levelUpChance the new value of levelUpChance
@@ -49,6 +55,7 @@ public class RandomEvent {
     public void setLevelUpChance(double levelUpChance) {
     	this.levelUpChance = levelUpChance;
     }
+    
     
     /**
      * Get the value of leaveChance
@@ -58,6 +65,7 @@ public class RandomEvent {
     	return leaveChance;
     }
     
+    
     /**
      * Set the value of leaveChance
      * @param leaveChance the new value of leaveChance
@@ -65,6 +73,7 @@ public class RandomEvent {
     public void setLeaveChance(double leaveChance) {
     	this.leaveChance = leaveChance;
     }
+    
     
     /**
      * Get the value of joinChance
@@ -74,6 +83,7 @@ public class RandomEvent {
     	return joinChance;
     }
     
+    
     /**
      * Set the value of joinChance
      * @param joinChance the new value of joinChance
@@ -81,6 +91,7 @@ public class RandomEvent {
     public void setJoinChance(double joinChance) {
     	this.joinChance = joinChance;
     }
+    
     
     /**
      * Functional
@@ -108,13 +119,14 @@ public class RandomEvent {
 		return event;
     }
     
+    
     /**
      * Monster leaves the player's team based on the leaveChance
      * @param monster given Monster object 
      * @return event the string representing when a monster leaves the team
-     * @throws StorableNotFoundException if monster not found in player's inventory
+     * @throws NotFoundException if monster not found in player's inventory
      */
-    public String randomMonsterLeave(Monster monster) throws StorableNotFoundException {
+    public String randomMonsterLeave(Monster monster) throws NotFoundException {
     	String event = "";
 		double resetValue = leaveChance;
 		//If monster fainted during any battle in the day, leaveChance is doubled 
@@ -123,12 +135,13 @@ public class RandomEvent {
 		}
 		double randomValue = rn.nextDouble(1);
 		if(randomValue <= leaveChance) {
-		    game.getMyMonsters().remove(monster);
+		    player.getMonsters().remove(monster);
 		    event = String.format("Sadly, %s left the team over night...\n", monster.getName());
 		}
 		setLeaveChance(resetValue);
 		return event;
     }
+    
 
     /**
      * Random monster joins the player's team based on the joinChance
@@ -136,12 +149,12 @@ public class RandomEvent {
      */
     public String randomMonsterJoin() {
     	String event = "";
-		Monster randomMonster = (Monster) game.getAllMonsters().random();
+		Monster randomMonster = game.getAllMonsters().random();
 		double randomValue = rn.nextDouble(1);
 		
 		if(randomValue <= joinChance) {
 			try {				
-				game.getMyMonsters().add(randomMonster);
+				player.getMonsters().add(randomMonster);
 				event = String.format("A new monster has joined the team over night. Welcome %s!\n", randomMonster.getName());
 			}
 			catch (InventoryFullException e) {}
@@ -149,29 +162,30 @@ public class RandomEvent {
 		return event;
     }
     
+    
     /**
      * Runs randomMonsterLevelUp based on the number of monsters in the player's team 
      * Runs randomMonsterLeave based on the number of monsters in the player's team but stops when there is only 1 monster in the team
      * Runs randomMonsterJoin based on the number of free slots in the player's team 
-     * @return event the string representing the events occured  
+     * @return event the string representing the events occurred  
      */
     public String runAllRandom() {
     	String events = "";
-		for(Storable monster: game.getMyMonsters().getList()) {
+		for(Monster monster: player.getMonsters().getList()) {
 			events += randomMonsterLevelUp((Monster) monster);
 		}
-		for(Storable monster: game.getMyMonsters().getList()) {
-		    if(game.getMyMonsters().size() <= 1) {
+		for(Monster monster: player.getMonsters().getList()) {
+		    if(player.getMonsters().getList().size() <= 1) {
 		    	break;
 		    }
 		    try {		    	
 		    	events += randomMonsterLeave((Monster) monster);
 		    }
-		    catch (StorableNotFoundException e) {
+		    catch (NotFoundException e) {
 		    	e.printStackTrace();
 		    }
 		}
-		for(int i = 0; i < game.getMyMonsters().getMaxSize() - game.getMyMonsters().size(); i++) {
+		for(int i = 0; i < player.getMonsters().getMaxSize() - player.getMonsters().getList().size(); i++) {
 			events += randomMonsterJoin();
 		}
 		if (events.equals("")) {
@@ -179,4 +193,5 @@ public class RandomEvent {
 		}
 		return events;
     }
+    
 }

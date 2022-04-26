@@ -8,6 +8,7 @@ public class Shop {
     private MonsterInventory monsters;
     private ItemInventory items;
     private GameEnvironment game;
+    private Player player;
     
     
     /**
@@ -23,7 +24,9 @@ public class Shop {
     	monsters = new MonsterInventory (4, game);
     	items = new ItemInventory(4, game);
     	this.game = game;
+    	player = game.getPlayer();
     }
+    
     
     /**
      * Getters and setters
@@ -64,6 +67,7 @@ public class Shop {
 		this.items = items;
 	}
 	
+	
 	/**
 	 * Functional
 	 */
@@ -81,15 +85,15 @@ public class Shop {
      * @return result the string representation of the Shop object with command line options.
      */
     public String toString() {
-    	String result = String.format("\nBalance: %s\n", game.getBalance());
+    	String result = String.format("\nBalance: %s\n", player.getBalance());
     	int start = 1;
     	result += "\n===== MONSTERS =====\n\n";
-    	for (Storable monster : monsters.getList()) {
+    	for (Monster monster : monsters.getList()) {
     		result += String.format("%s: %s\n", start, monster);
     		start++;
     	}
     	result += "\n===== ITEMS =====\n\n";
-    	for (Storable item : items.getList()) {
+    	for (Item item : items.getList()) {
     		result += String.format("%s: %s\n", start, item);
     		start++;
     	}

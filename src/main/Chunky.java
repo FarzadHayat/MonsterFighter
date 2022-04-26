@@ -1,10 +1,5 @@
 package main;
 
-/**
- * Class Chunky
- * Chunky
-Tanky but low damage and expensive
- */
 public class Chunky extends Monster {
 	
 	/**
@@ -31,6 +26,7 @@ public class Chunky extends Monster {
 	private int levelUpCost = 10;
 	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
 	
+	
 	/**
 	 * Constructors
 	 */
@@ -43,6 +39,7 @@ public class Chunky extends Monster {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
 
+    
     /**
      * Functional
      */
