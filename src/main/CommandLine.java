@@ -222,7 +222,7 @@ public class CommandLine {
 				selection = scanner.nextInt();
 				scanner.nextLine();
 				if (0 < selection && selection <= game.getAllMonsters().size()) {
-					Monster monster = game.getAllMonsters().get(selection - 1).clone();
+					Monster monster = (Monster) game.getAllMonsters().get(selection - 1).clone();
 					System.out.println("You chose: " + monster.getName());
 					game.getMyMonsters().add(monster);
 					break;
@@ -288,14 +288,14 @@ public class CommandLine {
 				}
 				if (0 < selection && selection <= monstersSize) {
 					int index = selection - 1;
-					Monster monster = game.getShop().getMonsters().get(index);
+					Monster monster = (Monster) game.getShop().getMonsters().get(index);
 					viewShopMonster(monster);
 		    		System.out.println(game.getShop());
 				}
 				else {						
 					if (monstersSize < selection && selection <= combinedSize) {
 						int index = selection - monstersSize - 1;
-						Item item = game.getShop().getItems().get(index);
+						Item item = (Item) game.getShop().getItems().get(index);
 						viewShopItem(item);
 						System.out.println(game.getShop());
 					}
@@ -404,7 +404,7 @@ public class CommandLine {
 					break;
 				}
 				if (0 < selection && selection <= game.getMyMonsters().size()) {
-					Monster monster = game.getMyMonsters().get(selection - 1);
+					Monster monster = (Monster) game.getMyMonsters().get(selection - 1);
 					viewPlayerMonster(monster);
 					System.out.println("\n===== MY TEAM =====\n");
 			    	System.out.println(game.getMyMonsters().view());
@@ -480,7 +480,7 @@ public class CommandLine {
 					break;
 				}
 				if (0 < selection && selection <= game.getMyItems().size()) {
-					Item item = game.getMyItems().get(selection - 1);
+					Item item = (Item) game.getMyItems().get(selection - 1);
 					viewPlayerItem(item);
 			    	System.out.println("\n===== MY INVENTORY =====\n");
 			    	System.out.println(game.getMyItems().view());
@@ -557,7 +557,7 @@ public class CommandLine {
 					break;
 				}
 				if (0 < selection && selection <= game.getMyMonsters().size()) {
-					Monster monster = game.getMyMonsters().get(selection - 1);
+					Monster monster = (Monster) game.getMyMonsters().get(selection - 1);
 					System.out.println(String.format("You used %s on %s:", item.getName(), monster.getName()));
 					item.use(monster);
 					System.out.println(monster);
@@ -597,7 +597,7 @@ public class CommandLine {
 					break;
 				}
 				if (0 < selection && selection <= game.getBattles().size()) {
-					Battle battle = game.getBattles().get(selection - 1); 
+					Battle battle = (Battle) game.getBattles().get(selection - 1); 
 					viewBattle(battle);
 					System.out.println("\n===== BATTLES =====\n");
 			    	System.out.println(game.getBattles().view());

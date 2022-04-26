@@ -5,8 +5,8 @@ public class Shop {
 	/**
 	 * Fields
 	 */
-    private Inventory<Monster> monsters;
-    private Inventory<Item> items;
+    private MonsterInventory monsters;
+    private ItemInventory items;
     private GameEnvironment game;
     
     
@@ -20,8 +20,8 @@ public class Shop {
      * @param game the given GameEnvironment object
      */
     public Shop(GameEnvironment game) {
-    	monsters = new Inventory<Monster> (4);
-    	items = new Inventory<Item>(4);
+    	monsters = new MonsterInventory (4, game);
+    	items = new ItemInventory(4, game);
     	this.game = game;
     }
     
@@ -33,7 +33,7 @@ public class Shop {
 	 * get the value of monsters
 	 * @return the value of monsters
 	 */
-	public Inventory<Monster> getMonsters() {
+	public MonsterInventory getMonsters() {
 		return monsters;
 	}
 
@@ -42,7 +42,7 @@ public class Shop {
 	 * Set the value of monsters
 	 * @param monsters the new value of monsters
 	 */
-	public void setMonsters(Inventory<Monster> monsters) {
+	public void setMonsters(MonsterInventory monsters) {
 		this.monsters = monsters;
 	}
 	
@@ -51,7 +51,7 @@ public class Shop {
 	 * Get the value of items
 	 * @return the value of items
 	 */
-	public Inventory<Item> getItems() {
+	public ItemInventory getItems() {
 		return items;
 	}
 
@@ -60,7 +60,7 @@ public class Shop {
 	 * Set the value of items
 	 * @param items the new value of items
 	 */
-	public void setItems(Inventory<Item> items) {
+	public void setItems(ItemInventory items) {
 		this.items = items;
 	}
 	
@@ -72,8 +72,8 @@ public class Shop {
      * Randomize the monsters and items in the shop.
      */
     public void randomise() {
-		Inventory.randomiseMonsters(monsters, game.getAllMonsters());
-    	Inventory.randomiseItems(items, game.getAllItems());
+		monsters.randomise();
+    	items.randomise();;
     }
     
     
@@ -84,12 +84,12 @@ public class Shop {
     	String result = String.format("\nBalance: %s\n", game.getBalance());
     	int start = 1;
     	result += "\n===== MONSTERS =====\n\n";
-    	for (Monster monster : monsters.getList()) {
+    	for (Storable monster : monsters.getList()) {
     		result += String.format("%s: %s\n", start, monster);
     		start++;
     	}
     	result += "\n===== ITEMS =====\n\n";
-    	for (Item item : items.getList()) {
+    	for (Storable item : items.getList()) {
     		result += String.format("%s: %s\n", start, item);
     		start++;
     	}

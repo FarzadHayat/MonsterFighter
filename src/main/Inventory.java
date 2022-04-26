@@ -2,13 +2,14 @@ package main;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Inventory<T extends Storable> {
+public abstract class Inventory {
 	
 	/**
 	 * Fields
 	 */
-	private int maxSize;
-    private ArrayList<T> list;
+	protected int maxSize;
+    protected ArrayList<Storable> list;
+    protected GameEnvironment game;
     
     
     /**
@@ -18,12 +19,21 @@ public class Inventory<T extends Storable> {
     /**
      * Create a new Inventory object with the given size.
      * Set the value of maxSize to the given maxSize.
+     * Set the value of game to the given game.
      * @param maxSize the given maxSize
+     * @param game the given game
      */
-    public Inventory (int maxSize) {
+    public Inventory (int maxSize, GameEnvironment game) {
     	this.maxSize = maxSize;
-    	list = new ArrayList<T>(maxSize);
+    	this.game = game;
     };
+    
+    
+//    public Inventory (int maxSize, GameEnvironment game, ArrayList<Storable> list) {
+//    	this.maxSize = maxSize;
+//    	this.game = game;
+//    	this.list = list;
+//    };
     
     
     /**
@@ -52,7 +62,7 @@ public class Inventory<T extends Storable> {
      * get the value of list
      * @return the value of list
      */
-    public ArrayList<T> getList() {
+    public ArrayList<Storable> getList() {
     	return list;
     }
     
@@ -61,8 +71,8 @@ public class Inventory<T extends Storable> {
      * Set the value of list
      * @param list the new value of list
      */
-    public void setList(ArrayList<T> list) {
-    	this.list = list;
+	public void setList(ArrayList<Storable> list) {
+    	this.list = (ArrayList<Storable>) list;
     }
     
     
@@ -71,14 +81,14 @@ public class Inventory<T extends Storable> {
      */
     
     /**
-     * Add the given t to the inventory.
-     * @param t the given t
+     * Add the given storable to the inventory.
+     * @param storable the given storable
      * @throws InventoryFullException if the inventory is already full
      */
-    public void add(T t) throws InventoryFullException
+    public void add(Storable storable) throws InventoryFullException
     {
     	if (!isFull()) {
-    		list.add(t);
+    		list.add(storable);
     	}
     	else {
     		throw new InventoryFullException("Inventory full!");
@@ -87,14 +97,14 @@ public class Inventory<T extends Storable> {
     
     
     /**
-     * Add the given t at the given index to the inventory.
-     * @param t the given t
+     * Add the given storable at the given index to the inventory.
+     * @param storable the given storable
      * @throws InventoryFullException if the inventory is already full
      */
-    public void add(int index, T t) throws InventoryFullException
+    public void add(int index, Storable storable) throws InventoryFullException
     {
     	if (!isFull()) {
-    		list.add(index, t);
+    		list.add(index, storable);
     	}
     	else {
     		throw new InventoryFullException("Inventory full!");
@@ -103,14 +113,14 @@ public class Inventory<T extends Storable> {
 
 
     /**
-     * Remove the given t from the inventory.
-     * @param t the given t
-     * @throws StorableNotFoundException if the t was not found in the inventory
+     * Remove the given storable from the inventory.
+     * @param storable the given storable
+     * @throws StorableNotFoundException if the storable was not found in the inventory
      */
-    public void remove(T t) throws StorableNotFoundException
+    public void remove(Storable storable) throws StorableNotFoundException
     {
-    	if (contains(t)) {    		
-    		list.remove(t);
+    	if (contains(storable)) {    		
+    		list.remove(storable);
     	}
     	else {
     		throw new StorableNotFoundException("Not found in inventory!");
@@ -127,10 +137,10 @@ public class Inventory<T extends Storable> {
 	
 	
 	/**
-	 * @param index the index of t
-	 * @return t the t at the given index in the inventory
+	 * @param index the index of storable
+	 * @return storable the storable at the given index in the inventory
 	 */
-	public T get(int index) {
+	public Storable get(int index) {
 		return list.get(index);
 	}
     
@@ -144,92 +154,14 @@ public class Inventory<T extends Storable> {
     
     
     /**
-     * @param inventory the given monster inventory
-     * @return whether all monsters in the given inventory have fainted
+     * Returns a random storable from the inventory
+     * @return storable the randomly selected storable
      */
-    public static boolean allFainted(Inventory<Monster> inventory) {
-    	boolean fainted = true;
-    	for (Monster monster : inventory.getList()) {
-    		if (!monster.getIsFainted()) {
-    			fainted = false;
-    		}
-    	}
-    	return fainted;
-    }
-    
-    
-    /**
-     * @param inventory the given monster inventory
-     * Heal all monsters in the given inventory.
-     */
-    public static void healAll(Inventory<Monster> inventory) {
-    	for (Monster monster : inventory.getList()) {
-    		monster.heal();
-    	}
-    }
-    
-    
-    /**
-     * Returns a random t from the inventory
-     * @return t the randomly selected t
-     */
-    public T random() {
+    public Storable random() {
     	Random random = new Random();
     	int index = random.nextInt(list.size());
-    	T t = list.get(index);
-		return t;
-    }
-    
-    
-    /**
-     * Populate the given monster inventory by randomly selecting monsters from the given all monsters.
-     * @param inventory the given monster inventory
-     * @param allItems all monsters in the game
-     */
-    public static void randomiseMonsters(Inventory<Monster> inventory, Inventory<Monster> allMonsters) {
-    	Random random = new Random();
-    	ArrayList<Monster> newList = new ArrayList<Monster>(inventory.getMaxSize());
-    	for (int i = 0; i < inventory.getMaxSize(); i++) {
-    		int index = random.nextInt(allMonsters.size());
-    		Monster monster = allMonsters.get(index).clone();
-    		newList.add(monster);
-    	}
-    	inventory.setList(newList);
-    }
-    
-    
-    /**
-     * Populate the given item inventory by randomly selecting monsters from the given all items.
-     * @param inventory the given item inventory
-     * @param allItems all items in the game
-     */
-    public static void randomiseItems(Inventory<Item> inventory, Inventory<Item> allItems) {
-    	Random random = new Random();
-    	ArrayList<Item> newList = new ArrayList<Item>(inventory.getMaxSize());
-    	for (int i = 0; i < inventory.getMaxSize(); i++) {
-    		int index = random.nextInt(allItems.size());
-    		Item item = allItems.get(index).clone();
-    		newList.add(item);
-    	}
-    	inventory.setList(newList);
-    }
-    
-	
-    /**
-     * populate the given battle inventory by randomly generating battles.
-     * Each randomly generated battle is a new battle populated with randomly selected monsters from all monsters in the game.
-     * @param inventory the given battle inventory
-     * @param game the given GameEnviroment object
-     */
-    public static void randomiseBattles(Inventory<Battle> inventory, GameEnvironment game) {
-    	ArrayList<Battle> battleList = new ArrayList<Battle>(inventory.getMaxSize());
-    	for (int i = 0; i < inventory.getMaxSize(); i++) {
-    		Inventory<Monster> monsterInventory = new Inventory<Monster>(4);
-    		Inventory.randomiseMonsters(monsterInventory, game.getAllMonsters());
-    		Battle battle = new Battle(game, monsterInventory);
-    		battleList.add(battle);
-    	}
-    	inventory.setList(battleList);
+    	Storable storable = list.get(index);
+		return storable;
     }
     
     
@@ -238,62 +170,62 @@ public class Inventory<T extends Storable> {
      */
     public String toString() {
     	String result = "";
-    	for (T t : list)
+    	for (Storable storable : list)
     	{
-    		result += "\n" + t;
+    		result += "\n" + storable;
     	}
     	return result;
     }
     
     
     /**
-	 * @param t the given t
-	 * @return whether the inventory contains the given t
+	 * @param storable the given storable
+	 * @return whether the inventory contains the given storable
 	 */
-	public boolean contains(T t) {
-		return list.contains(t);
+	public boolean contains(Storable storable) {
+		return list.contains(storable);
 	}
 	
     
     /**
      * @param name the given name
-     * @return whether the inventory contains a t with the given name. Not case sensitive.
+     * @return whether the inventory contains a storable with the given name. Not case sensitive.
      */
     public boolean contains(String name) {
     	name = name.toLowerCase();
-    	boolean hasT = false;
-    	for (T t: getList()) {
-    		if (t.getName().toLowerCase().equals(name)) {
-    			hasT = true;
+    	boolean hasStorable = false;
+    	for (Storable storable: getList()) {
+    		if (storable.getName().toLowerCase().equals(name)) {
+    			hasStorable = true;
     		}
     	}
-    	return hasT;
+    	return hasStorable;
     }
     
     
     /**
-     * Get the index of the first occurrence of the t with the given name in the inventory or null if not found.
+     * Get the index of the first occurrence of the storable with the given name in the inventory or null if not found.
      * @param name the given name
-     * @return the index of selectedT
+     * @return the index of selectedStorable
      */
-    public T find(String name) {
-    	T selectedT = null;
-    	for (T t : getList()) {
-    		if (t.getName().equals(name)) {
-    			selectedT = t;
+    public Storable find(String name) {
+    	Storable selectedStorable = null;
+    	for (Storable storable : getList()) {
+    		if (storable.getName().equals(name)) {
+    			selectedStorable = storable;
     		}
     	}
-		return selectedT;
+		return selectedStorable;
     }
     
     
     /**
-     * Get the index of the given t in the inventory or -1 if not found.
-     * @param t the given t
-     * @return the index of t
+     * Get the index of the given storable in the inventory or -1 if not found.
+     * @param storable the given storable
+     * @return the index of storable
      */
-	public int indexOf(T t) {
-		return list.indexOf(t);
+	public int indexOf(Storable storable) {
+		return list.indexOf(storable);
 	}
 	
 	
@@ -303,8 +235,8 @@ public class Inventory<T extends Storable> {
 	public String view() {
 		String result = "";
 		int start = 1;
-    	for (T t : list) {
-    		result += String.format("%s: %s\n", start, t);
+    	for (Storable storable : list) {
+    		result += String.format("%s: %s\n", start, storable);
     		start++;
     	}
     	return result;

@@ -12,7 +12,7 @@ import main.*;
 class MonsterTest {
 
 	private GameEnvironment game;
-	private Inventory<Monster> myMonsters;
+	private MonsterInventory myMonsters;
 	private Monster monster;
 	
 	@BeforeEach
@@ -110,7 +110,7 @@ class MonsterTest {
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
 		//Blue sky
 		game.setBalance(monster.getCost());
-		game.getShop().setMonsters(new Inventory<Monster>(4));
+		game.getShop().setMonsters(new MonsterInventory(4, game));
 		game.getShop().getMonsters().add(monster);
 		monster.buy();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
@@ -135,7 +135,7 @@ class MonsterTest {
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException, StorableNotFoundException, InvalidValueException {
 		//Inventory full
 		game.setBalance(monster.getCost()*5);
-		game.getShop().setMonsters(new Inventory<Monster>(4));
+		game.getShop().setMonsters(new MonsterInventory(4, game));
 		for(int i = 0; i < 4; i++) {
 			game.getShop().getMonsters().add(monster);
 			monster.buy();
@@ -153,7 +153,7 @@ class MonsterTest {
 		//Blue sky
 		game.setBalance(monster.getCost());
 		Monster testMonster = new AverageJoe(game);
-		game.getShop().setMonsters(new Inventory<Monster>(4));
+		game.getShop().setMonsters(new MonsterInventory(4, game));
 		game.getShop().getMonsters().add(testMonster);
 		testMonster.buy();
 		testMonster.sell();
@@ -167,7 +167,7 @@ class MonsterTest {
 		//Multiple items of same type
 		game.setBalance(monster.getCost()*3);
 		Monster testMonster = new AverageJoe(game);
-		game.getShop().setMonsters(new Inventory<Monster>(4));
+		game.getShop().setMonsters(new MonsterInventory(4, game));
 		game.getShop().getMonsters().add(monster);
 		game.getShop().getMonsters().add(testMonster);
 		game.getShop().getMonsters().add(testMonster);

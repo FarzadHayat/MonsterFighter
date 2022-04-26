@@ -136,7 +136,7 @@ public class RandomEvent {
      */
     public String randomMonsterJoin() {
     	String event = "";
-		Monster randomMonster = game.getAllMonsters().random();
+		Monster randomMonster = (Monster) game.getAllMonsters().random();
 		double randomValue = rn.nextDouble(1);
 		
 		if(randomValue <= joinChance) {
@@ -157,15 +157,15 @@ public class RandomEvent {
      */
     public String runAllRandom() {
     	String events = "";
-		for(Monster monster: game.getMyMonsters().getList()) {
-			events += randomMonsterLevelUp(monster);
+		for(Storable monster: game.getMyMonsters().getList()) {
+			events += randomMonsterLevelUp((Monster) monster);
 		}
-		for(Monster monster: game.getMyMonsters().getList()) {
+		for(Storable monster: game.getMyMonsters().getList()) {
 		    if(game.getMyMonsters().size() <= 1) {
 		    	break;
 		    }
 		    try {		    	
-		    	events += randomMonsterLeave(monster);
+		    	events += randomMonsterLeave((Monster) monster);
 		    }
 		    catch (StorableNotFoundException e) {
 		    	e.printStackTrace();

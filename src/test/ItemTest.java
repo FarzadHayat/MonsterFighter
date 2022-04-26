@@ -12,7 +12,7 @@ import main.*;
 class ItemTest {
 	
 	private GameEnvironment game;
-	private Inventory<Item> myItems;
+	private ItemInventory myItems;
 	
 	
 	@BeforeEach

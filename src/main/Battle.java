@@ -10,8 +10,8 @@ public class Battle implements Storable {
     private Turn currentTurn = Turn.PLAYER;
     private Turn winner;
     private GameEnvironment game;
-    private Inventory<Monster> enemyMonsters;
-    private Inventory<Monster> playerMonsters;
+    private MonsterInventory enemyMonsters;
+    private MonsterInventory playerMonsters;
     
     
     /** 
@@ -26,21 +26,7 @@ public class Battle implements Storable {
     public Battle (GameEnvironment game) {
     	this.game = game;
     	playerMonsters = game.getMyMonsters();
-    	enemyMonsters = new Inventory<Monster>(4);
-    };
-    
-    
-    /**
-     * Create a new Battle object.
-     * Set the value of game to the given GameEnvironment object.
-     * Set the value of enemyMonsters to the given Inventory object.
-     * @param game the given GameEnvironment object
-     * @param monsterInventory the given Monster Inventory
-     */
-    public Battle (GameEnvironment game, Inventory<Monster> monsterInventory) {
-    	this.game = game;
-    	playerMonsters = game.getMyMonsters();
-    	enemyMonsters = monsterInventory;
+    	enemyMonsters = new MonsterInventory(4, game);
     };
     
 
@@ -88,7 +74,7 @@ public class Battle implements Storable {
      * Get the value of enemyMonsters
 	 * @return the value of enemyMonsters
 	 */
-	public Inventory<Monster> getEnemyMonsters() {
+	public MonsterInventory getEnemyMonsters() {
 		return enemyMonsters;
 	}
 
@@ -97,7 +83,7 @@ public class Battle implements Storable {
 	 * Set the value of enemyMonsters
 	 * @param enemyMonsters the new value of enemyMonsters
 	 */
-	public void setEnemyMonsters(Inventory<Monster> enemyMonsters) {
+	public void setEnemyMonsters(MonsterInventory enemyMonsters) {
 		this.enemyMonsters = enemyMonsters;
 	}
 
@@ -106,7 +92,7 @@ public class Battle implements Storable {
 	 * Get the value of playerMonsters
 	 * @return the value of playerMonsters
 	 */
-	public Inventory<Monster> getPlayerMonsters() {
+	public MonsterInventory getPlayerMonsters() {
 		return playerMonsters;
 	}
 
@@ -115,7 +101,7 @@ public class Battle implements Storable {
 	 * Set the value of playerMonsters
 	 * @param playerMonsters the new value of playerMonsters
 	 */
-	public void setPlayerMonsters(Inventory<Monster> playerMonsters) {
+	public void setPlayerMonsters(MonsterInventory playerMonsters) {
 		this.playerMonsters = playerMonsters;
 	}
 
@@ -130,14 +116,14 @@ public class Battle implements Storable {
 	 * @param inventory the given Monster Inventory
 	 * @return the randomly selected monster
 	 */
-	public Monster random(Inventory<Monster> inventory) {
+	public Monster random(MonsterInventory inventory) {
 		Random random = new Random();
     	boolean found = false;
     	Monster monster = null;
     	
     	while (!found) {
     		int index = random.nextInt(inventory.size());
-    		monster = inventory.get(index);
+    		monster = (Monster) inventory.get(index);
     		if (!monster.getIsFainted()) {
     			found = true;
     		}
@@ -155,7 +141,7 @@ public class Battle implements Storable {
 		if (game.getMyMonsters().isEmpty()) {
     		throw new StorableNotFoundException("Battle not available: Player has no monsters! Try again...");
     	}
-		if (Inventory.allFainted(game.getMyMonsters())) {
+		if (game.getMyMonsters().allFainted()) {
     		throw new StorableNotFoundException("Battle not available: Player monsters are all fainted! Try again...");
     	}
 	}
@@ -273,10 +259,10 @@ public class Battle implements Storable {
      */
     public String checkStatus() {
     	String result = "";
-    	if (Inventory.allFainted(playerMonsters)) {
+    	if (playerMonsters.allFainted()) {
     		result = lose();
     	}
-    	if (Inventory.allFainted(enemyMonsters)) {
+    	if (enemyMonsters.allFainted()) {
     		result = win();
     	}
     	return result;
@@ -352,5 +338,16 @@ public class Battle implements Storable {
 	public String getName() {
 		return null;
 	}
+	
+	
+	/**
+     * @return battle
+     */
+    public Battle clone() {
+    	Battle battle = new Battle(game);
+    	battle.getEnemyMonsters().randomise();
+    	return battle;
+    }
+    
 
 }

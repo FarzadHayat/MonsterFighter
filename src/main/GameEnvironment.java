@@ -11,14 +11,14 @@ public class GameEnvironment {
     private int day = 1;
     private Difficulty difficulty = Difficulty.EASY;
     
-    private Inventory<Monster> myMonsters;
-    private Inventory<Item> myItems;
+    private MonsterInventory myMonsters;
+    private ItemInventory myItems;
     
-    private Inventory<Monster> allMonsters;
-    private Inventory<Item> allItems;
+    private MonsterInventory allMonsters;
+    private ItemInventory allItems;
     
     private Shop shop;
-    private Inventory<Battle> battles;
+    private BattleInventory battles;
     
     private RandomEvent randomEvent;
     private Score scoreSystem;
@@ -166,7 +166,7 @@ public class GameEnvironment {
      * Get the value of myMonsters
      * @return the value of myMonsters
      */
-    public Inventory<Monster> getMyMonsters () {
+    public MonsterInventory getMyMonsters () {
         return myMonsters;
     }
     
@@ -175,7 +175,7 @@ public class GameEnvironment {
      * Set the value of myMonsters
      * @param myMonsters the new value of myMonsters
      */
-    public void setMyMonsters (Inventory<Monster> myMonsters) {
+    public void setMyMonsters (MonsterInventory myMonsters) {
     	this.myMonsters = myMonsters;
     }
 
@@ -184,7 +184,7 @@ public class GameEnvironment {
      * Get the value of myItems
      * @return the value of myItems
      */
-    public Inventory<Item> getMyItems () {
+    public ItemInventory getMyItems () {
         return myItems;
     }
     
@@ -193,7 +193,7 @@ public class GameEnvironment {
      * Set the value of myItems
      * @param myItems the new value of myItems
      */
-    public void setMyItems (Inventory<Item> myItems) {
+    public void setMyItems (ItemInventory myItems) {
     	this.myItems = myItems;
     }
 
@@ -202,7 +202,7 @@ public class GameEnvironment {
 	 * Get the value of allMonsters
 	 * @return the value of allMonsters
 	 */
-	public Inventory<Monster> getAllMonsters() {
+	public MonsterInventory getAllMonsters() {
 		return allMonsters;
 	}
 
@@ -211,7 +211,7 @@ public class GameEnvironment {
 	 * Set the value of allMonsters
 	 * @param allMonsters the new value of allMonsters
 	 */
-	public void setAllMonsters(Inventory<Monster> allMonsters) {
+	public void setAllMonsters(MonsterInventory allMonsters) {
 		this.allMonsters = allMonsters;
 	}
 
@@ -220,7 +220,7 @@ public class GameEnvironment {
 	 * Get the value of allItems
 	 * @return the value of allItems
 	 */
-	public Inventory<Item> getAllItems() {
+	public ItemInventory getAllItems() {
 		return allItems;
 	}
 	
@@ -229,7 +229,7 @@ public class GameEnvironment {
 	 * Set the value of allItems
 	 * @param allItems the new value of allItems
 	 */
-	public void setAllItems(Inventory<Item> allItems) {
+	public void setAllItems(ItemInventory allItems) {
 		this.allItems = allItems;
 	}
 	
@@ -256,7 +256,7 @@ public class GameEnvironment {
 	 * Get the value of battles
 	 * @return the value of battles
 	 */
-	public Inventory<Battle> getBattles() {
+	public BattleInventory getBattles() {
 		return battles;
 	}
 
@@ -265,7 +265,7 @@ public class GameEnvironment {
 	 * Set the value of battles
 	 * @param battles the new value of battles
 	 */
-	public void setBattles(Inventory<Battle> battles) {
+	public void setBattles(BattleInventory battles) {
 		this.battles = battles;
 	}
 	
@@ -357,7 +357,7 @@ public class GameEnvironment {
     	}
     	
     	try {    		
-    		allMonsters = new Inventory<Monster>(6);
+    		allMonsters = new MonsterInventory(6, this);
     		allMonsters.add(new AverageJoe(this));
     		allMonsters.add(new Chunky(this));
     		allMonsters.add(new Lanky(this));
@@ -365,18 +365,18 @@ public class GameEnvironment {
     		allMonsters.add(new Raka(this));
     		allMonsters.add(new Zap(this));
     		
-    		allItems = new Inventory<Item>(4);
+    		allItems = new ItemInventory(4, this);
     		allItems.add(new HealUp(this));
     		allItems.add(new IncreaseDamage(this));
     		allItems.add(new IncreaseCritRate(this));
     		allItems.add(new LevelUp(this));
     		
-    		myMonsters = new Inventory<Monster>(4);
-    		myItems = new Inventory<Item>(4);
+    		myMonsters = new MonsterInventory(4, this);
+    		myItems = new ItemInventory(4, this);
     		shop = new Shop(this);
     		shop.randomise();
-    		battles = new Inventory<Battle>(5);
-    		Inventory.randomiseBattles(battles, this);
+    		battles = new BattleInventory(5, this);
+    		battles.randomise();
     		randomEvent = new RandomEvent(this);
     	}
     	catch (InventoryFullException e) {
@@ -400,9 +400,9 @@ public class GameEnvironment {
     	if (!getIsFinished()) {
     		setDay(getDay() + 1);
     		getShop().randomise();
-    		Inventory.randomiseBattles(battles, this);
+    		battles.randomise();
 			result += randomEvent.runAllRandom();
-    		Inventory.healAll(myMonsters);
+    		myMonsters.healAll();
     		scoreSystem.resetDayBattles();
     		result += "The shop has been randomised.\n";
     		result +="The battles have been randomised.\n";
@@ -419,8 +419,8 @@ public class GameEnvironment {
     public void checkStatus() {
     	boolean stalemate = true;
     	if (myMonsters.size() == 0) {
-    		for (Monster monster : getShop().getMonsters().getList()) {
-    			if (balance >= monster.getCost()) {
+    		for (Storable monster : getShop().getMonsters().getList()) {
+    			if (balance >= ((Monster) monster).getCost()) {
     				stalemate = false;
     			}
     		}
