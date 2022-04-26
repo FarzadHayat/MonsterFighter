@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Random;
+
 public class Battle {
 	
     /** 
@@ -19,12 +21,14 @@ public class Battle {
     /**
      * Create a new Battle object.
      * Set the value of game to the given GameEnvironment object.
+     * Randomize the enemy monsters inventory.
      * @param game the given GameEnvironment object
      */
     public Battle (GameEnvironment game) {
     	this.game = game;
     	player = game.getPlayer();
-    	monsters = new MonsterInventory(4, game);
+    	monsters = new MonsterInventory(inventorySize(), game);
+    	monsters.randomise();
     };
     
 
@@ -263,6 +267,15 @@ public class Battle {
     	result += monsters;
     	game.getScoreSystem().addBattlesLost();
     	return result;
+    }
+    
+    
+    public int inventorySize() {
+    	int minSize = Math.max(1, player.getMonsters().getList().size());
+    	int maxsize = player.getMonsters().getMaxSize();
+    	Random random = new Random();
+    	int size = random.nextInt(minSize, maxsize + 1);
+    	return size;
     }
     
     

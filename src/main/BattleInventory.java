@@ -136,17 +136,6 @@ public class BattleInventory {
 	public boolean isEmpty() {
 		return list.size() == 0;
 	}
-    
-	/**
-	 * Get a random non fainted battle from the inventory.
-	 * @return the randomly selected battle
-	 */
-	public Battle random() {
-		Random random = new Random();
-		int index = random.nextInt(list.size());
-		Battle battle = list.get(index);
-		return battle;
-	}
 	
 	
 	/**
@@ -157,7 +146,6 @@ public class BattleInventory {
     	ArrayList<Battle> newList = new ArrayList<Battle>(maxSize);
     	for (int i = 0; i < maxSize; i++) {
     		Battle battle = new Battle(game);
-    		battle.getEnemyMonsters().randomise();
     		newList.add(battle);
     	}
     	setList(newList);

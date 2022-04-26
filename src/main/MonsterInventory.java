@@ -144,7 +144,7 @@ public class MonsterInventory {
     public boolean allFainted() {
     	boolean fainted = true;
     	for (Monster monster : getList()) {
-    		if (!((Monster) monster).getIsFainted()) {
+    		if (!monster.getIsFainted()) {
     			fainted = false;
     		}
     	}
@@ -157,7 +157,7 @@ public class MonsterInventory {
      */
     public void healAll() {
     	for (Monster monster : getList()) {
-    		((Monster) monster).heal();
+    		monster.heal();
     	}
     }
     

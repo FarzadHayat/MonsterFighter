@@ -37,7 +37,6 @@ class InventoryTest {
 		
 		// Blue sky
 		Battle battle = new Battle(game);
-		battle.getEnemyMonsters().randomise();
 		battles.add(battle);
 	}
 	
@@ -70,7 +69,6 @@ class InventoryTest {
 		
 		// Inventory full
 		Battle battle = new Battle(game);
-		battle.getEnemyMonsters().randomise();
 		for (int i = 0; i < battles.getMaxSize(); i++) {
 			battles.add(battle);
 		}

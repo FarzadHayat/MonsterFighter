@@ -172,14 +172,14 @@ public class RandomEvent {
     public String runAllRandom() {
     	String events = "";
 		for(Monster monster: player.getMonsters().getList()) {
-			events += randomMonsterLevelUp((Monster) monster);
+			events += randomMonsterLevelUp(monster);
 		}
 		for(Monster monster: player.getMonsters().getList()) {
 		    if(player.getMonsters().getList().size() <= 1) {
 		    	break;
 		    }
 		    try {		    	
-		    	events += randomMonsterLeave((Monster) monster);
+		    	events += randomMonsterLeave(monster);
 		    }
 		    catch (NotFoundException e) {
 		    	e.printStackTrace();

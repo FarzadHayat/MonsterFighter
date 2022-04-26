@@ -350,7 +350,7 @@ public class GameEnvironment {
     	boolean stalemate = true;
     	if (player.getMonsters().getList().size() == 0) {
     		for (Monster monster : getShop().getMonsters().getList()) {
-    			if (player.getBalance() >= ((Monster) monster).getCost()) {
+    			if (player.getBalance() >= monster.getCost()) {
     				stalemate = false;
     			}
     		}
