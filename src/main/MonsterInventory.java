@@ -13,7 +13,6 @@ public class MonsterInventory {
     protected GameEnvironment game;
     protected Player player;
 	
-    private boolean levelUpBefore;
     
     
     /**
@@ -207,14 +206,26 @@ public class MonsterInventory {
     public void levelUpOnDay() {
     	int maxLevel = random().getMaxLevel();
     	int dayToLevelUp = game.getNumDays()/maxLevel;
-    	int loopInt = game.getDay()/dayToLevelUp;
+    	int timesToLevelUp = 0;
     	
+    	//If monster needs to level up every day, timesToLevelUp is reduced by one to ensure that monsters
+    	//are not leveling at on day 1 
     	if(dayToLevelUp == 1) {
-    		loopInt -= 1;
+    		timesToLevelUp -= 1;
     	}
-    	if(game.getDay() % dayToLevelUp == 0 || levelUpBefore){
+    	//If max level is greater than number of days, monster will level up as if dayToLevelUp is 1 
+    	//Sets timesToLevelUp like the above if statement would 
+    	else if(dayToLevelUp == 0) {
+    		dayToLevelUp += 1;
+    		timesToLevelUp -= 1;
+    	}
+    	
+    	//Calculate and adds to the final timesToLevelUp 
+    	timesToLevelUp += game.getDay()/dayToLevelUp;
+    	
+    	if(game.getDay() % dayToLevelUp == 0){
     		for(Monster monster: list) {
-    			for(int i = 0; i < loopInt; i++) {
+    			for(int i = 0; i < timesToLevelUp; i++) {
     				try {
     					monster.levelUp();
     				}
