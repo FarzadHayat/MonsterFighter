@@ -704,10 +704,9 @@ public class CommandLine {
     	System.out.println(String.format("Total battles: %s won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
     			game.getScoreSystem().getTotalBattlesWon() + game.getScoreSystem().getTotalBattlesLost()));
     	if (game.getIsFinished()) {
-    		System.out.println(String.format("\nFinal score: %s (score) + %s (bonus) = %s", 
-					game.getScoreSystem().getTotalScore(), 
-					game.getScoreSystem().scoreBonus(), 
-					game.getScoreSystem().finalScore()));
+    		System.out.println(String.format("\nFinal score: %s (+%s bonus)", 
+					game.getScoreSystem().finalScore(), 
+					game.getScoreSystem().scoreBonus()));
     		System.out.println("\n<<<<< Game over! >>>>>");
     	}
     }

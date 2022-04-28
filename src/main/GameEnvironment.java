@@ -234,7 +234,7 @@ public class GameEnvironment {
 	 * Set the value of isFinished
 	 * @param isFinished the new value of isFinished
 	 */
-	public void setFinished(boolean isFinished) {
+	public void setIsFinished(boolean isFinished) {
 		this.isFinished = isFinished;
 	}
 	
@@ -359,7 +359,7 @@ public class GameEnvironment {
     	else {
     		stalemate = false;
     	}
-    	setFinished(day >= numDays || stalemate);
+    	setIsFinished(day >= numDays || stalemate);
     }
 
 }
