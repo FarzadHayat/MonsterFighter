@@ -695,13 +695,13 @@ public class CommandLine {
     	System.out.println("\n===== PLAYER STATS =====\n");
     	System.out.println("Balance: " + player.getBalance());
     	System.out.println("Player name: " + player.getName());
-    	System.out.println(String.format("Day %s out of %s", game.getDay(), game.getNumDays()));
+    	System.out.println(String.format("Day: %s out of %s", game.getDay(), game.getNumDays()));
     	System.out.println("Difficulty: " + game.getDifficulty());
     	System.out.println("Today score: " + game.getScoreSystem().getDayScore());
     	System.out.println("Total score: " + game.getScoreSystem().getTotalScore());
-    	System.out.println(String.format("Today: %s battles won out of %s", game.getScoreSystem().getDayBattlesWon(), 
+    	System.out.println(String.format("Today battles: %s won out of %s", game.getScoreSystem().getDayBattlesWon(), 
     			game.getScoreSystem().getDayBattlesWon() + game.getScoreSystem().getDayBattlesLost()));
-    	System.out.println(String.format("Total: %s battles won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
+    	System.out.println(String.format("Total battles: %s won out of %s", game.getScoreSystem().getTotalBattlesWon(), 
     			game.getScoreSystem().getTotalBattlesWon() + game.getScoreSystem().getTotalBattlesLost()));
     	if (game.getIsFinished()) {
     		System.out.println(String.format("\nFinal score: %s (score) + %s (bonus) = %s", 
