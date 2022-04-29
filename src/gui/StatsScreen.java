@@ -60,6 +60,7 @@ public class StatsScreen {
 		JButton backButton = new JButton("Back");
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				gui.launchHomeScreen();
 				finishedWindow();
 			}
 		});
