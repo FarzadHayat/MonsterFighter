@@ -115,6 +115,9 @@ public class HomeScreen {
 		int yPos = 10;
 		for (Monster monster : monsters.getList()) {
 			JButton monsterButton = new JButton(monster.getName());
+			if (monster.getName().length() > 10) {				
+				monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
+			}
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					gui.launchMonsterScreen(monster);
@@ -135,6 +138,9 @@ public class HomeScreen {
 		int xPos = 10;
 		for (Item item : items.getList()) {
 			JButton itemButton = new JButton(item.getName());
+			if (item.getName().length() > 10) {
+				itemButton.setText("<html><center>" + item.getName().replaceFirst(" ", "<br>") + "</centre></html>");
+			}
 			itemButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					gui.launchItemScreen(item);

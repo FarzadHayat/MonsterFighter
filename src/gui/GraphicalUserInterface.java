@@ -71,7 +71,7 @@ public class GraphicalUserInterface {
 			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
 			gui.getGame().getPlayer().getMonsters().add(new Lanky(gui.getGame()));
 			gui.getGame().getPlayer().getMonsters().add(new Shanny(gui.getGame()));
-			gui.getGame().getPlayer().getMonsters().add(new Zap(gui.getGame()));
+			gui.getGame().getPlayer().getMonsters().add(new AverageJoe(gui.getGame()));
 			
 			gui.getGame().getPlayer().getItems().add(new LevelUp(gui.getGame()));
 			gui.getGame().getPlayer().getItems().add(new HealUp(gui.getGame()));
