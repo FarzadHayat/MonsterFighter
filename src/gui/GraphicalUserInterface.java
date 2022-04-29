@@ -70,6 +70,30 @@ public class GraphicalUserInterface {
 		itemWindow.closeWindow();
 	}
 	
+	public void launchSetupScreen() {
+		new SetupScreen(this);
+	}
+	
+	public void closeSetupScreen(SetupScreen setupWindow) {
+		setupWindow.closeWindow();
+	}
+	
+	public void launchStartScreen() {
+		new StartScreen(this);
+	}
+	
+	public void closeStartScreen(StartScreen startWindow) {
+		startWindow.closeWindow();
+	}
+	
+	public void launchStartingMonsterScreen() {
+		new StartingMonsterScreen(this);
+	}
+	
+	public void closeStartingMonsterScreen(StartingMonsterScreen startMonsterWindow) {
+		startMonsterWindow.closeWindow();
+	}
+	
 	public static void main(String[] args) {
 		GraphicalUserInterface gui = new GraphicalUserInterface();
 		gui.setGame(new GameEnvironment());
@@ -105,6 +129,7 @@ public class GraphicalUserInterface {
 
 	public void launchSleepAlert() {
 		// sleep and show overnight commentary
+		AlertBox.infoBox(game.sleep(), "Good morning!");
 	}
 
 }
