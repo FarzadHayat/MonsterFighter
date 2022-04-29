@@ -85,7 +85,7 @@ public class HomeScreen {
 		shopButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		generalPanel.add(shopButton);
 		
-		JButton battleButton = new JButton("Battle");
+		JButton battleButton = new JButton("Battles");
 		battleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.launchBattlesScreen();

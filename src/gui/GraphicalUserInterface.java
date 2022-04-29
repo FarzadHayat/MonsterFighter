@@ -45,6 +45,14 @@ public class GraphicalUserInterface {
 	public void closeBattlesScreen(BattlesScreen battlesWindow) {
 		battlesWindow.closeWindow();
 	}
+
+	public void launchBattleScreen(Battle battle) {
+		new BattleScreen(this, battle);
+	}
+	
+	public void closeBattleScreen(BattleScreen battleWindow) {
+		battleWindow.closeWindow();
+	}
 	
 	public void launchMonsterScreen(Monster monster) {
 		new MonsterScreen(this, monster);
@@ -68,15 +76,26 @@ public class GraphicalUserInterface {
 		
 		// testing inventories
 		try {
-			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
-			gui.getGame().getPlayer().getMonsters().add(new Lanky(gui.getGame()));
-			gui.getGame().getPlayer().getMonsters().add(new Shanny(gui.getGame()));
-			gui.getGame().getPlayer().getMonsters().add(new AverageJoe(gui.getGame()));
+			gui.getGame().setAllMonsters(new MonsterInventory(6, gui.getGame()));
+			gui.getGame().getAllMonsters().add(new Chunky(gui.getGame()));
+			gui.getGame().getAllMonsters().add(new Lanky(gui.getGame()));
+			gui.getGame().getAllMonsters().add(new Shanny(gui.getGame()));
+			gui.getGame().getAllMonsters().add(new AverageJoe(gui.getGame()));
+			gui.getGame().getAllMonsters().add(new Zap(gui.getGame()));
+			gui.getGame().getAllMonsters().add(new Raka(gui.getGame()));
 			
-			gui.getGame().getPlayer().getItems().add(new LevelUp(gui.getGame()));
-			gui.getGame().getPlayer().getItems().add(new HealUp(gui.getGame()));
-			gui.getGame().getPlayer().getItems().add(new IncreaseCritRate(gui.getGame()));
-			gui.getGame().getPlayer().getItems().add(new IncreaseDamage(gui.getGame()));
+			gui.getGame().setAllItems(new ItemInventory(4, gui.getGame()));
+			gui.getGame().getAllItems().add(new LevelUp(gui.getGame()));
+			gui.getGame().getAllItems().add(new HealUp(gui.getGame()));
+			gui.getGame().getAllItems().add(new IncreaseCritRate(gui.getGame()));
+			gui.getGame().getAllItems().add(new IncreaseDamage(gui.getGame()));
+			
+			gui.getGame().getPlayer().getMonsters().randomise();
+			
+			gui.getGame().getPlayer().getItems().randomise();
+			
+			gui.getGame().setBattles(new BattleInventory(5, gui.getGame()));
+			gui.getGame().getBattles().randomise();
 		} catch (InventoryFullException e1) {
 			e1.printStackTrace();
 		}
