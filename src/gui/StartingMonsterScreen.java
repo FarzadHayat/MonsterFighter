@@ -6,6 +6,8 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 
 import main.*;
+
+import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -67,7 +69,6 @@ public class StartingMonsterScreen {
 		monstersPanel.setBounds(10, 113, 390, 428);
 		window.getContentPane().add(monstersPanel);
 				
-		
 		JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(null);
 		statsPanel.setBounds(410, 113, 366, 428);
@@ -150,103 +151,38 @@ public class StartingMonsterScreen {
 		btnNext.setBounds(237, 380, 119, 44);
 		statsPanel.add(btnNext);
 		
-		JButton monster1Button = new JButton("");
-		monster1Button.setText(allMonsters.getList().get(0).getName());
-		monster1Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selected = allMonsters.getList().get(0);
-				lblHealthValue.setText(""+ selected.getHealth());
-				lblDamageValue.setText(""+ selected.getDamage());
-				lblLevelValue.setText(""+ selected.getLevel());
-				lblHealValue.setText(""+ selected.getHealAmount());
-				lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
+		int yPos = 20;
+		int xPos = 10;
+		int numButton = 1;
+		for(Monster monster: allMonsters.getList()) {
+			JButton monsterButton = new JButton(monster.getName());
+			monsterButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selected = monster;
+					lblHealthValue.setText(""+ selected.getHealth());
+					lblDamageValue.setText(""+ selected.getDamage());
+					lblLevelValue.setText(""+ selected.getLevel());
+					lblHealValue.setText(""+ selected.getHealAmount());
+					lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
+				}
+			});
+			monsterButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+			monsterButton.setBounds(xPos, yPos, 160, 90);
+			monstersPanel.add(monsterButton);
+			numButton += 1;
+			yPos += 140;
+			if(numButton == 4) {
+				yPos = 20;
+				xPos += 200;
 			}
-		});
-		monster1Button.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		monster1Button.setBounds(10, 21, 160, 90);
-		monstersPanel.add(monster1Button);
+		}
 		
-		JButton monster2Button = new JButton("");
-		monster2Button.setText(allMonsters.getList().get(1).getName());
-		monster2Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selected = allMonsters.getList().get(1);
-				lblHealthValue.setText(""+ selected.getHealth());
-				lblDamageValue.setText(""+ selected.getDamage());
-				lblLevelValue.setText(""+ selected.getLevel());
-				lblHealValue.setText(""+ selected.getHealAmount());
-				lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
-			}
-		});
-		monster2Button.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		monster2Button.setBounds(10, 163, 160, 90);
-		monstersPanel.add(monster2Button);
-		
-		JButton monster3Button = new JButton("");
-		monster3Button.setText(allMonsters.getList().get(2).getName());
-		monster3Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selected = allMonsters.getList().get(2);
-				lblHealthValue.setText(""+ selected.getHealth());
-				lblDamageValue.setText(""+ selected.getDamage());
-				lblLevelValue.setText(""+ selected.getLevel());
-				lblHealValue.setText(""+ selected.getHealAmount());
-				lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
-			}
-		});
-		monster3Button.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		monster3Button.setBounds(10, 312, 160, 90);
-		monstersPanel.add(monster3Button);
-		
-		JButton monster4Button = new JButton("");
-		monster4Button.setText(allMonsters.getList().get(3).getName());
-		monster4Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selected = allMonsters.getList().get(3);
-				lblHealthValue.setText(""+ selected.getHealth());
-				lblDamageValue.setText(""+ selected.getDamage());
-				lblLevelValue.setText(""+ selected.getLevel());
-				lblHealValue.setText(""+ selected.getHealAmount());
-				lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
-			}
-		});
-		monster4Button.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		monster4Button.setBounds(212, 21, 160, 90);
-		monstersPanel.add(monster4Button);
-		
-		JButton monster5Button = new JButton("");
-		monster5Button.setText(allMonsters.getList().get(4).getName());
-		monster5Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selected = allMonsters.getList().get(4);
-				lblHealthValue.setText(""+ selected.getHealth());
-				lblDamageValue.setText(""+ selected.getDamage());
-				lblLevelValue.setText(""+ selected.getLevel());
-				lblHealValue.setText(""+ selected.getHealAmount());
-				lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
-			}
-		});
-		monster5Button.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		monster5Button.setBounds(212, 163, 160, 90);
-		monstersPanel.add(monster5Button);
-		
-		JButton monster6Button = new JButton("");
-		monster6Button.setText(allMonsters.getList().get(5).getName());
-		monster6Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selected = allMonsters.getList().get(5);
-				lblHealthValue.setText(""+ selected.getHealth());
-				lblDamageValue.setText(""+ selected.getDamage());
-				lblLevelValue.setText(""+ selected.getLevel());
-				lblHealValue.setText(""+ selected.getHealAmount());
-				lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
-			}
-		});
-		monster6Button.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		monster6Button.setBounds(212, 312, 160, 90);
-		monstersPanel.add(monster6Button);
-
-
-		
+	}
+	
+	public static void main(String[]args) {
+		GraphicalUserInterface gui = new GraphicalUserInterface();
+		gui.setGame(new GameEnvironment());
+		gui.getGame().setupGame();
+		new StartingMonsterScreen(gui);
 	}
 }
