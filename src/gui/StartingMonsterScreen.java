@@ -25,6 +25,7 @@ public class StartingMonsterScreen {
 	private MonsterInventory allMonsters;
 	private Player player;
 	private Monster selected;
+	private JButton selectedButton;
 	
 	
 	public void closeWindow() {
@@ -159,6 +160,11 @@ public class StartingMonsterScreen {
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selected = monster;
+					if(selectedButton != null) {
+						selectedButton.setBackground(null);
+					}
+					selectedButton = monsterButton;
+					selectedButton.setBackground(Color.lightGray);
 					lblHealthValue.setText(""+ selected.getHealth());
 					lblDamageValue.setText(""+ selected.getDamage());
 					lblLevelValue.setText(""+ selected.getLevel());
