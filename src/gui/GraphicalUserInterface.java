@@ -124,7 +124,7 @@ public class GraphicalUserInterface {
 			e1.printStackTrace();
 		}
 		
-		gui.launchHomeScreen();
+		gui.launchStartScreen();
 	}
 
 	public void launchSleepAlert() {
