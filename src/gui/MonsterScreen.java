@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.Font;
@@ -77,11 +78,40 @@ public class MonsterScreen {
 		window.getContentPane().add(backButton);
 		
 		JButton btnRename = new JButton("Rename");
+		btnRename.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String result = (String)JOptionPane.showInputDialog(
+			               null,
+			               "Select monster name", 
+			               "Rename monster",            
+			               JOptionPane.PLAIN_MESSAGE,
+			               null,            
+			               null, 
+			               "Red"
+			            );
+			            if(result != null){
+			            	try {
+			            		monster.setName(result);
+			            		titleLabel.setText(monster.getName().toUpperCase());
+			            	}
+			            	catch(InvalidValueException error) {
+				            	JOptionPane.showMessageDialog(null, "Select a unique monster name (3 - 15 characters)\ncontaining no numbers or special characters", "ERROR: " + "Invalid name!", JOptionPane.INFORMATION_MESSAGE);
+			            	}
+			            }
+			            else if(result == null || (result != null && ("".equals(result)))) {
+			            	titleLabel.setText(monster.getName().toUpperCase());
+			            }
+			}
+		});
 		btnRename.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnRename.setBounds(631, 508, 119, 44);
 		window.getContentPane().add(btnRename);
 		
 		JButton btnSell = new JButton("Sell");
+		btnSell.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnSell.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnSell.setBounds(631, 453, 119, 44);
 		window.getContentPane().add(btnSell);
