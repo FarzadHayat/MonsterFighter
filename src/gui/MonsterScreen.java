@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import exceptions.InvalidValueException;
+
 import javax.swing.JButton;
 import java.awt.Font;
 
@@ -11,8 +14,6 @@ import main.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
-import javax.swing.JCheckBox;
-import javax.swing.JTextPane;
 import javax.swing.JProgressBar;
 import java.awt.Color;
 import javax.swing.JTextArea;
