@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import exceptions.InventoryFullException;
+import exceptions.NotFoundException;
 import main.*;
+import monsters.Chunky;
 
 class MonsterInventoryTest {
 	

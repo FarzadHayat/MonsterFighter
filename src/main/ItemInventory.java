@@ -2,6 +2,9 @@ package main;
 import java.util.ArrayList;
 import java.util.Random;
 
+import exceptions.InventoryFullException;
+import exceptions.NotFoundException;
+
 public class ItemInventory {
     
 	/**

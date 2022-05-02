@@ -1,5 +1,8 @@
 package main;
 
+import exceptions.InsufficientFundsException;
+import exceptions.InvalidValueException;
+
 public class Player {
 
 	/**

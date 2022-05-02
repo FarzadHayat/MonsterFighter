@@ -1,4 +1,7 @@
-package main;
+package items;
+
+import exceptions.NotFoundException;
+import main.*;
 
 public class IncreaseDamage extends Item {
     

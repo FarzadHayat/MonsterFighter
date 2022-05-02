@@ -5,7 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import exceptions.InventoryFullException;
+import exceptions.NotFoundException;
+import exceptions.StatMaxedOutException;
 import main.*;
+import monsters.Chunky;
+import monsters.Zap;
 
 class RandomEventTest {
 

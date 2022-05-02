@@ -22,6 +22,9 @@ import java.awt.EventQueue;
 
 import javax.swing.border.MatteBorder;
 import javax.swing.border.TitledBorder;
+
+import exceptions.InvalidValueException;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollBar;
 

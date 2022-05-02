@@ -1,4 +1,7 @@
-package main;
+package monsters;
+
+import exceptions.StatMaxedOutException;
+import main.*;
 
 public class Lanky extends Monster {
 	

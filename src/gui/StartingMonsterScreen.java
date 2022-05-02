@@ -3,6 +3,9 @@ package gui;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import exceptions.InventoryFullException;
+
 import java.awt.Font;
 
 import main.*;

@@ -2,6 +2,10 @@ package main;
 
 import java.util.Random;
 
+import exceptions.InvalidTargetException;
+import exceptions.InvalidValueException;
+import exceptions.NotFoundException;
+
 public class Battle {
 	
     /** 

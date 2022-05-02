@@ -1,5 +1,11 @@
 package main;
 
+import exceptions.InsufficientFundsException;
+import exceptions.InvalidValueException;
+import exceptions.InventoryFullException;
+import exceptions.NotFoundException;
+import exceptions.StatMaxedOutException;
+
 abstract public class Item implements Purchasable {
 
 	/**

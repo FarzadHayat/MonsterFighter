@@ -3,10 +3,15 @@ package gui;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import exceptions.InventoryFullException;
+import exceptions.NotFoundException;
+
 import java.awt.Font;
 import java.awt.Window;
 
 import main.*;
+import monsters.*;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
