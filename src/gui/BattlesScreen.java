@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 public class BattlesScreen {
 
@@ -25,8 +24,8 @@ public class BattlesScreen {
 	
 	private JButton selectedButton;
 	private Battle selectedBattle;
-	ArrayList<JLabel> statsLabels;
-	ArrayList<JLabel> statsLabelValues;
+	private ArrayList<JLabel> statsLabels;
+	private ArrayList<JLabel> statsLabelValues;
 	
 	public void closeWindow() {
 		window.dispose();
@@ -140,7 +139,7 @@ public class BattlesScreen {
 		window.getContentPane().add(statsPanel);
 		statsPanel.setLayout(null);
 		
-		JLabel statsLabel = new JLabel("<html><u>Stats</u></html>");
+		JLabel statsLabel = new JLabel("<html><u>Battle Stats</u></html>");
 		statsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		statsLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		statsLabel.setBounds(76, 11, 151, 40);

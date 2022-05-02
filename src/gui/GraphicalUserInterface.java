@@ -94,6 +94,14 @@ public class GraphicalUserInterface {
 		startMonsterWindow.closeWindow();
 	}
 	
+	public void launchFightScreen(Battle battle) {
+		new FightScreen(this, battle);
+	}
+	
+	public void closeFightScreen(FightScreen fightWindow) {
+		fightWindow.closeWindow();
+	}
+	
 	public static void main(String[] args) {
 		GraphicalUserInterface gui = new GraphicalUserInterface();
 		gui.setGame(new GameEnvironment());
