@@ -1,4 +1,8 @@
-package main;
+package monsters;
+
+import exceptions.InvalidTargetException;
+import exceptions.StatMaxedOutException;
+import main.*;
 
 public class Raka extends Monster {
 	

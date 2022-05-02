@@ -1,6 +1,12 @@
 package gui;
 
+import exceptions.InventoryFullException;
+import items.HealUp;
+import items.IncreaseCritRate;
+import items.IncreaseDamage;
+import items.LevelUp;
 import main.*;
+import monsters.*;
 
 public class GraphicalUserInterface {
 

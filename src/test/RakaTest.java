@@ -5,7 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import exceptions.InvalidTargetException;
+import exceptions.InvalidValueException;
+import exceptions.StatMaxedOutException;
 import main.*;
+import monsters.AverageJoe;
+import monsters.Raka;
 
 class RakaTest {
 

@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import exceptions.InsufficientFundsException;
+import exceptions.InvalidValueException;
+import exceptions.InventoryFullException;
+import exceptions.NotFoundException;
+import items.HealUp;
 import main.*;
 
 class ItemTest {

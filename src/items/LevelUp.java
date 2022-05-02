@@ -1,4 +1,8 @@
-package main;
+package items;
+
+import exceptions.NotFoundException;
+import exceptions.StatMaxedOutException;
+import main.*;
 
 public class LevelUp extends Item {
 	

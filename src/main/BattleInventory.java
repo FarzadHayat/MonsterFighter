@@ -1,6 +1,9 @@
 package main;
 import java.util.ArrayList;
 
+import exceptions.InventoryFullException;
+import exceptions.NotFoundException;
+
 public class BattleInventory {
     
 	/**

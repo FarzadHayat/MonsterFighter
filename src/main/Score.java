@@ -1,5 +1,7 @@
 package main;
 
+import exceptions.InvalidValueException;
+
 public class Score {
    
 	/**

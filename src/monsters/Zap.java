@@ -1,6 +1,9 @@
-package main;
+package monsters;
 
-public class Chunky extends Monster {
+import exceptions.StatMaxedOutException;
+import main.*;
+
+public class Zap extends Monster {
 	
 	/**
 	 * Fields
@@ -9,22 +12,23 @@ public class Chunky extends Monster {
 	/**
 	 * Default value for monster statistics 
 	 */
-	private static String defaultName = "Chunky";
+	private static String defaultName = "Zap";
 	private static String description = "";
-	private static int defaultMaxHealth = 200;
-	private static int defaultDamage = 10;
-	private static int defaultCost = 80;
+	private static int defaultMaxHealth = 80;
+	private static int defaultDamage = 20;
+	private static int defaultCost = 50;
 	private static int defaultHealAmount = (int) (0.2*defaultMaxHealth);
-	private static double defaultCritRate = 0.1;
+	private static double defaultCritRate = 0.5;
 	private static int level = 1;
 	
 	/**
 	 * Increment on statistics per level 
 	 */
-	private int levelUpHealth = (int)(0.2*getMaxHealth());
-	private int levelUpDamage = 5;
+	private int levelUpHealth = (int)(0.1*getMaxHealth());
+	private int levelUpDamage = 10;
 	private int levelUpCost = 10;
 	private int levelUpHealAmount = (int)(0.1*getMaxHealth());
+	private double levelUpCritRate = 0.2;
 	
 	
 	/**
@@ -32,10 +36,10 @@ public class Chunky extends Monster {
 	 */
 	
 	/**
-	 * Creates Chunky object by calling superclass constructor and passing in the default values
+	 * Creates Zap object by calling superclass constructor and passing in the default values
 	 * @param game given GameEnvironment object
 	 */
-    public Chunky(GameEnvironment game) {
+	public Zap(GameEnvironment game) {
     	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
     };
 
@@ -55,15 +59,17 @@ public class Chunky extends Monster {
     	setDamage(getDamage()+levelUpDamage);
     	setCost(getCost()+levelUpCost);
     	setHealAmount(getHealAmount()+levelUpHealAmount);
+    	double newCritRate = Math.round((getCritRate()+levelUpCritRate)*10.0)/ 10.0;
+    	setCritRate(newCritRate);
     	setHealth(getHealth()+levelUpHealth);
     }
     
     
     /**
-     * @return new Chunky instance
+     * @return new Zap instance
      */
     public Monster clone() {
-    	return new Chunky(game);
+    	return new Zap(game);
     }
 
 }

@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import exceptions.InventoryFullException;
+import items.LevelUp;
 import main.*;
+import monsters.Chunky;
 
 class InventoryTest {
 

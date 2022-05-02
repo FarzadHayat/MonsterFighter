@@ -1,5 +1,13 @@
 package main;
 
+import exceptions.InvalidValueException;
+import exceptions.InventoryFullException;
+import items.HealUp;
+import items.IncreaseCritRate;
+import items.IncreaseDamage;
+import items.LevelUp;
+import monsters.*;
+
 public class GameEnvironment {
 
 	/**

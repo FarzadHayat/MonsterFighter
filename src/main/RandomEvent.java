@@ -2,6 +2,10 @@ package main;
 
 import java.util.*;
 
+import exceptions.InventoryFullException;
+import exceptions.NotFoundException;
+import exceptions.StatMaxedOutException;
+
 public class RandomEvent {
     
 	/**
