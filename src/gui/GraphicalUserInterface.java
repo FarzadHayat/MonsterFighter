@@ -143,7 +143,14 @@ public class GraphicalUserInterface {
 
 	public void launchSleepAlert() {
 		// sleep and show overnight commentary
-		AlertBox.infoBox(game.sleep(), "Good morning!");
+		String events = game.sleep();
+		if (game.getIsFinished()) {
+			AlertBox.infoBox("GAME OVER!", "Game over");
+			launchStatsScreen();
+		}
+		else {
+			AlertBox.infoBox(events, "Good morning!");
+		}
 	}
 
 }

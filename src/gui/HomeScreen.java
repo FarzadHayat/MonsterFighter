@@ -63,6 +63,10 @@ public class HomeScreen {
 		sleepButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.launchSleepAlert();
+				if (!game.getIsFinished()) {
+					gui.launchHomeScreen();
+				}
+				finishedWindow();				
 			}
 		});
 		sleepButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -106,7 +110,7 @@ public class HomeScreen {
 		statsButton.setBounds(30, 200, 140, 50);
 		statsButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		generalPanel.add(statsButton);
-		
+
 		JPanel monstersPanel = new JPanel();
 		monstersPanel.setBounds(0, 20, 180, 410);
 		window.getContentPane().add(monstersPanel);

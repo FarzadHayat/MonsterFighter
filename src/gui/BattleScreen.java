@@ -185,7 +185,7 @@ public class BattleScreen {
 					finishedWindow();
 				}
 				else {
-					JOptionPane.showMessageDialog(window, "You don't have any non fainted monsters in your team!", "Message: Monster Inventory empty", JOptionPane.INFORMATION_MESSAGE);
+					AlertBox.infoBox("You don't have any non fainted monsters in your team!", "Team empty");
 				}
 			}
 		});
