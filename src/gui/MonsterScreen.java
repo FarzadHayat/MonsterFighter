@@ -10,6 +10,11 @@ import main.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
+import javax.swing.JCheckBox;
+import javax.swing.JTextPane;
+import javax.swing.JProgressBar;
+import java.awt.Color;
+import javax.swing.JTextArea;
 
 public class MonsterScreen {
 
@@ -70,5 +75,114 @@ public class MonsterScreen {
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		backButton.setBounds(650, 30, 100, 30);
 		window.getContentPane().add(backButton);
+		
+		JButton btnRename = new JButton("Rename");
+		btnRename.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnRename.setBounds(631, 508, 119, 44);
+		window.getContentPane().add(btnRename);
+		
+		JButton btnSell = new JButton("Sell");
+		btnSell.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnSell.setBounds(631, 453, 119, 44);
+		window.getContentPane().add(btnSell);
+		
+		JPanel statsPanel = new JPanel();
+		statsPanel.setLayout(null);
+		statsPanel.setBounds(23, 98, 366, 428);
+		window.getContentPane().add(statsPanel);
+		
+		JLabel lblStats = new JLabel("<html><u>Stats</u></html>");
+		lblStats.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStats.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblStats.setBounds(76, 11, 151, 40);
+		statsPanel.add(lblStats);
+		
+		JLabel lblHealth = new JLabel("Health :");
+		lblHealth.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHealth.setBounds(10, 76, 121, 40);
+		statsPanel.add(lblHealth);
+		
+		JLabel lblDamage = new JLabel("Damage :");
+		lblDamage.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDamage.setBounds(10, 137, 121, 40);
+		statsPanel.add(lblDamage);
+		
+		JLabel lblLevel = new JLabel("Level :");
+		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblLevel.setBounds(10, 202, 121, 40);
+		statsPanel.add(lblLevel);
+		
+		JLabel lblHealAmount = new JLabel("Heal amount :");
+		lblHealAmount.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHealAmount.setBounds(10, 260, 136, 40);
+		statsPanel.add(lblHealAmount);
+		
+		JLabel lblCritRate = new JLabel("Critical rate :");
+		lblCritRate.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCritRate.setBounds(10, 320, 121, 40);
+		statsPanel.add(lblCritRate);
+		
+		JLabel lblDamageValue = new JLabel("");
+		lblDamageValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDamageValue.setBounds(193, 135, 121, 40);
+		statsPanel.add(lblDamageValue);
+		
+		JLabel lblLevelValue = new JLabel("");
+		lblLevelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblLevelValue.setBounds(193, 200, 121, 40);
+		statsPanel.add(lblLevelValue);
+		
+		JLabel lblHealValue = new JLabel("");
+		lblHealValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHealValue.setBounds(193, 260, 121, 40);
+		statsPanel.add(lblHealValue);
+		
+		JLabel lblCritValue = new JLabel("");
+		lblCritValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCritValue.setBounds(193, 320, 121, 40);
+		statsPanel.add(lblCritValue);
+		
+		JProgressBar healthBar = new JProgressBar();
+		healthBar.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		healthBar.setBackground(Color.LIGHT_GRAY);
+		healthBar.setForeground(Color.RED);
+		healthBar.setStringPainted(true);
+		healthBar.setBounds(193, 77, 163, 35);
+		statsPanel.add(healthBar);
+		healthBar.setMaximum(monster.getMaxHealth());
+		healthBar.setValue(monster.getHealth());
+		
+		JLabel lblFainted = new JLabel("Status :");
+		lblFainted.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblFainted.setBounds(10, 377, 121, 40);
+		statsPanel.add(lblFainted);
+		
+		JLabel lblStatusValue = new JLabel("");
+		lblStatusValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblStatusValue.setBounds(193, 377, 121, 40);
+		statsPanel.add(lblStatusValue);
+		
+		JTextArea txtDescription = new JTextArea();
+		txtDescription.setWrapStyleWord(true);
+		txtDescription.setEditable(false);
+		txtDescription.setLineWrap(true);
+		txtDescription.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtDescription.setText(monster.getDescription());
+		txtDescription.setBackground(null);
+		txtDescription.setBounds(425, 98, 325, 294);
+		window.getContentPane().add(txtDescription);
+		
+		lblDamageValue.setText(""+ monster.getDamage());
+		lblLevelValue.setText(""+ monster.getLevel());
+		lblHealValue.setText(""+ monster.getHealAmount());
+		lblCritValue.setText(""+ (int)(monster.getCritRate() * 100 )+ "%");
+		String status;
+		if(monster.getIsFainted()) {
+			status = "Fainted";
+		}
+		else {
+			status = "Alive";
+		}
+		lblStatusValue.setText(status);
 	}
 }
