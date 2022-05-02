@@ -20,7 +20,6 @@ public class BattleScreen {
 	private JFrame window;
 	private GraphicalUserInterface gui;
 	
-	private GameEnvironment game;
 	private Battle battle;
 	private MonsterInventory monsters;
 	
@@ -51,7 +50,7 @@ public class BattleScreen {
 	public BattleScreen(GraphicalUserInterface gui, Battle battle) {
 		this.gui = gui;
 		this.battle = battle;
-		game = gui.getGame();
+		gui.getGame();
 		monsters = battle.getEnemyMonsters();
 		initialize();
 		window.setVisible(true);
@@ -179,11 +178,9 @@ public class BattleScreen {
 		
 		JButton nextButton = new JButton("Fight");
 		nextButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (selectedMonster != null) {					
-					gui.launchFightScreen(battle);
-					finishedWindow();
-				}
+			public void actionPerformed(ActionEvent e) {				
+				gui.launchFightScreen(battle);
+				finishedWindow();
 			}
 		});
 		nextButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
