@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 
@@ -178,9 +179,14 @@ public class BattleScreen {
 		
 		JButton nextButton = new JButton("Fight");
 		nextButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-				gui.launchFightScreen(battle);
-				finishedWindow();
+			public void actionPerformed(ActionEvent e) {
+				if (!gui.getGame().getPlayer().getMonsters().allFainted()) {					
+					gui.launchFightScreen(battle);
+					finishedWindow();
+				}
+				else {
+					JOptionPane.showMessageDialog(window, "You don't have any non fainted monsters in your team!", "Message: Monster Inventory empty", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		nextButton.setFont(new Font("Tahoma", Font.PLAIN, 17));

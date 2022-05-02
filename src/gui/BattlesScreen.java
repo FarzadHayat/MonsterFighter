@@ -79,60 +79,70 @@ public class BattlesScreen {
 		window.getContentPane().add(battlesPanel);
 		battlesPanel.setLayout(null);
 		
-		JButton battle1Button = new JButton("Battle 1");
-		battle1Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selectedBattle = battles.getList().get(0);
-				updateStatsPanel(battle1Button);
-			}
-		});
-		battle1Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		battle1Button.setBounds(10, 40, 160, 90);
-		battlesPanel.add(battle1Button);
+		if (battles.getList().size() > 0) {			
+			JButton battle1Button = new JButton("Battle 1");
+			battle1Button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedBattle = battles.getList().get(0);
+					updateStatsPanel(battle1Button);
+				}
+			});
+			battle1Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			battle1Button.setBounds(10, 40, 160, 90);
+			battlesPanel.add(battle1Button);
+		}
 		
-		JButton battle2Button = new JButton("Battle 2");
-		battle2Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selectedBattle = battles.getList().get(1);
-				updateStatsPanel(battle2Button);
-			}
-		});
-		battle2Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		battle2Button.setBounds(190, 40, 160, 90);
-		battlesPanel.add(battle2Button);
+		if (battles.getList().size() > 1) {
+			JButton battle2Button = new JButton("Battle 2");
+			battle2Button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedBattle = battles.getList().get(1);
+					updateStatsPanel(battle2Button);
+				}
+			});
+			battle2Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			battle2Button.setBounds(190, 40, 160, 90);
+			battlesPanel.add(battle2Button);
+		}
+			
+		if (battles.getList().size() > 2) {
+			JButton battle3Button = new JButton("Battle 3");
+			battle3Button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedBattle = battles.getList().get(2);
+					updateStatsPanel(battle3Button);
+				}
+			});
+			battle3Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			battle3Button.setBounds(10, 175, 160, 90);
+			battlesPanel.add(battle3Button);
+		}
 		
-		JButton battle3Button = new JButton("Battle 3");
-		battle3Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selectedBattle = battles.getList().get(2);
-				updateStatsPanel(battle3Button);
-			}
-		});
-		battle3Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		battle3Button.setBounds(10, 175, 160, 90);
-		battlesPanel.add(battle3Button);
+		if (battles.getList().size() > 3) {
+			JButton battle4Button = new JButton("Battle 4");
+			battle4Button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedBattle = battles.getList().get(3);
+					updateStatsPanel(battle4Button);
+				}
+			});
+			battle4Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			battle4Button.setBounds(190, 175, 160, 90);
+			battlesPanel.add(battle4Button);
+		}
 		
-		JButton battle4Button = new JButton("Battle 4");
-		battle4Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selectedBattle = battles.getList().get(3);
-				updateStatsPanel(battle4Button);
-			}
-		});
-		battle4Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		battle4Button.setBounds(190, 175, 160, 90);
-		battlesPanel.add(battle4Button);
-		
-		JButton battle5Button = new JButton("Battle 5");
-		battle5Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selectedBattle = battles.getList().get(4);
-				updateStatsPanel(battle5Button);
-			}
-		});
-		battle5Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		battle5Button.setBounds(100, 310, 160, 90);
-		battlesPanel.add(battle5Button);
+		if (battles.getList().size() > 4) {
+			JButton battle5Button = new JButton("Battle 5");
+			battle5Button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedBattle = battles.getList().get(4);
+					updateStatsPanel(battle5Button);
+				}
+			});
+			battle5Button.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			battle5Button.setBounds(100, 310, 160, 90);
+			battlesPanel.add(battle5Button);
+		}
 		
 		JPanel statsPanel = new JPanel();
 		statsPanel.setBounds(405, 105, 360, 440);
