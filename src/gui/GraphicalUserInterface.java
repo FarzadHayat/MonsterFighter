@@ -149,7 +149,7 @@ public class GraphicalUserInterface {
 			launchStatsScreen();
 		}
 		else {
-			AlertBox.infoBox(events, "Good morning!");
+			AlertBox.infoBox(events.replaceFirst("(?:\n)+", ""), "Good morning!");
 		}
 	}
 
