@@ -150,34 +150,48 @@ public class ItemScreen {
 		txtDescription.setText(item.getDescription());
 		txtDescription.setBackground(null);
 		
-		int yPos = 100;
-		int xPos = 215;
-		int numButton = 1;
-		for (Monster monster : monsters.getList()) {
-			JButton monsterButton = new JButton(monster.getName());
-			if (monster.getName().length() > 10) {				
-				monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
-			}
-			monsterButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					selectedMonster = monster;
-					if(selectedButton != null) {
-						selectedButton.setBackground(null);
-					}
-					selectedButton = monsterButton;
-					selectedButton.setBackground(Color.lightGray);
+		if(!monsters.getList().isEmpty()) {
+			int yPos = 100;
+			int xPos = 215;
+			int numButton = 1;
+			for (Monster monster : monsters.getList()) {
+				JButton monsterButton = new JButton(monster.getName());
+				if (monster.getName().length() > 10) {				
+					monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
 				}
-			});
-			monsterButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			monsterButton.setBounds(xPos, yPos, 160, 90);
-			monstersPanel.add(monsterButton);
-			xPos += 190;
-			numButton++;
-			if(numButton == 3) {
-				yPos += 120;
-				xPos = 215;
+				monsterButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						selectedMonster = monster;
+						if(selectedButton != null) {
+							selectedButton.setBackground(null);
+						}
+						selectedButton = monsterButton;
+						selectedButton.setBackground(Color.lightGray);
+					}
+				});
+				monsterButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+				monsterButton.setBounds(xPos, yPos, 160, 90);
+				monstersPanel.add(monsterButton);
+				xPos += 190;
+				numButton++;
+				if(numButton == 3) {
+					yPos += 120;
+					xPos = 215;
+				}
 			}
 		}
+		else {
+			JLabel txtNoMonster = new JLabel();
+			txtNoMonster.setVerticalAlignment(SwingConstants.TOP);
+			txtNoMonster.setText((String) null);
+			txtNoMonster.setHorizontalAlignment(SwingConstants.CENTER);
+			txtNoMonster.setFont(new Font("Tahoma", Font.PLAIN, 17));
+			txtNoMonster.setBackground((Color) null);
+			txtNoMonster.setBounds(226, 107, 325, 85);
+			txtNoMonster.setText("No monster in player's inventory!");
+			monstersPanel.add(txtNoMonster);
+		}
+		
 	}
 	
 	public static void main(String[]args){
