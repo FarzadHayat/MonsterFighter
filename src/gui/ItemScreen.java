@@ -8,6 +8,7 @@ import javax.swing.SwingConstants;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
 import exceptions.NotFoundException;
+import exceptions.StatMaxedOutException;
 import items.IncreaseCritRate;
 import items.IncreaseDamage;
 import items.LevelUp;
@@ -88,6 +89,26 @@ public class ItemScreen {
 		window.getContentPane().add(backButton);
 		
 		JButton btnUse = new JButton("Use");
+		btnUse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(selectedMonster != null) {
+					try {
+						int result = JOptionPane.showConfirmDialog(null, String.format("Are you sure you want to use\n%s item on %s?", item.getName(), selectedMonster.getName()));
+						if(result == 0) {
+							item.use(selectedMonster);
+							AlertBox.infoBox(String.format("%s item used on %s.", item.getName(), selectedMonster.getName()),"Item used!");
+							gui.launchHomeScreen();
+							finishedWindow();
+						}
+					} catch (NotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (StatMaxedOutException e1) {
+						AlertBox.infoBox("Monster stat maxed out, choose another monster.", "Try again!");
+					}
+				}
+			}
+		});
 		btnUse.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnUse.setBounds(631, 508, 119, 44);
 		window.getContentPane().add(btnUse);

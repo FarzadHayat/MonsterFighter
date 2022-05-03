@@ -89,7 +89,7 @@ public class MonsterScreen {
 			               JOptionPane.PLAIN_MESSAGE,
 			               null,            
 			               null, 
-			               "Red"
+			               ""
 			            );
 			            if(result != null){
 			            	try {
