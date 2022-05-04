@@ -8,5 +8,10 @@ public class AlertBox {
     {
         JOptionPane.showMessageDialog(null, infoMessage, "Message: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
     }
+	
+	public static int yesNo(String infoMessage)
+    {
+		return JOptionPane.showConfirmDialog(null, infoMessage, "Select an Option...", JOptionPane.YES_NO_OPTION);
+    }
 
 }

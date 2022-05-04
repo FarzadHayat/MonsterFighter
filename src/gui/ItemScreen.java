@@ -93,7 +93,7 @@ public class ItemScreen {
 			public void actionPerformed(ActionEvent e) {
 				if(selectedMonster != null) {
 					try {
-						int result = JOptionPane.showConfirmDialog(null, String.format("Are you sure you want to use\n%s item on %s?", item.getName(), selectedMonster.getName()));
+						int result = AlertBox.yesNo(String.format("Are you sure you want to use\n%s item on %s?", item.getName(), selectedMonster.getName()));
 						if(result == 0) {
 							item.use(selectedMonster);
 							AlertBox.infoBox(String.format("%s item used on %s.", item.getName(), selectedMonster.getName()),"Item used!");
@@ -116,7 +116,7 @@ public class ItemScreen {
 		JButton btnSell = new JButton("Sell");
 		btnSell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int result = JOptionPane.showConfirmDialog(null, String.format("Are you sure you want to sell\n%s item for %s gold?", item.getName(), (int)(item.getCost()*item.getRefundAmount())));
+				int result = AlertBox.yesNo(String.format("Are you sure you want to sell\n%s item for %s gold?", item.getName(), (int)(item.getCost()*item.getRefundAmount())));
 				if(result == 0) {
 					try {
 						AlertBox.infoBox(item.sell(), "Item Sold!");
@@ -194,9 +194,10 @@ public class ItemScreen {
 		
 	}
 	
-	public static void main(String[]args){
+	public static void main(String[]args) throws InventoryFullException{
 		GraphicalUserInterface gui = new GraphicalUserInterface();
-		gui.setGame(new GameEnvironment());
+		GameEnvironment game = new GameEnvironment();
+		gui.setGame(game);
 		gui.getGame().setupGame();
 		for(int i = 0; i < 4; i++) {
 			try {
@@ -206,6 +207,8 @@ public class ItemScreen {
 				e.printStackTrace();
 			}
 		}
-		new ItemScreen(gui, new IncreaseDamage(gui.getGame()));
+		LevelUp test = new LevelUp(game);
+		game.getPlayer().getItems().add(test);
+		new ItemScreen(gui, test);
 	}
 }
