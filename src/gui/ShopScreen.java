@@ -3,6 +3,12 @@ package gui;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import exceptions.InsufficientFundsException;
+import exceptions.InvalidValueException;
+import exceptions.InventoryFullException;
+import exceptions.NotFoundException;
+
 import javax.swing.JButton;
 import java.awt.Font;
 
@@ -12,6 +18,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
 
 public class ShopScreen {
 
@@ -26,6 +34,7 @@ public class ShopScreen {
 	private ItemInventory shopItems;
 	
 	private JButton selectedShop;
+	private int selected = 0; //0 representing monster shop, 1 representing item shop
 	
 	private JButton selectedMonsterButton;
 	private JButton selectedItemButton;
@@ -166,6 +175,48 @@ public class ShopScreen {
 		window.getContentPane().add(lblBalanceValue);
 		
 		JButton btnBuy = new JButton("Buy");
+		btnBuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(selected == 0) {
+					if(selectedMonster != null) {
+						int result = AlertBox.yesNo(String.format("Are you sure you want to buy\n%s for $%s?", selectedMonster.getName(), (double)selectedMonster.getCost()));
+						if(result == 0) {
+							try {
+								AlertBox.infoBox(selectedMonster.buy(), "Monster bought!");
+								gui.launchShopScreen();
+								finishedWindow();
+							} catch (NotFoundException| InvalidValueException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (InsufficientFundsException e1) {
+								AlertBox.infoBox("Insufficient funds in player's balance!", "ERROR, Try again");
+							} catch (InventoryFullException e1) {
+								AlertBox.infoBox("Inventory is full!", "ERROR, Try again");
+							}
+						}
+					}
+				}
+				else {
+					if(selectedItem != null) {
+						int result = AlertBox.yesNo(String.format("Are you sure you want to buy\n%s item for $%s?", selectedItem.getName(), (double)selectedItem.getCost()));
+						if(result == 0) {
+							try {
+								AlertBox.infoBox(selectedItem.buy(), "Item bought!");
+								gui.launchShopScreen();
+								finishedWindow();
+							} catch (NotFoundException| InvalidValueException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (InsufficientFundsException e1) {
+								AlertBox.infoBox("Insufficient funds in player's balance!", "ERROR, Try again");
+							} catch (InventoryFullException e1) {
+								AlertBox.infoBox("Inventory is full!", "ERROR, Try again");
+							}
+						}
+					}
+				}
+			}
+		});
 		btnBuy.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnBuy.setBounds(631, 508, 119, 44);
 		window.getContentPane().add(btnBuy);
@@ -253,6 +304,7 @@ public class ShopScreen {
 				if(selectedShop != null) {
 					selectedShop.setBackground(null);
 				}
+				selected = 1;
 				selectedShop = btnItemSelection;
 				selectedShop.setBackground(Color.lightGray);
 				itemPanel.setVisible(true);
@@ -268,6 +320,7 @@ public class ShopScreen {
 				if(selectedShop != null) {
 					selectedShop.setBackground(null);
 				}
+				selected = 0;
 				selectedShop = btnMonsterSelection;
 				selectedShop.setBackground(Color.lightGray);
 				itemPanel.setVisible(false);
