@@ -10,6 +10,8 @@ import main.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import java.awt.Color;
 
 public class ShopScreen {
 
@@ -19,6 +21,17 @@ public class ShopScreen {
 	private GameEnvironment game;
 	private Player player;
 	private Score score;
+	
+	private MonsterInventory shopMonsters;
+	private ItemInventory shopItems;
+	
+	private JButton selectedShop;
+	
+	private JButton selectedMonsterButton;
+	private JButton selectedItemButton;
+	
+	private Monster selectedMonster;
+	private Item selectedItem;
 	
 	public void closeWindow() {
 		window.dispose();
@@ -36,6 +49,8 @@ public class ShopScreen {
 		game = gui.getGame();
 		player = game.getPlayer();
 		score = game.getScoreSystem();
+		shopMonsters = game.getShop().getMonsters();
+		shopItems = game.getShop().getItems();
 		initialize();
 		window.setVisible(true);
 	}
@@ -52,12 +67,13 @@ public class ShopScreen {
 		window.getContentPane().setLayout(null);
 		
 		JLabel titleLabel = new JLabel("SHOP");
+		titleLabel.setBounds(250, 20, 300, 50);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setBounds(250, 20, 300, 50);
 		window.getContentPane().add(titleLabel);
 		
 		JButton backButton = new JButton("Back");
+		backButton.setBounds(650, 30, 100, 30);
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.launchHomeScreen();
@@ -65,7 +81,215 @@ public class ShopScreen {
 			}
 		});
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		backButton.setBounds(650, 30, 100, 30);
 		window.getContentPane().add(backButton);
+		
+		JPanel monsterPanel = new JPanel();
+		monsterPanel.setBounds(10, 182, 766, 319);
+		window.getContentPane().add(monsterPanel);
+		monsterPanel.setLayout(null);
+		
+		JLabel lblStats = new JLabel("<html><u>Stats</u></html>");
+		lblStats.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStats.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		lblStats.setBounds(513, 0, 151, 40);
+		monsterPanel.add(lblStats);
+		
+		JLabel lblHealth = new JLabel("Health :");
+		lblHealth.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHealth.setBounds(453, 37, 121, 40);
+		monsterPanel.add(lblHealth);
+		
+		JLabel lblHealthValue = new JLabel("");
+		lblHealthValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHealthValue.setBounds(607, 37, 121, 40);
+		monsterPanel.add(lblHealthValue);
+		
+		JLabel lblDamage = new JLabel("Damage :");
+		lblDamage.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDamage.setBounds(453, 88, 121, 40);
+		monsterPanel.add(lblDamage);
+		
+		JLabel lblDamageValue = new JLabel("");
+		lblDamageValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDamageValue.setBounds(607, 83, 121, 40);
+		monsterPanel.add(lblDamageValue);
+		
+		JLabel lblLevel = new JLabel("Level :");
+		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblLevel.setBounds(453, 139, 121, 40);
+		monsterPanel.add(lblLevel);
+		
+		JLabel lblHealAmount = new JLabel("Heal amount :");
+		lblHealAmount.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHealAmount.setBounds(453, 184, 136, 40);
+		monsterPanel.add(lblHealAmount);
+		
+		JLabel lblHealValue = new JLabel("");
+		lblHealValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHealValue.setBounds(607, 184, 121, 40);
+		monsterPanel.add(lblHealValue);
+		
+		JLabel lblLevelValue = new JLabel("");
+		lblLevelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblLevelValue.setBounds(607, 139, 121, 40);
+		monsterPanel.add(lblLevelValue);
+		
+		JLabel lblCritRate = new JLabel("Critical rate :");
+		lblCritRate.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCritRate.setBounds(453, 236, 121, 40);
+		monsterPanel.add(lblCritRate);
+		
+		JLabel lblCritValue = new JLabel("");
+		lblCritValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCritValue.setBounds(607, 236, 121, 40);
+		monsterPanel.add(lblCritValue);
+		
+		JLabel lblCost = new JLabel("Cost :");
+		lblCost.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCost.setBounds(453, 281, 121, 40);
+		monsterPanel.add(lblCost);
+		
+		JLabel lblCostValue = new JLabel("");
+		lblCostValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCostValue.setBounds(607, 281, 121, 40);
+		monsterPanel.add(lblCostValue);
+		
+		JLabel lblBalance = new JLabel("Balance: ");
+		lblBalance.setBounds(20, 78, 71, 40);
+		lblBalance.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		window.getContentPane().add(lblBalance);
+		
+		JLabel lblBalanceValue = new JLabel("");
+		lblBalanceValue.setText("$"+player.getBalance());
+		lblBalanceValue.setBounds(101, 78, 71, 40);
+		lblBalanceValue.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		window.getContentPane().add(lblBalanceValue);
+		
+		JButton btnBuy = new JButton("Buy");
+		btnBuy.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		btnBuy.setBounds(631, 508, 119, 44);
+		window.getContentPane().add(btnBuy);
+		
+		JPanel itemPanel = new JPanel();
+		itemPanel.setBounds(10, 182, 766, 319);
+		window.getContentPane().add(itemPanel);
+		itemPanel.setLayout(null);
+		
+		JLabel lblDescription = new JLabel("Description:");
+		lblDescription.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDescription.setBounds(452, 22, 134, 21);
+		itemPanel.add(lblDescription);
+		
+		JLabel lblCostItem = new JLabel("Cost:");
+		lblCostItem.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCostItem.setBounds(452, 110, 92, 21);
+		itemPanel.add(lblCostItem);
+		
+		JLabel lblCostItemValue = new JLabel("");
+		lblCostItemValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblCostItemValue.setBounds(533, 110, 92, 21);
+		itemPanel.add(lblCostItemValue);
+		
+		JTextArea txtDescription = new JTextArea();
+		txtDescription.setWrapStyleWord(true);
+		txtDescription.setEditable(false);
+		txtDescription.setLineWrap(true);
+		txtDescription.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		txtDescription.setBackground(null);
+		txtDescription.setBounds(452, 50, 304, 56);
+		itemPanel.add(txtDescription);
+						
+		int xPos = 10;
+		int yPos = 60;
+		int numButton = 1;
+		for(int i = 0; i < shopMonsters.getMaxSize(); i++) {
+			Monster monster = shopMonsters.getList().get(i);
+			Item item = shopItems.getList().get(i);
+			JButton itemButton = new JButton(item.getName());
+			JButton monsterButton = new JButton(monster.getName());
+			monsterButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedMonster = monster;
+					if(selectedMonsterButton != null) {
+						selectedMonsterButton.setBackground(null);
+					}
+					selectedMonsterButton = monsterButton;
+					selectedMonsterButton.setBackground(Color.lightGray);
+					lblHealthValue.setText(""+ selectedMonster.getHealth());
+					lblDamageValue.setText(""+ selectedMonster.getDamage());
+					lblLevelValue.setText(""+ selectedMonster.getLevel());
+					lblHealValue.setText(""+ selectedMonster.getHealAmount());
+					lblCritValue.setText(""+ (int)(selectedMonster.getCritRate() * 100 )+ "%");
+					lblCostValue.setText("$"+(double)selectedMonster.getCost());
+				}
+			});
+			itemButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					selectedItem = item;
+					if(selectedItemButton != null) {
+						selectedItemButton.setBackground(null);
+					}
+					selectedItemButton = itemButton;
+					selectedItemButton.setBackground(Color.lightGray);
+					txtDescription.setText(selectedItem.getDescription());
+					lblCostItemValue.setText("$"+(double)selectedItem.getCost());
+				}
+			});
+			itemButton.setBounds(xPos, yPos, 160, 90);
+			monsterButton.setBounds(xPos, yPos, 160, 90);
+			monsterPanel.add(monsterButton);
+			itemPanel.add(itemButton);
+			xPos += 190;
+			numButton += 1;
+			if(numButton == 3) {
+				yPos += 140;
+				xPos = 10;
+			}
+		}
+		
+		JButton btnItemSelection = new JButton("Item");
+		btnItemSelection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(selectedShop != null) {
+					selectedShop.setBackground(null);
+				}
+				selectedShop = btnItemSelection;
+				selectedShop.setBackground(Color.lightGray);
+				itemPanel.setVisible(true);
+				monsterPanel.setVisible(false);
+			}
+		});
+		
+		JButton btnMonsterSelection = new JButton("Monster");
+		selectedShop = btnMonsterSelection;
+		selectedShop.setBackground(Color.lightGray);
+		btnMonsterSelection.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(selectedShop != null) {
+					selectedShop.setBackground(null);
+				}
+				selectedShop = btnMonsterSelection;
+				selectedShop.setBackground(Color.lightGray);
+				itemPanel.setVisible(false);
+				monsterPanel.setVisible(true);
+			}
+		});
+		
+		btnMonsterSelection.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnMonsterSelection.setBounds(20, 129, 128, 42);
+		window.getContentPane().add(btnMonsterSelection);
+		
+		
+		btnItemSelection.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnItemSelection.setBounds(175, 129, 128, 42);
+		window.getContentPane().add(btnItemSelection);
+	}
+	
+	public static void main(String[]args) {
+		GraphicalUserInterface gui = new GraphicalUserInterface();
+		GameEnvironment game = new GameEnvironment();
+		gui.setGame(game);
+		gui.getGame().setupGame();
+		new ShopScreen(gui);
 	}
 }
