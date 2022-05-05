@@ -238,7 +238,7 @@ public class ShopScreen {
 		
 		JLabel lblCostItemValue = new JLabel("");
 		lblCostItemValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblCostItemValue.setBounds(533, 110, 92, 21);
+		lblCostItemValue.setBounds(452, 138, 92, 21);
 		itemPanel.add(lblCostItemValue);
 		
 		JTextArea txtDescription = new JTextArea();
@@ -258,6 +258,12 @@ public class ShopScreen {
 			Item item = shopItems.getList().get(i);
 			JButton itemButton = new JButton(item.getName());
 			JButton monsterButton = new JButton(monster.getName());
+			if (item.getName().length() > 10) {				
+				itemButton.setText("<html><center>" + item.getName().replaceFirst(" ", "<br>") + "</centre></html>");
+			}
+			else if (monster.getName().length() > 10) {				
+				monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
+			}
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedMonster = monster;
@@ -288,6 +294,8 @@ public class ShopScreen {
 			});
 			itemButton.setBounds(xPos, yPos, 160, 90);
 			monsterButton.setBounds(xPos, yPos, 160, 90);
+			itemButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+			monsterButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 			monsterPanel.add(monsterButton);
 			itemPanel.add(itemButton);
 			xPos += 190;
