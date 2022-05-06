@@ -118,7 +118,7 @@ public class HomeScreen {
 		
 		int yPos = 10;
 		for (Monster monster : monsters.getList()) {
-			JButton monsterButton = new JButton(monster.getName());
+			MonsterButton monsterButton = new MonsterButton(monster, 10, yPos);
 			if (monster.getName().length() > 10) {				
 				monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
 			}
@@ -128,8 +128,6 @@ public class HomeScreen {
 					finishedWindow();
 				}
 			});
-			monsterButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			monsterButton.setBounds(10, yPos, 160, 90);
 			monstersPanel.add(monsterButton);
 			yPos += 100;
 		}
@@ -141,7 +139,7 @@ public class HomeScreen {
 		
 		int xPos = 10;
 		for (Item item : items.getList()) {
-			JButton itemButton = new JButton(item.getName());
+			ItemButton itemButton = new ItemButton(item, xPos, 10);
 			if (item.getName().length() > 10) {
 				itemButton.setText("<html><center>" + item.getName().replaceFirst(" ", "<br>") + "</centre></html>");
 			}
@@ -151,8 +149,6 @@ public class HomeScreen {
 					finishedWindow();
 				}
 			});
-			itemButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			itemButton.setBounds(xPos, 10, 160, 90);
 			itemsPanel.add(itemButton);
 			xPos += 170;
 		}

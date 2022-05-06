@@ -90,15 +90,13 @@ public class BattleScreen {
 		
 		int yPos = 20;
 		for (Monster monster : monsters.getList()) {
-			JButton monsterButton = new JButton(String.valueOf(monster.getName()));
+			MonsterButton monsterButton = new MonsterButton(monster, 100, yPos);
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedMonster = monster;
 					updateStatsPanel(monsterButton);
 				}
 			});
-			monsterButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			monsterButton.setBounds(100, yPos, 160, 90);
 			monstersPanel.add(monsterButton);
 			yPos += 100;
 		}

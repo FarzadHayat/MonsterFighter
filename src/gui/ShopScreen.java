@@ -254,8 +254,8 @@ public class ShopScreen {
 		for(int i = 0; i < shopMonsters.getMaxSize(); i++) {
 			Monster monster = shopMonsters.getList().get(i);
 			Item item = shopItems.getList().get(i);
-			JButton itemButton = new JButton(item.getName());
-			JButton monsterButton = new JButton(monster.getName());
+			ItemButton itemButton = new ItemButton(item, xPos, yPos);
+			MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
 			if (item.getName().length() > 10) {				
 				itemButton.setText("<html><center>" + item.getName().replaceFirst(" ", "<br>") + "</centre></html>");
 			}
@@ -290,10 +290,6 @@ public class ShopScreen {
 					lblCostItemValue.setText("$"+(double)selectedItem.getCost());
 				}
 			});
-			itemButton.setBounds(xPos, yPos, 160, 90);
-			monsterButton.setBounds(xPos, yPos, 160, 90);
-			itemButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
-			monsterButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 			monsterPanel.add(monsterButton);
 			itemPanel.add(itemButton);
 			xPos += 190;
@@ -304,7 +300,7 @@ public class ShopScreen {
 			}
 		}
 		
-		JButton btnItemSelection = new JButton("Item");
+		JButton btnItemSelection = new JButton("Items");
 		btnItemSelection.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(selectedShop != null) {
@@ -318,7 +314,7 @@ public class ShopScreen {
 			}
 		});
 		
-		JButton btnMonsterSelection = new JButton("Monster");
+		JButton btnMonsterSelection = new JButton("Monsters");
 		selectedShop = btnMonsterSelection;
 		selectedShop.setBackground(Color.lightGray);
 		btnMonsterSelection.addActionListener(new ActionListener() {

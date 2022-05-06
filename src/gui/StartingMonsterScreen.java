@@ -159,7 +159,7 @@ public class StartingMonsterScreen {
 		int xPos = 10;
 		int numButton = 1;
 		for(Monster monster: allMonsters.getList()) {
-			JButton monsterButton = new JButton(monster.getName());
+			MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selected = monster;
@@ -175,8 +175,6 @@ public class StartingMonsterScreen {
 					lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
 				}
 			});
-			monsterButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
-			monsterButton.setBounds(xPos, yPos, 160, 90);
 			monstersPanel.add(monsterButton);
 			numButton += 1;
 			yPos += 140;

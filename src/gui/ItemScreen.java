@@ -153,7 +153,7 @@ public class ItemScreen {
 			int xPos = 215;
 			int numButton = 1;
 			for (Monster monster : monsters.getList()) {
-				JButton monsterButton = new JButton(monster.getName());
+				MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
 				if (monster.getName().length() > 10) {				
 					monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
 				}
@@ -167,8 +167,6 @@ public class ItemScreen {
 						selectedButton.setBackground(Color.lightGray);
 					}
 				});
-				monsterButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				monsterButton.setBounds(xPos, yPos, 160, 90);
 				monstersPanel.add(monsterButton);
 				xPos += 190;
 				numButton++;
