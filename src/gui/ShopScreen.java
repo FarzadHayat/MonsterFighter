@@ -81,15 +81,13 @@ public class ShopScreen {
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		window.getContentPane().add(titleLabel);
 		
-		JButton backButton = new JButton("Back");
-		backButton.setBounds(650, 30, 100, 30);
+		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.launchHomeScreen();
 				finishedWindow();
 			}
 		});
-		backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		window.getContentPane().add(backButton);
 		
 		JPanel monsterPanel = new JPanel();

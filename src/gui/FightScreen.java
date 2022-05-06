@@ -66,16 +66,14 @@ public class FightScreen {
 		titleLabel.setBounds(202, 35, 376, 50);
 		window.getContentPane().add(titleLabel);
 		
-		backButton = new JButton("Back");
+		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.launchBattlesScreen();
 				finishedWindow();
 			}
 		});
-		backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		backButton.setVisible(false);
-		backButton.setBounds(650, 30, 100, 30);
 		window.getContentPane().add(backButton);
 		
 		JPanel commentaryPanel = new JPanel();

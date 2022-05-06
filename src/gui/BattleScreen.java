@@ -74,15 +74,13 @@ public class BattleScreen {
 		titleLabel.setBounds(250, 20, 300, 50);
 		window.getContentPane().add(titleLabel);
 		
-		JButton backButton = new JButton("Back");
+		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.launchBattlesScreen();
 				finishedWindow();
 			}
 		});
-		backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		backButton.setBounds(650, 30, 100, 30);
 		window.getContentPane().add(backButton);
 		
 		JPanel monstersPanel = new JPanel();
