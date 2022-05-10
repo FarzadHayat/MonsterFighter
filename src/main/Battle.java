@@ -1,10 +1,17 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import exceptions.InvalidTargetException;
 import exceptions.InvalidValueException;
 import exceptions.NotFoundException;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class Battle {
 	
@@ -18,6 +25,7 @@ public class Battle {
     private Player player;
     private MonsterInventory monsters;
     
+    private String name;
     private int size;
     private int balanceMultiplier = 25;
     private int scoreMultiplier = 50;
@@ -36,9 +44,10 @@ public class Battle {
     public Battle (GameEnvironment game) {
     	this.game = game;
     	player = game.getPlayer();
-    	size = inventorySize();
+    	size = randomSize();
     	monsters = new MonsterInventory(size, game);
     	monsters.randomise();
+    	name = randomName();
     };
     
 
@@ -86,7 +95,7 @@ public class Battle {
      * Get the value of monsters
 	 * @return the value of monsters
 	 */
-	public MonsterInventory getEnemyMonsters() {
+	public MonsterInventory getMonsters() {
 		return monsters;
 	}
 
@@ -95,15 +104,33 @@ public class Battle {
 	 * Set the value of monsters
 	 * @param monsters the new value of monsters
 	 */
-	public void setEnemyMonsters(MonsterInventory enemyMonsters) {
-		this.monsters = enemyMonsters;
+	public void setMonsters(MonsterInventory monsters) {
+		this.monsters = monsters;
 	}
 	
+	
+	/**
+     * Get the value of name
+	 * @return the value of name
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	
+	/**
+	 * Set the value of name
+	 * @param name the new value of name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
     /** 
      * Functional
      */
-	
+
+
 	/**
 	 * Check that the player monster inventory contains at least one non fainted monster.
 	 * @throws NotFoundException if the player has no non fainted monsters in their team
@@ -288,7 +315,11 @@ public class Battle {
     }
     
     
-    public int inventorySize() {
+    /**
+     * get a random number between 1 and the maximum numbers of monsters that the player can have
+     * @return the inventory size
+     */
+    public int randomSize() {
     	int minSize = 1;
     	int maxsize = player.getMonsters().getMaxSize();
     	Random random = new Random();
@@ -298,11 +329,34 @@ public class Battle {
     
     
     /**
+     * get a random battle name from the given file
+     * @return the selected name
+     */
+    public String randomName() {
+    	ArrayList<String> battleNames = new ArrayList<String>();
+    	try {
+    		File myFile = new File(System.getProperty("user.dir") + "/src/resources/battle-names.txt");
+    		Scanner scanner = new Scanner(myFile);
+    		while (scanner.hasNextLine()) {
+    			String name = scanner.nextLine();
+    			battleNames.add(name);
+    		}
+    		scanner.close();
+    	}
+    	catch (FileNotFoundException e) {
+    		e.printStackTrace();
+    	}
+    	Random random = new Random();
+    	int i = random.nextInt(0, battleNames.size());
+    	String selectedName = battleNames.get(i);
+		return selectedName;
+    }
+    
+    /**
      * @return result the string representation of the battle object
      */
     public String toString() {
-    	int index = game.getBattles().getList().indexOf(this);
-    	String result = String.format("Battle %s\n %s\n", index + 1, monsters);
+    	String result = String.format("Battle %s\n %s\n", name, monsters);
     	return result;
     }
     

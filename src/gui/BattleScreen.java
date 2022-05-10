@@ -52,7 +52,7 @@ public class BattleScreen {
 		this.gui = gui;
 		this.battle = battle;
 		gui.getGame();
-		monsters = battle.getEnemyMonsters();
+		monsters = battle.getMonsters();
 		initialize();
 		window.setVisible(true);
 	}
@@ -68,7 +68,7 @@ public class BattleScreen {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
 		
-		JLabel titleLabel = new JLabel("BATTLE");
+		JLabel titleLabel = new JLabel(battle.getName().toUpperCase());
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(250, 20, 300, 50);

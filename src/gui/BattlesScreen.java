@@ -77,11 +77,12 @@ public class BattlesScreen {
 		window.getContentPane().add(battlesPanel);
 		battlesPanel.setLayout(null);
 		
-		if (battles.getList().size() > 0) {			
-			JButton battle1Button = new JButton("Battle 1");
+		if (battles.getList().size() > 0) {
+			Battle battle = battles.getList().get(0);
+			JButton battle1Button = new JButton(battle.getName());
 			battle1Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					selectedBattle = battles.getList().get(0);
+					selectedBattle = battle;
 					updateStatsPanel(battle1Button);
 				}
 			});
@@ -91,10 +92,11 @@ public class BattlesScreen {
 		}
 		
 		if (battles.getList().size() > 1) {
-			JButton battle2Button = new JButton("Battle 2");
+			Battle battle = battles.getList().get(1);
+			JButton battle2Button = new JButton(battle.getName());
 			battle2Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					selectedBattle = battles.getList().get(1);
+					selectedBattle = battle;
 					updateStatsPanel(battle2Button);
 				}
 			});
@@ -104,10 +106,11 @@ public class BattlesScreen {
 		}
 			
 		if (battles.getList().size() > 2) {
-			JButton battle3Button = new JButton("Battle 3");
+			Battle battle = battles.getList().get(2);
+			JButton battle3Button = new JButton(battle.getName());
 			battle3Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					selectedBattle = battles.getList().get(2);
+					selectedBattle = battle;
 					updateStatsPanel(battle3Button);
 				}
 			});
@@ -117,10 +120,11 @@ public class BattlesScreen {
 		}
 		
 		if (battles.getList().size() > 3) {
-			JButton battle4Button = new JButton("Battle 4");
+			Battle battle = battles.getList().get(3);
+			JButton battle4Button = new JButton(battle.getName());
 			battle4Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					selectedBattle = battles.getList().get(3);
+					selectedBattle = battle;
 					updateStatsPanel(battle4Button);
 				}
 			});
@@ -130,10 +134,11 @@ public class BattlesScreen {
 		}
 		
 		if (battles.getList().size() > 4) {
-			JButton battle5Button = new JButton("Battle 5");
+			Battle battle = battles.getList().get(4);
+			JButton battle5Button = new JButton(battle.getName());
 			battle5Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					selectedBattle = battles.getList().get(4);
+					selectedBattle = battle;
 					updateStatsPanel(battle5Button);
 				}
 			});
@@ -201,8 +206,8 @@ public class BattlesScreen {
 		for (int i = 0; i < statsLabelValues.size(); i++) {
 			JLabel label = statsLabels.get(i);
 			JLabel labelvalue = statsLabelValues.get(i);
-			if (selectedBattle.getEnemyMonsters().getList().size() > i) {				
-				Monster monster = selectedBattle.getEnemyMonsters().getList().get(i);
+			if (selectedBattle.getMonsters().getList().size() > i) {				
+				Monster monster = selectedBattle.getMonsters().getList().get(i);
 				label.setVisible(true);
 				labelvalue.setText(String.valueOf(monster.getName()) + " - Lvl " + String.valueOf(monster.getLevel()));			
 			}
