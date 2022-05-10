@@ -68,6 +68,7 @@ public class ItemScreen {
 		window.setTitle("MonsterFighter - Item");
 		window.setResizable(false);
 		window.setBounds(100, 100, 800, 600);
+		window.setLocationRelativeTo(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
 		
