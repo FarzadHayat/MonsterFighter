@@ -29,18 +29,8 @@ class PlayerTest {
 		player.setBalance(100);
 		assertEquals(100, player.getBalance());
 		
-		player.setBalance(5.5);
-		assertEquals(5.5, player.getBalance());
-		
 		try {
 			player.setBalance(-5);
-		}
-		catch (InvalidValueException e) {
-			assertEquals(e.getMessage(), "Balance cannot be a negative value!");
-		}
-		
-		try {
-			player.setBalance(-0.5);
 		}
 		catch (InvalidValueException e) {
 			assertEquals(e.getMessage(), "Balance cannot be a negative value!");
@@ -128,7 +118,7 @@ class PlayerTest {
 		assertTrue(player.balanceSufficient(50));
 		assertTrue(player.balanceSufficient(100));
 		
-		assertFalse(player.balanceSufficient(100.1));
+		assertFalse(player.balanceSufficient(101));
 		player.setBalance(0);
 		assertTrue(player.balanceSufficient(0));
 		assertFalse(player.balanceSufficient(1));

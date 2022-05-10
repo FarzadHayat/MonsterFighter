@@ -114,7 +114,7 @@ public class ItemScreen {
 		JButton btnSell = new JButton("Sell");
 		btnSell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int result = AlertBox.yesNo(String.format("Are you sure you want to sell\n%s item for $%s?", item.getName(), item.getCost()*item.getRefundAmount()));
+				int result = AlertBox.yesNo(String.format("Are you sure you want to sell\n%s item for $%s?", item.getName(), (int) (item.getCost()*item.getRefundAmount())));
 				if(result == 0) {
 					try {
 						AlertBox.infoBox(item.sell(), "Item Sold!");

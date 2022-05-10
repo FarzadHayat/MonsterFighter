@@ -177,7 +177,7 @@ public class ShopScreen {
 			public void actionPerformed(ActionEvent e) {
 				if(selected == 0) {
 					if(selectedMonster != null) {
-						int result = AlertBox.yesNo(String.format("Are you sure you want to buy\n%s for $%s?", selectedMonster.getName(), (double)selectedMonster.getCost()));
+						int result = AlertBox.yesNo(String.format("Are you sure you want to buy\n%s for $%s?", selectedMonster.getName(), selectedMonster.getCost()));
 						if(result == 0) {
 							try {
 								AlertBox.infoBox(selectedMonster.buy(), "Monster bought!");
@@ -196,7 +196,7 @@ public class ShopScreen {
 				}
 				else {
 					if(selectedItem != null) {
-						int result = AlertBox.yesNo(String.format("Are you sure you want to buy\n%s item for $%s?", selectedItem.getName(), (double)selectedItem.getCost()));
+						int result = AlertBox.yesNo(String.format("Are you sure you want to buy\n%s item for $%s?", selectedItem.getName(), selectedItem.getCost()));
 						if(result == 0) {
 							try {
 								AlertBox.infoBox(selectedItem.buy(), "Item bought!");
@@ -275,7 +275,7 @@ public class ShopScreen {
 					lblLevelValue.setText(""+ selectedMonster.getLevel());
 					lblHealValue.setText(""+ selectedMonster.getHealAmount());
 					lblCritValue.setText(""+ (int)(selectedMonster.getCritRate() * 100 )+ "%");
-					lblCostValue.setText("$"+(double)selectedMonster.getCost());
+					lblCostValue.setText("$"+selectedMonster.getCost());
 				}
 			});
 			itemButton.addActionListener(new ActionListener() {
@@ -287,7 +287,7 @@ public class ShopScreen {
 					selectedItemButton = itemButton;
 					selectedItemButton.setBackground(Color.lightGray);
 					txtDescription.setText(selectedItem.getDescription());
-					lblCostItemValue.setText("$"+(double)selectedItem.getCost());
+					lblCostItemValue.setText("$"+selectedItem.getCost());
 				}
 			});
 			monsterPanel.add(monsterButton);

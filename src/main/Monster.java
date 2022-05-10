@@ -481,7 +481,7 @@ public abstract class Monster implements Purchasable {
      * @return the string representing what the player sold
      */
 	public String sell() throws NotFoundException, InvalidValueException {
-		player.addBalance(cost * refundAmount);
+		player.addBalance((int) (cost * refundAmount));
 		player.getMonsters().remove(this);
 		return "You sold: " + name;
 	}

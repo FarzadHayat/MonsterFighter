@@ -110,7 +110,7 @@ public class MonsterScreen {
 		JButton btnSell = new JButton("Sell");
 		btnSell.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int result = AlertBox.yesNo(String.format("Are you sure you want to sell\n%s for $%s?", monster.getName(), monster.getCost()*monster.getRefundAmount()));
+				int result = AlertBox.yesNo(String.format("Are you sure you want to sell\n%s for $%s?", monster.getName(), (int) (monster.getCost()*monster.getRefundAmount())));
 				if(result == 0) {
 					try {
 						AlertBox.infoBox(monster.sell(), "Monster Sold!");

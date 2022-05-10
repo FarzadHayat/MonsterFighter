@@ -8,7 +8,7 @@ public class Player {
 	/**
 	 * Fields
 	 */
-	private double balance;
+	private int balance;
     private String name;
 	
 	private MonsterInventory monsters;
@@ -38,7 +38,7 @@ public class Player {
      * Get the value of balance
      * @return the value of balance
      */
-    public double getBalance () {
+    public int getBalance () {
         return balance;
     }
     
@@ -48,7 +48,7 @@ public class Player {
      * @param balance the new value of balance
      * @throws InvalidValueException 
      */
-    public void setBalance (double balance) throws InvalidValueException {
+    public void setBalance (int balance) throws InvalidValueException {
     	if (0 > balance) {
     		throw new InvalidValueException("Balance cannot be a negative value!");
     	}
@@ -129,7 +129,7 @@ public class Player {
      * @param amount to be added to balance
      * @throws InvalidValueException if amount is a negative value
      */
-    public void addBalance(double amount) throws InvalidValueException {
+    public void addBalance(int amount) throws InvalidValueException {
     	if (0 > amount) {
     		throw new InvalidValueException("Cannot be a negative value!");
     	}
@@ -145,7 +145,7 @@ public class Player {
      * @throws InsufficientFundsException if balance is less than the amount to be subtracted
      * @throws InvalidValueException if amount is a negative value
      */
-    public void minusBalance(double amount) throws InsufficientFundsException, InvalidValueException {
+    public void minusBalance(int amount) throws InsufficientFundsException, InvalidValueException {
     	if (0 > amount) {
     		throw new InvalidValueException("Cannot be a negative value!");
     	}
@@ -164,7 +164,7 @@ public class Player {
      * @return whether balance is bigger or equal to amount
      * @throws InvalidValueException if amount is negative value
      */
-    public boolean balanceSufficient(double amount) throws InvalidValueException {
+    public boolean balanceSufficient(int amount) throws InvalidValueException {
     	if (0 > amount) {
     		throw new InvalidValueException("Cannot be a negative value!");
     	}
