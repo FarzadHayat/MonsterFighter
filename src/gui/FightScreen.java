@@ -8,8 +8,6 @@ import exceptions.InventoryFullException;
 import exceptions.NotFoundException;
 
 import java.awt.Font;
-import java.awt.Window;
-
 import main.*;
 import monsters.*;
 
@@ -28,7 +26,7 @@ public class FightScreen {
 	private Battle battle;
 	
 	private JTextArea commentaryText;
-	private JButton backButton;
+	private BackButton backButton;
 	
 	public void closeWindow() {
 		window.dispose();
@@ -66,7 +64,7 @@ public class FightScreen {
 		titleLabel.setBounds(202, 35, 376, 50);
 		window.getContentPane().add(titleLabel);
 		
-		BackButton backButton = new BackButton();
+		backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gui.launchBattlesScreen();
