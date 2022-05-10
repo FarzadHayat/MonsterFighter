@@ -1,6 +1,7 @@
 package monsters;
 
 import exceptions.InvalidTargetException;
+import exceptions.InvalidValueException;
 import exceptions.StatMaxedOutException;
 import main.*;
 
@@ -35,6 +36,9 @@ public class Raka extends Monster {
 	 */
 	private int damageBefore;
 	
+	private boolean hasAllies;
+	private MonsterInventory team;
+	private Monster randomMonster; 
 	
 	/**
 	 * Constructors
@@ -140,6 +144,19 @@ public class Raka extends Monster {
     	setHealth(getHealth()+levelUpHealth);
     }
     
+    public int attack(Monster other) throws InvalidTargetException, InvalidValueException {
+    	if(hasAllies) {
+    		randomMonster = team.random();
+    		while(randomMonster == this) {
+    			randomMonster = team.random();
+    		}
+    		this.healAllies(randomMonster);
+    		return getHealAmount();
+    	}
+    	else {
+    		return super.attack(other);
+    	}
+    }
     
     /**
      * @return new Raka instance
@@ -147,5 +164,49 @@ public class Raka extends Monster {
     public Monster clone() {
     	return new Raka(game);
     }
+
+
+    /**
+     * @return value of hasAllies
+     */
+	public boolean getHasAllies() {
+		return hasAllies;
+	}
+
+
+	/**
+	 * Set the value of hasAllies
+	 * @param hasAllies the new value of hasAllies
+	 */
+	public void setHasAllies(boolean hasAllies) {
+		this.hasAllies = hasAllies;
+	}
+
+
+	/**
+	 * @return value of team 
+	 */
+	public MonsterInventory getTeam() {
+		return team;
+	}
+
+	
+	/**
+	 * Set the value of team
+	 * @param team the new value of team
+	 */
+	public void setTeam(MonsterInventory team) {
+		this.team = team;
+	}
+
+
+	public Monster getRandomMonster() {
+		return randomMonster;
+	}
+
+
+	public void setRandomMonster(Monster randomMonster) {
+		this.randomMonster = randomMonster;
+	}
     
 }

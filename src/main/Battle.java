@@ -6,6 +6,7 @@ import java.util.Random;
 import exceptions.InvalidTargetException;
 import exceptions.InvalidValueException;
 import exceptions.NotFoundException;
+import monsters.Raka;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -142,6 +143,20 @@ public class Battle {
 		if (player.getMonsters().allFainted()) {
     		throw new NotFoundException("Battle not available: Player monsters are all fainted! Try again...");
     	}
+		for(Monster monster: player.getMonsters().getList()) {
+			if(monster instanceof Raka && player.getMonsters().getList().size() > 1) {
+				Raka rakaInst = (Raka)monster;
+				rakaInst.setHasAllies(true);
+				rakaInst.setTeam(player.getMonsters());
+			}
+		}
+		for(Monster monster: monsters.getList()) {
+			if(monster instanceof Raka && monsters.getList().size() > 1) {
+				Raka rakaInst = (Raka)monster;
+				rakaInst.setHasAllies(true);
+				rakaInst.setTeam(monsters);
+			}
+		}
 	}
 	
 	
@@ -153,6 +168,7 @@ public class Battle {
     public String playerAttack() {
     	Monster playerMonster = player.getMonsters().random();
     	Monster enemyMonster = monsters.random();
+    	String result;
     	int damageDealt = 0;
     	try {
     		damageDealt = playerMonster.attack(enemyMonster);
@@ -162,15 +178,22 @@ public class Battle {
     	}
     	currentTurn = Turn.ENEMY;
     	
-    	String result = String.format("Player %s attacked enemy %s for %s damage.\n", 
-    			playerMonster.getName(), enemyMonster.getName(), damageDealt);
-    	if (enemyMonster.getIsFainted()) {
-    		result += String.format("Enemy %s has fainted!", enemyMonster.getName());
+    	if(playerMonster instanceof Raka && player.getMonsters().getList().size() > 1) {
+    		Raka test = (Raka)playerMonster;
+    		result = String.format("Player %s healed player %s for %s health.\n", test.getName(),test.getRandomMonster().getName(), test.getHealAmount());
+    		result += String.format("Player %s now has %s health.", test.getRandomMonster().getName(), test.getRandomMonster().getHealth());
     	}
-    	else {    		
-    		result += String.format("Enemy %s now has %s health.", 
-    				enemyMonster.getName(), enemyMonster.getHealth());
-    	}
+    	else {
+    		result = String.format("Player %s attacked enemy %s for %s damage.\n", 
+        			playerMonster.getName(), enemyMonster.getName(), damageDealt);
+        	if (enemyMonster.getIsFainted()) {
+        		result += String.format("Enemy %s has fainted!", enemyMonster.getName());
+        	}
+        	else {    		
+        		result += String.format("Enemy %s now has %s health.", 
+        				enemyMonster.getName(), enemyMonster.getHealth());
+        	}
+    	}	
 		return result;
     }
 
@@ -183,6 +206,7 @@ public class Battle {
     public String enemyAttack() {
     	Monster enemyMonster = monsters.random();
     	Monster playerMonster = player.getMonsters().random();
+    	String result;
     	int damageDealt = 0;
     	try {    		
     		damageDealt = enemyMonster.attack(playerMonster);
@@ -192,15 +216,22 @@ public class Battle {
     	}
     	currentTurn = Turn.PLAYER;
     	
-    	String result = String.format("Enemy %s attacked player %s for %s damage.\n", 
-    			enemyMonster.getName(), playerMonster.getName(), damageDealt);
-    	if (playerMonster.getIsFainted()) {
-    		result += String.format("Player %s has fainted!", playerMonster.getName());
+    	if(enemyMonster instanceof Raka && monsters.getList().size() > 1) {
+    		Raka test = (Raka)enemyMonster;
+    		result = String.format("Enemy %s healed enemy %s for %s health.\n", test.getName(),test.getRandomMonster().getName(), test.getHealAmount());
+    		result += String.format("Enemy %s now has %s health.", test.getRandomMonster().getName(), test.getRandomMonster().getHealth());
     	}
-    	else {    		
-    		result += String.format("Player %s now has %s health.", 
-    				playerMonster.getName(), playerMonster.getHealth());
-    	}
+    	else {
+    		result = String.format("Enemy %s attacked player %s for %s damage.\n", 
+        			enemyMonster.getName(), playerMonster.getName(), damageDealt);
+    		if (playerMonster.getIsFainted()) {
+        		result += String.format("Player %s has fainted!", playerMonster.getName());
+        	}
+        	else {    		
+        		result += String.format("Player %s now has %s health.", 
+        				playerMonster.getName(), playerMonster.getHealth());
+        	}
+    	}	
 		return result;
     }
 
