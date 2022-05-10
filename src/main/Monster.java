@@ -401,6 +401,22 @@ public abstract class Monster implements Purchasable {
 	}
 	
 	
+    /**
+     * If monster is fainted, set the new value of isFainted to false 
+     * Increase the monster health by the healAmount value 
+     * @param amount the heal amount
+     */
+	public void heal(int amount) {
+	    if(getIsFainted()) {
+		setIsFainted(false);
+	    }
+	    health += healAmount;
+	    if(this.getHealth() > this.getMaxHealth()) {
+		this.setHealth(maxHealth);
+	    }
+	}
+	
+	
 	/**
 	 * Deal damage to the given Monster object 
 	 * Damage to deal is calulated in finalDamage method
@@ -492,6 +508,7 @@ public abstract class Monster implements Purchasable {
 	 * @throws StatMaxedOutException if monster's level value is the same as maxLevel value 
      */
 	public void levelUp( ) throws StatMaxedOutException {
+		setIsFainted(false);
 		if (level == maxLevel) {
 			throw new StatMaxedOutException("Monster is already max level!");
 		}

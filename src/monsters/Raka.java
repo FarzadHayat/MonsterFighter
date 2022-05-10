@@ -99,7 +99,7 @@ public class Raka extends Monster {
      */
     public void healAllies(Monster other) throws InvalidTargetException {
     	if(!other.getIsFainted()) {
-    		other.setHealth(other.getHealth()+getHealAmount());
+    		other.heal(getHealAmount());
     	}
     	else {
     		throw new InvalidTargetException("Invalid target!");

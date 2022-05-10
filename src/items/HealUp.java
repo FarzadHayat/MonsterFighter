@@ -66,21 +66,12 @@ public class HealUp extends Item {
     	if (!player.getItems().getList().contains(this)) {
     		throw new NotFoundException("You do not own this item!");
     	}
-    	
-    	int health = monster.getHealth();
-    	int maxHealth = monster.getMaxHealth();
 		
-    	if (health == maxHealth) {
+    	if (monster.getHealth() == monster.getMaxHealth()) {
     		throw new StatMaxedOutException("Health is already full!");
     	}
     	
-    	int newHealth = health + healAmount;
-
-    	if (newHealth > maxHealth) {
-    		newHealth = maxHealth;
-    	}
-    	
-    	monster.setHealth(newHealth);
+    	monster.heal(healAmount);
     	player.getItems().remove(this);
     }
     
