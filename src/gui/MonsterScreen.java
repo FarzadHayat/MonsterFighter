@@ -187,15 +187,8 @@ public class MonsterScreen {
 		lblCritValue.setBounds(193, 320, 121, 40);
 		statsPanel.add(lblCritValue);
 		
-		JProgressBar healthBar = new JProgressBar();
-		healthBar.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		healthBar.setBackground(Color.LIGHT_GRAY);
-		healthBar.setForeground(Color.RED);
-		healthBar.setStringPainted(true);
-		healthBar.setBounds(193, 77, 163, 35);
+		HealthBar healthBar = new HealthBar(monster, 193, 77);
 		statsPanel.add(healthBar);
-		healthBar.setMaximum(monster.getMaxHealth());
-		healthBar.setValue(monster.getHealth());
 		
 		JLabel lblFainted = new JLabel("Status :");
 		lblFainted.setFont(new Font("Tahoma", Font.PLAIN, 20));

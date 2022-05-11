@@ -163,9 +163,6 @@ public class FightScreen {
 		Battle battle = gui.getGame().getBattles().getList().get(0);
 		try {
 			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
-			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
-			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
-			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
 		} catch (InventoryFullException e) {
 			e.printStackTrace();
 		}
