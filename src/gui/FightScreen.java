@@ -8,6 +8,7 @@ import exceptions.InventoryFullException;
 import exceptions.NotFoundException;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import main.*;
 import monsters.*;
@@ -29,6 +30,8 @@ public class FightScreen {
 	
 	private JTextArea commentaryText;
 	private BackButton backButton;
+	private JPanel playerPanel;
+	private JPanel enemyPanel;
 	
 	public void closeWindow() {
 		window.dispose();
@@ -77,39 +80,16 @@ public class FightScreen {
 		backButton.setVisible(false);
 		window.getContentPane().add(backButton);
 		
-		JPanel playerPanel = new JPanel();
-		playerPanel.setBounds(20, 105, 744, 100);
-		window.getContentPane().add(playerPanel);
-		playerPanel.setLayout(null);
-		
-		int xPos = 7;
-		for (Monster monster : game.getPlayer().getMonsters().getList()) {
-			MonsterButton monsterButton = new MonsterButton(monster, xPos, 5);
-			playerPanel.add(monsterButton);
-			xPos += 190;
-		}
-		
-		JPanel enemyPanel = new JPanel();
-		enemyPanel.setBounds(20, 365, 744, 100);
-		window.getContentPane().add(enemyPanel);
-		enemyPanel.setLayout(null);
-		
-		xPos = 7;
-		for (Monster monster : battle.getMonsters().getList()) {
-			MonsterButton monsterButton = new MonsterButton(monster, xPos, 5);
-			enemyPanel.add(monsterButton);
-			xPos += 190;
-		}
-		
+		refreshMonsters();
 		
 		JPanel commentaryPanel = new JPanel();
-		commentaryPanel.setBounds(93, 205, 600, 160);
+		commentaryPanel.setBounds(93, 215, 600, 150);
 		window.getContentPane().add(commentaryPanel);
 		commentaryPanel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane(commentaryText);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(10, 10, 580, 140);
+		scrollPane.setBounds(10, 10, 580, 130);
 		commentaryPanel.add(scrollPane);
 		
 		commentaryText = new JTextArea();
@@ -132,11 +112,17 @@ public class FightScreen {
 
 		// press nextButton to play the next turn in the battle
 		JButton nextButton = new JButton("Play Turn");
+		nextButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		nextButton.setBounds(630, 500, 120, 40);
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent key) {				
 				if (battle.getWinner() == null) {
-					commentaryText.setText(battle.playTurn());
-					commentaryText.setText(commentaryText.getText() + "\n" + battle.checkStatus());
+					String commentary = battle.playTurn();
+					commentary += battle.checkStatus();
+					commentaryText.setText(commentary);
+					window.getContentPane().remove(playerPanel);
+					window.getContentPane().remove(enemyPanel);
+					refreshMonsters();
 				}
 				if (battle.getWinner() != null) {
 					// disable nextButton and remove Battle from BattleInventory
@@ -151,8 +137,6 @@ public class FightScreen {
 				}
 			}
 		});
-		nextButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		nextButton.setBounds(630, 490, 120, 40);
 		window.getContentPane().add(nextButton);
 	}
 	
@@ -168,4 +152,35 @@ public class FightScreen {
 		}
 		new FightScreen(gui, battle);
 	}
+	
+	public void refreshMonsters() {
+		playerPanel = new JPanel();
+		playerPanel.setBounds(20, 90, 744, 120);
+		window.getContentPane().add(playerPanel);
+		playerPanel.setLayout(null);
+		
+		int xPos = 7;
+		for (Monster monster : game.getPlayer().getMonsters().getList()) {
+			MonsterPanel monsterPanel = new MonsterPanel(monster, xPos, 0);
+			playerPanel.add(monsterPanel);
+			xPos += 190;
+		}
+		playerPanel.revalidate();
+		playerPanel.repaint();
+		
+		enemyPanel = new JPanel();
+		enemyPanel.setBounds(20, 370, 744, 120);
+		window.getContentPane().add(enemyPanel);
+		enemyPanel.setLayout(null);
+		
+		xPos = 7;
+		for (Monster monster : battle.getMonsters().getList()) {
+			MonsterPanel monsterPanel = new MonsterPanel(monster, xPos, 0);
+			enemyPanel.add(monsterPanel);
+			xPos += 190;
+		}
+		enemyPanel.revalidate();
+		enemyPanel.repaint();
+	}
+
 }
