@@ -155,7 +155,7 @@ public class FightScreen {
 	
 	public void refreshMonsters() {
 		playerPanel = new JPanel();
-		playerPanel.setBounds(20, 90, 744, 120);
+		playerPanel.setBounds(20, 370, 744, 120);
 		window.getContentPane().add(playerPanel);
 		playerPanel.setLayout(null);
 		
@@ -169,7 +169,7 @@ public class FightScreen {
 		playerPanel.repaint();
 		
 		enemyPanel = new JPanel();
-		enemyPanel.setBounds(20, 370, 744, 120);
+		enemyPanel.setBounds(20, 90, 744, 120);
 		window.getContentPane().add(enemyPanel);
 		enemyPanel.setLayout(null);
 		
