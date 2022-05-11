@@ -7,6 +7,7 @@ import javax.swing.SwingConstants;
 import exceptions.InventoryFullException;
 import exceptions.NotFoundException;
 
+import java.awt.Color;
 import java.awt.Font;
 import main.*;
 import monsters.*;
@@ -17,6 +18,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class FightScreen {
 
@@ -75,21 +77,47 @@ public class FightScreen {
 		backButton.setVisible(false);
 		window.getContentPane().add(backButton);
 		
+		JPanel playerPanel = new JPanel();
+		playerPanel.setBounds(20, 105, 744, 100);
+		window.getContentPane().add(playerPanel);
+		playerPanel.setLayout(null);
+		
+		int xPos = 7;
+		for (Monster monster : game.getPlayer().getMonsters().getList()) {
+			MonsterButton monsterButton = new MonsterButton(monster, xPos, 5);
+			playerPanel.add(monsterButton);
+			xPos += 190;
+		}
+		
+		JPanel enemyPanel = new JPanel();
+		enemyPanel.setBounds(20, 365, 744, 100);
+		window.getContentPane().add(enemyPanel);
+		enemyPanel.setLayout(null);
+		
+		xPos = 7;
+		for (Monster monster : battle.getMonsters().getList()) {
+			MonsterButton monsterButton = new MonsterButton(monster, xPos, 5);
+			enemyPanel.add(monsterButton);
+			xPos += 190;
+		}
+		
+		
 		JPanel commentaryPanel = new JPanel();
-		commentaryPanel.setBounds(70, 120, 500, 380);
+		commentaryPanel.setBounds(93, 205, 600, 160);
 		window.getContentPane().add(commentaryPanel);
 		commentaryPanel.setLayout(null);
-
+		
 		JScrollPane scrollPane = new JScrollPane(commentaryText);
-		scrollPane.setBounds(10, 10, 480, 360);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBounds(10, 10, 580, 140);
 		commentaryPanel.add(scrollPane);
 		
 		commentaryText = new JTextArea();
-		scrollPane.setViewportView(commentaryText);
+		commentaryText.setEditable(false);
 		commentaryText.setFont(new Font("Calibri", Font.BOLD, 16));
 		commentaryText.setTabSize(4);
 		commentaryText.setLineWrap(true);
-		commentaryText.setEditable(false);
+		scrollPane.setViewportView(commentaryText);
 		
 		playBattle();
 	}
@@ -107,7 +135,7 @@ public class FightScreen {
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent key) {				
 				if (battle.getWinner() == null) {
-					commentaryText.setText(commentaryText.getText() + "\n" + battle.playTurn());
+					commentaryText.setText(battle.playTurn());
 					commentaryText.setText(commentaryText.getText() + "\n" + battle.checkStatus());
 				}
 				if (battle.getWinner() != null) {
@@ -134,6 +162,9 @@ public class FightScreen {
 		gui.getGame().setupGame();
 		Battle battle = gui.getGame().getBattles().getList().get(0);
 		try {
+			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
+			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
+			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
 			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
 		} catch (InventoryFullException e) {
 			e.printStackTrace();

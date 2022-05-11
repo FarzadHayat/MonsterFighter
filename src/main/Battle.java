@@ -277,8 +277,6 @@ public class Battle {
     {
     	winner = Turn.PLAYER;
     	String result = "\nYou won!";
-    	result += "\nYour monsters:";
-    	result += player.getMonsters();
     	game.getScoreSystem().addBattlesWon();
     	
     	int balanceReward = balanceMultiplier * size;
@@ -308,8 +306,6 @@ public class Battle {
     {
     	winner = Turn.ENEMY;
     	String result = "\nYou lost!";
-    	result += "\nEnemy monsters:";
-    	result += monsters;
     	game.getScoreSystem().addBattlesLost();
     	return result;
     }
