@@ -5,6 +5,7 @@ import java.util.Random;
 import exceptions.InventoryFullException;
 import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
+import monsters.Raka;
 
 public class MonsterInventory {
     
@@ -88,6 +89,9 @@ public class MonsterInventory {
     {
     	if (!isFull()) {
     		list.add(monster);
+    		if(monster instanceof Raka) {
+    			((Raka) monster).setTeam(this);
+    		}
     	}
     	else {
     		throw new InventoryFullException("Inventory full!");
@@ -197,6 +201,9 @@ public class MonsterInventory {
     	for (int i = 0; i < maxSize; i++) {
     		int index = random.nextInt(game.getAllMonsters().getList().size());
     		Monster monster = game.getAllMonsters().getList().get(index).clone();
+    		if(monster instanceof Raka) {
+    			((Raka) monster).setTeam(this);
+    		}
     		newList.add(monster);
     	}
     	setList(newList);

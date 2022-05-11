@@ -31,7 +31,6 @@ public abstract class Monster implements Purchasable {
 	private double refundAmount = 0.5;
 	
 	private boolean isFainted = false;
-	private boolean isBuffed = false;
 
 	protected GameEnvironment game;
 	protected Player player;
@@ -346,24 +345,6 @@ public abstract class Monster implements Purchasable {
     
     
 	/**
-     * Set the value of isFainted
-     * @param isFainted the new value of isFainted
-     */
-    public void setIsBuffed (boolean buffed) {
-        this.isBuffed = buffed;
-    }
-
-    
-    /**
-     * Get the value of isFainted
-     * @return the value of isFainted
-     */
-    public boolean getIsBuffed () {
-        return isBuffed;
-    }
-	
-    
-	/**
 	 * Functional 
 	 */
     
@@ -403,14 +384,14 @@ public abstract class Monster implements Purchasable {
 	
     /**
      * If monster is fainted, set the new value of isFainted to false 
-     * Increase the monster health by the healAmount value 
+     * Increase the monster health by the amount value 
      * @param amount the heal amount
      */
 	public void heal(int amount) {
 	    if(getIsFainted()) {
 		setIsFainted(false);
 	    }
-	    health += healAmount;
+	    health += amount;
 	    if(this.getHealth() > this.getMaxHealth()) {
 		this.setHealth(maxHealth);
 	    }
