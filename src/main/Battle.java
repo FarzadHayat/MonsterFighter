@@ -6,6 +6,7 @@ import java.util.Random;
 import exceptions.InvalidTargetException;
 import exceptions.InvalidValueException;
 import exceptions.NotFoundException;
+import monsters.Raka;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -153,16 +154,18 @@ public class Battle {
     public String playerAttack() {
     	Monster playerMonster = player.getMonsters().random();
     	Monster enemyMonster = monsters.random();
+    	String result;
     	int damageDealt = 0;
     	try {
     		damageDealt = playerMonster.attack(enemyMonster);
+
     	}
     	catch (InvalidValueException | InvalidTargetException e) {
     		e.printStackTrace();
     	}
     	currentTurn = Turn.ENEMY;
     	
-    	String result = String.format("Player %s attacked enemy %s for %s damage.\n", 
+    	result = String.format("Player %s attacked Enemy %s for %s damage.\n", 
     			playerMonster.getName(), enemyMonster.getName(), damageDealt);
     	if (enemyMonster.getIsFainted()) {
     		result += String.format("Enemy %s has fainted!", enemyMonster.getName());
@@ -170,6 +173,14 @@ public class Battle {
     	else {    		
     		result += String.format("Enemy %s now has %s health.", 
     				enemyMonster.getName(), enemyMonster.getHealth());
+    	}
+    	
+    	if(playerMonster instanceof Raka) {
+    		Raka rakaMonster = (Raka)playerMonster;
+    		if(rakaMonster.getChoice() <= 2) {
+        		result = String.format("Player %s healed Player %s for %s health.\n", rakaMonster.getName(),rakaMonster.getRandomMonster().getName(), rakaMonster.getHealAmount());
+        		result += String.format("Player %s now has %s health.", rakaMonster.getRandomMonster().getName(), rakaMonster.getRandomMonster().getHealth());
+    		}
     	}
 		return result;
     }
@@ -183,6 +194,7 @@ public class Battle {
     public String enemyAttack() {
     	Monster enemyMonster = monsters.random();
     	Monster playerMonster = player.getMonsters().random();
+    	String result;
     	int damageDealt = 0;
     	try {    		
     		damageDealt = enemyMonster.attack(playerMonster);
@@ -192,14 +204,22 @@ public class Battle {
     	}
     	currentTurn = Turn.PLAYER;
     	
-    	String result = String.format("Enemy %s attacked player %s for %s damage.\n", 
+    	result = String.format("Enemy %s attacked Player %s for %s damage.\n", 
     			enemyMonster.getName(), playerMonster.getName(), damageDealt);
-    	if (playerMonster.getIsFainted()) {
+		if (playerMonster.getIsFainted()) {
     		result += String.format("Player %s has fainted!", playerMonster.getName());
     	}
     	else {    		
     		result += String.format("Player %s now has %s health.", 
     				playerMonster.getName(), playerMonster.getHealth());
+    	}
+    	
+    	if(enemyMonster instanceof Raka) {
+    		Raka rakaMonster = (Raka)enemyMonster;
+    		if(rakaMonster.getChoice() <= 2) {
+        		result = String.format("Enemy %s healed Enemy %s for %s health.\n", rakaMonster.getName(),rakaMonster.getRandomMonster().getName(), rakaMonster.getHealAmount());
+        		result += String.format("Enemy %s now has %s health.", rakaMonster.getRandomMonster().getName(), rakaMonster.getRandomMonster().getHealth());
+    		}
     	}
 		return result;
     }
