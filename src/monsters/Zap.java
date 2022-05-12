@@ -3,7 +3,7 @@ package monsters;
 import exceptions.StatMaxedOutException;
 import main.*;
 
-public class Zap extends Monster {
+public class Zap extends Monster implements Cloneable {
 	
 	/**
 	 * Fields
@@ -69,7 +69,17 @@ public class Zap extends Monster {
      * @return new Zap instance
      */
     public Monster clone() {
-    	return new Zap(game);
+    	Zap cloneInst = new Zap(game);
+    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	for(int i = 0; i < correctLevel - 1; i++) {
+    		try {
+				cloneInst.levelUp();
+			} catch (StatMaxedOutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	return cloneInst;
     }
 
 }

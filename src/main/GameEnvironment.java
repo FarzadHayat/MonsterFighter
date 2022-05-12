@@ -337,6 +337,7 @@ public class GameEnvironment {
     	checkStatus();
     	if (!getIsFinished()) {
     		setDay(getDay() + 1);
+    		getAllMonsters().levelUpOnDay();
     		getShop().randomise();
     		battles.randomise();
 			result += randomEvent.runAllRandom();

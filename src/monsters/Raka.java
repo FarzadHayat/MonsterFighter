@@ -160,7 +160,17 @@ public class Raka extends Monster {
      * @return new Raka instance
      */
     public Monster clone() {
-    	return new Raka(game);
+    	Raka cloneInst = new Raka(game);
+    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	for(int i = 0; i < correctLevel - 1; i++) {
+    		try {
+				cloneInst.levelUp();
+			} catch (StatMaxedOutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	return cloneInst;
     }
     
 }
