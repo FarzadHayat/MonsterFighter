@@ -95,6 +95,22 @@ public class RandomEvent {
     	this.joinChance = joinChance;
     }
     
+    /**
+     * Get the value of rn
+     * @return the value of rn 
+     */
+    public Random getRandom() {
+    	return rn;
+    }
+    
+    /**
+     * Set the value of rn
+     * @param rn the new value of rn
+     */
+    public void setRandom(Random rn) {
+    	this.rn = rn;
+    }
+    
     
     /**
      * Functional
