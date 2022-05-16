@@ -86,7 +86,7 @@ public class BattleInventory {
     		list.add(battle);
     	}
     	else {
-    		throw new InventoryFullException("Inventory full!");
+    		throw new InventoryFullException("Battle inventory is full!");
     	}
     }
     
@@ -102,7 +102,7 @@ public class BattleInventory {
     		list.add(index, battle);
     	}
     	else {
-    		throw new InventoryFullException("Inventory full!");
+    		throw new InventoryFullException("Battle inventory is full!");
     	}
     }
 

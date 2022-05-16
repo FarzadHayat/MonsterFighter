@@ -93,7 +93,7 @@ public class MonsterInventory {
     		}
     	}
     	else {
-    		throw new InventoryFullException("Inventory full!");
+    		throw new InventoryFullException("Monster inventory is full!");
     	}
     }
     
@@ -109,7 +109,7 @@ public class MonsterInventory {
     		list.add(index, monster);
     	}
     	else {
-    		throw new InventoryFullException("Inventory full!");
+    		throw new InventoryFullException("Monster inventory is full!");
     	}
     }
 
@@ -265,37 +265,5 @@ public class MonsterInventory {
     	}
     	return result;
 	}
-
-	
-    /**
-    * @param name the given name
-    * @return whether the inventory contains a monster with the given name. Not case sensitive.
-    */
-    public boolean contains(String name) {
-	   	name = name.toLowerCase();
-	   	boolean hasMonster = false;
-	   	for (Monster monster: getList()) {
-	   		if (monster.getName().toLowerCase().equals(name)) {
-	   			hasMonster = true;
-	   		}
-	   	}
-	   	return hasMonster;
-    }
- 
- 
-   /**
-    * Get the index of the first occurrence of the monster with the given name in the inventory or null if not found.
-    * @param name the given name
-    * @return the index of selectedMonster
-    */
-    public Monster find(String name) {
-	   	Monster selectedMonster = null;
-	   	for (Monster monster : getList()) {
-	   		if (monster.getName().equals(name)) {
-	   			selectedMonster = monster;
-	   		}
-	   	}
-  		return selectedMonster;
-    }
 	
 }

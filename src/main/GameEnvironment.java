@@ -1,5 +1,7 @@
 package main;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
 import items.HealUp;
@@ -277,7 +279,6 @@ public class GameEnvironment {
      * 4. Setup battles and randomize it.
      */
     public void setupGame() {
-    	
     	try {
     		switch(difficulty) {
 	    	case EASY:
@@ -352,22 +353,10 @@ public class GameEnvironment {
     
     
     /**
-     * Set the value of isFinished to true if either the number of days has reached numDays or there is a stale mate.
-     * A stale mate occurs when the player has no monsters and can't afford to buy anything from the shop.
+     * Set the value of isFinished to true if the number of days has reached numDays.
      */
     public void checkStatus() {
-    	boolean stalemate = true;
-    	if (player.getMonsters().getList().size() == 0) {
-    		for (Monster monster : getShop().getMonsters().getList()) {
-    			if (player.getBalance() >= monster.getCost()) {
-    				stalemate = false;
-    			}
-    		}
-    	}
-    	else {
-    		stalemate = false;
-    	}
-    	setIsFinished(day >= numDays || stalemate);
+    	setIsFinished(day >= numDays);
     }
 
 }

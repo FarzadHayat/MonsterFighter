@@ -43,8 +43,8 @@ public class Battle {
     public Battle (GameEnvironment game) {
     	this.game = game;
     	player = game.getPlayer();
-    	size = randomSize();
-    	monsters = new MonsterInventory(size, game);
+    	setSize(randomSize());
+    	monsters = new MonsterInventory(getSize(), game);
     	monsters.randomise();
     	name = randomName();
     };
@@ -125,10 +125,64 @@ public class Battle {
 		this.name = name;
 	}
 
-    /** 
-     * Functional
-     */
 
+	/**
+     * Get the value of size
+	 * @return the value of size
+	 */
+	public int getSize() {
+		return size;
+	}
+
+
+	/**
+	 * Set the value of size
+	 * @param size the new value of size
+	 */
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+
+	/**
+     * Get the value of balanceMultiplier
+	 * @return the value of balanceMultiplier
+	 */
+	public int getBalanceMultiplier() {
+		return balanceMultiplier;
+	}
+
+
+	/**
+	 * Set the value of balanceMultiplier
+	 * @param balanceMultiplier the new value of balanceMultiplier
+	 */
+	public void setBalanceMultiplier(int balanceMultiplier) {
+		this.balanceMultiplier = balanceMultiplier;
+	}
+
+
+	/**
+     * Get the value of scoreMultiplier
+	 * @return the value of scoreMultiplier
+	 */
+	public int getScoreMultiplier() {
+		return scoreMultiplier;
+	}
+
+
+	/**
+	 * Set the value of scoreMultiplier
+	 * @param scoreMultiplier the new value of scoreMultiplier
+	 */
+	public void setScoreMultiplier(int scoreMultiplier) {
+		this.scoreMultiplier = scoreMultiplier;
+	}
+
+	
+	/** 
+	 * Functional
+	 */
 
 	/**
 	 * Check that the player monster inventory contains at least one non fainted monster.
@@ -292,8 +346,8 @@ public class Battle {
     	String result = "\nYou won!";
     	game.getScoreSystem().addBattlesWon();
     	
-    	int balanceReward = balanceMultiplier * size;
-    	int scoreReward = scoreMultiplier * size;
+    	int balanceReward = getBalanceMultiplier() * getSize();
+    	int scoreReward = getScoreMultiplier() * getSize();
     	
     	try {    		
     		player.addBalance(balanceReward);

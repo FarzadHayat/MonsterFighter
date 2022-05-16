@@ -85,8 +85,7 @@ public abstract class Monster implements Purchasable {
 	public void setName(String name) throws InvalidValueException {
 		name = name.strip();
     	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
-    	if (3 <= name.length() && name.length() <= 15 && name.matches(regex) && 
-			!player.getMonsters().contains(name) && !game.getAllMonsters().contains(name)) {
+    	if (3 <= name.length() && name.length() <= 15 && name.matches(regex)) {
     		this.name = name;
     	}
     	else {    		
@@ -462,7 +461,7 @@ public abstract class Monster implements Purchasable {
 	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException {
 		player.minusBalance(cost);
 		player.getMonsters().add(this);
-		int index = shop.getMonsters().getList().indexOf(this);
+		int index = shop.getMonsters().getList().indexOf(this);		
 		shop.getMonsters().remove(this);
 		shop.getMonsters().add(index, game.getAllMonsters().random());
 		return "You bought: " + name;

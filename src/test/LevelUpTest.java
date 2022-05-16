@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
+import items.HealUp;
 import items.LevelUp;
 import main.*;
 import monsters.Chunky;
@@ -22,6 +23,7 @@ class LevelUpTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
+		game.setupGame();
 		player = game.getPlayer();
 	}
 
@@ -55,6 +57,14 @@ class LevelUpTest {
 		catch (StatMaxedOutException e) {
 			assertEquals(e.getMessage(), "Monster is already max level!");
 		}
+	}
+	
+	
+	@Test
+	public void testClone() {
+		Item testItem = new LevelUp(game);
+		Item newItem = testItem.clone();
+		assertTrue(LevelUp.class.isInstance(newItem));
 	}
 
 }

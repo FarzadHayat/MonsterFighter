@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 import items.IncreaseCritRate;
+import items.LevelUp;
 import main.*;
 import monsters.Chunky;
 
@@ -22,6 +23,7 @@ class IncreaseCritRateTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
+		game.setupGame();
 		player = game.getPlayer();
 	}
 
@@ -71,6 +73,14 @@ class IncreaseCritRateTest {
 			assertEquals(e.getMessage(), "Crit Rate is already maxed out!");
 		}
 		
+	}
+	
+	
+	@Test
+	public void testClone() {
+		Item testItem = new IncreaseCritRate(game);
+		Item newItem = testItem.clone();
+		assertTrue(IncreaseCritRate.class.isInstance(newItem));
 	}
 
 }

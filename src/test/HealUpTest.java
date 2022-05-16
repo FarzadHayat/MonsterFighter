@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 import items.HealUp;
+import items.IncreaseCritRate;
 import main.*;
 import monsters.Chunky;
 
@@ -22,6 +23,7 @@ class HealUpTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
+		game.setupGame();
 		player = game.getPlayer();
 	}
 
@@ -70,6 +72,14 @@ class HealUpTest {
 			assertEquals(e.getMessage(), "Health is already full!");
 		}
 		
+	}
+	
+	
+	@Test
+	public void testClone() {
+		Item testItem = new HealUp(game);
+		Item newItem = testItem.clone();
+		assertTrue(HealUp.class.isInstance(newItem));
 	}
 
 }

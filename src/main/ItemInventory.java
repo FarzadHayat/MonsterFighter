@@ -88,7 +88,7 @@ public class ItemInventory {
     		list.add(item);
     	}
     	else {
-    		throw new InventoryFullException("Inventory full!");
+    		throw new InventoryFullException("Item inventory is full!");
     	}
     }
     
@@ -104,7 +104,7 @@ public class ItemInventory {
     		list.add(index, item);
     	}
     	else {
-    		throw new InventoryFullException("Inventory full!");
+    		throw new InventoryFullException("Item inventory is full!");
     	}
     }
 
