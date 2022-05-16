@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import items.HealUp;
 import main.*;
 
@@ -53,7 +52,7 @@ class ItemInventoryTest {
 
 	
 	@Test
-	public void testRemoveItem1() throws NotFoundException, InventoryFullException {
+	public void testRemoveItem1() throws InventoryFullException {
 		// Blue sky
 		Item testItem = new HealUp(game);
 		myItems.add(testItem);
@@ -64,7 +63,7 @@ class ItemInventoryTest {
 	
 	
 	@Test
-	public void testRemoveItem2() throws NotFoundException, InventoryFullException {
+	public void testRemoveItem2() throws InventoryFullException {
 		// Multiple items of the same type
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);
@@ -80,17 +79,12 @@ class ItemInventoryTest {
 	
 	
 	@Test
-	public void testRemoveItem3() throws NotFoundException, InventoryFullException {
+	public void testRemoveItem3() throws InventoryFullException {
 		// Purchasable not found in inventory
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);
 		myItems.add(testItem2);
-		try {    		
-			myItems.remove(testItem1);
-		}
-		catch (NotFoundException e){
-			assertEquals(e.getMessage(), "Item not found in inventory!");
-		}
+		myItems.remove(testItem1);
 	}
 
 	

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 
 public class ItemInventory {
     
@@ -113,16 +112,10 @@ public class ItemInventory {
     /**
      * Remove the given item from the inventory.
      * @param item the given item
-     * @throws NotFoundException if the item was not found in the inventory
      */
-    public void remove(Item item) throws NotFoundException
+    public void remove(Item item)
     {
-    	if (list.contains(item)) {    		
-    		list.remove(item);
-    	}
-    	else {
-    		throw new NotFoundException("Not found in inventory!");
-    	}
+    	list.remove(item);
     }
     
     

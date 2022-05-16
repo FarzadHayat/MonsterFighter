@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import exceptions.InsufficientFundsException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import items.HealUp;
 import main.*;
 
@@ -30,7 +29,7 @@ class ItemTest {
 
 	
 	@Test
-	public void testBuy1() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
+	public void testBuy1() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Blue sky
 		Item testItem = new HealUp(game);
 		player.setBalance(testItem.getCost());
@@ -43,7 +42,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testBuy2() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
+	public void testBuy2() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Insufficient funds
 		Item testItem = new HealUp(game);
 		player.setBalance(testItem.getCost() / 2);
@@ -57,7 +56,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testBuy3() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
+	public void testBuy3() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Inventory full	
 		Item testItem = new HealUp(game);
 		player.setBalance(testItem.getCost() * (myItems.getMaxSize() + 1));
@@ -74,7 +73,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testSell1() throws NotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell1() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Blue sky
 		Item testItem = new HealUp(game);
 		player.setBalance(testItem.getCost());
@@ -87,7 +86,7 @@ class ItemTest {
 	
 	
 	@Test
-	public void testSell2() throws NotFoundException, InventoryFullException, InsufficientFundsException, InvalidValueException {
+	public void testSell2() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Multiple items of the same type
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);
@@ -101,22 +100,6 @@ class ItemTest {
 		testItemList.add(testItem2);
 		assertEquals(testItem1.getCost(), player.getBalance());
 		assertEquals(testItemList, myItems.getList());
-	}
-	
-	
-	@Test
-	public void testSell3() throws NotFoundException, InsufficientFundsException, InventoryFullException, InvalidValueException {
-		// Purchasable not found in inventory
-		Item testItem1 = new HealUp(game);
-		Item testItem2 = new HealUp(game);
-		player.setBalance(testItem1.getCost());
-		testItem1.buy();
-		try {    		
-			testItem2.sell();
-		}
-		catch (NotFoundException e){
-			assertEquals(e.getMessage(), "Item not found in inventory!");
-		}
 	}
 
 }

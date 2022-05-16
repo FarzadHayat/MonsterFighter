@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import exceptions.InvalidValueException;
-import exceptions.NotFoundException;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -15,8 +14,6 @@ import main.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import java.awt.Color;
 import javax.swing.JTextArea;
 
 public class MonsterScreen {
@@ -25,9 +22,6 @@ public class MonsterScreen {
 	private GraphicalUserInterface gui;
 	
 	private GameEnvironment game;
-	private Player player;
-	private Score score;
-	
 	private Monster monster;
 	
 	public void closeWindow() {
@@ -45,8 +39,6 @@ public class MonsterScreen {
 		this.monster = monster;
 		this.gui = gui;
 		game = gui.getGame();
-		player = game.getPlayer();
-		score = game.getScoreSystem();
 		initialize();
 		window.setVisible(true);
 	}
@@ -117,9 +109,6 @@ public class MonsterScreen {
 						AlertBox.infoBox(monster.sell(), "Monster Sold!");
 						gui.launchHomeScreen();
 						finishedWindow();
-					} catch (NotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
 					} catch (InvalidValueException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

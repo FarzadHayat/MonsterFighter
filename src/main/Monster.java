@@ -6,7 +6,6 @@ import exceptions.InsufficientFundsException;
 import exceptions.InvalidTargetException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
 
 public abstract class Monster implements Purchasable {
@@ -457,11 +456,10 @@ public abstract class Monster implements Purchasable {
      * Buy a monster from the shop and add it to the player inventory.
      * @throws InsufficientFundsException if cost of monster is more than player balance
      * @throws InventoryFullException if inventory is full
-     * @throws NotFoundException if monster not found in the shop
      * @throws InvalidValueException if value of balance to minus is invalid
      * @return the string representing what the player bought
      */
-	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException, NotFoundException {
+	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException {
 		player.minusBalance(cost);
 		player.getMonsters().add(this);
 		int index = shop.getMonsters().getList().indexOf(this);
@@ -473,11 +471,10 @@ public abstract class Monster implements Purchasable {
 	
     /**
      * Sell monster back to the shop for a partial refund and removes the monster from the player's inventory
-     * @throws NotFoundException if monster not found in the player's inventory
      * @throws InvalidValueException if value of balance to add is invalid
      * @return the string representing what the player sold
      */
-	public String sell() throws NotFoundException, InvalidValueException {
+	public String sell() throws InvalidValueException {
 		player.addBalance((int) (cost * refundAmount));
 		player.getMonsters().remove(this);
 		return "You sold: " + name;

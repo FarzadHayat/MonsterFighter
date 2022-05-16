@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+
+import exceptions.NotFoundException;
+
 import javax.swing.JButton;
 
 import java.awt.Color;
@@ -176,13 +179,14 @@ public class BattleScreen {
 		
 		JButton nextButton = new JButton("Fight");
 		nextButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!gui.getGame().getPlayer().getMonsters().allFainted()) {					
+			public void actionPerformed(ActionEvent key) {
+				try {
+					battle.setup();
 					gui.launchFightScreen(battle);
 					finishedWindow();
 				}
-				else {
-					AlertBox.infoBox("You don't have any non fainted monsters in your team!", "Team empty");
+				catch (NotFoundException e) {					
+					AlertBox.infoBox(e.getMessage(), "Team empty");
 				}
 			}
 		});

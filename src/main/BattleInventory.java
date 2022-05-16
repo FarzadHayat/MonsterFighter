@@ -2,7 +2,6 @@ package main;
 import java.util.ArrayList;
 
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 
 public class BattleInventory {
     
@@ -111,16 +110,10 @@ public class BattleInventory {
     /**
      * Remove the given battle from the inventory.
      * @param battle the given battle
-     * @throws NotFoundException if the battle was not found in the inventory
      */
-    public void remove(Battle battle) throws NotFoundException
+    public void remove(Battle battle)
     {
-    	if (list.contains(battle)) {    		
-    		list.remove(battle);
-    	}
-    	else {
-    		throw new NotFoundException("Not found in inventory!");
-    	}
+    	list.remove(battle);
     }
     
     

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
 import items.LevelUp;
 import main.*;
@@ -28,7 +27,7 @@ class LevelUpTest {
 
 	
 	@Test
-	void testUse1() throws InventoryFullException, NotFoundException, StatMaxedOutException {
+	void testUse1() throws InventoryFullException, StatMaxedOutException {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		int levelBefore = monster.getLevel();
@@ -43,7 +42,7 @@ class LevelUpTest {
 	
 	
 	@Test
-	void testUse2() throws InventoryFullException, NotFoundException, StatMaxedOutException {
+	void testUse2() throws InventoryFullException, StatMaxedOutException {
 		// Monster is already max level
 		Monster monster = new Chunky(game);
 		monster.setLevel(monster.getMaxLevel());
@@ -55,21 +54,6 @@ class LevelUpTest {
 		}
 		catch (StatMaxedOutException e) {
 			assertEquals(e.getMessage(), "Monster is already max level!");
-		}
-	}
-	
-	
-	@Test
-	void testUse3() throws InventoryFullException, NotFoundException, StatMaxedOutException {
-		// Item not owned
-		Monster monster = new Chunky(game);
-		Item item = new LevelUp(game);
-		player.getMonsters().add(monster);
-		try {			
-			item.use(monster);
-		}
-		catch (NotFoundException e) {
-			assertEquals(e.getMessage(), "You do not own this item!");
 		}
 	}
 

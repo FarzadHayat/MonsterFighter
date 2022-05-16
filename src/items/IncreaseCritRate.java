@@ -1,6 +1,5 @@
 package items;
 
-import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
 import main.*;
 
@@ -58,15 +57,10 @@ public class IncreaseCritRate extends Item {
     /**
      * Increase the monster's crit rate by critIncrease amount.
      * @param monster the given monster
-     * @throws NotFoundException if the given monster was not found in the player inventory or the item was not found in the shop
      * @throws StatMaxedOutException if the monster is already max crit rate
      */
-    public void use(Monster monster) throws NotFoundException, StatMaxedOutException
+    public void use(Monster monster) throws StatMaxedOutException
     {
-    	if (!player.getItems().getList().contains(this)) {
-    		throw new NotFoundException("You do not own this item!");
-    	}
-    	
     	double critRate = monster.getCritRate();
     	double maxCritRate = monster.getMaxCritRate();
     	

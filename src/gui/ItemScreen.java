@@ -2,15 +2,11 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
-import items.IncreaseCritRate;
-import items.IncreaseDamage;
 import items.LevelUp;
 
 import javax.swing.JButton;
@@ -30,8 +26,6 @@ public class ItemScreen {
 	
 	private GameEnvironment game;
 	private Player player;
-	private Score score;
-	
 	private MonsterInventory monsters;
 	private JButton selectedButton;
 	private Monster selectedMonster;
@@ -54,7 +48,7 @@ public class ItemScreen {
 		this.gui = gui;
 		game = gui.getGame();
 		player = game.getPlayer();
-		score = game.getScoreSystem();
+		game.getScoreSystem();
 		monsters = player.getMonsters();
 		initialize();
 		window.setVisible(true);
@@ -99,9 +93,6 @@ public class ItemScreen {
 							gui.launchHomeScreen();
 							finishedWindow();
 						}
-					} catch (NotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
 					} catch (StatMaxedOutException e1) {
 						AlertBox.infoBox("Monster stat maxed out, choose another monster.", "Try again!");
 					}
@@ -121,9 +112,6 @@ public class ItemScreen {
 						AlertBox.infoBox(item.sell(), "Item Sold!");
 						gui.launchHomeScreen();
 						finishedWindow();
-					} catch (NotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
 					} catch (InvalidValueException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

@@ -3,7 +3,6 @@ package main;
 import exceptions.InsufficientFundsException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
 
 abstract public class Item implements Purchasable {
@@ -128,11 +127,10 @@ abstract public class Item implements Purchasable {
      * Buy this item from the shop and add it to the player inventory.
      * @throws InsufficientFundsException if cost of item is more than player balance
      * @throws InventoryFullException if the player inventory is full
-     * @throws NotFoundException if item was not found in the shop
      * @throws InvalidValueException if cost is a negative value 
      * @return the string representing what the player bought
      */
-    public String buy() throws InsufficientFundsException, InventoryFullException, NotFoundException, InvalidValueException {
+    public String buy() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
     	player.minusBalance(cost);
     	player.getItems().add(this);
 		int index = shop.getItems().getList().indexOf(this);
@@ -144,11 +142,10 @@ abstract public class Item implements Purchasable {
     
     /**
      * Sell this item back to the shop for a partial refund and remove the item from the player inventory.
-     * @throws NotFoundException if item was not found in the player inventory
      * @throws InvalidValueException if (cost * refundAmount) is a negative value
      * @return the string representing what the player sold
      */
-    public String sell() throws NotFoundException, InvalidValueException {
+    public String sell() throws InvalidValueException {
     	player.addBalance((int) (cost * refundAmount));
     	player.getItems().remove(this);
     	return "You sold: " + name;
@@ -158,10 +155,9 @@ abstract public class Item implements Purchasable {
     /**
      * Use this item on the given Monster
      * @param monster the given monster
-     * @throws NotFoundException if the given monster was not found in the player inventory or the item was not found in the shop
      * @throws StatMaxedOutException if the monster is already maxed out in the stat that the item is upgrading
      */
-    abstract public void use(Monster monster) throws NotFoundException, StatMaxedOutException;
+    abstract public void use(Monster monster) throws StatMaxedOutException;
 
     
     /**
