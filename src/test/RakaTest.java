@@ -55,38 +55,6 @@ class RakaTest {
 	}
 	
 	@Test
-	public void testBuff1() throws InvalidTargetException { 
-		//Raka buffs ally damage 
-		raka.increaseDamage(target);
-		assertEquals(raka.getDamageBefore()+raka.getBuffAmount(), target.getDamage());
-	}
-	
-	@Test 
-	public void testBuff2() throws InvalidTargetException, InvalidValueException { 
-		//Raka tries to buff fainted ally
-		target.takeDamage(target.getHealth());
-		try {
-			raka.increaseDamage(target);
-		}
-		catch(InvalidTargetException e) {
-			assertEquals(20, target.getDamage());
-			assertEquals(e.getMessage(), "Invalid target!");
-		}
-	}
-	
-	@Test
-	public void testBuff3() throws InvalidTargetException {
-		raka.increaseDamage(target);
-		try {
-			raka.increaseDamage(target);
-		}
-		catch(InvalidTargetException e) {
-			assertEquals(30, target.getDamage());
-			assertEquals(e.getMessage(), "Invalid target!");
-		}
-	}
-	
-	@Test
 	void testLevelUp1() throws StatMaxedOutException {
 		//Raka level up once 
 		raka.levelUp();

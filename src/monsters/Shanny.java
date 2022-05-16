@@ -64,7 +64,17 @@ public class Shanny extends Monster {
      * @return new Shanny instance
      */
     public Monster clone() {
-    	return new Shanny(game);
+    	Shanny cloneInst = new Shanny(game);
+    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	for(int i = 0; i < correctLevel - 1; i++) {
+    		try {
+				cloneInst.levelUp();
+			} catch (StatMaxedOutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	return cloneInst;
     }
 
 }

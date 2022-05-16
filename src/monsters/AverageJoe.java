@@ -66,7 +66,17 @@ public class AverageJoe extends Monster{
      * @return new AverageJoe instance
      */
     public Monster clone() {
-    	return new AverageJoe(game);
+    	AverageJoe cloneInst = new AverageJoe(game);
+    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	for(int i = 0; i < correctLevel - 1; i++) {
+    		try {
+				cloneInst.levelUp();
+			} catch (StatMaxedOutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	return cloneInst;
     }
     
 }

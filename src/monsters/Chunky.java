@@ -66,7 +66,17 @@ public class Chunky extends Monster {
      * @return new Chunky instance
      */
     public Monster clone() {
-    	return new Chunky(game);
+    	Chunky cloneInst = new Chunky(game);
+    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	for(int i = 0; i < correctLevel - 1; i++) {
+    		try {
+				cloneInst.levelUp();
+			} catch (StatMaxedOutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	return cloneInst;
     }
 
 }

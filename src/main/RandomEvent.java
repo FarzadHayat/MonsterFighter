@@ -151,7 +151,7 @@ public class RandomEvent {
      */
     public String randomMonsterJoin() {
     	String event = "";
-		Monster randomMonster = game.getAllMonsters().random();
+		Monster randomMonster = game.getAllMonsters().random().clone();
 		double randomValue = rn.nextDouble(1);
 		
 		if(randomValue <= joinChance) {

@@ -66,7 +66,17 @@ public class Lanky extends Monster {
      * @return new Lanky instance
      */
     public Monster clone() {
-    	return new Lanky(game);
+    	Lanky cloneInst = new Lanky(game);
+    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	for(int i = 0; i < correctLevel - 1; i++) {
+    		try {
+				cloneInst.levelUp();
+			} catch (StatMaxedOutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	return cloneInst;
     }
     
 }
