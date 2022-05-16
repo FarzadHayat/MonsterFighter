@@ -10,8 +10,6 @@ import monsters.Raka;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Battle {
@@ -259,12 +257,7 @@ public class Battle {
     		playTurn();
     		result += checkStatus();
     	}
-    	try {
-    		game.getBattles().remove(this);
-    	}
-    	catch (NotFoundException e) {
-    		e.printStackTrace();
-    	}
+    	game.getBattles().remove(this);
     	return result;
     }
     

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
 import items.IncreaseCritRate;
 import main.*;
@@ -28,7 +27,7 @@ class IncreaseCritRateTest {
 
 	
 	@Test
-	void testUse1() throws InventoryFullException, NotFoundException, StatMaxedOutException {
+	void testUse1() throws InventoryFullException, StatMaxedOutException {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		monster.setCritRate(0);
@@ -43,7 +42,7 @@ class IncreaseCritRateTest {
 
 	
 	@Test
-	void testUse2() throws InventoryFullException, NotFoundException, StatMaxedOutException {
+	void testUse2() throws InventoryFullException, StatMaxedOutException {
 		// Monster crit rate is only partially increased
 		Monster monster = new Chunky(game);
 		monster.setCritRate(monster.getMaxCritRate() - (IncreaseCritRate.getCritIncrease() / 2));
@@ -58,7 +57,7 @@ class IncreaseCritRateTest {
 	
 	
 	@Test
-	void testUse3() throws InventoryFullException, NotFoundException, StatMaxedOutException {
+	void testUse3() throws InventoryFullException, StatMaxedOutException {
 		// Monster is already at max crit rate
 		Monster monster = new Chunky(game);
 		monster.setCritRate(1);
@@ -72,21 +71,6 @@ class IncreaseCritRateTest {
 			assertEquals(e.getMessage(), "Crit Rate is already maxed out!");
 		}
 		
-	}
-	
-	
-	@Test
-	void testUse4() throws InventoryFullException, NotFoundException, StatMaxedOutException {
-		// Item not owned
-		Monster monster = new Chunky(game);
-		Item item = new IncreaseCritRate(game);
-		player.getMonsters().add(monster);
-		try {			
-			item.use(monster);
-		}
-		catch (NotFoundException e) {
-			assertEquals(e.getMessage(), "You do not own this item!");
-		}
 	}
 
 }

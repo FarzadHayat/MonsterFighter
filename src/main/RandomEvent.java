@@ -3,7 +3,6 @@ package main;
 import java.util.*;
 
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
 
 public class RandomEvent {
@@ -128,9 +127,8 @@ public class RandomEvent {
      * Monster leaves the player's team based on the leaveChance
      * @param monster given Monster object 
      * @return event the string representing when a monster leaves the team
-     * @throws NotFoundException if monster not found in player's inventory
      */
-    public String randomMonsterLeave(Monster monster) throws NotFoundException {
+    public String randomMonsterLeave(Monster monster) {
     	String event = "";
 		double resetValue = leaveChance;
 		//If monster fainted during any battle in the day, leaveChance is doubled 
@@ -183,12 +181,7 @@ public class RandomEvent {
 		    if(player.getMonsters().getList().size() <= 1) {
 		    	break;
 		    }
-		    try {
-		    	events += randomMonsterLeave(monster);
-		    }
-		    catch (NotFoundException e) {
-		    	e.printStackTrace();
-		    }
+		    events += randomMonsterLeave(monster);
 		}
 		for(int i = 0; i < player.getMonsters().getMaxSize() - player.getMonsters().getList().size(); i++) {
 			events += randomMonsterJoin();

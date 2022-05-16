@@ -7,8 +7,6 @@ import javax.swing.SwingConstants;
 import exceptions.InventoryFullException;
 import exceptions.NotFoundException;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import main.*;
 import monsters.*;
@@ -103,13 +101,6 @@ public class FightScreen {
 	}
 	
 	public void playBattle() {
-		// Setup the battle
-		try {
-			battle.setup();
-		} catch (NotFoundException e1) {
-			e1.printStackTrace();
-		}
-
 		// press nextButton to play the next turn in the battle
 		JButton nextButton = new JButton("Play Turn");
 		nextButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -126,14 +117,9 @@ public class FightScreen {
 				}
 				if (battle.getWinner() != null) {
 					// disable nextButton and remove Battle from BattleInventory
-					try {
-						game.getBattles().remove(battle);
-						backButton.setVisible(true);
-						nextButton.setVisible(false);
-					}
-					catch (NotFoundException e) {
-						e.printStackTrace();
-					}
+					game.getBattles().remove(battle);
+					backButton.setVisible(true);
+					nextButton.setVisible(false);
 				}
 			}
 		});

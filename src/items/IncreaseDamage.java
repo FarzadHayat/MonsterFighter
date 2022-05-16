@@ -1,6 +1,5 @@
 package items;
 
-import exceptions.NotFoundException;
 import main.*;
 
 public class IncreaseDamage extends Item {
@@ -57,14 +56,9 @@ public class IncreaseDamage extends Item {
     /**
      * Increase the monster's damage by damageIncrease amount.
      * @param monster the given monster
-     * @throws NotFoundException if the given monster was not found in the player inventory or the item was not found in the shop
      */
-    public void use(Monster monster) throws NotFoundException
+    public void use(Monster monster)
     {	
-    	if (!player.getItems().getList().contains(this)) {
-    		throw new NotFoundException("You do not own this item!");
-    	}
-    	
     	monster.setDamage(monster.getDamage() + damageIncrease);
     	player.getItems().remove(this);
     }

@@ -350,8 +350,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (NotFoundException | InvalidValueException | 
-						   InsufficientFundsException | InventoryFullException e) {
+				catch (InvalidValueException | InsufficientFundsException | InventoryFullException e) {
 					System.out.println(e.getMessage());
 				}
 				catch (InputMismatchException e) {
@@ -387,8 +386,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (NotFoundException | InvalidValueException | 
-						   InsufficientFundsException | InventoryFullException e) {
+				catch (InvalidValueException | InsufficientFundsException | InventoryFullException e) {
 					System.out.println(e.getMessage());
 				}
 				catch (InputMismatchException e) {
@@ -460,7 +458,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (NotFoundException | InvalidValueException e) {
+				catch (InvalidValueException e) {
 					System.out.println(e.getMessage());
 				}
 				catch (InputMismatchException e) {
@@ -531,7 +529,7 @@ public class CommandLine {
 				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
 				}
-				catch (NotFoundException | InvalidValueException e) {
+				catch (InvalidValueException e) {
 					System.out.println(e.getMessage());
 				}
 				catch (InputMismatchException e) {
@@ -570,9 +568,6 @@ public class CommandLine {
 			}
 			catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
-			}
-			catch (NotFoundException e) {
-				e.printStackTrace();
 			}
 			catch (StatMaxedOutException e) {
 				System.out.println("\n" + e.getMessage() + "\n");
@@ -646,9 +641,7 @@ public class CommandLine {
 				catch (InputMismatchException e) {
 	    			System.out.println("Command not found! Try again:");
 	    			scanner.nextLine();
-	    		} catch (NotFoundException e) {
-					System.out.println(e.getMessage());
-				}
+	    		}
 			}
 	}
 
@@ -659,22 +652,23 @@ public class CommandLine {
 	 * Checks the player team before the game to make sure they have at least one non fainted monster.
 	 * Checks the status of the battle after each turn.
 	 * @param battle the given battle currently being played
-	 * @throws NotFoundException if the player has no non fainted monsters in their team
 	 */
-	public void playBattle(Battle battle) throws NotFoundException {
-		battle.setup();
+	public void playBattle(Battle battle) {
+		try {
+			battle.setup();
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+			goBack();
+			return;
+		}
 		System.out.println("Press Enter to play next turn...");
 		while (battle.getWinner() == null) {
 			scanner.nextLine();
 			System.out.println(battle.playTurn());
 			System.out.println(battle.checkStatus());
 		}
-		try {
-			game.getBattles().remove(battle);
-		}
-		catch (NotFoundException e) {
-			e.printStackTrace();
-		}
+		game.getBattles().remove(battle);
 		goBack();
 	}
 

@@ -7,7 +7,6 @@ import javax.swing.SwingConstants;
 import exceptions.InsufficientFundsException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -28,7 +27,6 @@ public class ShopScreen {
 	
 	private GameEnvironment game;
 	private Player player;
-	private Score score;
 	
 	private MonsterInventory shopMonsters;
 	private ItemInventory shopItems;
@@ -57,7 +55,6 @@ public class ShopScreen {
 		this.gui = gui;
 		game = gui.getGame();
 		player = game.getPlayer();
-		score = game.getScoreSystem();
 		shopMonsters = game.getShop().getMonsters();
 		shopItems = game.getShop().getItems();
 		initialize();
@@ -184,7 +181,7 @@ public class ShopScreen {
 								AlertBox.infoBox(selectedMonster.buy(), "Monster bought!");
 								gui.launchShopScreen();
 								finishedWindow();
-							} catch (NotFoundException| InvalidValueException e1) {
+							} catch (InvalidValueException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							} catch (InsufficientFundsException e1) {
@@ -203,7 +200,7 @@ public class ShopScreen {
 								AlertBox.infoBox(selectedItem.buy(), "Item bought!");
 								gui.launchShopScreen();
 								finishedWindow();
-							} catch (NotFoundException| InvalidValueException e1) {
+							} catch (InvalidValueException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							} catch (InsufficientFundsException e1) {

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
 import monsters.Raka;
 
@@ -118,16 +117,10 @@ public class MonsterInventory {
     /**
      * Remove the given monster from the inventory.
      * @param monster the given monster
-     * @throws NotFoundException if the monster was not found in the inventory
      */
-    public void remove(Monster monster) throws NotFoundException
+    public void remove(Monster monster)
     {
-    	if (list.contains(monster)) {    		
-    		list.remove(monster);
-    	}
-    	else {
-    		throw new NotFoundException("Not found in inventory!");
-    	}
+    	list.remove(monster);
     }
 	
 	

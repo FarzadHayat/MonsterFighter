@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
 import items.HealUp;
 import main.*;
@@ -28,7 +27,7 @@ class HealUpTest {
 
 	
 	@Test
-	void testUse1() throws InventoryFullException, NotFoundException, StatMaxedOutException {
+	void testUse1() throws InventoryFullException, StatMaxedOutException {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		monster.setHealth(0);
@@ -43,7 +42,7 @@ class HealUpTest {
 
 	
 	@Test
-	void testUse2() throws InventoryFullException, NotFoundException, StatMaxedOutException {
+	void testUse2() throws InventoryFullException, StatMaxedOutException {
 		// Monster is only partially healed
 		Monster monster = new Chunky(game);
 		monster.setHealth(monster.getHealth() - (HealUp.getHealAmount() / 2));
@@ -58,7 +57,7 @@ class HealUpTest {
 	
 	
 	@Test
-	void testUse3() throws InventoryFullException, NotFoundException, StatMaxedOutException {
+	void testUse3() throws InventoryFullException, StatMaxedOutException {
 		// Monster is already max health
 		Monster monster = new Chunky(game);
 		Item item = new HealUp(game);
@@ -71,21 +70,6 @@ class HealUpTest {
 			assertEquals(e.getMessage(), "Health is already full!");
 		}
 		
-	}
-	
-	
-	@Test
-	void testUse4() throws InventoryFullException, NotFoundException, StatMaxedOutException {
-		// Item not owned
-		Monster monster = new Chunky(game);
-		Item item = new HealUp(game);
-		player.getMonsters().add(monster);
-		try {			
-			item.use(monster);
-		}
-		catch (NotFoundException e) {
-			assertEquals(e.getMessage(), "You do not own this item!");
-		}
 	}
 
 }
