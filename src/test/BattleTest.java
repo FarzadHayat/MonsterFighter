@@ -38,7 +38,7 @@ class BattleTest {
 			battle.setup();
 		}
 		catch (NotFoundException e) {
-			assertEquals(e.getMessage(), "Battle not available: Player has no monsters! Try again...");
+			assertEquals("Battle not available: Player has no monsters! Try again...", e.getMessage());
 		}
 		
 		Monster testMonster = new Chunky(game);
@@ -49,7 +49,7 @@ class BattleTest {
 			battle.setup();
 		}
 		catch (NotFoundException e) {
-			assertEquals(e.getMessage(), "Battle not available: Player monsters are all fainted! Try again...");
+			assertEquals("Battle not available: Player monsters are all fainted! Try again...", e.getMessage());
 		}
 	}
 	
@@ -64,7 +64,7 @@ class BattleTest {
 		
 		String result = "\nYou lost!";
     	
-    	assertEquals(battle.checkStatus(), result);
+    	assertEquals(result, battle.checkStatus());
 	}
 	
 	
@@ -83,7 +83,7 @@ class BattleTest {
     	result += String.format("\nYou have gained %s gold!", balanceReward);
     	result += String.format("\nYou have gained %s score!", scoreReward);
     	
-    	assertEquals(battle.checkStatus(), result);
+    	assertEquals(result, battle.checkStatus());
 	}
 
 	
@@ -99,11 +99,11 @@ class BattleTest {
     	result += String.format("\nYou have gained %s gold!", balanceReward);
     	result += String.format("\nYou have gained %s score!", scoreReward);
     	
-    	assertEquals(battle.win(), result);
-    	assertEquals(battle.getWinner(), Turn.PLAYER);
-    	assertEquals(score.getDayBattlesWon(), 1);
-    	assertEquals(score.getDayScore(), scoreBefore + scoreReward);
-    	assertEquals(player.getBalance(), balanceBefore + balanceReward);
+    	assertEquals(result, battle.win());
+    	assertEquals(Turn.PLAYER, battle.getWinner());
+    	assertEquals(1, score.getDayBattlesWon());
+    	assertEquals(scoreBefore + scoreReward, score.getDayScore());
+    	assertEquals(balanceBefore + balanceReward, player.getBalance());
 	}
 
 	
@@ -111,9 +111,9 @@ class BattleTest {
 	void testLose() {
 		String result = "\nYou lost!";
 		game.getScoreSystem().addBattlesLost();
-		assertEquals(battle.lose(), result);
+		assertEquals(result, battle.lose());
 
-		assertEquals(battle.getWinner(), Turn.ENEMY);
+		assertEquals(Turn.ENEMY, battle.getWinner());
 		
 	}
 	
@@ -121,7 +121,7 @@ class BattleTest {
 	@Test
 	public void testToString() {
 		String result = String.format("Battle %s\n %s\n", battle.getName(), battle.getMonsters());
-		assertEquals(battle.toString(), result);
+		assertEquals(result, battle.toString());
 	}
 	
 	
@@ -130,7 +130,7 @@ class BattleTest {
 		String result = battle.toString();
     	result += "\n1: Fight";
     	result += "\n2: Go back";
-    	assertEquals(battle.view(), result);
+    	assertEquals(result, battle.view());
 	}
 
 }

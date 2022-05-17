@@ -55,7 +55,7 @@ class LevelUpTest {
 			item.use(monster);
 		}
 		catch (StatMaxedOutException e) {
-			assertEquals(e.getMessage(), "Monster is already max level!");
+			assertEquals("Monster is already max level!", e.getMessage());
 		}
 	}
 	

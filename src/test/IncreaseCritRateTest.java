@@ -70,7 +70,7 @@ class IncreaseCritRateTest {
 			item.use(monster);
 		}
 		catch (StatMaxedOutException e) {
-			assertEquals(e.getMessage(), "Crit Rate is already maxed out!");
+			assertEquals("Crit Rate is already maxed out!", e.getMessage());
 		}
 		
 	}

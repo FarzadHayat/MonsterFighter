@@ -39,7 +39,7 @@ class PlayerTest {
 			player.setBalance(-5);
 		}
 		catch (InvalidValueException e) {
-			assertEquals(e.getMessage(), "Balance cannot be a negative value!");
+			assertEquals("Balance cannot be a negative value!", e.getMessage());
 		}
 	}
 
@@ -63,7 +63,7 @@ class PlayerTest {
 				player.SetName(name);
 			}
 			catch (InvalidValueException e){
-				assertEquals(e.getMessage(), "Invalid player name! Try again:");
+				assertEquals("Invalid player name! Try again:", e.getMessage());
 			}
 		}
 	}
@@ -85,7 +85,7 @@ class PlayerTest {
 			player.addBalance(-5);
 		}
 		catch (InvalidValueException e) {
-			assertEquals(e.getMessage(), "Cannot be a negative value!");
+			assertEquals("Cannot be a negative value!", e.getMessage());
 		}
 	}
 	
@@ -104,7 +104,7 @@ class PlayerTest {
 			player.minusBalance(-5);
 		}
 		catch (InvalidValueException e) {
-			assertEquals(e.getMessage(), "Cannot be a negative value!");
+			assertEquals("Cannot be a negative value!", e.getMessage());
 		}
 		
 		// Insufficient funds error
@@ -112,7 +112,7 @@ class PlayerTest {
 			player.minusBalance(20);
 		}
 		catch (InsufficientFundsException e) {
-			assertEquals(e.getMessage(), "Insufficient funds!");
+			assertEquals("Insufficient funds!", e.getMessage());
 		}
 		
 		player.setBalance(0);
@@ -120,7 +120,7 @@ class PlayerTest {
 			player.minusBalance(10);
 		}
 		catch (InsufficientFundsException e) {
-			assertEquals(e.getMessage(), "Insufficient funds!");
+			assertEquals("Insufficient funds!", e.getMessage());
 		}
 	}
 	
@@ -142,7 +142,7 @@ class PlayerTest {
 			player.balanceSufficient(-5);
 		}
 		catch (InvalidValueException e) {
-			assertEquals(e.getMessage(), "Cannot be a negative value!");
+			assertEquals("Cannot be a negative value!", e.getMessage());
 		}
 	}
 	
@@ -159,7 +159,7 @@ class PlayerTest {
     	result += player.getMonsters().view();
     	result += String.format("\n%s: Go back", player.getMonsters().getList().size() + 1);
     	
-    	assertEquals(player.viewMonsters(), result);
+    	assertEquals(result, player.viewMonsters());
     }
     
     
@@ -175,7 +175,7 @@ class PlayerTest {
     	result += player.getItems().view();
     	result += String.format("\n%s: Go back", player.getItems().getList().size() + 1);
 
-    	assertEquals(player.viewItems(), result);
+    	assertEquals(result, player.viewItems());
     }
 
 }

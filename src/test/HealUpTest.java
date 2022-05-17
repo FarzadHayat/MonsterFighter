@@ -69,7 +69,7 @@ class HealUpTest {
 			item.use(monster);
 		}
 		catch (StatMaxedOutException e) {
-			assertEquals(e.getMessage(), "Health is already full!");
+			assertEquals("Health is already full!", e.getMessage());
 		}
 		
 	}

@@ -55,7 +55,7 @@ class ItemTest {
 			testItem.buy();
 		}
 		catch (InsufficientFundsException e){
-			assertEquals(e.getMessage(), "Insufficient funds!");
+			assertEquals("Insufficient funds!", e.getMessage());
 		}
 	}
 	
@@ -75,7 +75,7 @@ class ItemTest {
 			testItem.buy();
 		}
 		catch (InventoryFullException e){
-			assertEquals(e.getMessage(), "Item inventory is full!");
+			assertEquals("Item inventory is full!", e.getMessage());
 		}
 	}
 	
@@ -119,7 +119,7 @@ class ItemTest {
 	public void testToString() {
 		Item testItem = new HealUp(game);
 		String myStr = testItem.toString();
-		assertEquals(myStr, "%-20s    cost: %-3s    %-50s".formatted(testItem.getName(), testItem.getCost(), testItem.getDescription()));
+		assertEquals("%-20s    cost: %-3s    %-50s".formatted(testItem.getName(), testItem.getCost(), testItem.getDescription()), myStr);
 	}
 	
 	
@@ -144,7 +144,7 @@ class ItemTest {
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}
-    	assertEquals(myStr, result);
+    	assertEquals(result, myStr);
 	}
 
 }

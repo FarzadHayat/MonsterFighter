@@ -48,7 +48,7 @@ class BattleInventoryTest {
 			myBattles.add(testBattle);
 		}
 		catch (InventoryFullException e){
-			assertEquals(e.getMessage(), "Battle inventory is full!");
+			assertEquals("Battle inventory is full!", e.getMessage());
 		}
 	}
 	
@@ -139,7 +139,7 @@ class BattleInventoryTest {
 			result += "\n" + battle;
 		}
 		
-		assertEquals(myBattles.toString(), result);
+		assertEquals(result, myBattles.toString());
 	}
 	
 	
@@ -158,7 +158,7 @@ class BattleInventoryTest {
     	}
     	result += String.format("%s: Go back", start);
     	
-    	assertEquals(myBattles.view(), result);
+    	assertEquals(result, myBattles.view());
 	}
 
 }

@@ -47,7 +47,7 @@ class ItemInventoryTest {
 			myItems.add(testItem);
 		}
 		catch (InventoryFullException e){
-			assertEquals(e.getMessage(), "Item inventory is full!");
+			assertEquals("Item inventory is full!", e.getMessage());
 		}
 	}
 	
@@ -148,7 +148,7 @@ class ItemInventoryTest {
 			result += "\n" + item;
 		}
 		
-		assertEquals(myItems.toString(), result);
+		assertEquals(result, myItems.toString());
 	}
 	
 	
@@ -166,7 +166,7 @@ class ItemInventoryTest {
     		start++;
     	}
     	
-    	assertEquals(myItems.view(), result);
+    	assertEquals(result, myItems.view());
 	}
 
 }

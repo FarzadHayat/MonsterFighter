@@ -48,7 +48,7 @@ class MonsterInventoryTest {
 			myMonsters.add(testMonster);
 		}
 		catch (InventoryFullException e){
-			assertEquals(e.getMessage(), "Monster inventory is full!");
+			assertEquals("Monster inventory is full!", e.getMessage());
 		}
 	}
 	
@@ -157,9 +157,9 @@ class MonsterInventoryTest {
 		myMonsters.add(testMonster3);
 		
 		myMonsters.healAll();
-		assertEquals(myMonsters.getList().get(0).getHealth(), testMonster1.getMaxHealth());
-		assertEquals(myMonsters.getList().get(1).getHealth(), (testMonster2.getMaxHealth() / 2) + testMonster2.getHealAmount());
-		assertEquals(myMonsters.getList().get(2).getHealth(), testMonster3.getMaxHealth());
+		assertEquals(testMonster1.getMaxHealth(), myMonsters.getList().get(0).getHealth());
+		assertEquals((testMonster2.getMaxHealth() / 2) + testMonster2.getHealAmount(), myMonsters.getList().get(1).getHealth());
+		assertEquals(testMonster3.getMaxHealth(), myMonsters.getList().get(2).getHealth());
 	}
 	
 	
@@ -187,8 +187,8 @@ class MonsterInventoryTest {
 		
 		myMonsters.levelUpOnDay();
 		
-		assertEquals(myMonsters.getList().get(0).getLevel(), 3);
-		assertEquals(myMonsters.getList().get(1).getLevel(), 3);
+		assertEquals(3, myMonsters.getList().get(0).getLevel());
+		assertEquals(3, myMonsters.getList().get(1).getLevel());
 	}
 	
 	
@@ -205,7 +205,7 @@ class MonsterInventoryTest {
 			result += "\n" + monster;
 		}
 		
-		assertEquals(myMonsters.toString(), result);
+		assertEquals(result, myMonsters.toString());
 	}
 	
 	
@@ -223,7 +223,7 @@ class MonsterInventoryTest {
     		start++;
     	}
     	
-    	assertEquals(myMonsters.view(), result);
+    	assertEquals(result, myMonsters.view());
 	}
 
 }

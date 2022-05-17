@@ -58,7 +58,7 @@ class GameEnvironmentTest {
 				game.setNumDays(numDay);
 			}
 			catch (InvalidValueException e){
-				assertEquals(e.getMessage(), "Invalid number of days! Try again:");
+				assertEquals("Invalid number of days! Try again:", e.getMessage());
 			}
 		}
 	}
@@ -68,13 +68,13 @@ class GameEnvironmentTest {
 	void testSetDifficulty() {
 		// Blue sky
 		game.setDifficulty(Difficulty.EASY);
-		assertEquals(game.getDifficulty(), Difficulty.EASY);
+		assertEquals(Difficulty.EASY, game.getDifficulty());
 		
 		game.setDifficulty(Difficulty.NORMAL);
-		assertEquals(game.getDifficulty(), Difficulty.NORMAL);
+		assertEquals(Difficulty.NORMAL, game.getDifficulty());
 		
 		game.setDifficulty(Difficulty.HARD);
-		assertEquals(game.getDifficulty(), Difficulty.HARD);
+		assertEquals(Difficulty.HARD, game.getDifficulty());
 	}
 
 	
@@ -85,8 +85,8 @@ class GameEnvironmentTest {
 	
 	@Test
 	void setupGame() {
-		assertEquals(player.getBalance(), 100);
-		assertEquals(score.getTotalScore(), 1000);
+		assertEquals(100, player.getBalance());
+		assertEquals(1000, score.getTotalScore());
 	}
 	
 	
@@ -114,12 +114,12 @@ class GameEnvironmentTest {
 		assertFalse(game.getShop().getItems().getList().equals(shopItemsBefore));
 		assertFalse(game.getBattles().getList().equals(battlesBefore));
 		
-		assertEquals(testMonster.getHealth(), healthBefore + testMonster.getHealAmount());
+		assertEquals(healthBefore + testMonster.getHealAmount(), testMonster.getHealth());
 		
-		assertEquals(game.getDay(), 2);
-		assertEquals(score.getDayBattlesWon(), 0);
-		assertEquals(score.getDayBattlesLost(), 0);
-		assertEquals(score.getDayScore(), 0);
+		assertEquals(2, game.getDay());
+		assertEquals(0, score.getDayBattlesWon());
+		assertEquals(0, score.getDayBattlesLost());
+		assertEquals(0, score.getDayScore());
 	}
 	
 	
@@ -128,7 +128,7 @@ class GameEnvironmentTest {
 		// Game over
 		String result = "\n";
 
-		assertEquals(game.sleep(), result);
+		assertEquals(result, game.sleep());
     	assertTrue(game.getIsFinished());
 	}
 
