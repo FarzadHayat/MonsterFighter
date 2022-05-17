@@ -35,6 +35,8 @@ public abstract class Monster implements Purchasable {
 	protected Player player;
 	private Shop shop;
 	
+	private Random rn = new Random();
+	
 	
 	/**
 	 * Constructors
@@ -341,6 +343,22 @@ public abstract class Monster implements Purchasable {
         return refundAmount;
     }
     
+    /**
+     * Get the value of rn
+     * @return the value of rn 
+     */
+    public Random getRandom() {
+    	return rn;
+    }
+    
+    /**
+     * Set the value of rn
+     * @param rn the new value of rn
+     */
+    public void setRandom(Random rn) {
+    	this.rn = rn;
+    }
+    
     
 	/**
 	 * Functional 
@@ -384,15 +402,21 @@ public abstract class Monster implements Purchasable {
      * If monster is fainted, set the new value of isFainted to false 
      * Increase the monster health by the amount value 
      * @param amount the heal amount
+     * @throws InvalidValueException if given amount value is 0 or negative
      */
-	public void heal(int amount) {
-	    if(getIsFainted()) {
-		setIsFainted(false);
-	    }
-	    health += amount;
-	    if(this.getHealth() > this.getMaxHealth()) {
-		this.setHealth(maxHealth);
-	    }
+	public void heal(int amount) throws InvalidValueException {
+		if(amount <= 0) {
+			throw new InvalidValueException("Invalid value!");
+		}
+		else {
+		    if(getIsFainted()) {
+		    	setIsFainted(false);
+		    }
+		    health += amount;
+		    if(this.getHealth() > this.getMaxHealth()) {
+		    	this.setHealth(maxHealth);
+		    }
+		}
 	}
 	
 	
@@ -440,7 +464,6 @@ public abstract class Monster implements Purchasable {
 	 * @return the totalDamage after taking into account the critical rate 
 	 */
 	public int finalDamage() {
-		Random rn = new Random();
 		double chanceValue = (double)(rn.nextInt(10)+1) / 10;
 		int totalDamage = getDamage();
 		if(chanceValue <= getCritRate()) {
