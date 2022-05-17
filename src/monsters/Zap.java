@@ -75,7 +75,7 @@ public class Zap extends Monster implements Cloneable {
     		try {
 				cloneInst.levelUp();
 			} catch (StatMaxedOutException e) {
-				// TODO Auto-generated catch block
+				// Error within code
 				e.printStackTrace();
 			}
     	}

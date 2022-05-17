@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.StatMaxedOutException;
 import main.*;
+import monsters.AverageJoe;
 import monsters.Lanky;
 
 class LankyTest {
@@ -17,6 +18,7 @@ class LankyTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
+		game.setupGame();
 		monster = new Lanky(game);
 	}
 
@@ -55,6 +57,14 @@ class LankyTest {
 		catch(StatMaxedOutException e) {
 			assertEquals(e.getMessage(), "Monster is already max level!");
 		}
+	}
+	
+	@Test
+	public void testClone() {
+		Monster cloneInst = monster.clone();
+		assertTrue(cloneInst != monster);
+		assertTrue(Lanky.class.isInstance(cloneInst));
+		assertTrue(cloneInst.getLevel() == monster.getLevel());
 	}
 
 }

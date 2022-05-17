@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.StatMaxedOutException;
+import items.HealUp;
 import main.*;
 import monsters.AverageJoe;
 
@@ -15,13 +16,14 @@ class AverageJoeTest {
 	private AverageJoe monster;
 	
 	@BeforeEach
-	void setUp() throws Exception {
+	public void setUp() throws Exception {
 		game = new GameEnvironment();
+		game.setupGame();
 		monster = new AverageJoe(game);
 	}
 
 	@Test
-	void testLevelUp1() throws StatMaxedOutException {
+	public void testLevelUp1() throws StatMaxedOutException {
 		//Average Joe level up once 
 		monster.levelUp();
 		assertEquals(110, monster.getMaxHealth());
@@ -32,7 +34,7 @@ class AverageJoeTest {
 	}
 	
 	@Test
-	void testLevelUp2() throws StatMaxedOutException {
+	public void testLevelUp2() throws StatMaxedOutException {
 		//Average Joe level up twice 
 		monster.levelUp();
 		monster.levelUp();
@@ -44,7 +46,7 @@ class AverageJoeTest {
 	}
 	
 	@Test
-	void testLevelUp3() throws StatMaxedOutException {
+	public void testLevelUp3() throws StatMaxedOutException {
 		//Average Joe level up at max level
 		for(int i = 0; i < 3; i++) {
 			monster.levelUp();
@@ -55,6 +57,14 @@ class AverageJoeTest {
 		catch(StatMaxedOutException e) {
 			assertEquals(e.getMessage(), "Monster is already max level!");
 		}
+	}
+	
+	@Test
+	public void testClone() {
+		Monster cloneInst = monster.clone();
+		assertTrue(cloneInst != monster);
+		assertTrue(AverageJoe.class.isInstance(cloneInst));
+		assertTrue(cloneInst.getLevel() == monster.getLevel());
 	}
 
 }

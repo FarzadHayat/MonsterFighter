@@ -115,8 +115,9 @@ public class Raka extends Monster {
     /**
      * Heals given Monster object
      * @param other given Monster object
+     * @throws InvalidValueException if heal amount is negative or zero
      */
-    public void healAllies(Monster other) throws InvalidTargetException {
+    public void healAllies(Monster other) throws InvalidTargetException, InvalidValueException {
     	if(!other.getIsFainted()) {
     		other.heal(getHealAmount());
     	}
@@ -166,7 +167,7 @@ public class Raka extends Monster {
     		try {
 				cloneInst.levelUp();
 			} catch (StatMaxedOutException e) {
-				// TODO Auto-generated catch block
+				// Error within code
 				e.printStackTrace();
 			}
     	}

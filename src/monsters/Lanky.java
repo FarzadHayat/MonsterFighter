@@ -72,7 +72,7 @@ public class Lanky extends Monster {
     		try {
 				cloneInst.levelUp();
 			} catch (StatMaxedOutException e) {
-				// TODO Auto-generated catch block
+				// Error within code
 				e.printStackTrace();
 			}
     	}

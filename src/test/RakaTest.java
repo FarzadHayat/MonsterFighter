@@ -2,11 +2,14 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.InvalidTargetException;
 import exceptions.InvalidValueException;
+import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 import main.*;
 import monsters.AverageJoe;
@@ -19,8 +22,9 @@ class RakaTest {
 	private Monster target;
 	
 	@BeforeEach
-	void setUp() throws Exception {
+	public void setUp() throws Exception {
 		game = new GameEnvironment();
+		game.setupGame();
 		raka = new Raka(game);
 		target = new AverageJoe(game);
 	}
@@ -50,12 +54,12 @@ class RakaTest {
 		}
 		catch(InvalidTargetException e) {
 			assertEquals(0, target.getHealth());
-			assertEquals(e.getMessage(), "Invalid target!");
+			assertEquals("Invalid target!", e.getMessage());
 		}
 	}
 	
 	@Test
-	void testLevelUp1() throws StatMaxedOutException {
+	public void testLevelUp1() throws StatMaxedOutException {
 		//Raka level up once 
 		raka.levelUp();
 		assertEquals(88, raka.getMaxHealth());
@@ -66,7 +70,7 @@ class RakaTest {
 	}
 	
 	@Test
-	void testLevelUp2() throws StatMaxedOutException {
+	public void testLevelUp2() throws StatMaxedOutException {
 		//Raka level up twice 
 		raka.levelUp();
 		raka.levelUp();
@@ -78,7 +82,7 @@ class RakaTest {
 	}
 	
 	@Test
-	void testLevelUp3() throws StatMaxedOutException {
+	public void testLevelUp3() throws StatMaxedOutException {
 		//Raka level up at max level
 		for(int i = 0; i < 3; i++) {
 			raka.levelUp();
@@ -89,6 +93,30 @@ class RakaTest {
 		catch(StatMaxedOutException e) {
 			assertEquals(e.getMessage(), "Monster is already max level!");
 		}
+	}
+	
+	@Test
+	public void testAttack1() throws InvalidTargetException, InvalidValueException, InventoryFullException {
+		//Raka heals
+		game.getPlayer().getMonsters().add(raka);
+		raka.setRandom(new Random(0));
+		assertEquals(raka.getHealAmount(), raka.attack(target));
+	}
+	
+	@Test
+	public void testAttack2() throws InventoryFullException, InvalidTargetException, InvalidValueException {
+		//Raka attacks
+		game.getPlayer().getMonsters().add(raka);
+		raka.setRandom(new Random(1234));
+		assertTrue(raka.getDamage() == raka.attack(target) || raka.getDamage()*2 == raka.attack(target));
+	}
+	
+	@Test
+	public void testClone() {
+		Monster cloneInst = raka.clone();
+		assertTrue(cloneInst != raka);
+		assertTrue(Raka.class.isInstance(cloneInst));
+		assertTrue(cloneInst.getLevel() == raka.getLevel());
 	}
 
 }
