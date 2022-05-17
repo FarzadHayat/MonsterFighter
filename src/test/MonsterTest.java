@@ -345,8 +345,80 @@ class MonsterTest {
 	}
 	
 	@Test
-	public void testView() {
+	public void testView1() {
+		//Viewing monster stats
 		String result = "";
+    	if (shop.getMonsters().getList().contains(monster)) {
+    		result += String.format("\nBalance: %s\n\n", player.getBalance());
+    	}
+    	result += "Monster: " + monster.getClass().getSimpleName() + "\n";
+    	if (!monster.getName().equals(getClass().getSimpleName())){
+    		result += "Name: " + monster.getName() + "\n";
+    	}
+    	result += monster.getDescription() + "\n";
+    	result += "Health: " + monster.getHealth() + "\n";
+    	result += "Max Health: " + monster.getMaxHealth() + "\n";
+    	result += "Damage: " + monster.getDamage() + "\n";
+    	result += "Cost: " + monster.getCost() + "\n";
+    	result += "Level: " + monster.getLevel() + "\n";
+    	result += "Heal Amount: " + monster.getHealAmount() + "\n";
+    	result += "Crit Rate: " + (int) (monster.getCritRate() * 100) + "%\n";
+    	result += "Fainted: " + monster.getIsFainted() + "\n";
+    	result += "Max Level: " + monster.getMaxLevel() + "\n";
+    	if (shop.getMonsters().getList().contains(monster)) {
+    		result += "\n1: Buy";
+    		result += "\n2: Go back";
+    	}
+    	if (player.getMonsters().getList().contains(monster)) {
+    		result += "\n1: Rename";
+    		result += "\n2: Sell";
+    		result += "\n3: Go back";
+    	}
+    	
+    	assertEquals(result, monster.view());
+	}
+	
+	@Test
+	public void testView2() throws InventoryFullException {
+		//Viewing monster in player's inventory
+		String result = "";
+		player.getMonsters().add(monster);
+    	if (shop.getMonsters().getList().contains(monster)) {
+    		result += String.format("\nBalance: %s\n\n", player.getBalance());
+    	}
+    	result += "Monster: " + monster.getClass().getSimpleName() + "\n";
+    	if (!monster.getName().equals(getClass().getSimpleName())){
+    		result += "Name: " + monster.getName() + "\n";
+    	}
+    	result += monster.getDescription() + "\n";
+    	result += "Health: " + monster.getHealth() + "\n";
+    	result += "Max Health: " + monster.getMaxHealth() + "\n";
+    	result += "Damage: " + monster.getDamage() + "\n";
+    	result += "Cost: " + monster.getCost() + "\n";
+    	result += "Level: " + monster.getLevel() + "\n";
+    	result += "Heal Amount: " + monster.getHealAmount() + "\n";
+    	result += "Crit Rate: " + (int) (monster.getCritRate() * 100) + "%\n";
+    	result += "Fainted: " + monster.getIsFainted() + "\n";
+    	result += "Max Level: " + monster.getMaxLevel() + "\n";
+    	if (shop.getMonsters().getList().contains(monster)) {
+    		result += "\n1: Buy";
+    		result += "\n2: Go back";
+    	}
+    	if (player.getMonsters().getList().contains(monster)) {
+    		result += "\n1: Rename";
+    		result += "\n2: Sell";
+    		result += "\n3: Go back";
+    	}
+    	
+    	assertEquals(result, monster.view());
+	}
+	
+	@Test
+	public void testView3() throws InventoryFullException {
+		//Viewing monster in shop
+		String result = "";
+		shop.getMonsters().getList().remove(0);
+		shop.getMonsters().add(monster);
     	if (shop.getMonsters().getList().contains(monster)) {
     		result += String.format("\nBalance: %s\n\n", player.getBalance());
     	}
