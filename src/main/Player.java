@@ -72,7 +72,7 @@ public class Player {
      * @param name the new value of name
      * @throws InvalidValueException 
      */
-    public void SetName (String name) throws InvalidValueException {
+    public void setName (String name) throws InvalidValueException {
     	name = name.strip();
     	String regex = "(([a-zA-Z])*(\\s)*)*([a-zA-Z])+";
     	if (3 <= name.length() && name.length() <= 15 && name.matches(regex)) {

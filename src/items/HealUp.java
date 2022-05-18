@@ -1,5 +1,6 @@
 package items;
 
+import exceptions.InvalidValueException;
 import exceptions.StatMaxedOutException;
 import main.*;
 
@@ -65,7 +66,12 @@ public class HealUp extends Item {
     		throw new StatMaxedOutException("Health is already full!");
     	}
     	
-    	monster.heal(healAmount);
+    	try {
+			monster.heal(healAmount);
+		} catch (InvalidValueException e) {
+			// Error in code
+			e.printStackTrace();
+		}
     	player.getItems().remove(this);
     }
     

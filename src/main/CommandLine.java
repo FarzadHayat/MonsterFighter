@@ -146,7 +146,7 @@ public class CommandLine {
 		while (true) {
 			String name = scanner.nextLine();
 			try {
-				player.SetName(name);
+				player.setName(name);
 				break;
 			}
 			catch (InvalidValueException e) {

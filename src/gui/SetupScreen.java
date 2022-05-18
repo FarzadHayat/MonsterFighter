@@ -122,7 +122,7 @@ public class SetupScreen {
 			public void actionPerformed(ActionEvent e) {
 				game.setDifficulty((Difficulty)difficultyBox.getSelectedItem());
 				try {
-					player.SetName(txtSelectPlayerName.getText());
+					player.setName(txtSelectPlayerName.getText());
 					game.setNumDays(sliderNumDays.getValue());
 					game.setupGame();
 					gui.launchStartingMonsterScreen();

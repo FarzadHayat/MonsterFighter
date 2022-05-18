@@ -47,20 +47,20 @@ class PlayerTest {
 	@Test
 	void testSetName() throws InvalidValueException {
 		// Blue sky
-		player.SetName("john");
+		player.setName("john");
 		assertEquals("john", player.getName());
 		
-		player.SetName("ABC   Abc   abc");
+		player.setName("ABC   Abc   abc");
 		assertEquals("ABC   Abc   abc", player.getName());
 		
-		player.SetName("  whitespace               ");
+		player.setName("  whitespace               ");
 		assertEquals("whitespace", player.getName());
 		
 		// Invalid name error
 		String[] testNames = {"aj", "", "Abc   Abc   AbcZ", "123", "Mikey5x", "!WoW", "oops_"};
 		for (String name : testNames) {			
 			try {			
-				player.SetName(name);
+				player.setName(name);
 			}
 			catch (InvalidValueException e){
 				assertEquals("Invalid player name! Try again:", e.getMessage());
