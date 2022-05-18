@@ -13,7 +13,7 @@ public class Zap extends Monster implements Cloneable {
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Zap";
-	private static String description = "";
+	private static String description = "Being charged is in its nature, some say its attacks are so powerful you won't even know you're dead. Specialising in critical rate, this monster has the potential to strike as hard as a thunderstorm. However, when it doesn't land a critical hit, its attacks are only mediocre";
 	private static int defaultMaxHealth = 80;
 	private static int defaultDamage = 20;
 	private static int defaultCost = 50;

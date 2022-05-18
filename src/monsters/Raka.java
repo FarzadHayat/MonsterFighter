@@ -17,7 +17,7 @@ public class Raka extends Monster {
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Raka";
-	private static String description = "";
+	private static String description = "An ancient being from decades ago, Raka swaps between a healer and an attacker. Its offensive ability can be overlooked but not its healing ability. With this monster in the team, monsters will definitely get a substantial boost!";
 	private static int defaultMaxHealth = 80;
 	private static int defaultDamage = 10;
 	private static int defaultCost = 70;

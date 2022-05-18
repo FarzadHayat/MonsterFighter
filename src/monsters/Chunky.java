@@ -13,7 +13,7 @@ public class Chunky extends Monster {
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Chunky";
-	private static String description = "";
+	private static String description = "Big bones, big limbs, big shoulder, everything about this monster is big. They tower over other monsters, making any incoming damage feel like a tickle. Their lack of attack power would long ago have spelled their end if not for their formidable size";
 	private static int defaultMaxHealth = 200;
 	private static int defaultDamage = 10;
 	private static int defaultCost = 80;

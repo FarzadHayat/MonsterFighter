@@ -13,7 +13,7 @@ public class AverageJoe extends Monster{
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Average Joe";
-	private static String description = "";
+	private static String description = "As the name suggests, this is a regular monster with mediocre stats all across the board. They not specialise in anything in particular but always gets the job done. If you're looking for a safe route, this is the monster to go.";
 	private static int defaultMaxHealth = 100;
 	private static int defaultDamage = 20;
 	private static int defaultCost = 60;

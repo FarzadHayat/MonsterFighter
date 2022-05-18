@@ -13,7 +13,7 @@ public class Lanky extends Monster {
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Lanky";
-	private static String description = "";
+	private static String description = "Long limbs and a skinny figure, sometimes one swing from this monster is enough to finish its foes. They specialise in attack damage while losing out on some of its defensive attributes. Having them in your team is always a gamble!";
 	private static int defaultMaxHealth = 60;
 	private static int defaultDamage = 40;
 	private static int defaultCost = 70;

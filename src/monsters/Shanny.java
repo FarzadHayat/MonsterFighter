@@ -13,7 +13,7 @@ public class Shanny extends Monster {
 	 * Default value for monster statistics 
 	 */
 	private static String defaultName = "Shanny";
-	private static String description = "";
+	private static String description = "Its offensive ability is not the best but this monster can definitely hold its ground when it comes to self healing. It specialises in overnight healing, making it perfect for everyday battles. It could end up being your last hope in winning your battles on the last day";
 	private static int defaultMaxHealth = 100;
 	private static int defaultDamage = 15;
 	private static int defaultCost = 60;
