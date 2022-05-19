@@ -3,6 +3,14 @@ package monsters;
 import exceptions.StatMaxedOutException;
 import main.*;
 
+/**
+ * A monster subclass.
+ * Its offensive ability is not the best but this monster can definitely
+ * hold its ground when it comes to self healing. It specialises in overnight
+ * healing, making it perfect for everyday battles. It could end up being
+ * your last hope in winning your battles on the last day.
+ * @author Farzad and Daniel
+ */
 public class Shanny extends Monster {
 	
 	/**

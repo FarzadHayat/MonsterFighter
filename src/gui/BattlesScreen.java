@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
+/**
+ * Displays the battle inventory in a new window.
+ * @author Farzad and Daniel
+ */
 public class BattlesScreen {
 
 	private JFrame window;
@@ -27,16 +31,26 @@ public class BattlesScreen {
 	private ArrayList<JLabel> statsLabels;
 	private ArrayList<JLabel> statsLabelValues;
 	
+	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 	
+	
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeBattlesScreen(this);
 	}
 
+	
 	/**
-	 * Create the application.
+	 * Create a new BattlesScreen object.
+	 * @param gui the given gui
 	 */
 	public BattlesScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
@@ -46,6 +60,7 @@ public class BattlesScreen {
 		window.setVisible(true);
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -198,6 +213,11 @@ public class BattlesScreen {
 		statsPanel.add(nextButton);
 	}
 	
+	
+	/**
+	 * Update the stats panel and highlight the selected button.
+	 * @param button the given button
+	 */
 	public void updateStatsPanel(JButton button) {
 		if(selectedButton != null) {
 			selectedButton.setBackground(null);
@@ -219,10 +239,4 @@ public class BattlesScreen {
 		}
 	}
 	
-	public static void main(String[]args) {
-		GraphicalUserInterface gui = new GraphicalUserInterface();
-		gui.setGame(new GameEnvironment());
-		gui.getGame().setupGame();
-		new BattlesScreen(gui);
-	}
 }

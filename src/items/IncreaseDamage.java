@@ -2,6 +2,10 @@ package items;
 
 import main.*;
 
+/**
+ * Item that can be used on a monster to increase their damage by the given damage amount.
+ * @author Farzad and Daniel
+ */
 public class IncreaseDamage extends Item {
     
 	/**

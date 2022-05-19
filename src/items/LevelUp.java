@@ -3,6 +3,10 @@ package items;
 import exceptions.StatMaxedOutException;
 import main.*;
 
+/**
+ * Item that can be used on a monster to level them up to increase their stats.
+ * @author Farzad and Daniel
+ */
 public class LevelUp extends Item {
 	
 	/**

@@ -19,6 +19,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
+/**
+ * Displays the selected item in a new window.
+ * @author Farzad and Daniel
+ */
 public class ItemScreen {
 
 	private JFrame window;
@@ -32,16 +36,27 @@ public class ItemScreen {
 	
 	private Item item;
 	
+	
+	/**
+	 * Close the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 	
+	
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeItemScreen(this);
 	}
+	
 
 	/**
-	 * Create the application.
+	 * Create a new ItemScreen object.
+	 * @param gui the given gui
+	 * @param item the given item
 	 */
 	public ItemScreen(GraphicalUserInterface gui, Item item) {
 		this.item = item;
@@ -53,6 +68,7 @@ public class ItemScreen {
 		initialize();
 		window.setVisible(true);
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -179,21 +195,4 @@ public class ItemScreen {
 		
 	}
 	
-	public static void main(String[]args) throws InventoryFullException{
-		GraphicalUserInterface gui = new GraphicalUserInterface();
-		GameEnvironment game = new GameEnvironment();
-		gui.setGame(game);
-		gui.getGame().setupGame();
-		for(int i = 0; i < 4; i++) {
-			try {
-				gui.getGame().getPlayer().getMonsters().add(gui.getGame().getAllMonsters().getList().get(i).clone());
-			} catch (InventoryFullException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		LevelUp test = new LevelUp(game);
-		game.getPlayer().getItems().add(test);
-		new ItemScreen(gui, test);
-	}
 }

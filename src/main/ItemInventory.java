@@ -4,6 +4,10 @@ import java.util.Random;
 
 import exceptions.InventoryFullException;
 
+/**
+ * Displays the selected item inventory in a new window.
+ * @author Farzad and Daniel
+ */
 public class ItemInventory {
     
 	/**
@@ -95,6 +99,7 @@ public class ItemInventory {
     
     /**
      * Add the given item at the given index to the inventory.
+     * @param index the given index to add the item
      * @param item the given item
      * @throws InventoryFullException if the inventory is already full
      */

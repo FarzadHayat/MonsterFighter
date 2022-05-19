@@ -7,9 +7,19 @@ import javax.swing.JProgressBar;
 
 import main.Monster;
 
+/**
+ * A template for creating a new health progress bar.
+ * @author Farzad and Daniel
+ */
 @SuppressWarnings("serial")
 public class HealthBar extends JProgressBar {
 
+	/**
+	 * Create a new health bar.
+	 * @param monster the given monster
+	 * @param xPos the given x position
+	 * @param yPos the given y position
+	 */
 	public HealthBar (Monster monster, int xPos, int yPos) {
 		super();
 		setFont(new Font("Tahoma", Font.PLAIN, 15));

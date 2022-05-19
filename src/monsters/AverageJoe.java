@@ -3,6 +3,14 @@ package monsters;
 import exceptions.StatMaxedOutException;
 import main.*;
 
+/**
+ * A monster subclass.
+ * As the name suggests, this is a regular monster with mediocre stats
+ * all across the board. They not specialise in anything in particular
+ * but always gets the job done. If you're looking for a safe route,
+ * this is the monster to go.
+ * @author Farzad and Daniel
+ */
 public class AverageJoe extends Monster{
 	
 	/**

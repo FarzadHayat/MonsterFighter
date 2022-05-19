@@ -16,6 +16,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+/**
+ * Displays the selected monster in a new window.
+ * @author Farzad and Daniel
+ */
 public class MonsterScreen {
 
 	private JFrame window;
@@ -24,16 +28,27 @@ public class MonsterScreen {
 	private GameEnvironment game;
 	private Monster monster;
 	
+	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 	
+	
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeMonsterScreen(this);
 	}
 
+	
 	/**
-	 * Create the application.
+	 * Create a new MonsterScreen object.
+	 * @param gui the given gui
+	 * @param monster the given monster
 	 */
 	public MonsterScreen(GraphicalUserInterface gui, Monster monster) {
 		this.monster = monster;
@@ -43,6 +58,7 @@ public class MonsterScreen {
 		window.setVisible(true);
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */

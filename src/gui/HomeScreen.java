@@ -11,6 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
+/**
+ * Displays the home screen in a new window.
+ * @author Farzad and Daniel
+ */
 public class HomeScreen {
 
 	private JFrame window;
@@ -21,16 +25,26 @@ public class HomeScreen {
 	private MonsterInventory monsters;
 	private ItemInventory items;
 	
+	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 	
+	
+	/**
+	 * call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeHomeScreen(this);
 	}
 
+
 	/**
-	 * Create the application.
+	 * Create a new HomeScreen object.
+	 * @param gui the given gui
 	 */
 	public HomeScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
@@ -41,6 +55,7 @@ public class HomeScreen {
 		initialize();
 		window.setVisible(true);
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.

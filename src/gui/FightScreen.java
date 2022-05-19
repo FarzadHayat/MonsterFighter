@@ -19,6 +19,10 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+/**
+ * Displays the fight screen for the battle in a new window.
+ * @author Farzad and Daniel
+ */
 public class FightScreen {
 
 	private JFrame window;
@@ -31,16 +35,26 @@ public class FightScreen {
 	private JPanel playerPanel;
 	private JPanel enemyPanel;
 	
+	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 
+	
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeFightScreen(this);
 	}
+	
 
 	/**
-	 * Create the application.
+	 * Create a new FightScreen object.
+	 * @param gui the given gui
 	 */
 	public FightScreen(GraphicalUserInterface gui, Battle battle) {
 		this.gui = gui;
@@ -50,6 +64,7 @@ public class FightScreen {
 		window.setVisible(true);
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -100,6 +115,10 @@ public class FightScreen {
 		playBattle();
 	}
 	
+	
+	/**
+	 * Play the battle turn by turn using a play turn button until the battle is over.
+	 */
 	public void playBattle() {
 		// press nextButton to play the next turn in the battle
 		JButton nextButton = new JButton("Play Turn");
@@ -126,19 +145,10 @@ public class FightScreen {
 		window.getContentPane().add(nextButton);
 	}
 	
-	public static void main(String[]args) {
-		GraphicalUserInterface gui = new GraphicalUserInterface();
-		gui.setGame(new GameEnvironment());
-		gui.getGame().setupGame();
-		Battle battle = gui.getGame().getBattles().getList().get(0);
-		try {
-			gui.getGame().getPlayer().getMonsters().add(new Chunky(gui.getGame()));
-		} catch (InventoryFullException e) {
-			e.printStackTrace();
-		}
-		new FightScreen(gui, battle);
-	}
-	
+
+	/**
+	 * Refresh the monster buttons to update their health.
+	 */
 	public void refreshMonsters() {
 		playerPanel = new JPanel();
 		playerPanel.setBounds(20, 370, 744, 120);

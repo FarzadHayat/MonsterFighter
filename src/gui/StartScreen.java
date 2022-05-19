@@ -11,29 +11,41 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-
+/**
+ * Displays the start screen in a new window.
+ * @author Farzad and Daniel
+ */
 public class StartScreen {
 
 	private JFrame window;
 	private GraphicalUserInterface gui;
 	
 	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 	
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeStartScreen(this);
 	}
 
+
 	/**
-	 * Create the application.
+	 * Create a new StartScreen object.
+	 * @param gui the given gui
 	 */
 	public StartScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
 		initialize();
 		window.setVisible(true);
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.

@@ -3,6 +3,14 @@ package monsters;
 import exceptions.StatMaxedOutException;
 import main.*;
 
+/**
+ * A monster subclass.
+ * Big bones, big limbs, big shoulder, everything about this monster is big.
+ * They tower over other monsters, making any incoming damage feel like a tickle.
+ * Their lack of attack power would long ago have spelled their end if not for
+ * their formidable size.
+ * @author Farzad and Daniel
+ */
 public class Chunky extends Monster {
 	
 	/**

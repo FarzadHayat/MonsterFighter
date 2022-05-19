@@ -3,6 +3,10 @@ package items;
 import exceptions.StatMaxedOutException;
 import main.*;
 
+/**
+ * Item that can be used on a monster to increase their crit rate by the given crit amount.
+ * @author Farzad and Daniel
+ */
 public class IncreaseCritRate extends Item {
     
 	/**

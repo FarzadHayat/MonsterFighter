@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
+/**
+ * Displays the selected battle in a new window.
+ * @author Farzad and Daniel
+ */
 public class BattleScreen {
 
 	private JFrame window;
@@ -40,16 +44,26 @@ public class BattleScreen {
 	private JLabel critRateLabelValue;
 	
 	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 	
+	
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeBattleScreen(this);
 	}
 
+
 	/**
-	 * Create the application.
+	 * Create a new BattleScreen object.
+	 * @param gui the given gui
+	 * @param battle the given battle
 	 */
 	public BattleScreen(GraphicalUserInterface gui, Battle battle) {
 		this.gui = gui;
@@ -59,6 +73,7 @@ public class BattleScreen {
 		initialize();
 		window.setVisible(true);
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -195,6 +210,11 @@ public class BattleScreen {
 		statsPanel.add(nextButton);
 	}
 	
+	
+	/**
+	 * Update the stats panel and highlight the selected button.
+	 * @param button the given button
+	 */
 	public void updateStatsPanel(JButton button) {
 		if(selectedButton != null) {
 			selectedButton.setBackground(null);
@@ -213,10 +233,4 @@ public class BattleScreen {
 		critRateLabelValue.setText(String.valueOf((int)(selectedMonster.getCritRate() * 100 )+ "%"));
 	}
 	
-	public static void main(String[]args) {
-		GraphicalUserInterface gui = new GraphicalUserInterface();
-		gui.setGame(new GameEnvironment());
-		gui.getGame().setupGame();
-		new BattleScreen(gui, new Battle(gui.getGame()));
-	}
 }

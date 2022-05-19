@@ -19,7 +19,10 @@ import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
-
+/**
+ * Displays the starting monster screen in a new window.
+ * @author Farzad and Daniel
+ */
 public class StartingMonsterScreen {
 
 	private JFrame window;
@@ -31,16 +34,24 @@ public class StartingMonsterScreen {
 	private JButton selectedButton;
 	
 	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeStartingMonsterScreen(this);
 	}
 
+
 	/**
-	 * Create the application.
+	 * Create a new StartingMonsterScreen object.
+	 * @param gui the given gui
 	 */
 	public StartingMonsterScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
@@ -51,6 +62,7 @@ public class StartingMonsterScreen {
 		window.setVisible(true);
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -186,11 +198,5 @@ public class StartingMonsterScreen {
 		}
 		
 	}
-	
-	public static void main(String[]args) {
-		GraphicalUserInterface gui = new GraphicalUserInterface();
-		gui.setGame(new GameEnvironment());
-		gui.getGame().setupGame();
-		new StartingMonsterScreen(gui);
-	}
+
 }

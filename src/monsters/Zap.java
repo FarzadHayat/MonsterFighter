@@ -3,6 +3,15 @@ package monsters;
 import exceptions.StatMaxedOutException;
 import main.*;
 
+/**
+ * A monster subclass.
+ * Being charged is in its nature, some say its attacks are so powerful
+ * you won't even know you're dead. Specialising in critical rate,
+ * this monster has the potential to strike as hard as a thunderstorm.
+ * However, when it doesn't land a critical hit,
+ * its attacks are only mediocre.
+ * @author Farzad and Daniel
+ */
 public class Zap extends Monster implements Cloneable {
 	
 	/**

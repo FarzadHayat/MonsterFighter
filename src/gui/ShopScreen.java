@@ -20,6 +20,10 @@ import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
+/**
+ * Displays the shop screen in a new window.
+ * @author Farzad and Daniel
+ */
 public class ShopScreen {
 
 	private JFrame window;
@@ -40,16 +44,26 @@ public class ShopScreen {
 	private Monster selectedMonster;
 	private Item selectedItem;
 	
+	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 	
+	
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeShopScreen(this);
 	}
 
+
 	/**
-	 * Create the application.
+	 * Create a new ShopScreen object.
+	 * @param gui the given gui
 	 */
 	public ShopScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
@@ -61,6 +75,7 @@ public class ShopScreen {
 		window.setVisible(true);
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -338,11 +353,4 @@ public class ShopScreen {
 		window.getContentPane().add(btnItemSelection);
 	}
 	
-	public static void main(String[]args) {
-		GraphicalUserInterface gui = new GraphicalUserInterface();
-		GameEnvironment game = new GameEnvironment();
-		gui.setGame(game);
-		gui.getGame().setupGame();
-		new ShopScreen(gui);
-	}
 }

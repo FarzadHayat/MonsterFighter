@@ -4,6 +4,10 @@ import exceptions.InvalidValueException;
 import exceptions.StatMaxedOutException;
 import main.*;
 
+/**
+ * Item that can be used on a monster to heal them for the given heal amount.
+ * @author Farzad and Daniel
+ */
 public class HealUp extends Item {
     
 	/**

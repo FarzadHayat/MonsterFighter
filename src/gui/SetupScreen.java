@@ -28,6 +28,10 @@ import exceptions.InvalidValueException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JScrollBar;
 
+/**
+ * Displays the setup screen in a new window.
+ * @author Farzad and Daniel
+ */
 public class SetupScreen {
 
 	private JFrame window;
@@ -37,16 +41,25 @@ public class SetupScreen {
 	private GameEnvironment game;
 	
 	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 	
+	
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeSetupScreen(this);
 	}
 
+	
 	/**
-	 * Create the application.
+	 * Create a new SetupScreen object.
+	 * @param gui the given gui
 	 */
 	public SetupScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
@@ -56,6 +69,7 @@ public class SetupScreen {
 		window.setVisible(true);
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */

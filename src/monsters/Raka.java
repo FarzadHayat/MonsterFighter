@@ -7,6 +7,14 @@ import exceptions.InvalidValueException;
 import exceptions.StatMaxedOutException;
 import main.*;
 
+/**
+ * A monster subclass.
+ * An ancient being from decades ago, Raka swaps between a healer
+ * and an attacker. Its offensive ability can be overlooked but
+ * not its healing ability. With this monster in the team, monsters
+ * will definitely get a substantial boost!
+ * @author Farzad and Daniel
+ */
 public class Raka extends Monster {
 	
 	/**
@@ -56,7 +64,8 @@ public class Raka extends Monster {
      */
     
     /**
-	 * @return value of team 
+     * Get the value of team
+	 * @return the value of team 
 	 */
 	public MonsterInventory getTeam() {
 		return team;
@@ -72,29 +81,55 @@ public class Raka extends Monster {
 	}
 
 
+	/**
+     * Get the value of randomMonster
+     * @return the value of randomMonster
+     */
 	public Monster getRandomMonster() {
 		return randomMonster;
 	}
 
 
+	/**
+     * Set the value of randomMonster
+     * @param randomMonster the new value of randomMonster
+     */
 	public void setRandomMonster(Monster randomMonster) {
 		this.randomMonster = randomMonster;
 	}
 
 
+	/**
+     * Get the value of random
+     * @return the value of random
+     */
 	public Random getRandom() {
 		return random;
 	}
 
 
+	/**
+     * Set the value of random
+     * @param random the new value of random
+     */
 	public void setRandom(Random random) {
 		this.random = random;
 	}
 	
+	
+	/**
+     * Get the value of choice
+     * @return the value of choice
+     */
 	public int getChoice() {
 		return choice;
 	}
 	
+	
+	/**
+     * Set the value of choice
+     * @param choice the new value of choice
+     */
 	public void setChoice(int choice) {
 		this.choice = choice;
 	}
@@ -111,6 +146,7 @@ public class Raka extends Monster {
     public int getHealingAmount() {
     	return getHealAmount();
     }
+    
     
     /**
      * Heals given Monster object
@@ -142,6 +178,11 @@ public class Raka extends Monster {
     	setHealth(getHealth()+levelUpHealth);
     }
     
+    
+    /**
+     * Randomly selects whether to heal an ally or attack an enemy monster.
+     * @param other the given enemy monster
+     */
     public int attack(Monster other) throws InvalidTargetException, InvalidValueException {
 		choice = random.nextInt(10);
 		if(choice <= 2) {
@@ -156,6 +197,7 @@ public class Raka extends Monster {
 			return super.attack(other);
 		}
     }
+    
     
     /**
      * @return new Raka instance

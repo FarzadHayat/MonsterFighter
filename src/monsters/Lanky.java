@@ -3,6 +3,14 @@ package monsters;
 import exceptions.StatMaxedOutException;
 import main.*;
 
+/**
+ * A monster subclass.
+ * Long limbs and a skinny figure, sometimes one swing from this monster
+ * is enough to finish its foes. They specialise in attack damage while
+ * losing out on some of its defensive attributes. Having them in your
+ * team is always a gamble!
+ * @author Farzad and Daniel
+ */
 public class Lanky extends Monster {
 	
 	/**

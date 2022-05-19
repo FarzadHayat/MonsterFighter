@@ -11,6 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
+/**
+ * Displays the stats screen in a new window.
+ * @author Farzad and Daniel
+ */
 public class StatsScreen {
 
 	private JFrame window;
@@ -20,16 +24,25 @@ public class StatsScreen {
 	private Player player;
 	private Score score;
 	
+	
+	/**
+	 * Closes the window.
+	 */
 	public void closeWindow() {
 		window.dispose();
 	}
 	
+	
+	/**
+	 * Call the gui to close this screen.
+	 */
 	public void finishedWindow() {
 		gui.closeStatsScreen(this);
 	}
 
 	/**
-	 * Create the application.
+	 * Create a new StatsScreen object.
+	 * @param gui the given gui
 	 */
 	public StatsScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
@@ -40,6 +53,7 @@ public class StatsScreen {
 		window.setVisible(true);
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
