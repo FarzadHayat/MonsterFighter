@@ -14,12 +14,23 @@ import items.LevelUp;
 import main.*;
 import monsters.Chunky;
 
+/**
+ * Unit test for IncreaseCritRate class
+ * @author Farzad and Daniel
+ */
+
 class IncreaseCritRateTest {
 	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private Player player;
 	
-	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -27,7 +38,12 @@ class IncreaseCritRateTest {
 		player = game.getPlayer();
 	}
 
-	
+	/**
+	 * Use item on monster
+	 * @result item is used on monster without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws StatMaxedOutException if monster stat is already maxed out
+	 */
 	@Test
 	void testUse1() throws InventoryFullException, StatMaxedOutException {
 		// Blue sky
@@ -42,7 +58,11 @@ class IncreaseCritRateTest {
 		assertEquals(IncreaseCritRate.getCritIncrease(), monster.getCritRate());
 	}
 
-	
+	/** Use item on monster and monster crit rate increases to greater than maximum crit rate
+	 * @result monster crit rate is equal to maximum crit rate
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws StatMaxedOutException if monster stat is already maxed out
+	 */
 	@Test
 	void testUse2() throws InventoryFullException, StatMaxedOutException {
 		// Monster crit rate is only partially increased
@@ -57,7 +77,12 @@ class IncreaseCritRateTest {
 		assertEquals(monster.getMaxCritRate(), monster.getCritRate());
 	}
 	
-	
+	/**
+	 * Use item on maximum crit rate monster
+	 * @result exception is thrown as monster is already at max crit rate 
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws StatMaxedOutException if monster stat is already maxed out
+	 */
 	@Test
 	void testUse3() throws InventoryFullException, StatMaxedOutException {
 		// Monster is already at max crit rate
@@ -75,7 +100,10 @@ class IncreaseCritRateTest {
 		
 	}
 	
-	
+	/**
+	 * Clones item instance
+	 * @result cloned instance is of the correct class
+	 */
 	@Test
 	public void testClone() {
 		Item testItem = new IncreaseCritRate(game);

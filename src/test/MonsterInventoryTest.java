@@ -12,12 +12,23 @@ import exceptions.InventoryFullException;
 import main.*;
 import monsters.Chunky;
 
+/**
+ * Unit test for MonsterInventory class
+ * @author Farzad and Daniel
+ */
+
 class MonsterInventoryTest {
 	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private MonsterInventory myMonsters;
 
-	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -25,7 +36,11 @@ class MonsterInventoryTest {
 		myMonsters = game.getPlayer().getMonsters();
 	}
 	
-	
+	/**
+	 * Add monster to monster inventory
+	 * @result monster is added to inventory without any errors
+	 * @throws InventoryFullException
+	 */
 	@Test
 	public void testAdd1() throws InventoryFullException {
 		// Blue sky
@@ -36,7 +51,11 @@ class MonsterInventoryTest {
 		assertEquals(testMonsterList, myMonsters.getList());
 	}
 	
-	
+	/**
+	 * Add monster to full inventory
+	 * @result exception is thrown 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testAdd2() throws InventoryFullException {
 		// Inventory full
@@ -52,7 +71,11 @@ class MonsterInventoryTest {
 		}
 	}
 	
-	
+	/**
+	 * Add monsters to specific indexes
+	 * @result monsters are added to specific indexes without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testAdd3() throws InventoryFullException {
 		// Add at index
@@ -72,7 +95,11 @@ class MonsterInventoryTest {
 		assertEquals(testMonsterList, myMonsters.getList());
 	}
 
-	
+	/**
+	 * Remove monster from inventory
+	 * @result monster is removed without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testRemove1() throws InventoryFullException {
 		// Blue sky
@@ -83,7 +110,11 @@ class MonsterInventoryTest {
 		assertEquals(testMonsterList, myMonsters.getList());
 	}
 	
-	
+	/**
+	 * Remove one instance of a monster from the monster inventory
+	 * @result removes one instance without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testRemove2() throws InventoryFullException {
 		// Multiple monsters of the same type
@@ -99,7 +130,11 @@ class MonsterInventoryTest {
 		assertEquals(testMonsterList, myMonsters.getList());
 	}
 
-	
+	/**
+	 * Checks if monster inventory is full
+	 * @result monster inventory is full when there are 4 items
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testIsFull() throws InventoryFullException {
 		// Blue sky
@@ -113,7 +148,11 @@ class MonsterInventoryTest {
 		assertTrue(myMonsters.isFull());
 	}
 	
-	
+	/**
+	 * Checks if monster inventory is empty
+	 * @result monster inventory is empty when there are no monsters 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testIsEmpty() throws InventoryFullException {
 		// Blue sky
@@ -123,7 +162,11 @@ class MonsterInventoryTest {
 		assertFalse(myMonsters.isEmpty());
 	}
 	
-	
+	/**
+	 * Checks if all monsters are fainted
+	 * @result true if all monsters are fainted and false otherwise
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testAllFainted() throws InventoryFullException {
 		// No monsters in the team
@@ -144,7 +187,11 @@ class MonsterInventoryTest {
 		assertTrue(myMonsters.allFainted());
 	}
 	
-	
+	/**
+	 * Heal all monsters in inventory
+	 * @result all monsters are healed without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testHealAll() throws InventoryFullException {
 		Monster testMonster1 = new Chunky(game);
@@ -162,7 +209,11 @@ class MonsterInventoryTest {
 		assertEquals(testMonster3.getMaxHealth(), myMonsters.getList().get(2).getHealth());
 	}
 	
-	
+	/**
+	 * Gets random monster in inventory
+	 * @result random monster from inventory is returned without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testRandom() throws InventoryFullException {
 		Monster testMonster1 = new Chunky(game);
@@ -174,7 +225,12 @@ class MonsterInventoryTest {
 		assertTrue(myMonsters.getList().contains(randomMonster));
 	}
 	
-	
+	/**
+	 * Level up monsters to appropriate level based on current day 
+	 * @result level of monsters are correct to the number of day
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws InvalidValueException if number of day value is invalid
+	 */
 	@Test
 	public void testLevelUpOnDay() throws InventoryFullException, InvalidValueException {
 		game.setDay(3);
@@ -191,7 +247,11 @@ class MonsterInventoryTest {
 		assertEquals(3, myMonsters.getList().get(1).getLevel());
 	}
 	
-	
+	/**
+	 * Checks string representation of monster inventory 
+	 * @result correct string is returned without any errors 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testToString() throws InventoryFullException {
 		Monster testMonster1 = new Chunky(game);
@@ -208,7 +268,10 @@ class MonsterInventoryTest {
 		assertEquals(result, myMonsters.toString());
 	}
 	
-	
+	/**
+	 * Checks string representation of view option
+	 * @result correct string is returned without any errors
+	 */
 	@Test
 	public void testView() throws InventoryFullException {
 		Monster testMonster1 = new Chunky(game);

@@ -10,11 +10,23 @@ import items.HealUp;
 import main.*;
 import monsters.AverageJoe;
 
-class AverageJoeTest {
+/**
+ * Unit test for AverageJoe class
+ * @author Farzad and Daniel
+ */
 
+class AverageJoeTest {
+	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private AverageJoe monster;
 	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	public void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -22,9 +34,13 @@ class AverageJoeTest {
 		monster = new AverageJoe(game);
 	}
 
+	/**
+	 * Levels up monster once
+	 * @result monster's stats will increase without any errors
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	public void testLevelUp1() throws StatMaxedOutException {
-		//Average Joe level up once 
 		monster.levelUp();
 		assertEquals(110, monster.getMaxHealth());
 		assertEquals(30, monster.getDamage());
@@ -33,9 +49,13 @@ class AverageJoeTest {
 		assertEquals(0.2, monster.getCritRate());
 	}
 	
+	/**
+	 * Levels up monster twice
+	 * @result monster's stats will increase without any errors
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	public void testLevelUp2() throws StatMaxedOutException {
-		//Average Joe level up twice 
 		monster.levelUp();
 		monster.levelUp();
 		assertEquals(120, monster.getMaxHealth());
@@ -45,6 +65,11 @@ class AverageJoeTest {
 		assertEquals(0.2, monster.getCritRate());
 	}
 	
+	/**
+	 * Levels up monster four times
+	 * @result monster is unable to level up further and exception is thrown
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	public void testLevelUp3() throws StatMaxedOutException {
 		//Average Joe level up at max level
@@ -55,10 +80,14 @@ class AverageJoeTest {
 			monster.levelUp();
 		}
 		catch(StatMaxedOutException e) {
-			assertEquals(e.getMessage(), "Monster is already max level!");
+			assertEquals("Monster is already max level!", e.getMessage());
 		}
 	}
 	
+	/**
+	 * Clones monster instance
+	 * @result new monster instance is created and does not equal the original instance
+	 */
 	@Test
 	public void testClone() {
 		Monster cloneInst = monster.clone();

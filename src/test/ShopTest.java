@@ -9,14 +9,26 @@ import org.junit.jupiter.api.Test;
 
 import main.*;
 
+/**
+ * Unit test for Shanny class
+ * @author Farzad and Daniel
+ */
+
 class ShopTest {
 
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private Shop shop;
 	private Player player;
 	private MonsterInventory monsters;
 	private ItemInventory items;
 	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -27,7 +39,10 @@ class ShopTest {
 		items = shop.getItems();
 	}
 
-	
+	/**
+	 * Randomise monsters and items in shop
+	 * @result monsters and items lists are randomised without any errors 
+	 */
 	@Test
 	void testRandomise() {
 		ArrayList<Monster> monstersList = monsters.getList();
@@ -37,7 +52,10 @@ class ShopTest {
 		assertTrue(itemsList != items.getList());
 	}
 
-	
+	/**
+	 * Checks string representation of shop 
+	 * @result correct string is returned without any errors 
+	 */
 	@Test
 	void testToString() {
 		String result = String.format("\nBalance: %s\n", player.getBalance());

@@ -12,19 +12,35 @@ import items.HealUp;
 import main.*;
 import monsters.Chunky;
 
+/**
+ * Unit test for Player class
+ * @author Farzad and Daniel
+ */
+
 class PlayerTest {
 
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private Player player;
 
-	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
 		player = game.getPlayer();
 	}
-
-
+	
+	/**
+	 * Set player's balance 
+	 * @result player's balance is set to given value without any errors, 
+	 * exception is thrown if given value is negative 
+	 * @throws InvalidValueException if given value is negative 
+	 */
 	@Test
 	void testSetBalance() throws InvalidValueException {
 		// Blue sky
@@ -43,7 +59,11 @@ class PlayerTest {
 		}
 	}
 
-	
+	/**
+	 * Set name of player with various types of names 
+	 * @result sets name without any errors unless name does not meet criteria 
+	 * @throws InvalidValueException if given name is invalid
+	 */
 	@Test
 	void testSetName() throws InvalidValueException {
 		// Blue sky
@@ -68,7 +88,11 @@ class PlayerTest {
 		}
 	}
 
-
+	/**
+	 * Add amount to player's balance
+	 * @result player's balance is set to given value, exception is thrown if value is negative 
+	 * @throws InvalidValueException if given value is negative 
+	 */
 	@Test
 	void testAddBalance() throws InvalidValueException {
 		// Blue sky
@@ -89,7 +113,13 @@ class PlayerTest {
 		}
 	}
 	
-
+	/**
+	 * Reduce amount from player's balance 
+	 * @result amount is reduced from balance, exception is thrown when given value is negative
+	 * or player has insufficient funds 
+	 * @throws InsufficientFundsException if player has insufficient funds 
+	 * @throws InvalidValueException if given value is negative 
+	 */
 	@Test
 	void testMinusBalance() throws InsufficientFundsException, InvalidValueException {
 		// Blue sky
@@ -124,7 +154,11 @@ class PlayerTest {
 		}
 	}
 	
-
+	/**
+	 * Checks if player's balance is sufficient 
+	 * @result player's balance is sufficient, exception is thrown if player's balance is negative 
+	 * @throws InvalidValueException if given value is negative 
+	 */
 	@Test
 	void testBalanceSufficient() throws InvalidValueException {
 		// Blue sky
@@ -146,7 +180,11 @@ class PlayerTest {
 		}
 	}
 	
-	
+	/**
+	 * Checks string representation when viewing monsters
+	 * @result correct string is returned without any errors 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testViewMonsters() throws InventoryFullException {
 		// Blue sky
@@ -162,7 +200,11 @@ class PlayerTest {
     	assertEquals(result, player.viewMonsters());
     }
     
-    
+	/**
+	 * Checks string representation when viewing items 
+	 * @result correct string is returned without any errors 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
     public void testViewItems() throws InventoryFullException {
 		// Blue sky

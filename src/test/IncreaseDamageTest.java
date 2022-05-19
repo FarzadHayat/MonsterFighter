@@ -14,12 +14,23 @@ import items.LevelUp;
 import main.*;
 import monsters.Chunky;
 
+/**
+ * Unit test for IncreaseDamage class
+ * @author Farzad and Daniel
+ */
+
 class IncreaseDamageTest {
 	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private Player player;
 	
-	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -27,7 +38,12 @@ class IncreaseDamageTest {
 		player = game.getPlayer();
 	}
 
-	
+	/**
+	 * Use item on monster
+	 * @result item is used on monster without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws StatMaxedOutException if monster stat is already maxed out
+	 */
 	@Test
 	void testUse1() throws InventoryFullException, StatMaxedOutException {
 		// Blue sky
@@ -42,7 +58,10 @@ class IncreaseDamageTest {
 		assertEquals(damageBefore + IncreaseDamage.getDamageIncrease(), monster.getDamage());
 	}
 	
-	
+	/**
+	 * Clones item instance
+	 * @result cloned instance is of the correct class
+	 */
 	@Test
 	public void testClone() {
 		Item testItem = new IncreaseDamage(game);

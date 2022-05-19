@@ -14,12 +14,23 @@ import items.LevelUp;
 import main.*;
 import monsters.Chunky;
 
+/**
+ * Unit test for LevelUp class
+ * @author Farzad and Daniel
+ */
+
 class LevelUpTest {
 	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private Player player;
 	
-	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -27,7 +38,11 @@ class LevelUpTest {
 		player = game.getPlayer();
 	}
 
-	
+	/** Use item on monster
+	 * @result item is used on monster without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws StatMaxedOutException if monster stat is already maxed out
+	 */
 	@Test
 	void testUse1() throws InventoryFullException, StatMaxedOutException {
 		// Blue sky
@@ -42,7 +57,12 @@ class LevelUpTest {
 		assertEquals(levelBefore + 1, monster.getLevel());
 	}
 	
-	
+	/**
+	 * Use item on maximum level monster
+	 * @result exception is thrown as monster is already at max level
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws StatMaxedOutException if monster stat is already maxed out
+	 */
 	@Test
 	void testUse2() throws InventoryFullException, StatMaxedOutException {
 		// Monster is already max level
@@ -59,7 +79,10 @@ class LevelUpTest {
 		}
 	}
 	
-	
+	/**
+	 * Clones item instance
+	 * @result cloned instance is of the correct class
+	 */
 	@Test
 	public void testClone() {
 		Item testItem = new LevelUp(game);

@@ -15,12 +15,24 @@ import main.*;
 import monsters.AverageJoe;
 import monsters.Raka;
 
+/**
+ * Unit test for Raka class
+ * @author Farzad and Daniel
+ */
+
 class RakaTest {
 
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private Raka raka;
 	private Monster target;
 	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	public void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -28,7 +40,13 @@ class RakaTest {
 		raka = new Raka(game);
 		target = new AverageJoe(game);
 	}
-
+	
+	/**
+	 * Heal target to max health 
+	 * @result heals target without any errors 
+	 * @throws InvalidTargetException if given monster is fainted 
+	 * @throws InvalidValueException if given value is invalid 
+	 */
 	@Test
 	public void testHeal1() throws InvalidTargetException, InvalidValueException {
 		//Raka heals target to max health  
@@ -37,6 +55,12 @@ class RakaTest {
 		assertEquals(target.getMaxHealth(), target.getHealth());
 	}
 	
+	/**
+	 * Heal target to less than max health 
+	 * @result heals target without any errors 
+	 * @throws InvalidTargetException if given monster is fainted 
+	 * @throws InvalidValueException if given value is invalid 
+	 */
 	@Test 
 	public void testHeal2() throws InvalidTargetException, InvalidValueException {
 		//Raka heals target to less than max health 
@@ -45,6 +69,12 @@ class RakaTest {
 		assertEquals(target.getMaxHealth()-4, target.getHealth());
 	}
 	
+	/**
+	 * Heal fainted target
+	 * @result exception is thrown and target is not healed 
+	 * @throws InvalidTargetException if given monster is fainted 
+	 * @throws InvalidValueException if given value is invalid 
+	 */
 	@Test
 	public void testHeal3() throws InvalidTargetException, InvalidValueException {
 		//Raka tries to heal fainted ally 
@@ -58,6 +88,11 @@ class RakaTest {
 		}
 	}
 	
+	/**
+	 * Levels up monster once
+	 * @result monster's stats will increase without any errors
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	public void testLevelUp1() throws StatMaxedOutException {
 		//Raka level up once 
@@ -69,6 +104,11 @@ class RakaTest {
 		assertEquals(0.1, raka.getCritRate());
 	}
 	
+	/**
+	 * Levels up monster twice
+	 * @result monster's stats will increase without any errors
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	public void testLevelUp2() throws StatMaxedOutException {
 		//Raka level up twice 
@@ -81,6 +121,11 @@ class RakaTest {
 		assertEquals(0.1, raka.getCritRate());
 	}
 	
+	/**
+	 * Levels up monster four times
+	 * @result monster is unable to level up further and exception is thrown
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	public void testLevelUp3() throws StatMaxedOutException {
 		//Raka level up at max level
@@ -95,6 +140,13 @@ class RakaTest {
 		}
 	}
 	
+	/**
+	 * Raka attack
+	 * @result raka heals instead of attacking 
+	 * @throws InvalidTargetException if given monster is fainted 
+	 * @throws InvalidValueException if given value is invalid 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testAttack1() throws InvalidTargetException, InvalidValueException, InventoryFullException {
 		//Raka heals
@@ -103,6 +155,13 @@ class RakaTest {
 		assertEquals(raka.getHealAmount(), raka.attack(target));
 	}
 	
+	/**
+	 * Raka attack
+	 * @result raka attacks without any errors 
+	 * @throws InvalidTargetException if given monster is fainted 
+	 * @throws InvalidValueException if given value is invalid 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testAttack2() throws InventoryFullException, InvalidTargetException, InvalidValueException {
 		//Raka attacks
@@ -111,6 +170,10 @@ class RakaTest {
 		assertTrue(raka.getDamage() == raka.attack(target) || raka.getDamage()*2 == raka.attack(target));
 	}
 	
+	/**
+	 * Clones monster instance
+	 * @result new monster instance is created and does not equal the original instance
+	 */
 	@Test
 	public void testClone() {
 		Monster cloneInst = raka.clone();

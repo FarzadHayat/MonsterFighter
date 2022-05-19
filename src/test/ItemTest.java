@@ -13,14 +13,25 @@ import exceptions.InventoryFullException;
 import items.HealUp;
 import main.*;
 
+/**
+ * Unit test for Item class
+ * @author Farzad and Daniel
+ */
+
 class ItemTest {
 	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private ItemInventory myItems;
 	private Player player;
 	private Shop shop;
 	
-	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -31,7 +42,13 @@ class ItemTest {
 		shop = game.getShop();
 	}
 
-	
+	/**
+	 * Item is bought
+	 * @result item is bought without any errors and player's balance is reduced 
+	 * @throws InsufficientFundsException if player has insufficient funds 
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws InvalidValueException if given balance value is negative
+	 */
 	@Test
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Blue sky
@@ -45,7 +62,13 @@ class ItemTest {
 		assertEquals(testItemList, myItems.getList());
 	}
 	
-	
+	/**
+	 * Item is bought, player has insufficient funds 
+	 * @result exception is thrown 
+	 * @throws InsufficientFundsException if player has insufficient funds
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws InvalidValueException if given balance value is negative
+	 */
 	@Test
 	public void testBuy2() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Insufficient funds
@@ -59,7 +82,13 @@ class ItemTest {
 		}
 	}
 	
-	
+	/**
+	 * Item is bought, player has full inventory
+	 * @result exception is thrown 
+	 * @throws InsufficientFundsException if player has insufficient funds
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws InvalidValueException if given balance value is negative
+	 */
 	@Test
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Inventory full	
@@ -79,7 +108,13 @@ class ItemTest {
 		}
 	}
 	
-	
+	/**
+	 * Item is sold
+	 * @result item is sold without any errors and player's balance is increased 
+	 * @throws InsufficientFundsException if player has insufficient funds
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws InvalidValueException if given balance value is negative
+	 */
 	@Test
 	public void testSell1() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Blue sky
@@ -93,7 +128,13 @@ class ItemTest {
 		assertEquals(testItemList, myItems.getList());
 	}
 	
-	
+	/**
+	 * Item is sold, player has multiple of the same item
+	 * @result items are sold without any errors and player's balance is increased 
+	 * @throws InsufficientFundsException if player has insufficient funds
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws InvalidValueException if given balance value is negative
+	 */
 	@Test
 	public void testSell2() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Multiple items of the same type
@@ -114,7 +155,10 @@ class ItemTest {
 		assertEquals(testItemList, myItems.getList());
 	}
 	
-	
+	/**
+	 * Checks string representation of item
+	 * @result correct string is returned without any errors 
+	 */
 	@Test
 	public void testToString() {
 		Item testItem = new HealUp(game);
@@ -122,7 +166,10 @@ class ItemTest {
 		assertEquals("%-20s    cost: %-3s    %-50s".formatted(testItem.getName(), testItem.getCost(), testItem.getDescription()), myStr);
 	}
 	
-	
+	/**
+	 * Checks string representation of view option
+	 * @result correct string is returned without any errors
+	 */
 	@Test
 	public void testView() {
 		Item testItem = new HealUp(game);

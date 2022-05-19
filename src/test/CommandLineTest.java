@@ -5,6 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit test for CommandLine class
+ * @author Farzad and Daniel
+ */
+
 class CommandLineTest {
 
 	@BeforeEach

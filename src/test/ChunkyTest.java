@@ -10,21 +10,37 @@ import main.*;
 import monsters.AverageJoe;
 import monsters.Chunky;
 
+/**
+ * Unit test for Chunky class
+ * @author Farzad and Daniel
+ */
+
 class ChunkyTest {
 
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private Chunky monster;
 	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
 		game.setupGame();
 		monster = new Chunky(game);
 	}
-
+	
+	/**
+	 * Levels up monster once
+	 * @result monster's stats will increase without any errors
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	void testLevelUp1() throws StatMaxedOutException {
-		//Chunky level up once 
 		monster.levelUp();
 		assertEquals(240, monster.getMaxHealth());
 		assertEquals(15, monster.getDamage());
@@ -33,9 +49,13 @@ class ChunkyTest {
 		assertEquals(0.1, monster.getCritRate());
 	}
 	
+	/**
+	 * Levels up monster twice
+	 * @result monster's stats will increase without any errors
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	void testLevelUp2() throws StatMaxedOutException {
-		//Chunky level up twice 
 		monster.levelUp();
 		monster.levelUp();
 		assertEquals(280, monster.getMaxHealth());
@@ -45,9 +65,13 @@ class ChunkyTest {
 		assertEquals(0.1, monster.getCritRate());
 	}
 	
+	/**
+	 * Levels up monster four times
+	 * @result monster is unable to level up further and exception is thrown
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	void testLevelUp3() throws StatMaxedOutException {
-		//Chunky level up at max level
 		for(int i = 0; i < 3; i++) {
 			monster.levelUp();
 		}
@@ -59,6 +83,10 @@ class ChunkyTest {
 		}
 	}
 	
+	/**
+	 * Clones monster instance
+	 * @result new monster instance is created and does not equal the original instance
+	 */
 	@Test
 	public void testClone() {
 		Monster cloneInst = monster.clone();

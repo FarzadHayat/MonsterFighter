@@ -21,13 +21,24 @@ import monsters.Raka;
 import monsters.Shanny;
 import monsters.Zap;
 
+/**
+ * Unit test for GameEnvironment class
+ * @author Farzad and Daniel
+ */
+
 class GameEnvironmentTest {
 
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private Player player;
 	private Score score;
 	
-	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -42,6 +53,11 @@ class GameEnvironmentTest {
 	 * 
 	 */
 	
+	/**
+	 * Set number of days to given value
+	 * @result number of days is assigned to given value, exception is thrown when value is invalid
+	 * @throws InvalidValueException if given value is invalid
+	 */
 	@Test
 	void testSetNumDays() throws InvalidValueException {
 		// Blue sky
@@ -63,7 +79,10 @@ class GameEnvironmentTest {
 		}
 	}
 
-	
+	/**
+	 * Set difficulty to given difficulty
+	 * @result difficulty is set to given difficulty without any errors
+	 */
 	@Test
 	void testSetDifficulty() {
 		// Blue sky
@@ -83,13 +102,22 @@ class GameEnvironmentTest {
 	 * 
 	 */
 	
+	/**
+	 * Setup game
+	 * @result player's balance and score is appropriate to the default difficulty
+	 */
 	@Test
 	void setupGame() {
 		assertEquals(100, player.getBalance());
 		assertEquals(1000, score.getTotalScore());
 	}
 	
-	
+	/**
+	 * Player sleeps 
+	 * @result correct string is returned and battles, shop monsters and items are randomised
+	 * @throws InventoryFullException if inventory is already full
+	 * @throws InvalidValueException if value for number of days is invalid 
+	 */
 	@Test
 	void testSleep1() throws InventoryFullException, InvalidValueException {
 		// Blue sky
@@ -122,7 +150,10 @@ class GameEnvironmentTest {
 		assertEquals(0, score.getDayScore());
 	}
 	
-	
+	/**
+	 * Player sleeps and current day is greater than chosen number of days
+	 * @result correct string is returned and game is finished
+	 */
 	@Test
 	void testSleep2() {
 		// Game over
@@ -132,7 +163,11 @@ class GameEnvironmentTest {
     	assertTrue(game.getIsFinished());
 	}
 
-	
+	/**
+	 * Checks if game is finished
+	 * @result game is finished if current day is greater or equal to number of days
+	 * @throws InvalidValueException if value for number of days is invalid 
+	 */
 	@Test
 	void testCheckStatus() throws InvalidValueException {
 		// Blue sky

@@ -10,11 +10,23 @@ import main.*;
 import monsters.AverageJoe;
 import monsters.Shanny;
 
+/**
+ * Unit test for Shanny class
+ * @author Farzad and Daniel
+ */
+
 class ShannyTest {
 
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private Shanny monster;
 	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	public void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -22,6 +34,11 @@ class ShannyTest {
 		monster = new Shanny(game);
 	}
 
+	/**
+	 * Levels up monster once
+	 * @result monster's stats will increase without any errors
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	public void testLevelUp1() throws StatMaxedOutException {
 		//Shanny level up once 
@@ -33,6 +50,11 @@ class ShannyTest {
 		assertEquals(0.2, monster.getCritRate());
 	}
 	
+	/**
+	 * Levels up monster twice
+	 * @result monster's stats will increase without any errors
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	public void testLevelUp2() throws StatMaxedOutException {
 		//Shanny level up twice 
@@ -45,6 +67,11 @@ class ShannyTest {
 		assertEquals(0.2, monster.getCritRate());
 	}
 	
+	/**
+	 * Levels up monster four times
+	 * @result monster is unable to level up further and exception is thrown
+	 * @throws StatMaxedOutException if monster is already at maximum level
+	 */
 	@Test
 	public void testLevelUp3() throws StatMaxedOutException {
 		//Shanny level up at max level
@@ -59,6 +86,10 @@ class ShannyTest {
 		}
 	}
 	
+	/**
+	 * Clones monster instance
+	 * @result new monster instance is created and does not equal the original instance
+	 */
 	@Test
 	public void testClone() {
 		Monster cloneInst = monster.clone();

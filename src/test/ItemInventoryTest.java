@@ -11,12 +11,23 @@ import exceptions.InventoryFullException;
 import main.*;
 import items.HealUp;
 
+/**
+ * Unit test for ItemInventory class
+ * @author Farzad and Daniel
+ */
+
 class ItemInventoryTest {
 	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game;
 	private ItemInventory myItems;
 
-	
+	/**
+	 * Assign values to fields used in unit test
+	 * @throws Exception if any exception is caught
+	 */
 	@BeforeEach
 	void setUp() throws Exception {
 		game = new GameEnvironment();
@@ -24,7 +35,11 @@ class ItemInventoryTest {
 		myItems = game.getPlayer().getItems();
 	}
 	
-	
+	/**
+	 * Add item to item inventory
+	 * @result item is added to inventory without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testAdd1() throws InventoryFullException {
 		// Blue sky
@@ -35,7 +50,11 @@ class ItemInventoryTest {
 		assertEquals(testItemList, myItems.getList());
 	}
 	
-	
+	/**
+	 * Add item to full inventory
+	 * @result exception is thrown 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testAdd2() throws InventoryFullException {
 		// Inventory full
@@ -51,7 +70,11 @@ class ItemInventoryTest {
 		}
 	}
 	
-	
+	/**
+	 * Add items to specific indexes
+	 * @result items are added to specific indexes without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testAdd3() throws InventoryFullException {
 		// Add at index
@@ -71,7 +94,11 @@ class ItemInventoryTest {
 		assertEquals(testItemList, myItems.getList());
 	}
 
-	
+	/**
+	 * Remove item from inventory
+	 * @result item is removed without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testRemove1() throws InventoryFullException {
 		// Blue sky
@@ -82,7 +109,11 @@ class ItemInventoryTest {
 		assertEquals(testItemList, myItems.getList());
 	}
 	
-	
+	/**
+	 * Remove one instance of a item from the item inventory
+	 * @result removes one instance without any errors
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testRemove2() throws InventoryFullException {
 		// Multiple items of the same type
@@ -98,7 +129,11 @@ class ItemInventoryTest {
 		assertEquals(testItemList, myItems.getList());
 	}
 
-	
+	/**
+	 * Checks if item inventory is full
+	 * @result item inventory is full when there are 4 items
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testIsFull() throws InventoryFullException {
 		// Blue sky
@@ -112,7 +147,11 @@ class ItemInventoryTest {
 		assertTrue(myItems.isFull());
 	}
 	
-	
+	/**
+	 * Checks if item inventory is empty
+	 * @result item inventory is empty when there are no items 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testIsEmpty() throws InventoryFullException {
 		// Blue sky
@@ -122,7 +161,11 @@ class ItemInventoryTest {
 		assertFalse(myItems.isEmpty());
 	}
 	
-	
+	/**
+	 * Get random item from item inventory
+	 * @result random item from inventory is returned
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testRandom() throws InventoryFullException {
 		Item testItem1 = new HealUp(game);
@@ -134,7 +177,11 @@ class ItemInventoryTest {
 		assertTrue(myItems.getList().contains(randomItem));
 	}
 	
-	
+	/**
+	 * Checks string representation of item inventory
+	 * @result correct string is returned without any errors 
+	 * @throws InventoryFullException if inventory is already full
+	 */
 	@Test
 	public void testToString() throws InventoryFullException {
 		Item testItem1 = new HealUp(game);
@@ -151,7 +198,10 @@ class ItemInventoryTest {
 		assertEquals(result, myItems.toString());
 	}
 	
-	
+	/**
+	 * Checks string representation of view option
+	 * @result correct string is returned without any errors
+	 */
 	@Test
 	public void testView() throws InventoryFullException {
 		Item testItem1 = new HealUp(game);
