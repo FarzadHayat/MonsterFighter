@@ -8,6 +8,10 @@ import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 
+/**
+ * An abstract class that describes a monster.
+ * @author Farzad and Daniel
+ */
 public abstract class Monster implements Purchasable {
 	
 	/**
@@ -343,6 +347,7 @@ public abstract class Monster implements Purchasable {
         return refundAmount;
     }
     
+    
     /**
      * Get the value of rn
      * @return the value of rn 
@@ -350,6 +355,7 @@ public abstract class Monster implements Purchasable {
     public Random getRandom() {
     	return rn;
     }
+    
     
     /**
      * Set the value of rn

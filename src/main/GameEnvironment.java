@@ -8,6 +8,11 @@ import items.IncreaseDamage;
 import items.LevelUp;
 import monsters.*;
 
+/**
+ * The main game manager.
+ * Holds the generic information about the game.
+ * @author Farzad and Daniel
+ */
 public class GameEnvironment {
 
 	/**
@@ -59,7 +64,6 @@ public class GameEnvironment {
     /**
      * Getters and setters
      */
-
 
 	/**
      * Get the value of numDays

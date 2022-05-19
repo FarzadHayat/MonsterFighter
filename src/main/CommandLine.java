@@ -8,6 +8,10 @@ import exceptions.InventoryFullException;
 import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
 
+/**
+ * This class launches the CMD game and manages the player input and written output.
+ * @author Farzad and Daniel
+ */
 public class CommandLine {
 
 	/**

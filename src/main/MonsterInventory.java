@@ -6,6 +6,10 @@ import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 import monsters.Raka;
 
+/**
+ * Holds an array of monsters with additional functionality.
+ * @author Farzad and Daniel
+ */
 public class MonsterInventory {
     
 	/**
@@ -16,7 +20,6 @@ public class MonsterInventory {
 
     protected GameEnvironment game;
     protected Player player;
-	
     
     
     /**
@@ -56,6 +59,7 @@ public class MonsterInventory {
     public void setMaxSize(int maxSize) {
     	this.maxSize = maxSize;
     }
+    
     
     /**
 	 * get the value of list

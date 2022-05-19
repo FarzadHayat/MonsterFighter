@@ -5,12 +5,15 @@ import java.util.*;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 
+/**
+ * Handles all random events that happen over night.
+ * @author Farzad and Daniel
+ */
 public class RandomEvent {
     
 	/**
 	 * Fields
 	 */
-	
     private double levelUpChance = 0.1;
     private double leaveChance = 0.05;
     private double joinChance = 0.1;
@@ -95,6 +98,7 @@ public class RandomEvent {
     	this.joinChance = joinChance;
     }
     
+    
     /**
      * Get the value of rn
      * @return the value of rn 
@@ -102,6 +106,7 @@ public class RandomEvent {
     public Random getRandom() {
     	return rn;
     }
+    
     
     /**
      * Set the value of rn

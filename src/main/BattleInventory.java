@@ -3,6 +3,10 @@ import java.util.ArrayList;
 
 import exceptions.InventoryFullException;
 
+/**
+ * Holds an array of battles with additional functionality.
+ * @author Farzad and Daniel
+ */
 public class BattleInventory {
     
 	/**
@@ -52,6 +56,7 @@ public class BattleInventory {
     public void setMaxSize(int maxSize) {
     	this.maxSize = maxSize;
     }
+    
     
     /**
 	 * get the value of list

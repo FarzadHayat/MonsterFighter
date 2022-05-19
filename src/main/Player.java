@@ -3,6 +3,10 @@ package main;
 import exceptions.InsufficientFundsException;
 import exceptions.InvalidValueException;
 
+/**
+ * Holds information about the player and their inventories.
+ * @author Farzad and Daniel
+ */
 public class Player {
 
 	/**
@@ -14,7 +18,6 @@ public class Player {
 	private MonsterInventory monsters;
     private ItemInventory items;
 	
-    
     
     /**
      * Constructors
@@ -174,6 +177,10 @@ public class Player {
     }
     
     
+    /**
+     * Returns a string containing a header and a numbered list of the player monsters.
+     * @return result the result
+     */
     public String viewMonsters() {
     	String result = "\n===== MY TEAM =====\n\n";
     	result += monsters.view();
@@ -182,6 +189,10 @@ public class Player {
     }
     
     
+    /**
+     * Returns a string containing a header and a numbered list of the player items.
+     * @return result the result
+     */
     public String viewItems() {
     	String result = "\n===== MY INVENTORY =====\n\n";
     	result += items.view();

@@ -1,5 +1,9 @@
 package main;
 
+/**
+ * Holds the shop monsters and items.
+ * @author Farzad and Daniel
+ */
 public class Shop {
 
 	/**

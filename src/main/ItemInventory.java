@@ -5,7 +5,7 @@ import java.util.Random;
 import exceptions.InventoryFullException;
 
 /**
- * Displays the selected item inventory in a new window.
+ * Holds an array of items with additional functionality.
  * @author Farzad and Daniel
  */
 public class ItemInventory {

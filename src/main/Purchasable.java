@@ -1,7 +1,7 @@
 package main;
 
 /**
- * An interface to that handles purchasable classes such as Monster and Item.
+ * An interface to that handles purchasable classes such as monster and item.
  * @author Farzad and Daniel
  */
 public interface Purchasable {
