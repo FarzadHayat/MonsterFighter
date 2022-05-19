@@ -47,32 +47,9 @@ class ItemInventoryTest {
 		myItems.add(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
-<<<<<<< HEAD
-		assertEquals(testItemList, myItems.getList());
-	}
-	
-	/**
-	 * Add item to full inventory
-	 * @result exception is thrown 
-	 * @throws InventoryFullException if inventory is already full
-	 */
-	@Test
-	public void testAdd2() throws InventoryFullException {
-		// Inventory full
-		Item testItem = new HealUp(game);
-		for (int i = 0; i < myItems.getMaxSize(); i++) {			
-			myItems.add(testItem);
-		}
-		try {    		
-			myItems.add(testItem);
-		}
-		catch (InventoryFullException e){
-			assertEquals("Item inventory is full!", e.getMessage());
-		}
-=======
 		assertEquals(testItemList, myItems);
->>>>>>> 99c6b9cfb96ddda372fab7ce6098457c981a2778
 	}
+
 	
 	/**
 	 * Add items to specific indexes
@@ -80,7 +57,7 @@ class ItemInventoryTest {
 	 * @throws InventoryFullException if inventory is already full
 	 */
 	@Test
-	public void testAdd3() throws InventoryFullException {
+	public void testAdd2() throws InventoryFullException {
 		// Add at index
 		Item testItem1 = new HealUp(game);
 		Item testItem2 = new HealUp(game);

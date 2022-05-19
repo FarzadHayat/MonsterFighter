@@ -48,31 +48,7 @@ class MonsterInventoryTest {
 		myMonsters.add(testMonster);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
 		testMonsterList.add(testMonster);
-<<<<<<< HEAD
-		assertEquals(testMonsterList, myMonsters.getList());
-	}
-	
-	/**
-	 * Add monster to full inventory
-	 * @result exception is thrown 
-	 * @throws InventoryFullException if inventory is already full
-	 */
-	@Test
-	public void testAdd2() throws InventoryFullException {
-		// Inventory full
-		Monster testMonster = new Chunky(game);
-		for (int i = 0; i < myMonsters.getMaxSize(); i++) {			
-			myMonsters.add(testMonster);
-		}
-		try {    		
-			myMonsters.add(testMonster);
-		}
-		catch (InventoryFullException e){
-			assertEquals("Monster inventory is full!", e.getMessage());
-		}
-=======
 		assertEquals(testMonsterList, myMonsters);
->>>>>>> 99c6b9cfb96ddda372fab7ce6098457c981a2778
 	}
 	
 	/**
@@ -81,7 +57,7 @@ class MonsterInventoryTest {
 	 * @throws InventoryFullException if inventory is already full
 	 */
 	@Test
-	public void testAdd3() throws InventoryFullException {
+	public void testAdd2() throws InventoryFullException {
 		// Add at index
 		Monster testMonster1 = new Chunky(game);
 		Monster testMonster2 = new Chunky(game);

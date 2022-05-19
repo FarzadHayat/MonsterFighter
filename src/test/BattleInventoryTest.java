@@ -47,30 +47,7 @@ class BattleInventoryTest {
 		myBattles.add(testBattle);
 		ArrayList<Battle> testBattleList = new ArrayList<Battle>();
 		testBattleList.add(testBattle);
-<<<<<<< HEAD
-		assertEquals(testBattleList, myBattles.getList());
-	}
-	
-	/**
-	 * Adds battle to full battle inventory
-	 * @result battle is not added and exception is thrown
-	 * @throws InventoryFullException if battle inventory is already full
-	 */
-	@Test
-	public void testAdd2() throws InventoryFullException {
-		Battle testBattle = new Battle(game);
-		for (int i = 0; i < myBattles.getMaxSize(); i++) {			
-			myBattles.add(testBattle);
-		}
-		try {    		
-			myBattles.add(testBattle);
-		}
-		catch (InventoryFullException e){
-			assertEquals("Battle inventory is full!", e.getMessage());
-		}
-=======
 		assertEquals(testBattleList, myBattles);
->>>>>>> 99c6b9cfb96ddda372fab7ce6098457c981a2778
 	}
 	
 	/**
@@ -79,7 +56,7 @@ class BattleInventoryTest {
 	 * @throws InventoryFullException if battle inventory is already full
 	 */
 	@Test
-	public void testAdd3() throws InventoryFullException {
+	public void testAdd2() throws InventoryFullException {
 		
 		Battle testBattle1 = new Battle(game);
 		Battle testBattle2 = new Battle(game);
@@ -97,12 +74,7 @@ class BattleInventoryTest {
 		testBattleList.add(testBattle3);
 		testBattleList.add(testBattle1);
 		testBattleList.add(testBattle4);
-<<<<<<< HEAD
-		
-		assertEquals(testBattleList, myBattles.getList());
-=======
 		assertEquals(testBattleList, myBattles);
->>>>>>> 99c6b9cfb96ddda372fab7ce6098457c981a2778
 	}
 
 	/**
