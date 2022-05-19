@@ -9,7 +9,7 @@ import exceptions.StatMaxedOutException;
  * An abstract class that describes an item that can be used on a monster.
  * @author Farzad and Daniel
  */
-abstract public class Item implements Purchasable {
+abstract public class Item {
 
 	/**
 	 * Fields

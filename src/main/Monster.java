@@ -12,7 +12,7 @@ import exceptions.StatMaxedOutException;
  * An abstract class that describes a monster.
  * @author Farzad and Daniel
  */
-public abstract class Monster implements Purchasable {
+public abstract class Monster {
 	
 	/**
 	 * Fields
