@@ -99,9 +99,9 @@ class GameEnvironmentTest {
 		result +="The battles have been randomised.\n";
 		result +="Your monsters have healed.";
     	
-		ArrayList<Monster> shopMonstersBefore = game.getShop().getMonsters().getList();
-		ArrayList<Item> shopItemsBefore = game.getShop().getItems().getList();
-		ArrayList<Battle> battlesBefore = game.getBattles().getList();
+		ArrayList<Monster> shopMonstersBefore = game.getShop().getMonsters();
+		ArrayList<Item> shopItemsBefore = game.getShop().getItems();
+		ArrayList<Battle> battlesBefore = game.getBattles();
 		
 		Monster testMonster = new Chunky(game);
 		player.getMonsters().add(testMonster);
@@ -110,9 +110,9 @@ class GameEnvironmentTest {
     	
 		assertTrue(game.sleep().contains(result));
 		
-		assertFalse(game.getShop().getMonsters().getList().equals(shopMonstersBefore));
-		assertFalse(game.getShop().getItems().getList().equals(shopItemsBefore));
-		assertFalse(game.getBattles().getList().equals(battlesBefore));
+		assertFalse(game.getShop().getMonsters().equals(shopMonstersBefore));
+		assertFalse(game.getShop().getItems().equals(shopItemsBefore));
+		assertFalse(game.getBattles().equals(battlesBefore));
 		
 		assertEquals(healthBefore + testMonster.getHealAmount(), testMonster.getHealth());
 		

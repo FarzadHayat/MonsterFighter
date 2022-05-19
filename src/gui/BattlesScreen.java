@@ -93,8 +93,8 @@ public class BattlesScreen {
 		window.getContentPane().add(battlesPanel);
 		battlesPanel.setLayout(null);
 		
-		if (battles.getList().size() > 0) {
-			Battle battle = battles.getList().get(0);
+		if (battles.size() > 0) {
+			Battle battle = battles.get(0);
 			JButton battle1Button = new JButton(battle.getName());
 			battle1Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -107,8 +107,8 @@ public class BattlesScreen {
 			battlesPanel.add(battle1Button);
 		}
 		
-		if (battles.getList().size() > 1) {
-			Battle battle = battles.getList().get(1);
+		if (battles.size() > 1) {
+			Battle battle = battles.get(1);
 			JButton battle2Button = new JButton(battle.getName());
 			battle2Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -121,8 +121,8 @@ public class BattlesScreen {
 			battlesPanel.add(battle2Button);
 		}
 			
-		if (battles.getList().size() > 2) {
-			Battle battle = battles.getList().get(2);
+		if (battles.size() > 2) {
+			Battle battle = battles.get(2);
 			JButton battle3Button = new JButton(battle.getName());
 			battle3Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -135,8 +135,8 @@ public class BattlesScreen {
 			battlesPanel.add(battle3Button);
 		}
 		
-		if (battles.getList().size() > 3) {
-			Battle battle = battles.getList().get(3);
+		if (battles.size() > 3) {
+			Battle battle = battles.get(3);
 			JButton battle4Button = new JButton(battle.getName());
 			battle4Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -149,8 +149,8 @@ public class BattlesScreen {
 			battlesPanel.add(battle4Button);
 		}
 		
-		if (battles.getList().size() > 4) {
-			Battle battle = battles.getList().get(4);
+		if (battles.size() > 4) {
+			Battle battle = battles.get(4);
 			JButton battle5Button = new JButton(battle.getName());
 			battle5Button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -227,8 +227,8 @@ public class BattlesScreen {
 		for (int i = 0; i < statsLabelValues.size(); i++) {
 			JLabel label = statsLabels.get(i);
 			JLabel labelvalue = statsLabelValues.get(i);
-			if (selectedBattle.getMonsters().getList().size() > i) {				
-				Monster monster = selectedBattle.getMonsters().getList().get(i);
+			if (selectedBattle.getMonsters().size() > i) {				
+				Monster monster = selectedBattle.getMonsters().get(i);
 				label.setVisible(true);
 				labelvalue.setText(String.valueOf(monster.getName()) + " - Lvl " + String.valueOf(monster.getLevel()));			
 			}

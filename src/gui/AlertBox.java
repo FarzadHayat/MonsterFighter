@@ -22,7 +22,7 @@ public class AlertBox {
 	/**
 	 * Create a new AlertBox object with a yes or no option.
 	 * @param infoMessage the given infoMessage.
-	 * @return 0 for no, 1 for yes.
+	 * @return the result: 0 or 1
 	 */
 	public static int yesNo(String infoMessage)
     {

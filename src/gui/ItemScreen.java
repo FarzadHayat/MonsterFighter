@@ -5,10 +5,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import exceptions.InvalidValueException;
-import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
-import items.LevelUp;
-
 import javax.swing.JButton;
 
 import java.awt.Color;
@@ -153,11 +150,11 @@ public class ItemScreen {
 		txtDescription.setText(item.getDescription());
 		txtDescription.setBackground(null);
 		
-		if(!monsters.getList().isEmpty()) {
+		if(!monsters.isEmpty()) {
 			int yPos = 100;
 			int xPos = 215;
 			int numButton = 1;
-			for (Monster monster : monsters.getList()) {
+			for (Monster monster : monsters) {
 				MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
 				if (monster.getName().length() > 10) {				
 					monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");

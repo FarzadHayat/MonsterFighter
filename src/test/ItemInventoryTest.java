@@ -32,23 +32,7 @@ class ItemInventoryTest {
 		myItems.add(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
-		assertEquals(testItemList, myItems.getList());
-	}
-	
-	
-	@Test
-	public void testAdd2() throws InventoryFullException {
-		// Inventory full
-		Item testItem = new HealUp(game);
-		for (int i = 0; i < myItems.getMaxSize(); i++) {			
-			myItems.add(testItem);
-		}
-		try {    		
-			myItems.add(testItem);
-		}
-		catch (InventoryFullException e){
-			assertEquals("Item inventory is full!", e.getMessage());
-		}
+		assertEquals(testItemList, myItems);
 	}
 	
 	
@@ -68,7 +52,7 @@ class ItemInventoryTest {
 		testItemList.add(testItem3);
 		testItemList.add(testItem1);
 		testItemList.add(testItem4);
-		assertEquals(testItemList, myItems.getList());
+		assertEquals(testItemList, myItems);
 	}
 
 	
@@ -79,7 +63,7 @@ class ItemInventoryTest {
 		myItems.add(testItem);
 		myItems.remove(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
-		assertEquals(testItemList, myItems.getList());
+		assertEquals(testItemList, myItems);
 	}
 	
 	
@@ -95,7 +79,7 @@ class ItemInventoryTest {
 		myItems.remove(testItem1);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem2);
-		assertEquals(testItemList, myItems.getList());
+		assertEquals(testItemList, myItems);
 	}
 
 	
@@ -131,7 +115,7 @@ class ItemInventoryTest {
 		myItems.add(testItem2);
 		
 		Item randomItem = myItems.random();
-		assertTrue(myItems.getList().contains(randomItem));
+		assertTrue(myItems.contains(randomItem));
 	}
 	
 	
@@ -143,7 +127,7 @@ class ItemInventoryTest {
 		myItems.add(testItem2);
 		
 		String result = "";
-		for (Item item : myItems.getList())
+		for (Item item : myItems)
 		{
 			result += "\n" + item;
 		}
@@ -161,7 +145,7 @@ class ItemInventoryTest {
 		
 		String result = "";
 		int start = 1;
-    	for (Item item : myItems.getList()) {
+    	for (Item item : myItems) {
     		result += String.format("%s: %s\n", start, item);
     		start++;
     	}

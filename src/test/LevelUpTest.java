@@ -38,7 +38,7 @@ class LevelUpTest {
 		player.getItems().add(item);
 		item.use(monster);
 		ArrayList<Item> itemList = new ArrayList<Item>();
-		assertEquals(itemList, player.getItems().getList());
+		assertEquals(itemList, player.getItems());
 		assertEquals(levelBefore + 1, monster.getLevel());
 	}
 	

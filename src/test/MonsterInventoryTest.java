@@ -33,23 +33,7 @@ class MonsterInventoryTest {
 		myMonsters.add(testMonster);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
 		testMonsterList.add(testMonster);
-		assertEquals(testMonsterList, myMonsters.getList());
-	}
-	
-	
-	@Test
-	public void testAdd2() throws InventoryFullException {
-		// Inventory full
-		Monster testMonster = new Chunky(game);
-		for (int i = 0; i < myMonsters.getMaxSize(); i++) {			
-			myMonsters.add(testMonster);
-		}
-		try {    		
-			myMonsters.add(testMonster);
-		}
-		catch (InventoryFullException e){
-			assertEquals("Monster inventory is full!", e.getMessage());
-		}
+		assertEquals(testMonsterList, myMonsters);
 	}
 	
 	
@@ -69,7 +53,7 @@ class MonsterInventoryTest {
 		testMonsterList.add(testMonster3);
 		testMonsterList.add(testMonster1);
 		testMonsterList.add(testMonster4);
-		assertEquals(testMonsterList, myMonsters.getList());
+		assertEquals(testMonsterList, myMonsters);
 	}
 
 	
@@ -80,7 +64,7 @@ class MonsterInventoryTest {
 		myMonsters.add(testMonster);
 		myMonsters.remove(testMonster);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
-		assertEquals(testMonsterList, myMonsters.getList());
+		assertEquals(testMonsterList, myMonsters);
 	}
 	
 	
@@ -96,7 +80,7 @@ class MonsterInventoryTest {
 		myMonsters.remove(testMonster1);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
 		testMonsterList.add(testMonster2);
-		assertEquals(testMonsterList, myMonsters.getList());
+		assertEquals(testMonsterList, myMonsters);
 	}
 
 	
@@ -157,9 +141,9 @@ class MonsterInventoryTest {
 		myMonsters.add(testMonster3);
 		
 		myMonsters.healAll();
-		assertEquals(testMonster1.getMaxHealth(), myMonsters.getList().get(0).getHealth());
-		assertEquals((testMonster2.getMaxHealth() / 2) + testMonster2.getHealAmount(), myMonsters.getList().get(1).getHealth());
-		assertEquals(testMonster3.getMaxHealth(), myMonsters.getList().get(2).getHealth());
+		assertEquals(testMonster1.getMaxHealth(), myMonsters.get(0).getHealth());
+		assertEquals((testMonster2.getMaxHealth() / 2) + testMonster2.getHealAmount(), myMonsters.get(1).getHealth());
+		assertEquals(testMonster3.getMaxHealth(), myMonsters.get(2).getHealth());
 	}
 	
 	
@@ -171,7 +155,7 @@ class MonsterInventoryTest {
 		myMonsters.add(testMonster2);
 		
 		Monster randomMonster = myMonsters.random();
-		assertTrue(myMonsters.getList().contains(randomMonster));
+		assertTrue(myMonsters.contains(randomMonster));
 	}
 	
 	
@@ -187,8 +171,8 @@ class MonsterInventoryTest {
 		
 		myMonsters.levelUpOnDay();
 		
-		assertEquals(3, myMonsters.getList().get(0).getLevel());
-		assertEquals(3, myMonsters.getList().get(1).getLevel());
+		assertEquals(3, myMonsters.get(0).getLevel());
+		assertEquals(3, myMonsters.get(1).getLevel());
 	}
 	
 	
@@ -200,7 +184,7 @@ class MonsterInventoryTest {
 		myMonsters.add(testMonster2);
 		
 		String result = "";
-		for (Monster monster : myMonsters.getList())
+		for (Monster monster : myMonsters)
 		{
 			result += "\n" + monster;
 		}
@@ -218,7 +202,7 @@ class MonsterInventoryTest {
 		
 		String result = "";
 		int start = 1;
-    	for (Monster monster : myMonsters.getList()) {
+    	for (Monster monster : myMonsters) {
     		result += String.format("%s: %s\n", start, monster);
     		start++;
     	}

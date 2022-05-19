@@ -17,8 +17,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import java.awt.Color;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
 
 /**
  * Displays the shop screen in a new window.
@@ -199,10 +197,8 @@ public class ShopScreen {
 							} catch (InvalidValueException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
-							} catch (InsufficientFundsException e1) {
-								AlertBox.infoBox("Insufficient funds in player's balance!", "ERROR, Try again");
-							} catch (InventoryFullException e1) {
-								AlertBox.infoBox("Inventory is full!", "ERROR, Try again");
+							} catch (InsufficientFundsException | InventoryFullException e1) {
+								AlertBox.infoBox(e1.getMessage(), "ERROR, Try again");
 							}
 						}
 					}
@@ -218,10 +214,8 @@ public class ShopScreen {
 							} catch (InvalidValueException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
-							} catch (InsufficientFundsException e1) {
-								AlertBox.infoBox("Insufficient funds in player's balance!", "ERROR, Try again");
-							} catch (InventoryFullException e1) {
-								AlertBox.infoBox("Inventory is full!", "ERROR, Try again");
+							} catch (InsufficientFundsException | InventoryFullException e1) {
+								AlertBox.infoBox(e1.getMessage(), "ERROR, Try again");
 							}
 						}
 					}
@@ -265,8 +259,8 @@ public class ShopScreen {
 		int yPos = 60;
 		int numButton = 1;
 		for(int i = 0; i < shopMonsters.getMaxSize(); i++) {
-			Monster monster = shopMonsters.getList().get(i);
-			Item item = shopItems.getList().get(i);
+			Monster monster = shopMonsters.get(i);
+			Item item = shopItems.get(i);
 			ItemButton itemButton = new ItemButton(item, xPos, yPos);
 			MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
 			if (item.getName().length() > 10) {				

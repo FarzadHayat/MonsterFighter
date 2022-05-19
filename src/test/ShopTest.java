@@ -30,11 +30,11 @@ class ShopTest {
 	
 	@Test
 	void testRandomise() {
-		ArrayList<Monster> monstersList = monsters.getList();
-		ArrayList<Item> itemsList = items.getList();
+		ArrayList<Monster> monstersList = monsters;
+		ArrayList<Item> itemsList = items;
 		shop.randomise();
-		assertTrue(monstersList != monsters.getList());
-		assertTrue(itemsList != items.getList());
+		assertTrue(monstersList != monsters);
+		assertTrue(itemsList != items);
 	}
 
 	
@@ -43,12 +43,12 @@ class ShopTest {
 		String result = String.format("\nBalance: %s\n", player.getBalance());
     	int start = 1;
     	result += "\n===== MONSTERS =====\n\n";
-    	for (Monster monster : monsters.getList()) {
+    	for (Monster monster : monsters) {
     		result += String.format("%s: %s\n", start, monster);
     		start++;
     	}
     	result += "\n===== ITEMS =====\n\n";
-    	for (Item item : items.getList()) {
+    	for (Item item : items) {
     		result += String.format("%s: %s\n", start, item);
     		start++;
     	}

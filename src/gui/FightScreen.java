@@ -4,13 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import exceptions.InventoryFullException;
-import exceptions.NotFoundException;
-
 import java.awt.Font;
 import main.*;
-import monsters.*;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -156,7 +151,7 @@ public class FightScreen {
 		playerPanel.setLayout(null);
 		
 		int xPos = 7;
-		for (Monster monster : game.getPlayer().getMonsters().getList()) {
+		for (Monster monster : game.getPlayer().getMonsters()) {
 			MonsterPanel monsterPanel = new MonsterPanel(monster, xPos, 0);
 			playerPanel.add(monsterPanel);
 			xPos += 190;
@@ -170,7 +165,7 @@ public class FightScreen {
 		enemyPanel.setLayout(null);
 		
 		xPos = 7;
-		for (Monster monster : battle.getMonsters().getList()) {
+		for (Monster monster : battle.getMonsters()) {
 			MonsterPanel monsterPanel = new MonsterPanel(monster, xPos, 0);
 			enemyPanel.add(monsterPanel);
 			xPos += 190;

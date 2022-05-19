@@ -235,8 +235,8 @@ public class CommandLine {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (0 < selection && selection <= game.getAllMonsters().getList().size()) {
-					Monster monster = game.getAllMonsters().getList().get(selection - 1).clone();
+				if (0 < selection && selection <= game.getAllMonsters().size()) {
+					Monster monster = game.getAllMonsters().get(selection - 1).clone();
 					System.out.println("You chose: " + monster.getName());
 					player.getMonsters().add(monster);
 					break;
@@ -247,9 +247,6 @@ public class CommandLine {
 			}
 			catch (IllegalArgumentException e) {
 				System.out.println(e.getMessage());
-			}
-			catch (InventoryFullException e) {
-				e.printStackTrace();
 			}
 			catch (InputMismatchException e) {
     			System.out.println("Command not found! Try again:");
@@ -293,8 +290,8 @@ public class CommandLine {
 				selection = scanner.nextInt();
 				scanner.nextLine();
 				
-				int monstersSize = shop.getMonsters().getList().size();
-				int itemsSize = shop.getItems().getList().size();
+				int monstersSize = shop.getMonsters().size();
+				int itemsSize = shop.getItems().size();
 				int combinedSize = monstersSize + itemsSize; 
 				
 				if (combinedSize == selection - 1) {
@@ -302,14 +299,14 @@ public class CommandLine {
 				}
 				if (0 < selection && selection <= monstersSize) {
 					int index = selection - 1;
-					Monster monster = shop.getMonsters().getList().get(index);
+					Monster monster = shop.getMonsters().get(index);
 					viewShopMonster(monster);
 		    		System.out.println(shop);
 				}
 				else {						
 					if (monstersSize < selection && selection <= combinedSize) {
 						int index = selection - monstersSize - 1;
-						Item item = shop.getItems().getList().get(index);
+						Item item = shop.getItems().get(index);
 						viewShopItem(item);
 						System.out.println(shop);
 					}
@@ -410,11 +407,11 @@ public class CommandLine {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (player.getMonsters().getList().size() == selection - 1) {
+				if (player.getMonsters().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= player.getMonsters().getList().size()) {
-					Monster monster = player.getMonsters().getList().get(selection - 1);
+				if (0 < selection && selection <= player.getMonsters().size()) {
+					Monster monster = player.getMonsters().get(selection - 1);
 					viewPlayerMonster(monster);
 					System.out.println(player.viewMonsters());
 				}
@@ -482,11 +479,11 @@ public class CommandLine {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (player.getItems().getList().size() == selection - 1) {
+				if (player.getItems().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= player.getItems().getList().size()) {
-					Item item = player.getItems().getList().get(selection - 1);
+				if (0 < selection && selection <= player.getItems().size()) {
+					Item item = player.getItems().get(selection - 1);
 					viewPlayerItem(item);
 					System.out.println(player.viewItems());
 				}
@@ -555,11 +552,11 @@ public class CommandLine {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (player.getMonsters().getList().size() == selection - 1) {
+				if (player.getMonsters().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= player.getMonsters().getList().size()) {
-					Monster monster = player.getMonsters().getList().get(selection - 1);
+				if (0 < selection && selection <= player.getMonsters().size()) {
+					Monster monster = player.getMonsters().get(selection - 1);
 					item.use(monster);
 					System.out.println(String.format("You used %s on %s:", item.getName(), monster.getName()));
 					System.out.println(monster);
@@ -595,11 +592,11 @@ public class CommandLine {
 			try {
 				selection = scanner.nextInt();
 				scanner.nextLine();
-				if (game.getBattles().getList().size() == selection - 1) {
+				if (game.getBattles().size() == selection - 1) {
 					break;
 				}
-				if (0 < selection && selection <= game.getBattles().getList().size()) {
-					Battle battle = game.getBattles().getList().get(selection - 1); 
+				if (0 < selection && selection <= game.getBattles().size()) {
+					Battle battle = game.getBattles().get(selection - 1); 
 					viewBattle(battle);
 			    	System.out.println(game.getBattles().view());
 				}

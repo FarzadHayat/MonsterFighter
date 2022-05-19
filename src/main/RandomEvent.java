@@ -2,7 +2,6 @@ package main;
 
 import java.util.*;
 
-import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 
 /**
@@ -176,11 +175,10 @@ public class RandomEvent {
 		double randomValue = rn.nextDouble(1);
 		
 		if(randomValue <= joinChance) {
-			try {				
+			if (!player.getMonsters().isFull()) {
 				player.getMonsters().add(randomMonster);
 				event = String.format("A new monster has joined the team over night. Welcome %s!\n", randomMonster.getName());
 			}
-			catch (InventoryFullException e) {}
 		}
 		return event;
     }
@@ -194,17 +192,17 @@ public class RandomEvent {
      */
     public String runAllRandom() {
     	String events = "";
-		for(Monster monster: player.getMonsters().getList()) {
+		for(Monster monster: player.getMonsters()) {
 			events += randomMonsterLevelUp(monster);
 		}
-		ArrayList<Monster> playerMonsterList = new ArrayList<Monster>(player.getMonsters().getList());
+		ArrayList<Monster> playerMonsterList = new ArrayList<Monster>(player.getMonsters());
 		for(Monster monster: playerMonsterList) {
-		    if(player.getMonsters().getList().size() <= 1) {
+		    if(player.getMonsters().size() <= 1) {
 		    	break;
 		    }
 		    events += randomMonsterLeave(monster);
 		}
-		for(int i = 0; i < player.getMonsters().getMaxSize() - player.getMonsters().getList().size(); i++) {
+		for(int i = 0; i < player.getMonsters().getMaxSize() - player.getMonsters().size(); i++) {
 			events += randomMonsterJoin();
 		}
 		if (events.equals("")) {

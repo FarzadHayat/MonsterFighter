@@ -483,17 +483,22 @@ public abstract class Monster {
     /**
      * Buy a monster from the shop and add it to the player inventory.
      * @throws InsufficientFundsException if cost of monster is more than player balance
-     * @throws InventoryFullException if inventory is full
      * @throws InvalidValueException if value of balance to minus is invalid
      * @return the string representing what the player bought
+     * @throws InventoryFullException if the player monster inventory is full
      */
 	public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException {
-		player.minusBalance(cost);
-		player.getMonsters().add(this);
-		int index = shop.getMonsters().getList().indexOf(this);		
-		shop.getMonsters().remove(this);
-		shop.getMonsters().add(index, game.getAllMonsters().random());
-		return "You bought: " + name;
+		if (player.getMonsters().isFull()) {
+			throw new InventoryFullException("Monster inventory is full!");
+		}
+		else {		
+			player.minusBalance(cost);
+			player.getMonsters().add(this);
+			int index = shop.getMonsters().indexOf(this);		
+			shop.getMonsters().remove(this);
+			shop.getMonsters().add(index, game.getAllMonsters().random().clone());
+			return "You bought: " + name;
+		}
 	}
 	
 	
@@ -539,7 +544,7 @@ public abstract class Monster {
 	 */
     public String view() {
     	String result = "";
-    	if (shop.getMonsters().getList().contains(this)) {
+    	if (shop.getMonsters().contains(this)) {
     		result += String.format("\nBalance: %s\n\n", player.getBalance());
     	}
     	result += "Monster: " + getClass().getSimpleName() + "\n";
@@ -556,11 +561,11 @@ public abstract class Monster {
     	result += "Crit Rate: " + (int) (critRate * 100) + "%\n";
     	result += "Fainted: " + isFainted + "\n";
     	result += "Max Level: " + maxLevel + "\n";
-    	if (shop.getMonsters().getList().contains(this)) {
+    	if (shop.getMonsters().contains(this)) {
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}
-    	if (player.getMonsters().getList().contains(this)) {
+    	if (player.getMonsters().contains(this)) {
     		result += "\n1: Rename";
     		result += "\n2: Sell";
     		result += "\n3: Go back";

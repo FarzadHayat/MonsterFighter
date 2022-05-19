@@ -1,19 +1,17 @@
 package main;
 import java.util.ArrayList;
 
-import exceptions.InventoryFullException;
-
 /**
  * Holds an array of battles with additional functionality.
  * @author Farzad and Daniel
  */
-public class BattleInventory {
+@SuppressWarnings("serial")
+public class BattleInventory extends ArrayList<Battle> {
     
 	/**
 	 * Fields
 	 */
     protected int maxSize;
-    private ArrayList<Battle> list;
 
     protected GameEnvironment game;
     protected Player player;
@@ -32,7 +30,6 @@ public class BattleInventory {
     	this.maxSize = maxSize;
     	this.game = game;
     	player = game.getPlayer();
-    	list = new ArrayList<Battle>(maxSize);
     };
     
     
@@ -57,76 +54,17 @@ public class BattleInventory {
     	this.maxSize = maxSize;
     }
     
-    
-    /**
-	 * get the value of list
-	 * @return the value of list
-	 */
-	public ArrayList<Battle> getList() {
-		return list;
-	}
-
-
-	/**
-	 * Set the value of list
-	 * @param list the new value of list
-	 */
-	public void setList(ArrayList<Battle> list) {
-		this.list = list;
-	}
-    
 	
 	/**
 	 * Functional 
 	 */
 
-	/**
-     * Add the given battle to the inventory.
-     * @param battle the given battle
-     * @throws InventoryFullException if the inventory is already full
-     */
-    public void add(Battle battle) throws InventoryFullException
-    {
-    	if (!isFull()) {
-    		list.add(battle);
-    	}
-    	else {
-    		throw new InventoryFullException("Battle inventory is full!");
-    	}
-    }
-    
-    
-    /**
-     * Add the given battle at the given index to the inventory.
-     * @param battle the given battle
-     * @throws InventoryFullException if the inventory is already full
-     */
-    public void add(int index, Battle battle) throws InventoryFullException
-    {
-    	if (!isFull()) {
-    		list.add(index, battle);
-    	}
-    	else {
-    		throw new InventoryFullException("Battle inventory is full!");
-    	}
-    }
-
-
-    /**
-     * Remove the given battle from the inventory.
-     * @param battle the given battle
-     */
-    public void remove(Battle battle)
-    {
-    	list.remove(battle);
-    }
-    
     
     /**
 	 * @return if the inventory is full or not
 	 */
 	public boolean isFull() {
-		return list.size() >= maxSize;
+		return size() >= maxSize;
 	}
 
 
@@ -134,7 +72,7 @@ public class BattleInventory {
 	 * @return whether the inventory is empty
 	 */
 	public boolean isEmpty() {
-		return list.size() == 0;
+		return size() == 0;
 	}
 	
 	
@@ -143,12 +81,13 @@ public class BattleInventory {
      * Each randomly generated battle is a new battle populated with randomly selected monsters from all monsters in the game.
      */
     public void randomise() {
-    	ArrayList<Battle> newList = new ArrayList<Battle>(maxSize);
+    	while (!this.isEmpty()) {
+    		remove(this.get(0));
+    	}
     	for (int i = 0; i < maxSize; i++) {
     		Battle battle = new Battle(game);
-    		newList.add(battle);
+    		add(battle);
     	}
-    	setList(newList);
     }
     
     
@@ -157,7 +96,7 @@ public class BattleInventory {
 	 */
 	public String toString() {
 		String result = "";
-		for (Battle battle : list)
+		for (Battle battle : this)
 		{
 			result += "\n" + battle;
 		}
@@ -171,7 +110,7 @@ public class BattleInventory {
 	public String view() {
 		String result = "\n===== BATTLES =====\n\n";
 		int start = 1;
-    	for (Battle battle : list) {
+    	for (Battle battle : this) {
     		result += String.format("%s: %s\n", start, battle);
     		start++;
     	}

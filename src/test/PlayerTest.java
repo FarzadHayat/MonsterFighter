@@ -157,7 +157,7 @@ class PlayerTest {
 		
     	String result = "\n===== MY TEAM =====\n\n";
     	result += player.getMonsters().view();
-    	result += String.format("\n%s: Go back", player.getMonsters().getList().size() + 1);
+    	result += String.format("\n%s: Go back", player.getMonsters().size() + 1);
     	
     	assertEquals(result, player.viewMonsters());
     }
@@ -173,7 +173,7 @@ class PlayerTest {
 		
     	String result = "\n===== MY INVENTORY =====\n\n";
     	result += player.getItems().view();
-    	result += String.format("\n%s: Go back", player.getItems().getList().size() + 1);
+    	result += String.format("\n%s: Go back", player.getItems().size() + 1);
 
     	assertEquals(result, player.viewItems());
     }

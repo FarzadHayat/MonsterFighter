@@ -89,12 +89,12 @@ public class Shop {
     	String result = String.format("\nBalance: %s\n", player.getBalance());
     	int start = 1;
     	result += "\n===== MONSTERS =====\n\n";
-    	for (Monster monster : monsters.getList()) {
+    	for (Monster monster : monsters) {
     		result += String.format("%s: %s\n", start, monster);
     		start++;
     	}
     	result += "\n===== ITEMS =====\n\n";
-    	for (Item item : items.getList()) {
+    	for (Item item : items) {
     		result += String.format("%s: %s\n", start, item);
     		start++;
     	}

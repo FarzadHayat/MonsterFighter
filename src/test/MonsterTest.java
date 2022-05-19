@@ -213,7 +213,7 @@ class MonsterTest {
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(monster);
 		assertEquals(0, player.getBalance());
-		assertEquals(monsterList, myMonsters.getList());
+		assertEquals(monsterList, myMonsters);
 	}
 	
 	@Test
@@ -256,7 +256,7 @@ class MonsterTest {
 		testMonster.sell();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		assertEquals(30, player.getBalance());
-		assertEquals(monsterList, myMonsters.getList());
+		assertEquals(monsterList, myMonsters);
 	}
 	
 	@Test
@@ -276,7 +276,7 @@ class MonsterTest {
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
 		monsterList.add(testMonster);
 		assertEquals(60, player.getBalance());
-		assertEquals(monsterList, myMonsters.getList());
+		assertEquals(monsterList, myMonsters);
 	}
 
 	@Test
@@ -348,7 +348,7 @@ class MonsterTest {
 	public void testView1() {
 		//Viewing monster stats
 		String result = "";
-    	if (shop.getMonsters().getList().contains(monster)) {
+    	if (shop.getMonsters().contains(monster)) {
     		result += String.format("\nBalance: %s\n\n", player.getBalance());
     	}
     	result += "Monster: " + monster.getClass().getSimpleName() + "\n";
@@ -365,11 +365,11 @@ class MonsterTest {
     	result += "Crit Rate: " + (int) (monster.getCritRate() * 100) + "%\n";
     	result += "Fainted: " + monster.getIsFainted() + "\n";
     	result += "Max Level: " + monster.getMaxLevel() + "\n";
-    	if (shop.getMonsters().getList().contains(monster)) {
+    	if (shop.getMonsters().contains(monster)) {
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}
-    	if (player.getMonsters().getList().contains(monster)) {
+    	if (player.getMonsters().contains(monster)) {
     		result += "\n1: Rename";
     		result += "\n2: Sell";
     		result += "\n3: Go back";
@@ -383,7 +383,7 @@ class MonsterTest {
 		//Viewing monster in player's inventory
 		String result = "";
 		player.getMonsters().add(monster);
-    	if (shop.getMonsters().getList().contains(monster)) {
+    	if (shop.getMonsters().contains(monster)) {
     		result += String.format("\nBalance: %s\n\n", player.getBalance());
     	}
     	result += "Monster: " + monster.getClass().getSimpleName() + "\n";
@@ -400,11 +400,11 @@ class MonsterTest {
     	result += "Crit Rate: " + (int) (monster.getCritRate() * 100) + "%\n";
     	result += "Fainted: " + monster.getIsFainted() + "\n";
     	result += "Max Level: " + monster.getMaxLevel() + "\n";
-    	if (shop.getMonsters().getList().contains(monster)) {
+    	if (shop.getMonsters().contains(monster)) {
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}
-    	if (player.getMonsters().getList().contains(monster)) {
+    	if (player.getMonsters().contains(monster)) {
     		result += "\n1: Rename";
     		result += "\n2: Sell";
     		result += "\n3: Go back";
@@ -417,9 +417,9 @@ class MonsterTest {
 	public void testView3() throws InventoryFullException {
 		//Viewing monster in shop
 		String result = "";
-		shop.getMonsters().getList().remove(0);
+		shop.getMonsters().remove(0);
 		shop.getMonsters().add(monster);
-    	if (shop.getMonsters().getList().contains(monster)) {
+    	if (shop.getMonsters().contains(monster)) {
     		result += String.format("\nBalance: %s\n\n", player.getBalance());
     	}
     	result += "Monster: " + monster.getClass().getSimpleName() + "\n";
@@ -436,11 +436,11 @@ class MonsterTest {
     	result += "Crit Rate: " + (int) (monster.getCritRate() * 100) + "%\n";
     	result += "Fainted: " + monster.getIsFainted() + "\n";
     	result += "Max Level: " + monster.getMaxLevel() + "\n";
-    	if (shop.getMonsters().getList().contains(monster)) {
+    	if (shop.getMonsters().contains(monster)) {
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}
-    	if (player.getMonsters().getList().contains(monster)) {
+    	if (player.getMonsters().contains(monster)) {
     		result += "\n1: Rename";
     		result += "\n2: Sell";
     		result += "\n3: Go back";
