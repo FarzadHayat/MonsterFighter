@@ -6,10 +6,10 @@ import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 
 /**
- * An abstract class that describes a purchasable item that can be used on a monster.
+ * An abstract class that describes an item that can be used on a monster.
  * @author Farzad and Daniel
  */
-abstract public class Item implements Purchasable {
+abstract public class Item {
 
 	/**
 	 * Fields
@@ -26,7 +26,6 @@ abstract public class Item implements Purchasable {
     /**
 	 * Constructors
 	 */
-    
     
     /**
      * Create a new Item object.
@@ -130,17 +129,22 @@ abstract public class Item implements Purchasable {
     /**
      * Buy this item from the shop and add it to the player inventory.
      * @throws InsufficientFundsException if cost of item is more than player balance
-     * @throws InventoryFullException if the player inventory is full
      * @throws InvalidValueException if cost is a negative value 
      * @return the string representing what the player bought
+     * @throws InventoryFullException if the player item inventory is full
      */
-    public String buy() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
-    	player.minusBalance(cost);
-    	player.getItems().add(this);
-		int index = shop.getItems().getList().indexOf(this);
-		shop.getItems().remove(this);
-		shop.getItems().add(index, game.getAllItems().random());
-		return "You bought: " + name;
+    public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException {
+    	if (player.getItems().isFull()) {
+    		throw new InventoryFullException("Item inventory is full");
+    	}
+    	else {    		
+    		player.minusBalance(cost);
+    		player.getItems().add(this);
+    		int index = shop.getItems().indexOf(this);
+    		shop.getItems().remove(this);
+    		shop.getItems().add(index, game.getAllItems().random().clone());
+    		return "You bought: " + name;
+    	}
     }
 
     
@@ -177,18 +181,18 @@ abstract public class Item implements Purchasable {
 	 */
     public String view() {
     	String result = "";
-    	if (shop.getItems().getList().contains(this)) {
+    	if (shop.getItems().contains(this)) {
     		result += String.format("\nBalance: %s\n\n", player.getBalance());
     	}
     	result += "Item: " + name + "\n";
     	result += description + "\n";
     	result += "Cost: " + cost + "\n";
-    	if (player.getItems().getList().contains(this)) {
+    	if (player.getItems().contains(this)) {
     		result += "\n1: Use";
     		result += "\n2: Sell";
     		result += "\n3: Go back";
     	}
-    	if (shop.getItems().getList().contains(this)) {    		
+    	if (shop.getItems().contains(this)) {    		
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}

@@ -75,7 +75,7 @@ class BattleTest {
 	@Test
 	void testCheckStatus1() {
 		player.getMonsters().randomise();
-		for (Monster monster : player.getMonsters().getList()) {
+		for (Monster monster : player.getMonsters()) {
 			monster.setHealth(0);
 			monster.setIsFainted(true);
 		}
@@ -92,7 +92,7 @@ class BattleTest {
 	@Test
 	void testCheckStatus2() {
 		player.getMonsters().randomise();
-		for (Monster monster : battle.getMonsters().getList()) {
+		for (Monster monster : battle.getMonsters()) {
 			monster.setHealth(0);
 			monster.setIsFainted(true);
 		}

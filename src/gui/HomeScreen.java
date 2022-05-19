@@ -133,7 +133,7 @@ public class HomeScreen {
 		monstersPanel.setLayout(null);
 		
 		int yPos = 10;
-		for (Monster monster : monsters.getList()) {
+		for (Monster monster : monsters) {
 			MonsterButton monsterButton = new MonsterButton(monster, 10, yPos);
 			if (monster.getName().length() > 10) {				
 				monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
@@ -154,7 +154,7 @@ public class HomeScreen {
 		itemsPanel.setLayout(null);
 		
 		int xPos = 10;
-		for (Item item : items.getList()) {
+		for (Item item : items) {
 			ItemButton itemButton = new ItemButton(item, xPos, 10);
 			if (item.getName().length() > 10) {
 				itemButton.setText("<html><center>" + item.getName().replaceFirst(" ", "<br>") + "</centre></html>");

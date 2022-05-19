@@ -4,18 +4,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import exceptions.InventoryFullException;
-
 import java.awt.Font;
 
 import main.*;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.font.TextAttribute;
-import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
@@ -153,14 +148,9 @@ public class StartingMonsterScreen {
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(selected != null) {
-					try {
-						player.getMonsters().add(selected.clone());
-						gui.launchHomeScreen();
-						finishedWindow();
-					} catch (InventoryFullException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					player.getMonsters().add(selected.clone());
+					gui.launchHomeScreen();
+					finishedWindow();
 				}
 			}
 		});
@@ -171,7 +161,7 @@ public class StartingMonsterScreen {
 		int yPos = 20;
 		int xPos = 10;
 		int numButton = 1;
-		for(Monster monster: allMonsters.getList()) {
+		for(Monster monster: allMonsters) {
 			MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

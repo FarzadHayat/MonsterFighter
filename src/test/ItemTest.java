@@ -59,7 +59,7 @@ class ItemTest {
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
 		assertEquals(0, player.getBalance());
-		assertEquals(testItemList, myItems.getList());
+		assertEquals(testItemList, myItems);
 	}
 	
 	/**
@@ -125,7 +125,7 @@ class ItemTest {
 		testItem.sell();
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		assertEquals(testItem.getCost() * testItem.getRefundAmount(), player.getBalance());
-		assertEquals(testItemList, myItems.getList());
+		assertEquals(testItemList, myItems);
 	}
 	
 	/**
@@ -152,7 +152,7 @@ class ItemTest {
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem2);
 		assertEquals(testItem1.getCost(), player.getBalance());
-		assertEquals(testItemList, myItems.getList());
+		assertEquals(testItemList, myItems);
 	}
 	
 	/**
@@ -176,18 +176,18 @@ class ItemTest {
 		String myStr = testItem.view();
 		
 		String result = "";
-    	if (game.getShop().getItems().getList().contains(testItem)) {
+    	if (game.getShop().getItems().contains(testItem)) {
     		result += String.format("\nBalance: %s\n\n", player.getBalance());
     	}
     	result += "Item: " + testItem.getName() + "\n";
     	result += testItem.getDescription() + "\n";
     	result += "Cost: " + testItem.getCost() + "\n";
-    	if (player.getItems().getList().contains(testItem)) {
+    	if (player.getItems().contains(testItem)) {
     		result += "\n1: Use";
     		result += "\n2: Sell";
     		result += "\n3: Go back";
     	}
-    	if (game.getShop().getItems().getList().contains(testItem)) {    		
+    	if (game.getShop().getItems().contains(testItem)) {    		
     		result += "\n1: Buy";
     		result += "\n2: Go back";
     	}

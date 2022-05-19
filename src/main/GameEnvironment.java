@@ -1,13 +1,17 @@
 package main;
 
 import exceptions.InvalidValueException;
-import exceptions.InventoryFullException;
 import items.HealUp;
 import items.IncreaseCritRate;
 import items.IncreaseDamage;
 import items.LevelUp;
 import monsters.*;
 
+/**
+ * The main game manager.
+ * Holds the generic information about the game.
+ * @author Farzad and Daniel
+ */
 public class GameEnvironment {
 
 	/**
@@ -59,7 +63,6 @@ public class GameEnvironment {
     /**
      * Getters and setters
      */
-
 
 	/**
      * Get the value of numDays
@@ -296,29 +299,24 @@ public class GameEnvironment {
     		e.printStackTrace();
     	}
     	
-    	try {    		
-    		allMonsters = new MonsterInventory(6, this);
-    		allMonsters.add(new AverageJoe(this));
-    		allMonsters.add(new Chunky(this));
-    		allMonsters.add(new Lanky(this));
-    		allMonsters.add(new Shanny(this));
-    		allMonsters.add(new Raka(this));
-    		allMonsters.add(new Zap(this));
-    		
-    		allItems = new ItemInventory(4, this);
-    		allItems.add(new HealUp(this));
-    		allItems.add(new IncreaseDamage(this));
-    		allItems.add(new IncreaseCritRate(this));
-    		allItems.add(new LevelUp(this));
-    		
-    		shop.randomise();
-    		battles = new BattleInventory(5, this);
-    		battles.randomise();
-    		randomEvent = new RandomEvent(this);
-    	}
-    	catch (InventoryFullException e) {
-    		e.printStackTrace();
-    	}
+    	allMonsters = new MonsterInventory(6, this);
+		allMonsters.add(new AverageJoe(this));
+		allMonsters.add(new Chunky(this));
+		allMonsters.add(new Lanky(this));
+		allMonsters.add(new Shanny(this));
+		allMonsters.add(new Raka(this));
+		allMonsters.add(new Zap(this));
+		
+		allItems = new ItemInventory(4, this);
+		allItems.add(new HealUp(this));
+		allItems.add(new IncreaseDamage(this));
+		allItems.add(new IncreaseCritRate(this));
+		allItems.add(new LevelUp(this));
+		
+		shop.randomise();
+		battles = new BattleInventory(5, this);
+		battles.randomise();
+		randomEvent = new RandomEvent(this);
     }
     
 	

@@ -47,6 +47,7 @@ class ItemInventoryTest {
 		myItems.add(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
+<<<<<<< HEAD
 		assertEquals(testItemList, myItems.getList());
 	}
 	
@@ -68,6 +69,9 @@ class ItemInventoryTest {
 		catch (InventoryFullException e){
 			assertEquals("Item inventory is full!", e.getMessage());
 		}
+=======
+		assertEquals(testItemList, myItems);
+>>>>>>> 99c6b9cfb96ddda372fab7ce6098457c981a2778
 	}
 	
 	/**
@@ -91,7 +95,7 @@ class ItemInventoryTest {
 		testItemList.add(testItem3);
 		testItemList.add(testItem1);
 		testItemList.add(testItem4);
-		assertEquals(testItemList, myItems.getList());
+		assertEquals(testItemList, myItems);
 	}
 
 	/**
@@ -106,7 +110,7 @@ class ItemInventoryTest {
 		myItems.add(testItem);
 		myItems.remove(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
-		assertEquals(testItemList, myItems.getList());
+		assertEquals(testItemList, myItems);
 	}
 	
 	/**
@@ -126,7 +130,7 @@ class ItemInventoryTest {
 		myItems.remove(testItem1);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem2);
-		assertEquals(testItemList, myItems.getList());
+		assertEquals(testItemList, myItems);
 	}
 
 	/**
@@ -174,7 +178,7 @@ class ItemInventoryTest {
 		myItems.add(testItem2);
 		
 		Item randomItem = myItems.random();
-		assertTrue(myItems.getList().contains(randomItem));
+		assertTrue(myItems.contains(randomItem));
 	}
 	
 	/**
@@ -190,7 +194,7 @@ class ItemInventoryTest {
 		myItems.add(testItem2);
 		
 		String result = "";
-		for (Item item : myItems.getList())
+		for (Item item : myItems)
 		{
 			result += "\n" + item;
 		}
@@ -211,7 +215,7 @@ class ItemInventoryTest {
 		
 		String result = "";
 		int start = 1;
-    	for (Item item : myItems.getList()) {
+    	for (Item item : myItems) {
     		result += String.format("%s: %s\n", start, item);
     		start++;
     	}

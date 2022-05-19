@@ -3,7 +3,7 @@ package gui;
 import main.*;
 
 /**
- * The class that launches the GUI game and manages the screens.
+ * This class launches the GUI game and manages the screens.
  * @author Farzad and Daniel
  */
 public class GraphicalUserInterface {

@@ -2,12 +2,15 @@ package main;
 
 import exceptions.InvalidValueException;
 
+/**
+ * Keeps track of the player score and battles won or lost.
+ * @author Farzad and Daniel
+ */
 public class Score {
    
 	/**
 	 * Fields
 	 */
-	
     private int dayBattlesWon;
     private int dayBattlesLost;
     private int dayScore;
@@ -19,6 +22,7 @@ public class Score {
     private int battlesWeight = 100;
     private int balanceWeight = 10;
    
+    
     /**
      * Constructors
      */
@@ -31,6 +35,7 @@ public class Score {
     	player = game.getPlayer();
     }
     
+    
     /**
      * Getters and Setters
      */
@@ -42,6 +47,7 @@ public class Score {
     public int getDayBattlesWon() {
     	return dayBattlesWon;
     }
+    
    
     /**
      * Set the value of dayBattlesWon
@@ -51,6 +57,7 @@ public class Score {
     	this.dayBattlesWon = battlesWon;
     }
    
+    
     /**
      * Get the value of dayBattlesLost
      * @return the value of dayBattlesLost
@@ -59,6 +66,7 @@ public class Score {
     	return dayBattlesLost;
     }
    
+    
     /**
      * Set the value of dayBattlesLost
      * @param battlesLost the new value of dayBattlesLost
@@ -67,6 +75,7 @@ public class Score {
     	this.dayBattlesLost = battlesLost;
     }
    
+    
     /**
      * Get the value of dayScore
      * @return the value of dayScore
@@ -75,6 +84,7 @@ public class Score {
     	return dayScore;
     }
    
+    
     /**
      * Set the value of dayScore
      * @param dayScore the new value of dayScore
@@ -82,6 +92,7 @@ public class Score {
     public void setDayScore(int dayScore) {
     	this.dayScore = dayScore;
     }
+    
     
     /**
      * Get the value of totalScore
@@ -91,6 +102,7 @@ public class Score {
     	return totalScore;
     }
    
+    
     /**
      * Set the value of totalScore
      * @param totalScore the new value of totalScore
@@ -98,6 +110,7 @@ public class Score {
     public void setTotalScore(int totalScore) {
     	this.totalScore = totalScore;
     }
+    
    
     /**
      * Get the value of totalBattlesWon
@@ -107,6 +120,7 @@ public class Score {
     	return totalBattlesWon;
     }
    
+    
     /**
      * Set the value of totalBattlesWon
      * @param battlesWon the new value of totalBattlesWon
@@ -115,6 +129,7 @@ public class Score {
     	this.totalBattlesWon = battlesWon;
     }
    
+    
     /**
      * Get the value of totalBattlesLost
      * @return the value of totalBattlesLost
@@ -122,6 +137,7 @@ public class Score {
     public int getTotalBattlesLost() {
     	return totalBattlesLost;
     }
+    
    
     /**
      * Set the value of totalBattlesLost
@@ -131,6 +147,7 @@ public class Score {
     	this.totalBattlesLost = battlesLost;
     }
     
+    
     /**
      * Get the value of battlesWeight
      * @return the value of battlesWeight
@@ -138,6 +155,7 @@ public class Score {
     public int getBattlesWeight() {
     	return battlesWeight;
     }
+    
     
     /**
      * Set the value of battlesWeight
@@ -147,6 +165,7 @@ public class Score {
     	this.battlesWeight = weight;
     }
     
+    
     /**
      * Get the value of balanceWeight
      * @return the value of balanceWeight
@@ -155,6 +174,7 @@ public class Score {
     	return balanceWeight;
     }
     
+    
     /**
      * Set the value of balanceWeight
      * @param weight the new value of balanceWeight
@@ -162,6 +182,7 @@ public class Score {
     public void setBalanceWeight(int weight) {
     	this.balanceWeight = weight;
     }
+    
     
     /**
      * Functional
@@ -174,6 +195,7 @@ public class Score {
 		this.dayBattlesWon++;
 		this.totalBattlesWon++;
     }
+    
    
     /**
      * Add one to dayBattlesLost and totalBattlesLost
@@ -183,6 +205,7 @@ public class Score {
 		this.totalBattlesLost++;
     }
    
+    
     /**
      * Set dayBattlesWon and dayBattlesLost to zero
      */
@@ -191,6 +214,7 @@ public class Score {
 		this.dayBattlesWon = 0;
     }
    
+    
     /**
      * @return the bonus score based on the value of totalBattlesWon and the remaining balance
      */
@@ -199,6 +223,7 @@ public class Score {
     	return bonus;
     }
     
+    
     /**
      * @return score the final score based on total score plus the bonus
      */
@@ -206,6 +231,7 @@ public class Score {
     	int score = getTotalScore() + scoreBonus();
 		return score;
     }
+    
     
     /**
      * Add to the value of dayScore and totalScore based on the given value
@@ -221,4 +247,5 @@ public class Score {
     		setTotalScore(getTotalScore() + amount);
     	}
     }
+    
 }

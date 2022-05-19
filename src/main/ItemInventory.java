@@ -2,19 +2,17 @@ package main;
 import java.util.ArrayList;
 import java.util.Random;
 
-import exceptions.InventoryFullException;
-
 /**
- * Displays the selected item inventory in a new window.
+ * Holds an array of items with additional functionality.
  * @author Farzad and Daniel
  */
-public class ItemInventory {
+@SuppressWarnings("serial")
+public class ItemInventory extends ArrayList<Item> {
     
 	/**
 	 * Fields
 	 */
     protected int maxSize;
-    private ArrayList<Item> list;
 
     protected GameEnvironment game;
     protected Player player;
@@ -33,7 +31,6 @@ public class ItemInventory {
     	this.maxSize = maxSize;
     	this.game = game;
     	player = game.getPlayer();
-    	list = new ArrayList<Item>(maxSize);
     };
     
     
@@ -57,78 +54,17 @@ public class ItemInventory {
     public void setMaxSize(int maxSize) {
     	this.maxSize = maxSize;
     }
-    
-    
-    /**
-	 * get the value of list
-	 * @return the value of list
-	 */
-	public ArrayList<Item> getList() {
-		return list;
-	}
-
-
-	/**
-	 * Set the value of list
-	 * @param list the new value of list
-	 */
-	public void setList(ArrayList<Item> list) {
-		this.list = list;
-	}
 	
 	
 	/**
 	 * Functional 
 	 */
-
-	/**
-     * Add the given item to the inventory.
-     * @param item the given item
-     * @throws InventoryFullException if the inventory is already full
-     */
-    public void add(Item item) throws InventoryFullException
-    {
-    	if (!isFull()) {
-    		list.add(item);
-    	}
-    	else {
-    		throw new InventoryFullException("Item inventory is full!");
-    	}
-    }
-    
-    
-    /**
-     * Add the given item at the given index to the inventory.
-     * @param index the given index to add the item
-     * @param item the given item
-     * @throws InventoryFullException if the inventory is already full
-     */
-    public void add(int index, Item item) throws InventoryFullException
-    {
-    	if (!isFull()) {
-    		list.add(index, item);
-    	}
-    	else {
-    		throw new InventoryFullException("Item inventory is full!");
-    	}
-    }
-
-
-    /**
-     * Remove the given item from the inventory.
-     * @param item the given item
-     */
-    public void remove(Item item)
-    {
-    	list.remove(item);
-    }
-    
     
     /**
 	 * @return if the inventory is full or not
 	 */
 	public boolean isFull() {
-		return list.size() >= maxSize;
+		return size() >= maxSize;
 	}
 
 
@@ -136,7 +72,7 @@ public class ItemInventory {
 	 * @return whether the inventory is empty
 	 */
 	public boolean isEmpty() {
-		return list.size() == 0;
+		return size() == 0;
 	}
     
 	
@@ -146,8 +82,8 @@ public class ItemInventory {
 	 */
 	public Item random() {
 		Random random = new Random();
-		int index = random.nextInt(list.size());
-		Item item = list.get(index);
+		int index = random.nextInt(size());
+		Item item = get(index);
 		return item;
 	}
 	
@@ -156,14 +92,15 @@ public class ItemInventory {
      * Populate the inventory by randomly selecting items from all items in the game.
      */
     public void randomise() {
-    	Random random = new Random();
-    	ArrayList<Item> newList = new ArrayList<Item>(maxSize);
-    	for (int i = 0; i < maxSize; i++) {
-    		int index = random.nextInt(game.getAllItems().getList().size());
-    		Item item = game.getAllItems().getList().get(index).clone();
-    		newList.add(item);
+    	while (!this.isEmpty()) {
+    		remove(this.get(0));
     	}
-    	setList(newList);
+    	Random random = new Random();
+    	for (int i = 0; i < maxSize; i++) {
+    		int index = random.nextInt(game.getAllItems().size());
+    		Item item = game.getAllItems().get(index).clone();
+    		add(item);
+    	}
     }
     
     
@@ -172,7 +109,7 @@ public class ItemInventory {
 	 */
 	public String toString() {
 		String result = "";
-		for (Item item : list)
+		for (Item item : this)
 		{
 			result += "\n" + item;
 		}
@@ -186,7 +123,7 @@ public class ItemInventory {
 	public String view() {
 		String result = "";
 		int start = 1;
-    	for (Item item : list) {
+    	for (Item item : this) {
     		result += String.format("%s: %s\n", start, item);
     		start++;
     	}

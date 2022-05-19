@@ -12,6 +12,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * A battle contains an inventory of enemy monsters that the player can fight.
+ * The player gains score and gold rewards if they win.
+ * @author Farzad and Daniel
+ */
 public class Battle {
 	
     /** 
@@ -414,6 +419,7 @@ public class Battle {
     	String selectedName = battleNames.get(i);
 		return selectedName;
     }
+    
     
     /**
      * @return result the string representation of the battle object

@@ -108,7 +108,7 @@ public class BattleScreen {
 		monstersPanel.setLayout(null);
 		
 		int yPos = 20;
-		for (Monster monster : monsters.getList()) {
+		for (Monster monster : monsters) {
 			MonsterButton monsterButton = new MonsterButton(monster, 100, yPos);
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

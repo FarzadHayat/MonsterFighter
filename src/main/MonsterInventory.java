@@ -2,21 +2,23 @@ package main;
 import java.util.ArrayList;
 import java.util.Random;
 
-import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 import monsters.Raka;
 
-public class MonsterInventory {
+/**
+ * Holds an array of monsters with additional functionality.
+ * @author Farzad and Daniel
+ */
+@SuppressWarnings("serial")
+public class MonsterInventory extends ArrayList<Monster> {
     
 	/**
 	 * Fields
 	 */
     protected int maxSize;
-    private ArrayList<Monster> list;
 
     protected GameEnvironment game;
     protected Player player;
-	
     
     
     /**
@@ -32,7 +34,6 @@ public class MonsterInventory {
     	this.maxSize = maxSize;
     	this.game = game;
     	player = game.getPlayer();
-    	list = new ArrayList<Monster>(maxSize);
     };
     
     
@@ -56,79 +57,17 @@ public class MonsterInventory {
     public void setMaxSize(int maxSize) {
     	this.maxSize = maxSize;
     }
-    
-    /**
-	 * get the value of list
-	 * @return the value of list
-	 */
-	public ArrayList<Monster> getList() {
-		return list;
-	}
-
-
-	/**
-	 * Set the value of list
-	 * @param list the new value of list
-	 */
-	public void setList(ArrayList<Monster> list) {
-		this.list = list;
-	}
 
 	
 	/**
 	 * Functional
 	 */
-
-	/**
-     * Add the given monster to the inventory.
-     * @param monster the given monster
-     * @throws InventoryFullException if the inventory is already full
-     */
-    public void add(Monster monster) throws InventoryFullException
-    {
-    	if (!isFull()) {
-    		list.add(monster);
-    		if(monster instanceof Raka) {
-    			((Raka) monster).setTeam(this);
-    		}
-    	}
-    	else {
-    		throw new InventoryFullException("Monster inventory is full!");
-    	}
-    }
-    
-    
-    /**
-     * Add the given monster at the given index to the inventory.
-     * @param monster the given monster
-     * @throws InventoryFullException if the inventory is already full
-     */
-    public void add(int index, Monster monster) throws InventoryFullException
-    {
-    	if (!isFull()) {
-    		list.add(index, monster);
-    	}
-    	else {
-    		throw new InventoryFullException("Monster inventory is full!");
-    	}
-    }
-
-
-    /**
-     * Remove the given monster from the inventory.
-     * @param monster the given monster
-     */
-    public void remove(Monster monster)
-    {
-    	list.remove(monster);
-    }
-	
 	
 	/**
 	 * @return if the inventory is full or not
 	 */
 	public boolean isFull() {
-		return list.size() >= maxSize;
+		return size() >= maxSize;
 	}
 
 
@@ -136,7 +75,7 @@ public class MonsterInventory {
 	 * @return whether the inventory is empty
 	 */
 	public boolean isEmpty() {
-		return list.size() == 0;
+		return size() == 0;
 	}
     
     
@@ -145,7 +84,7 @@ public class MonsterInventory {
      */
     public boolean allFainted() {
     	boolean fainted = true;
-    	for (Monster monster : getList()) {
+    	for (Monster monster : this) {
     		if (!monster.getIsFainted()) {
     			fainted = false;
     		}
@@ -158,7 +97,7 @@ public class MonsterInventory {
      * Heal all monsters in the inventory.
      */
     public void healAll() {
-    	for (Monster monster : getList()) {
+    	for (Monster monster : this) {
     		monster.heal();
     	}
     }
@@ -174,8 +113,8 @@ public class MonsterInventory {
     	Monster monster = null;
     	
     	while (!found) {
-    		int index = random.nextInt(list.size());
-    		monster = list.get(index);
+    		int index = random.nextInt(size());
+    		monster = get(index);
     		if (!monster.getIsFainted()) {
     			found = true;
     		}
@@ -189,17 +128,18 @@ public class MonsterInventory {
      * Populate the inventory by randomly selecting monsters from all monsters in the game.
      */
     public void randomise() {
+    	while (!this.isEmpty()) {
+    		remove(this.get(0));
+    	}
     	Random random = new Random();
-    	ArrayList<Monster> newList = new ArrayList<Monster>(maxSize);
     	for (int i = 0; i < maxSize; i++) {
-    		int index = random.nextInt(game.getAllMonsters().getList().size());
-    		Monster monster = game.getAllMonsters().getList().get(index).clone();
+    		int index = random.nextInt(game.getAllMonsters().size());
+    		Monster monster = game.getAllMonsters().get(index).clone();
     		if(monster instanceof Raka) {
     			((Raka) monster).setTeam(this);
     		}
-    		newList.add(monster);
+    		add(monster);
     	}
-    	setList(newList);
     }
 	
     
@@ -211,7 +151,7 @@ public class MonsterInventory {
     	int dayToLevelUp = game.getNumDays()/maxLevel;
     	
     	if(game.getDay() % dayToLevelUp == 0){
-    		for(Monster monster: list) {
+    		for(Monster monster: this) {
 				try {
 					monster.levelUp();
 				}
@@ -227,7 +167,7 @@ public class MonsterInventory {
 	 */
 	public String toString() {
 		String result = "";
-		for (Monster monster : list)
+		for (Monster monster : this)
 		{
 			result += "\n" + monster;
 		}
@@ -241,7 +181,7 @@ public class MonsterInventory {
 	public String view() {
 		String result = "";
 		int start = 1;
-    	for (Monster monster : list) {
+    	for (Monster monster : this) {
     		result += String.format("%s: %s\n", start, monster);
     		start++;
     	}

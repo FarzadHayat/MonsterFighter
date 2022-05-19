@@ -110,7 +110,7 @@ class RandomEventTest {
 		randEvent.setRandom(new Random(1010101010)); //Generates double of 0.04...
 		player.getMonsters().add(monster);
 		randEvent.randomMonsterLeave(monster);
-		assertEquals(0, player.getMonsters().getList().size());
+		assertEquals(0, player.getMonsters().size());
 	}
 	
 	/**
@@ -125,7 +125,7 @@ class RandomEventTest {
 		randEvent.setRandom(new Random(123));
 		player.getMonsters().add(monster);
 		randEvent.randomMonsterLeave(monster);
-		assertEquals(1, player.getMonsters().getList().size());
+		assertEquals(1, player.getMonsters().size());
 	}
 	
 	/**
@@ -142,7 +142,7 @@ class RandomEventTest {
 		monster.setIsFainted(true);
 		randEvent.randomMonsterLeave(monster);
 		assertEquals(0.05, randEvent.getLeaveChance());
-		assertEquals(0, player.getMonsters().getList().size());
+		assertEquals(0, player.getMonsters().size());
 	}
 	
 	/**
@@ -159,7 +159,7 @@ class RandomEventTest {
 		monster.setIsFainted(true);
 		randEvent.randomMonsterLeave(monster);
 		assertEquals(0.05, randEvent.getLeaveChance());
-		assertEquals(1, player.getMonsters().getList().size());
+		assertEquals(1, player.getMonsters().size());
 	}
 	
 	/**
@@ -173,7 +173,7 @@ class RandomEventTest {
 		randEvent.setRandom(new Random(1010101010)); //Generates double of 0.04...
 		player.getMonsters().add(monster);
 		randEvent.randomMonsterJoin();
-		assertEquals(2, player.getMonsters().getList().size());
+		assertEquals(2, player.getMonsters().size());
 	}
 	
 	/**
@@ -187,7 +187,7 @@ class RandomEventTest {
 		randEvent.setRandom(new Random(123)); //Generates double of 0.04...
 		player.getMonsters().add(monster);
 		randEvent.randomMonsterJoin();
-		assertEquals(1, player.getMonsters().getList().size());
+		assertEquals(1, player.getMonsters().size());
 	}
 	
 	/**
@@ -203,7 +203,7 @@ class RandomEventTest {
 			player.getMonsters().add(monster);
 		}
 		randEvent.randomMonsterJoin();
-		assertEquals(4, player.getMonsters().getList().size());
+		assertEquals(4, player.getMonsters().size());
 	}
 	
 	/**
@@ -218,7 +218,7 @@ class RandomEventTest {
 			randEvent.setRandom(new Random(1010101010)); //Generates double of 0.04...
 			randEvent.randomMonsterJoin();
 		}
-		assertEquals(4, player.getMonsters().getList().size());
+		assertEquals(4, player.getMonsters().size());
 	}
 	
 	/**
@@ -237,7 +237,7 @@ class RandomEventTest {
 		player.getMonsters().add(monster);
 		randEvent.runAllRandom();
 		assertEquals(2, monster.getLevel());
-		assertEquals(2, player.getMonsters().getList().size());
+		assertEquals(2, player.getMonsters().size());
 	}
 	
 	/**
@@ -256,10 +256,10 @@ class RandomEventTest {
 		Monster zap = new Zap(game);
 		player.getMonsters().add(monster);
 		player.getMonsters().add(zap);
-		assertEquals(2, player.getMonsters().getList().size());
+		assertEquals(2, player.getMonsters().size());
 		randEvent.runAllRandom();
 		assertEquals(2, monster.getLevel());
-		assertEquals(2, player.getMonsters().getList().size());
+		assertEquals(2, player.getMonsters().size());
 	}
 	
 	/**
@@ -278,7 +278,7 @@ class RandomEventTest {
 		player.getMonsters().add(monster);
 		randEvent.runAllRandom();
 		assertEquals(1, monster.getLevel());
-		assertEquals(1, player.getMonsters().getList().size());
+		assertEquals(1, player.getMonsters().size());
 	}
 
 }
