@@ -29,6 +29,7 @@ public class HealthBar extends JProgressBar {
 		setBounds(xPos, yPos, 160, 30);
 		setMaximum(monster.getMaxHealth());
 		setValue(monster.getHealth());
+		setString(monster.getHealth() + " / " + monster.getMaxHealth());
 	}
 	
 }
