@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 import items.CritPotion;
-import items.LevelPotion;
 import main.*;
 import monsters.Chunky;
 
@@ -24,7 +23,7 @@ class IncreaseCritRateTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Player player;
 	
 	/**
@@ -33,8 +32,7 @@ class IncreaseCritRateTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
+		game.populateGame();
 		player = game.getPlayer();
 	}
 
@@ -47,9 +45,9 @@ class IncreaseCritRateTest {
 	@Test
 	void testUse1() throws InventoryFullException, StatMaxedOutException {
 		// Blue sky
-		Monster monster = new Chunky(game);
+		Monster monster = new Chunky();
 		monster.setCritRate(0);
-		Item item = new CritPotion(game);
+		Item item = new CritPotion();
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
@@ -66,9 +64,9 @@ class IncreaseCritRateTest {
 	@Test
 	void testUse2() throws InventoryFullException, StatMaxedOutException {
 		// Monster crit rate is only partially increased
-		Monster monster = new Chunky(game);
+		Monster monster = new Chunky();
 		monster.setCritRate(monster.getMaxCritRate() - (CritPotion.getCritIncrease() / 2));
-		Item item = new CritPotion(game);
+		Item item = new CritPotion();
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
@@ -86,9 +84,9 @@ class IncreaseCritRateTest {
 	@Test
 	void testUse3() throws InventoryFullException, StatMaxedOutException {
 		// Monster is already at max crit rate
-		Monster monster = new Chunky(game);
+		Monster monster = new Chunky();
 		monster.setCritRate(1);
-		Item item = new CritPotion(game);
+		Item item = new CritPotion();
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		try {			
@@ -106,7 +104,7 @@ class IncreaseCritRateTest {
 	 */
 	@Test
 	public void testClone() {
-		Item testItem = new CritPotion(game);
+		Item testItem = new CritPotion();
 		Item newItem = testItem.clone();
 		assertTrue(CritPotion.class.isInstance(newItem));
 	}

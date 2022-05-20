@@ -28,7 +28,7 @@ public class SetupScreen {
 	private GraphicalUserInterface gui;
 	private JTextField txtSelectPlayerName;
 	private Player player;
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	
 	
 	/**
@@ -54,7 +54,6 @@ public class SetupScreen {
 	public SetupScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
 		initialize();
-		game = gui.getGame();
 		player = game.getPlayer();
 		window.setVisible(true);
 	}
@@ -128,7 +127,7 @@ public class SetupScreen {
 				try {
 					player.setName(txtSelectPlayerName.getText());
 					game.setNumDays(sliderNumDays.getValue());
-					game.setupGame();
+					game.populateGame();
 					gui.launchStartingMonsterScreen();
 					finishedWindow();
 				}

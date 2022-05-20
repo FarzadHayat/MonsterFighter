@@ -14,8 +14,7 @@ public class ItemInventory extends ArrayList<Item> {
 	 */
     protected int maxSize;
 
-    protected GameEnvironment game;
-    protected Player player;
+    private GameEnvironment game = GameEnvironment.getInstance();
 	
 	
     /**
@@ -25,12 +24,9 @@ public class ItemInventory extends ArrayList<Item> {
     /**
      * Create a new ItemInventory object with the given size.
      * @param maxSize the given maxSize
-     * @param game the given game
      */
-    public ItemInventory (int maxSize, GameEnvironment game) {
+    public ItemInventory (int maxSize) {
     	this.maxSize = maxSize;
-    	this.game = game;
-    	player = game.getPlayer();
     };
     
     

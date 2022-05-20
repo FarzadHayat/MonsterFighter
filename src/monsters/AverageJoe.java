@@ -44,10 +44,9 @@ public class AverageJoe extends Monster{
 	
 	/**
 	 * Creates AverageJoe object by calling superclass constructor and passing in the default values
-	 * @param game given GameEnvironment object
 	 */
-	public AverageJoe(GameEnvironment game) {
-    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
+	public AverageJoe() {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate);
     };
     
     
@@ -74,8 +73,8 @@ public class AverageJoe extends Monster{
      * @return new AverageJoe instance
      */
     public Monster clone() {
-    	AverageJoe cloneInst = new AverageJoe(game);
-    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	AverageJoe cloneInst = new AverageJoe();
+    	int correctLevel = GameEnvironment.getInstance().getAllMonsters().random().getLevel();
     	for(int i = 0; i < correctLevel - 1; i++) {
     		try {
 				cloneInst.levelUp();

@@ -23,7 +23,7 @@ public class BattlesScreen {
 	private JFrame window;
 	private GraphicalUserInterface gui;
 	
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private BattleInventory battles;
 	
 	private JButton selectedButton;
@@ -54,7 +54,6 @@ public class BattlesScreen {
 	 */
 	public BattlesScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
-		game = gui.getGame();
 		battles = game.getBattles();
 		initialize();
 		window.setVisible(true);

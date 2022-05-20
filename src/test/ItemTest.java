@@ -23,7 +23,7 @@ class ItemTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private ItemInventory myItems;
 	private Player player;
 	private Shop shop;
@@ -34,11 +34,10 @@ class ItemTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
+		game.populateGame();
 		player = game.getPlayer();
 		myItems = player.getItems();
-		game.setShop(new Shop(game));
+		game.setShop(new Shop());
 		shop = game.getShop();
 	}
 
@@ -52,7 +51,7 @@ class ItemTest {
 	@Test
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Blue sky
-		Item testItem = new HealthPotion(game);
+		Item testItem = new HealthPotion();
 		player.setBalance(testItem.getCost());
 		shop.getItems().add(testItem);
 		testItem.buy();
@@ -72,7 +71,7 @@ class ItemTest {
 	@Test
 	public void testBuy2() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Insufficient funds
-		Item testItem = new HealthPotion(game);
+		Item testItem = new HealthPotion();
 		player.setBalance(testItem.getCost() / 2);
 		try {    		
 			testItem.buy();
@@ -92,7 +91,7 @@ class ItemTest {
 	@Test
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Inventory full	
-		Item testItem = new HealthPotion(game);
+		Item testItem = new HealthPotion();
 		player.setBalance(testItem.getCost() * (myItems.getMaxSize() + 1));
 		
 		for (int i = 0; i < myItems.getMaxSize(); i++) {
@@ -118,7 +117,7 @@ class ItemTest {
 	@Test
 	public void testSell1() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Blue sky
-		Item testItem = new HealthPotion(game);
+		Item testItem = new HealthPotion();
 		player.setBalance(testItem.getCost());
 		shop.getItems().add(testItem);
 		testItem.buy();
@@ -138,8 +137,8 @@ class ItemTest {
 	@Test
 	public void testSell2() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Multiple items of the same type
-		Item testItem1 = new HealthPotion(game);
-		Item testItem2 = new HealthPotion(game);
+		Item testItem1 = new HealthPotion();
+		Item testItem2 = new HealthPotion();
 		player.setBalance(testItem1.getCost() * 3);
 		shop.getItems().add(testItem1);
 		shop.getItems().add(testItem2);
@@ -161,7 +160,7 @@ class ItemTest {
 	 */
 	@Test
 	public void testToString() {
-		Item testItem = new HealthPotion(game);
+		Item testItem = new HealthPotion();
 		String myStr = testItem.toString();
 		assertEquals("%-20s    cost: %-3s    %-50s".formatted(testItem.getName(), testItem.getCost(), testItem.getDescription()), myStr);
 	}
@@ -172,7 +171,7 @@ class ItemTest {
 	 */
 	@Test
 	public void testView() {
-		Item testItem = new HealthPotion(game);
+		Item testItem = new HealthPotion();
 		String myStr = testItem.view();
 		
 		String result = "";

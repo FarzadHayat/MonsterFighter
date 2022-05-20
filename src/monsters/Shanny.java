@@ -43,10 +43,9 @@ public class Shanny extends Monster {
 	
 	/**
 	 * Creates Shanny object by calling superclass constructor and passing in the default values
-	 * @param game given GameEnvironment object
 	 */
-	public Shanny(GameEnvironment game) {
-    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
+	public Shanny() {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate);
     };
     
     /**
@@ -72,8 +71,8 @@ public class Shanny extends Monster {
      * @return new Shanny instance
      */
     public Monster clone() {
-    	Shanny cloneInst = new Shanny(game);
-    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	Shanny cloneInst = new Shanny();
+    	int correctLevel = GameEnvironment.getInstance().getAllMonsters().random().getLevel();
     	for(int i = 0; i < correctLevel - 1; i++) {
     		try {
 				cloneInst.levelUp();

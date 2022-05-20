@@ -29,10 +29,9 @@ public class Score {
     
     /**
      * Creates new Score object 
-     * @param game given GameEnvironment object
      */
-    public Score(GameEnvironment game) {
-    	player = game.getPlayer();
+    public Score() {
+    	player = GameEnvironment.getInstance().getPlayer();
     }
     
     

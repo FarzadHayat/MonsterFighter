@@ -19,8 +19,8 @@ abstract public class Item implements Purchasable {
     private String name;
     private String description;
     private int cost;
-    protected GameEnvironment game;
-    protected Player player;
+    private GameEnvironment game = GameEnvironment.getInstance();
+    private Player player;
     private Shop shop;
     private double refundAmount = 0.5;
     private ImageIcon sprite;
@@ -32,18 +32,15 @@ abstract public class Item implements Purchasable {
     
     /**
      * Create a new Item object.
-     * Set the value of game to the given GameEnvironment object.
      * Set the item's name, description, and cost with the given values.
      * @param name the given name
      * @param description the given description
      * @param cost the given cost
-     * @param game the given GameEnvironment object.
      */
-    public Item (String name, String description, int cost, GameEnvironment game) {
+    public Item (String name, String description, int cost) {
     	this.name = name;
     	this.description = description;
     	this.cost = cost;
-    	this.game = game;
     	player = game.getPlayer();
     	shop = game.getShop();
     	setSprite(new ImageIcon(Item.class.getResource(

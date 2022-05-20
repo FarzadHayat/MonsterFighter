@@ -19,7 +19,7 @@ class ShopTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Shop shop;
 	private Player player;
 	private MonsterInventory monsters;
@@ -31,8 +31,7 @@ class ShopTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
+		game.populateGame();
 		shop = game.getShop();
 		player = game.getPlayer();
 		monsters = shop.getMonsters();

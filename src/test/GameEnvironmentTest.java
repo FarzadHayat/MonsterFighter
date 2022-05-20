@@ -9,17 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
-import items.HealthPotion;
-import items.CritPotion;
-import items.DamagePotion;
-import items.LevelPotion;
 import main.*;
-import monsters.AverageJoe;
 import monsters.Chunky;
-import monsters.Lanky;
-import monsters.Raka;
-import monsters.Shanny;
-import monsters.Zap;
 
 /**
  * Unit test for GameEnvironment class
@@ -31,7 +22,7 @@ class GameEnvironmentTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Player player;
 	private Score score;
 	
@@ -41,8 +32,7 @@ class GameEnvironmentTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
+		game.populateGame();
 		player = game.getPlayer();
 		score = game.getScoreSystem();
 	}
@@ -131,7 +121,7 @@ class GameEnvironmentTest {
 		ArrayList<Item> shopItemsBefore = game.getShop().getItems();
 		ArrayList<Battle> battlesBefore = game.getBattles();
 		
-		Monster testMonster = new Chunky(game);
+		Monster testMonster = new Chunky();
 		player.getMonsters().add(testMonster);
 		testMonster.setHealth(10);
 		int healthBefore = testMonster.getHealth();

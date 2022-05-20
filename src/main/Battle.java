@@ -25,7 +25,7 @@ public class Battle {
     private Turn currentTurn = Turn.PLAYER;
     private Turn winner;
     
-    private GameEnvironment game;
+    private GameEnvironment game = GameEnvironment.getInstance();
     private Player player;
     private MonsterInventory monsters;
     
@@ -43,13 +43,11 @@ public class Battle {
      * Create a new Battle object.
      * Set the value of game to the given GameEnvironment object.
      * Randomize the enemy monsters inventory.
-     * @param game the given GameEnvironment object
      */
-    public Battle (GameEnvironment game) {
-    	this.game = game;
+    public Battle () {
     	player = game.getPlayer();
     	setSize(randomSize());
-    	monsters = new MonsterInventory(getSize(), game);
+    	monsters = new MonsterInventory(getSize());
     	monsters.randomise();
     	name = randomName();
     };

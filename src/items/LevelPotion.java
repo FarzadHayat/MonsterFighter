@@ -23,11 +23,9 @@ public class LevelPotion extends Item {
 	
 	/**
      * Create a new LevelPotion object.
-     * Set the value of game to the given GameEnvironment object.
-     * @param game the given GameEnvironment object.
      */
-    public LevelPotion (GameEnvironment game) {
-    	super(name, description, cost, game);
+    public LevelPotion () {
+    	super(name, description, cost);
     };
     
     
@@ -43,7 +41,7 @@ public class LevelPotion extends Item {
     public void use(Monster monster) throws StatMaxedOutException
     {
     	monster.levelUp();
-    	player.getItems().remove(this);
+    	GameEnvironment.getInstance().getPlayer().getItems().remove(this);
     }
     
     
@@ -52,7 +50,7 @@ public class LevelPotion extends Item {
      * @return item the new LevelPotion object.
      */
     public Item clone() {
-    	return new LevelPotion(game);
+    	return new LevelPotion();
     }
 
 }

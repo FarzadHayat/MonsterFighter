@@ -7,6 +7,7 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 
 import main.*;
+import monsters.Raka;
 
 import java.awt.Color;
 import javax.swing.JButton;
@@ -22,7 +23,7 @@ public class StartingMonsterScreen {
 
 	private JFrame window;
 	private GraphicalUserInterface gui;
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private MonsterInventory allMonsters;
 	private Player player;
 	private Monster selected;
@@ -50,7 +51,6 @@ public class StartingMonsterScreen {
 	 */
 	public StartingMonsterScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
-		game = gui.getGame();
 		player = game.getPlayer();
 		allMonsters = game.getAllMonsters();
 		initialize();
@@ -143,7 +143,11 @@ public class StartingMonsterScreen {
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(selected != null) {
-					player.getMonsters().add(selected.clone());
+					Monster monster = selected.clone();
+					player.getMonsters().add(monster);
+					if(monster instanceof Raka) {
+		    			((Raka) monster).setTeam(player.getMonsters());
+		    		}
 					gui.launchHomeScreen();
 					finishedWindow();
 				}

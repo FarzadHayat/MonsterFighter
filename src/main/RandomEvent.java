@@ -3,6 +3,7 @@ package main;
 import java.util.*;
 
 import exceptions.StatMaxedOutException;
+import monsters.Raka;
 
 /**
  * Handles all random events that happen over night.
@@ -19,7 +20,7 @@ public class RandomEvent {
     private double leaveIncrement = 2.0;
     private double levelUpIncrement = 0.1;
     
-    private GameEnvironment game;
+    private GameEnvironment game = GameEnvironment.getInstance();
     private Player player;
     
     private Random rn = new Random();
@@ -31,11 +32,8 @@ public class RandomEvent {
     
     /**
      * Creates RandomEvent object 
-     * Sets game to the given GameEnvironment object
-     * @param game given GameEnvironment object
      */
-    public RandomEvent(GameEnvironment game) {
-    	this.game = game;
+    public RandomEvent() {
     	player = game.getPlayer();
     }
     
@@ -172,6 +170,9 @@ public class RandomEvent {
     public String randomMonsterJoin() {
     	String event = "";
 		Monster randomMonster = game.getAllMonsters().random().clone();
+		if(randomMonster instanceof Raka) {
+			((Raka) randomMonster).setTeam(player.getMonsters());
+		}
 		double randomValue = rn.nextDouble(1);
 		
 		if(randomValue <= joinChance) {

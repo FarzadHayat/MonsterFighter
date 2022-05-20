@@ -22,7 +22,7 @@ class MonsterInventoryTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private MonsterInventory myMonsters;
 
 	/**
@@ -31,8 +31,7 @@ class MonsterInventoryTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
+		game.populateGame();
 		myMonsters = game.getPlayer().getMonsters();
 	}
 	
@@ -44,7 +43,7 @@ class MonsterInventoryTest {
 	@Test
 	public void testAdd1() throws InventoryFullException {
 		// Blue sky
-		Monster testMonster = new Chunky(game);
+		Monster testMonster = new Chunky();
 		myMonsters.add(testMonster);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
 		testMonsterList.add(testMonster);
@@ -59,10 +58,10 @@ class MonsterInventoryTest {
 	@Test
 	public void testAdd2() throws InventoryFullException {
 		// Add at index
-		Monster testMonster1 = new Chunky(game);
-		Monster testMonster2 = new Chunky(game);
-		Monster testMonster3 = new Chunky(game);
-		Monster testMonster4 = new Chunky(game);
+		Monster testMonster1 = new Chunky();
+		Monster testMonster2 = new Chunky();
+		Monster testMonster3 = new Chunky();
+		Monster testMonster4 = new Chunky();
 		myMonsters.add(testMonster1);
 		myMonsters.add(0, testMonster2);
 		myMonsters.add(1, testMonster3);
@@ -83,7 +82,7 @@ class MonsterInventoryTest {
 	@Test
 	public void testRemove1() throws InventoryFullException {
 		// Blue sky
-		Monster testMonster = new Chunky(game);
+		Monster testMonster = new Chunky();
 		myMonsters.add(testMonster);
 		myMonsters.remove(testMonster);
 		ArrayList<Monster> testMonsterList = new ArrayList<Monster>();
@@ -98,8 +97,8 @@ class MonsterInventoryTest {
 	@Test
 	public void testRemove2() throws InventoryFullException {
 		// Multiple monsters of the same type
-		Monster testMonster1 = new Chunky(game);
-		Monster testMonster2 = new Chunky(game);
+		Monster testMonster1 = new Chunky();
+		Monster testMonster2 = new Chunky();
 		myMonsters.add(testMonster1);
 		myMonsters.add(testMonster2);
 		myMonsters.add(testMonster2);
@@ -118,7 +117,7 @@ class MonsterInventoryTest {
 	@Test
 	public void testIsFull() throws InventoryFullException {
 		// Blue sky
-		Monster testMonster = new Chunky(game);
+		Monster testMonster = new Chunky();
 		assertFalse(myMonsters.isFull());
 		myMonsters.add(testMonster);
 		myMonsters.add(testMonster);
@@ -136,7 +135,7 @@ class MonsterInventoryTest {
 	@Test
 	public void testIsEmpty() throws InventoryFullException {
 		// Blue sky
-		Monster testMonster = new Chunky(game);
+		Monster testMonster = new Chunky();
 		assertTrue(myMonsters.isEmpty());
 		myMonsters.add(testMonster);
 		assertFalse(myMonsters.isEmpty());
@@ -152,14 +151,14 @@ class MonsterInventoryTest {
 		// No monsters in the team
 		assertTrue(myMonsters.allFainted());
 		
-		Monster testMonster1 = new Chunky(game);
+		Monster testMonster1 = new Chunky();
 		myMonsters.add(testMonster1);
 		assertFalse(myMonsters.allFainted());
 		testMonster1.setHealth(0);
 		testMonster1.setIsFainted(true);
 		assertTrue(myMonsters.allFainted());
 		
-		Monster testMonster2 = new Chunky(game);
+		Monster testMonster2 = new Chunky();
 		myMonsters.add(testMonster2);
 		assertFalse(myMonsters.allFainted());
 		testMonster2.setHealth(0);
@@ -174,13 +173,13 @@ class MonsterInventoryTest {
 	 */
 	@Test
 	public void testHealAll() throws InventoryFullException {
-		Monster testMonster1 = new Chunky(game);
+		Monster testMonster1 = new Chunky();
 		testMonster1.setHealth(testMonster1.getHealth() - 10);
 		myMonsters.add(testMonster1);
-		Monster testMonster2 = new Chunky(game);
+		Monster testMonster2 = new Chunky();
 		testMonster2.setHealth(testMonster2.getHealth() / 2);
 		myMonsters.add(testMonster2);
-		Monster testMonster3 = new Chunky(game);
+		Monster testMonster3 = new Chunky();
 		myMonsters.add(testMonster3);
 		
 		myMonsters.healAll();
@@ -196,9 +195,9 @@ class MonsterInventoryTest {
 	 */
 	@Test
 	public void testRandom() throws InventoryFullException {
-		Monster testMonster1 = new Chunky(game);
+		Monster testMonster1 = new Chunky();
 		myMonsters.add(testMonster1);
-		Monster testMonster2 = new Chunky(game);
+		Monster testMonster2 = new Chunky();
 		myMonsters.add(testMonster2);
 		
 		Monster randomMonster = myMonsters.random();
@@ -216,9 +215,9 @@ class MonsterInventoryTest {
 		game.setDay(3);
 		game.setDifficulty(Difficulty.EASY);
 
-		Monster testMonster1 = new Chunky(game);
+		Monster testMonster1 = new Chunky();
 		myMonsters.add(testMonster1);
-		Monster testMonster2 = new Chunky(game);
+		Monster testMonster2 = new Chunky();
 		myMonsters.add(testMonster2);
 		
 		myMonsters.levelUpOnDay();
@@ -234,9 +233,9 @@ class MonsterInventoryTest {
 	 */
 	@Test
 	public void testToString() throws InventoryFullException {
-		Monster testMonster1 = new Chunky(game);
+		Monster testMonster1 = new Chunky();
 		myMonsters.add(testMonster1);
-		Monster testMonster2 = new Chunky(game);
+		Monster testMonster2 = new Chunky();
 		myMonsters.add(testMonster2);
 		
 		String result = "";
@@ -254,9 +253,9 @@ class MonsterInventoryTest {
 	 */
 	@Test
 	public void testView() throws InventoryFullException {
-		Monster testMonster1 = new Chunky(game);
+		Monster testMonster1 = new Chunky();
 		myMonsters.add(testMonster1);
-		Monster testMonster2 = new Chunky(game);
+		Monster testMonster2 = new Chunky();
 		myMonsters.add(testMonster2);
 		
 		String result = "";

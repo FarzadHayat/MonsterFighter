@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.StatMaxedOutException;
 import main.*;
-import monsters.AverageJoe;
 import monsters.Zap;
 
 /**
@@ -20,7 +19,7 @@ class ZapTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Zap monster;
 	
 	/**
@@ -29,9 +28,8 @@ class ZapTest {
 	 */
 	@BeforeEach
 	public void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
-		monster = new Zap(game);
+		game.populateGame();
+		monster = new Zap();
 	}
 
 	/**

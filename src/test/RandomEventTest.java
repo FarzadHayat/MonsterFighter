@@ -24,7 +24,7 @@ class RandomEventTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private RandomEvent randEvent;
 	private Monster monster;
 	private Player player;
@@ -35,11 +35,10 @@ class RandomEventTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
+		game.populateGame();
 		player = game.getPlayer();
-		randEvent = new RandomEvent(game);
-		monster = new Chunky(game);
+		randEvent = new RandomEvent();
+		monster = new Chunky();
 	}
 
 	/**
@@ -253,7 +252,7 @@ class RandomEventTest {
 		//Monster leaves 
 		//A monster joins 
 		randEvent.setRandom(new Random(1010101010)); //Generates double of 0.04...
-		Monster zap = new Zap(game);
+		Monster zap = new Zap();
 		player.getMonsters().add(monster);
 		player.getMonsters().add(zap);
 		assertEquals(2, player.getMonsters().size());

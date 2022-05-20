@@ -26,7 +26,7 @@ public class ShopScreen {
 	private JFrame window;
 	private GraphicalUserInterface gui;
 	
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Player player;
 	
 	private MonsterInventory shopMonsters;
@@ -64,7 +64,6 @@ public class ShopScreen {
 	 */
 	public ShopScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
-		game = gui.getGame();
 		player = game.getPlayer();
 		shopMonsters = game.getShop().getMonsters();
 		shopItems = game.getShop().getItems();

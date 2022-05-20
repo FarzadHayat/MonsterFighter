@@ -17,8 +17,7 @@ public class MonsterInventory extends ArrayList<Monster> {
 	 */
     protected int maxSize;
 
-    protected GameEnvironment game;
-    protected Player player;
+    private GameEnvironment game = GameEnvironment.getInstance();
     
     
     /**
@@ -28,12 +27,9 @@ public class MonsterInventory extends ArrayList<Monster> {
     /**
      * Create a new MonsterInventory object with the given size.
      * @param maxSize the given maxSize
-     * @param game the given game
      */
-    public MonsterInventory (int maxSize, GameEnvironment game) {
+    public MonsterInventory (int maxSize) {
     	this.maxSize = maxSize;
-    	this.game = game;
-    	player = game.getPlayer();
     };
     
     

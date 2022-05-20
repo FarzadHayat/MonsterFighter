@@ -19,7 +19,7 @@ public class StatsScreen {
 	private JFrame window;
 	private GraphicalUserInterface gui;
 	
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Player player;
 	private Score score;
 	
@@ -45,7 +45,6 @@ public class StatsScreen {
 	 */
 	public StatsScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
-		game = gui.getGame();
 		player = game.getPlayer();
 		score = game.getScoreSystem();
 		initialize();

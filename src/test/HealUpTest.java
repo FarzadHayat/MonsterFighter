@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 import items.HealthPotion;
-import items.CritPotion;
 import main.*;
 import monsters.Chunky;
 
@@ -24,7 +23,7 @@ class HealUpTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Player player;
 	
 	/**
@@ -33,8 +32,7 @@ class HealUpTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
+		game.populateGame();
 		player = game.getPlayer();
 	}
 
@@ -47,9 +45,9 @@ class HealUpTest {
 	@Test
 	void testUse1() throws InventoryFullException, StatMaxedOutException {
 		// Blue sky
-		Monster monster = new Chunky(game);
+		Monster monster = new Chunky();
 		monster.setHealth(0);
-		Item item = new HealthPotion(game);
+		Item item = new HealthPotion();
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
@@ -67,9 +65,9 @@ class HealUpTest {
 	@Test
 	void testUse2() throws InventoryFullException, StatMaxedOutException {
 		// Monster is only partially healed
-		Monster monster = new Chunky(game);
+		Monster monster = new Chunky();
 		monster.setHealth(monster.getHealth() - (HealthPotion.getHealAmount() / 2));
-		Item item = new HealthPotion(game);
+		Item item = new HealthPotion();
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
@@ -87,8 +85,8 @@ class HealUpTest {
 	@Test
 	void testUse3() throws InventoryFullException, StatMaxedOutException {
 		// Monster is already max health
-		Monster monster = new Chunky(game);
-		Item item = new HealthPotion(game);
+		Monster monster = new Chunky();
+		Item item = new HealthPotion();
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		try {			
@@ -106,7 +104,7 @@ class HealUpTest {
 	 */
 	@Test
 	public void testClone() {
-		Item testItem = new HealthPotion(game);
+		Item testItem = new HealthPotion();
 		Item newItem = testItem.clone();
 		assertTrue(HealthPotion.class.isInstance(newItem));
 	}

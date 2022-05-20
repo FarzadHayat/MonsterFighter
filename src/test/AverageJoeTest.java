@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.StatMaxedOutException;
-import items.HealthPotion;
 import main.*;
 import monsters.AverageJoe;
 
@@ -20,7 +19,7 @@ class AverageJoeTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private AverageJoe monster;
 	
 	/**
@@ -29,9 +28,8 @@ class AverageJoeTest {
 	 */
 	@BeforeEach
 	public void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
-		monster = new AverageJoe(game);
+		game.populateGame();
+		monster = new AverageJoe();
 	}
 
 	/**

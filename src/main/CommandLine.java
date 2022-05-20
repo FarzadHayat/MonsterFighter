@@ -7,6 +7,7 @@ import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
 import exceptions.NotFoundException;
 import exceptions.StatMaxedOutException;
+import monsters.Raka;
 
 /**
  * This class launches the CMD game and manages the player input and written output.
@@ -21,7 +22,7 @@ public class CommandLine {
     private int selection;
     private boolean forceStop = false;
 
-    private GameEnvironment game;
+    private GameEnvironment game = GameEnvironment.getInstance();
     private Player player;
     private Shop shop;
         
@@ -60,24 +61,6 @@ public class CommandLine {
 	 */
 	public void setScanner(Scanner scanner) {
 		this.scanner = scanner;
-	}
-	
-	
-	/**
-	 * Get the value of game
-	 * @return the value of game
-	 */
-	public GameEnvironment getGame() {
-		return game;
-	}
-	
-	
-	/**
-	 * set the value of game
-	 * @param game the new value of game
-	 */
-	public void setGame(GameEnvironment game) {
-		this.game = game;
 	}
 	
 
@@ -129,13 +112,12 @@ public class CommandLine {
 	 * 5. Select a starting monster.
 	 */
 	public void setupCmdGame() {
-		game = new GameEnvironment();
     	player = game.getPlayer();
     	shop = game.getShop();
 		selectPlayerName();
 		selectNumDays();
 		selectDifficulty();
-		game.setupGame();
+		game.populateGame();
 		selectStartingMonster();
 	}
 	
@@ -237,6 +219,9 @@ public class CommandLine {
 				scanner.nextLine();
 				if (0 < selection && selection <= game.getAllMonsters().size()) {
 					Monster monster = game.getAllMonsters().get(selection - 1).clone();
+					if(monster instanceof Raka) {
+		    			((Raka) monster).setTeam(player.getMonsters());
+		    		}
 					System.out.println("You chose: " + monster.getName());
 					player.getMonsters().add(monster);
 					break;
@@ -658,7 +643,6 @@ public class CommandLine {
 		try {
 			battle.setup();
 		} catch (NotFoundException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 			goBack();
 			return;

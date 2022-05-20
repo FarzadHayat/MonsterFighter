@@ -44,10 +44,9 @@ public class Chunky extends Monster {
 	
 	/**
 	 * Creates Chunky object by calling superclass constructor and passing in the default values
-	 * @param game given GameEnvironment object
 	 */
-    public Chunky(GameEnvironment game) {
-    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
+    public Chunky() {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate);
     };
 
     
@@ -74,8 +73,8 @@ public class Chunky extends Monster {
      * @return new Chunky instance
      */
     public Monster clone() {
-    	Chunky cloneInst = new Chunky(game);
-    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	Chunky cloneInst = new Chunky();
+    	int correctLevel = GameEnvironment.getInstance().getAllMonsters().random().getLevel();
     	for(int i = 0; i < correctLevel - 1; i++) {
     		try {
 				cloneInst.levelUp();

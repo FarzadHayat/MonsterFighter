@@ -8,25 +8,7 @@ import main.*;
  */
 public class GraphicalUserInterface {
 
-	private GameEnvironment game;
-	
-	
-	/**
-	 * Get the value of game
-	 * @return the value of game
-	 */
-	public GameEnvironment getGame() {
-		return game;
-	}
-
-	
-	/**
-	 * set the value of game
-	 * @param game the new value of game
-	 */
-	public void setGame(GameEnvironment game) {
-		this.game = game;
-	}
+	private GameEnvironment game = GameEnvironment.getInstance();
 	
 	
 	/**
@@ -224,7 +206,7 @@ public class GraphicalUserInterface {
 	 */
 	public static void main(String[] args) {
 		GraphicalUserInterface gui = new GraphicalUserInterface();
-		gui.setGame(new GameEnvironment());
+		gui.game = GameEnvironment.getInstance();
 		gui.launchStartScreen();
 	}
 

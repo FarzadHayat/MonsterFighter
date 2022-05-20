@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.StatMaxedOutException;
 import main.*;
-import monsters.AverageJoe;
 import monsters.Lanky;
 
 /**
@@ -20,7 +19,7 @@ class LankyTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Lanky monster;
 	
 	/**
@@ -29,9 +28,8 @@ class LankyTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
-		monster = new Lanky(game);
+		game.populateGame();
+		monster = new Lanky();
 	}
 
 	/**

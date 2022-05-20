@@ -33,9 +33,12 @@ public class GameEnvironment {
     
     private boolean isFinished = false;
     
+    private int passiveIncome = 20;
     private int easyScore = 1000;
     private int normalScore = 2000;
     private int hardScore = 3000;
+    
+    private static GameEnvironment instance = null;
     
     
     /**
@@ -44,29 +47,8 @@ public class GameEnvironment {
     
     /**
      * Create a new GameEnvironment object.
-     * 1. Sets default balance.
-     * 2. Sets default score.
      */
-    public GameEnvironment() {
-    	player = new Player(this);
-    	shop = new Shop(this);
-    	scoreSystem = new Score(this);
-    	try {
-			player.setBalance(100);
-		} catch (InvalidValueException e) {
-			e.printStackTrace();
-		}
-    	scoreSystem.setTotalScore(easyScore);
-
-		player.getMonsters().add(new Chunky(this));
-		player.getMonsters().add(new Chunky(this));
-		player.getMonsters().add(new Chunky(this));
-
-		player.getItems().add(new HealthPotion(this));
-		player.getItems().add(new HealthPotion(this));
-		player.getItems().add(new HealthPotion(this));
-		player.getItems().add(new HealthPotion(this));
-    }
+    private GameEnvironment() {}
     
     
     /**
@@ -281,14 +263,32 @@ public class GameEnvironment {
 	 * Functional
 	 */
 
+	/**
+	 * Create the necessary objects to run the game.
+	 * 1. Sets default balance.
+     * 2. Sets default score.
+     */
+	public void setupGame() {
+    	player = new Player();
+    	shop = new Shop();
+    	scoreSystem = new Score();
+    	try {
+			player.setBalance(100);
+		} catch (InvalidValueException e) {
+			e.printStackTrace();
+		}
+    	scoreSystem.setTotalScore(easyScore);
+	}
+	
+	
     /**
-     * Setup the necessary game information.
+     * Populate the necessary game information.
      * 1. Set starting balance and starting score based on the level of difficulty selected by the player.
      * 2. Setup allMonsters and allItems.
      * 3. Setup the shop and randomize it.
      * 4. Setup battles and randomize it.
      */
-    public void setupGame() {
+    public void populateGame() {
     	try {
     		switch(difficulty) {
 	    	case EASY:
@@ -308,24 +308,24 @@ public class GameEnvironment {
     		e.printStackTrace();
     	}
     	
-    	allMonsters = new MonsterInventory(6, this);
-		allMonsters.add(new AverageJoe(this));
-		allMonsters.add(new Chunky(this));
-		allMonsters.add(new Lanky(this));
-		allMonsters.add(new Shanny(this));
-		allMonsters.add(new Raka(this));
-		allMonsters.add(new Zap(this));
+    	allMonsters = new MonsterInventory(6);
+		allMonsters.add(new AverageJoe());
+		allMonsters.add(new Chunky());
+		allMonsters.add(new Lanky());
+		allMonsters.add(new Shanny());
+		allMonsters.add(new Raka());
+		allMonsters.add(new Zap());
 		
-		allItems = new ItemInventory(4, this);
-		allItems.add(new HealthPotion(this));
-		allItems.add(new DamagePotion(this));
-		allItems.add(new CritPotion(this));
-		allItems.add(new LevelPotion(this));
+		allItems = new ItemInventory(4);
+		allItems.add(new HealthPotion());
+		allItems.add(new DamagePotion());
+		allItems.add(new CritPotion());
+		allItems.add(new LevelPotion());
 		
 		shop.randomise();
-		battles = new BattleInventory(5, this);
+		battles = new BattleInventory(5);
 		battles.randomise();
-		randomEvent = new RandomEvent(this);
+		randomEvent = new RandomEvent();
     }
     
 	
@@ -350,6 +350,11 @@ public class GameEnvironment {
     		player.getMonsters().healAll();
     		scoreSystem.resetDayBattles();
     		scoreSystem.setDayScore(0);
+    		try {
+				player.addBalance(passiveIncome);
+			} catch (InvalidValueException e) {
+				e.printStackTrace();
+			}
     		result += "The shop has been randomised.\n";
     		result +="The battles have been randomised.\n";
     		result +="Your monsters have healed.";
@@ -363,6 +368,18 @@ public class GameEnvironment {
      */
     public void checkStatus() {
     	setIsFinished(day >= numDays);
+    }
+    
+    
+    /**
+     * @return the singleton instance of GameEnvironment
+     */
+    public static GameEnvironment getInstance() {
+    	if (instance == null) {
+    		instance = new GameEnvironment();
+    		instance.setupGame();
+    	}
+    	return instance;
     }
 
 }

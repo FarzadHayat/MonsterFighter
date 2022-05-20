@@ -22,7 +22,7 @@ public class FightScreen {
 
 	private JFrame window;
 	private GraphicalUserInterface gui;
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Battle battle;
 	
 	private JTextArea commentaryText;
@@ -54,7 +54,6 @@ public class FightScreen {
 	 */
 	public FightScreen(GraphicalUserInterface gui, Battle battle) {
 		this.gui = gui;
-		game = gui.getGame();
 		this.battle = battle;
 		initialize();
 		window.setVisible(true);

@@ -46,10 +46,9 @@ public class Zap extends Monster implements Cloneable {
 	
 	/**
 	 * Creates Zap object by calling superclass constructor and passing in the default values
-	 * @param game given GameEnvironment object
 	 */
-	public Zap(GameEnvironment game) {
-    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
+	public Zap() {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate);
     };
 
     
@@ -78,8 +77,8 @@ public class Zap extends Monster implements Cloneable {
      * @return new Zap instance
      */
     public Monster clone() {
-    	Zap cloneInst = new Zap(game);
-    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	Zap cloneInst = new Zap();
+    	int correctLevel = GameEnvironment.getInstance().getAllMonsters().random().getLevel();
     	for(int i = 0; i < correctLevel - 1; i++) {
     		try {
 				cloneInst.levelUp();

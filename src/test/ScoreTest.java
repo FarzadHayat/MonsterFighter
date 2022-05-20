@@ -19,7 +19,7 @@ class ScoreTest {
 	/**
 	 * Fields
 	 */
-    private GameEnvironment game;
+    private GameEnvironment game = GameEnvironment.getInstance();
     private Score scoreSystem;
    
 	/**
@@ -28,7 +28,6 @@ class ScoreTest {
 	 */
     @BeforeEach
     void setUp() throws Exception {
-    	game = new GameEnvironment();
     	scoreSystem = game.getScoreSystem();
     }
 

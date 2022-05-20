@@ -2,13 +2,9 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
 import exceptions.NotFoundException;
 import main.*;
@@ -24,7 +20,7 @@ class BattleTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Battle battle;
 	private Player player;
 	private Score score;
@@ -35,9 +31,8 @@ class BattleTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
-		battle = new Battle(game);
+		game.populateGame();
+		battle = new Battle();
 		player = game.getPlayer();
 		score = game.getScoreSystem();
 	}
@@ -56,7 +51,7 @@ class BattleTest {
 			assertEquals("Battle not available: Player has no monsters! Try again...", e.getMessage());
 		}
 		
-		Monster testMonster = new Chunky(game);
+		Monster testMonster = new Chunky();
 		testMonster.setHealth(0);
 		testMonster.setIsFainted(true);
 		player.getMonsters().add(testMonster);

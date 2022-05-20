@@ -24,7 +24,7 @@ public class ItemScreen {
 	private JFrame window;
 	private GraphicalUserInterface gui;
 	
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Player player;
 	private MonsterInventory monsters;
 	private JButton selectedButton;
@@ -57,7 +57,6 @@ public class ItemScreen {
 	public ItemScreen(GraphicalUserInterface gui, Item item) {
 		this.item = item;
 		this.gui = gui;
-		game = gui.getGame();
 		player = game.getPlayer();
 		game.getScoreSystem();
 		monsters = player.getMonsters();

@@ -20,12 +20,11 @@ public class Shop {
     
     /**
      * Create a new Shop object.
-     * @param game the given GameEnvironment object
      */
-    public Shop(GameEnvironment game) {
-    	monsters = new MonsterInventory (4, game);
-    	items = new ItemInventory(4, game);
-    	player = game.getPlayer();
+    public Shop() {
+    	monsters = new MonsterInventory (4);
+    	items = new ItemInventory(4);
+    	player = GameEnvironment.getInstance().getPlayer();
     }
     
     

@@ -20,7 +20,7 @@ class BattleInventoryTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private BattleInventory myBattles;
 
 	/**
@@ -29,9 +29,8 @@ class BattleInventoryTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
-		game.setBattles(new BattleInventory(6, game));
+		game.populateGame();
+		game.setBattles(new BattleInventory(6));
 		myBattles = game.getBattles();
 		
 	}
@@ -43,7 +42,7 @@ class BattleInventoryTest {
 	 */
 	@Test
 	public void testAdd1() throws InventoryFullException {
-		Battle testBattle = new Battle(game);
+		Battle testBattle = new Battle();
 		myBattles.add(testBattle);
 		ArrayList<Battle> testBattleList = new ArrayList<Battle>();
 		testBattleList.add(testBattle);
@@ -58,10 +57,10 @@ class BattleInventoryTest {
 	@Test
 	public void testAdd2() throws InventoryFullException {
 		
-		Battle testBattle1 = new Battle(game);
-		Battle testBattle2 = new Battle(game);
-		Battle testBattle3 = new Battle(game);
-		Battle testBattle4 = new Battle(game);
+		Battle testBattle1 = new Battle();
+		Battle testBattle2 = new Battle();
+		Battle testBattle3 = new Battle();
+		Battle testBattle4 = new Battle();
 		
 		myBattles.add(testBattle1);
 		myBattles.add(0, testBattle2);
@@ -84,7 +83,7 @@ class BattleInventoryTest {
 	 */
 	@Test
 	public void testRemove1() throws InventoryFullException {
-		Battle testBattle = new Battle(game);
+		Battle testBattle = new Battle();
 		myBattles.add(testBattle);
 		myBattles.remove(testBattle);
 		ArrayList<Battle> testBattleList = new ArrayList<Battle>();
@@ -98,8 +97,8 @@ class BattleInventoryTest {
 	 */
 	@Test
 	public void testRemove2() throws InventoryFullException {
-		Battle testBattle1 = new Battle(game);
-		Battle testBattle2 = new Battle(game);
+		Battle testBattle1 = new Battle();
+		Battle testBattle2 = new Battle();
 		myBattles.add(testBattle1);
 		myBattles.add(testBattle2);
 		myBattles.add(testBattle2);
@@ -117,7 +116,7 @@ class BattleInventoryTest {
 	 */
 	@Test
 	public void testIsFull() throws InventoryFullException {
-		Battle testBattle = new Battle(game);
+		Battle testBattle = new Battle();
 		assertFalse(myBattles.isFull());
 		myBattles.add(testBattle);
 		myBattles.add(testBattle);
@@ -136,7 +135,7 @@ class BattleInventoryTest {
 	 */
 	@Test
 	public void testIsEmpty() throws InventoryFullException {
-		Battle testBattle = new Battle(game);
+		Battle testBattle = new Battle();
 		assertTrue(myBattles.isEmpty());
 		myBattles.add(testBattle);
 		assertFalse(myBattles.isEmpty());
@@ -150,9 +149,9 @@ class BattleInventoryTest {
 	 */
 	@Test
 	public void testToString() throws InventoryFullException {
-		Battle testBattle1 = new Battle(game);
+		Battle testBattle1 = new Battle();
 		myBattles.add(testBattle1);
-		Battle testBattle2 = new Battle(game);
+		Battle testBattle2 = new Battle();
 		myBattles.add(testBattle2);
 		
 		String result = "";
@@ -171,9 +170,9 @@ class BattleInventoryTest {
 	 */
 	@Test
 	public void testView() throws InventoryFullException {
-		Battle testBattle1 = new Battle(game);
+		Battle testBattle1 = new Battle();
 		myBattles.add(testBattle1);
-		Battle testBattle2 = new Battle(game);
+		Battle testBattle2 = new Battle();
 		myBattles.add(testBattle2);
 		
 		String result = "\n===== BATTLES =====\n\n";

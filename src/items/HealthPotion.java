@@ -25,11 +25,9 @@ public class HealthPotion extends Item {
 	
 	/**
      * Create a new HealthPotion object.
-     * Set the value of game to the given GameEnvironment object.
-     * @param game the given GameEnvironment object.
      */
-	public HealthPotion (GameEnvironment game) {
-		super(name, description, cost, game);
+	public HealthPotion () {
+		super(name, description, cost);
 	};
 	
 	
@@ -76,7 +74,7 @@ public class HealthPotion extends Item {
 			// Error in code
 			e.printStackTrace();
 		}
-    	player.getItems().remove(this);
+    	GameEnvironment.getInstance().getPlayer().getItems().remove(this);
     }
     
     
@@ -85,7 +83,7 @@ public class HealthPotion extends Item {
      * @return item the new HealthPotion object.
      */
     public Item clone() {
-    	return new HealthPotion(game);
+    	return new HealthPotion();
     }
     
 }

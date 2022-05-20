@@ -22,7 +22,7 @@ class PlayerTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Player player;
 
 	/**
@@ -31,7 +31,6 @@ class PlayerTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
 		player = game.getPlayer();
 	}
 	
@@ -188,9 +187,9 @@ class PlayerTest {
 	@Test
 	public void testViewMonsters() throws InventoryFullException {
 		// Blue sky
-		Monster testMonster1 = new Chunky(game);
+		Monster testMonster1 = new Chunky();
 		player.getMonsters().add(testMonster1);
-		Monster testMonster2 = new Chunky(game);
+		Monster testMonster2 = new Chunky();
 		player.getMonsters().add(testMonster2);
 		
     	String result = "\n===== MY TEAM =====\n\n";
@@ -208,9 +207,9 @@ class PlayerTest {
 	@Test
     public void testViewItems() throws InventoryFullException {
 		// Blue sky
-		Item testItem1 = new HealthPotion(game);
+		Item testItem1 = new HealthPotion();
 		player.getItems().add(testItem1);
-		Item testItem2 = new HealthPotion(game);
+		Item testItem2 = new HealthPotion();
 		player.getItems().add(testItem2);
 		
     	String result = "\n===== MY INVENTORY =====\n\n";

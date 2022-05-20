@@ -26,7 +26,7 @@ class MonsterTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private MonsterInventory myMonsters;
 	private Monster monster;
 	private Player player;
@@ -38,12 +38,11 @@ class MonsterTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
+		game.populateGame();
 		player = game.getPlayer();
 		shop = game.getShop();
 		myMonsters = player.getMonsters();
-		monster = new AverageJoe(game);
+		monster = new AverageJoe();
 	}
 
 	/**
@@ -243,7 +242,7 @@ class MonsterTest {
 	public void testAttack1() throws InvalidValueException, InvalidTargetException {
 		//Attacking and dealing damage to an enemy, no critical hit
 		monster.setRandom(new Random(123));
-		Monster enemy = new AverageJoe(game);
+		Monster enemy = new AverageJoe();
 		monster.attack(enemy);
 		//Taking into account whether the monster crits or not 
 		assertEquals(80, enemy.getHealth());
@@ -260,7 +259,7 @@ class MonsterTest {
 	public void testAttack2() throws InvalidValueException, InvalidTargetException {
 		//Attacking and dealing damage to an enemy, critical hit
 		monster.setRandom(new Random(0)); //Generates int of 1  
-		Monster enemy = new AverageJoe(game);
+		Monster enemy = new AverageJoe();
 		monster.attack(enemy);
 		//Taking into account whether the monster crits or not 
 		assertEquals(60, enemy.getHealth());
@@ -275,7 +274,7 @@ class MonsterTest {
 	@Test
 	public void testAttack3() throws InvalidValueException {
 		//Attacking fainted enemy
-		Monster enemy = new AverageJoe(game);
+		Monster enemy = new AverageJoe();
 		enemy.takeDamage(enemy.getHealth());
 		try {
 			monster.attack(enemy);
@@ -318,7 +317,7 @@ class MonsterTest {
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		//Blue sky
 		player.setBalance(monster.getCost());
-		shop.setMonsters(new MonsterInventory(4, game));
+		shop.setMonsters(new MonsterInventory(4));
 		shop.getMonsters().add(monster);
 		monster.buy();
 		ArrayList<Monster> monsterList = new ArrayList<Monster>();
@@ -357,7 +356,7 @@ class MonsterTest {
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		//Inventory full
 		player.setBalance(monster.getCost()*5);
-		shop.setMonsters(new MonsterInventory(4, game));
+		shop.setMonsters(new MonsterInventory(4));
 		for(int i = 0; i < 4; i++) {
 			shop.getMonsters().add(monster);
 			monster.buy();
@@ -381,8 +380,8 @@ class MonsterTest {
 	public void testSell1() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Blue sky
 		player.setBalance(monster.getCost());
-		Monster testMonster = new AverageJoe(game);
-		shop.setMonsters(new MonsterInventory(4, game));
+		Monster testMonster = new AverageJoe();
+		shop.setMonsters(new MonsterInventory(4));
 		shop.getMonsters().add(testMonster);
 		testMonster.buy();
 		testMonster.sell();
@@ -402,8 +401,8 @@ class MonsterTest {
 	public void testSell2() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		//Multiple items of same type
 		player.setBalance(monster.getCost()*3);
-		Monster testMonster = new AverageJoe(game);
-		shop.setMonsters(new MonsterInventory(4, game));
+		Monster testMonster = new AverageJoe();
+		shop.setMonsters(new MonsterInventory(4));
 		shop.getMonsters().add(monster);
 		shop.getMonsters().add(testMonster);
 		shop.getMonsters().add(testMonster);

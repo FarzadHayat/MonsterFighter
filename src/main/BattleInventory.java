@@ -12,10 +12,6 @@ public class BattleInventory extends ArrayList<Battle> {
 	 * Fields
 	 */
     protected int maxSize;
-
-    protected GameEnvironment game;
-    protected Player player;
-	
 	
     /**
      * Constructors
@@ -24,12 +20,10 @@ public class BattleInventory extends ArrayList<Battle> {
     /**
      * Create a new BattleInventory object with the given size.
      * @param maxSize the given maxSize
-     * @param game the given game
      */
-    public BattleInventory (int maxSize, GameEnvironment game) {
+    public BattleInventory (int maxSize) {
     	this.maxSize = maxSize;
-    	this.game = game;
-    	player = game.getPlayer();
+    	GameEnvironment.getInstance();
     };
     
     
@@ -85,7 +79,7 @@ public class BattleInventory extends ArrayList<Battle> {
     		remove(this.get(0));
     	}
     	for (int i = 0; i < maxSize; i++) {
-    		Battle battle = new Battle(game);
+    		Battle battle = new Battle();
     		add(battle);
     	}
     }

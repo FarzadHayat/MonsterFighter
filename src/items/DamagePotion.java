@@ -23,11 +23,9 @@ public class DamagePotion extends Item {
 	
 	/**
 	 * Create a new DamagePotion object.
-	 * Set the value of game to the given GameEnvironment object.
-	 * @param game the given GameEnvironment object.
 	 */
-	public DamagePotion (GameEnvironment game) {
-		super(name, description, cost, game);
+	public DamagePotion () {
+		super(name, description, cost);
 	};
 	
 	
@@ -64,7 +62,7 @@ public class DamagePotion extends Item {
     public void use(Monster monster)
     {	
     	monster.setDamage(monster.getDamage() + damageIncrease);
-    	player.getItems().remove(this);
+    	GameEnvironment.getInstance().getPlayer().getItems().remove(this);
     }
     
     
@@ -73,7 +71,7 @@ public class DamagePotion extends Item {
      * @return item the new IncreaseDamge object.
      */
     public Item clone() {
-    	return new DamagePotion(game);
+    	return new DamagePotion();
     }
 
 }

@@ -44,10 +44,9 @@ public class Lanky extends Monster {
 	
 	/**
 	 * Creates Lanky object by calling superclass constructor and passing in the default values
-	 * @param game given GameEnvironment object
 	 */
-	public Lanky(GameEnvironment game) {
-    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
+	public Lanky() {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate);
     };
     
     
@@ -74,8 +73,8 @@ public class Lanky extends Monster {
      * @return new Lanky instance
      */
     public Monster clone() {
-    	Lanky cloneInst = new Lanky(game);
-    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	Lanky cloneInst = new Lanky();
+    	int correctLevel = GameEnvironment.getInstance().getAllMonsters().random().getLevel();
     	for(int i = 0; i < correctLevel - 1; i++) {
     		try {
 				cloneInst.levelUp();

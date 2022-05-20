@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
 import items.DamagePotion;
-import items.LevelPotion;
 import main.*;
 import monsters.Chunky;
 
@@ -24,7 +23,7 @@ class IncreaseDamageTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Player player;
 	
 	/**
@@ -33,8 +32,7 @@ class IncreaseDamageTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
+		game.populateGame();
 		player = game.getPlayer();
 	}
 
@@ -47,9 +45,9 @@ class IncreaseDamageTest {
 	@Test
 	void testUse1() throws InventoryFullException, StatMaxedOutException {
 		// Blue sky
-		Monster monster = new Chunky(game);
+		Monster monster = new Chunky();
 		int damageBefore = monster.getDamage();
-		Item item = new DamagePotion(game);
+		Item item = new DamagePotion();
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
@@ -64,7 +62,7 @@ class IncreaseDamageTest {
 	 */
 	@Test
 	public void testClone() {
-		Item testItem = new DamagePotion(game);
+		Item testItem = new DamagePotion();
 		Item newItem = testItem.clone();
 		assertTrue(DamagePotion.class.isInstance(newItem));
 	}

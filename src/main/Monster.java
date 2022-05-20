@@ -9,6 +9,7 @@ import exceptions.InvalidTargetException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
+import monsters.Raka;
 
 /**
  * An abstract class that describes a monster.
@@ -39,8 +40,8 @@ public abstract class Monster implements Purchasable {
 
 	private ImageIcon sprite;
 	
-	protected GameEnvironment game;
-	protected Player player;
+	private GameEnvironment game = GameEnvironment.getInstance();
+	private Player player;
 	private Shop shop;
 	
 	private Random rn = new Random();
@@ -55,7 +56,6 @@ public abstract class Monster implements Purchasable {
 	 * Sets the monster's name, description, maxHealth, damage, cost, level, healAmount and critRate with the given values 
 	 * Sets the monster's initial health to the maxHealth 
 	 * Sets the monster's maximum level based on the difficulty of the GameEnvironment object 
-	 * Sets the game variable to the given GameEnvironment object 
 	 * @param name given String for the monster's name 
 	 * @param description given String for the monster's description
 	 * @param maxHealth given int for the monster's maximum health
@@ -64,9 +64,8 @@ public abstract class Monster implements Purchasable {
 	 * @param level given int for the monster's current level 
 	 * @param healAmount given int for the monster's heal amount overnight
 	 * @param critRate given double for the monster's critical rate 
-	 * @param game given GameEnvironment object
 	 */
-	public Monster(String name, String description, int maxHealth, int damage, int cost, int level, int healAmount, double critRate, GameEnvironment game) {
+	public Monster(String name, String description, int maxHealth, int damage, int cost, int level, int healAmount, double critRate) {
 		this.name = name;
 		this.description = description;
 		this.maxHealth = maxHealth;
@@ -77,7 +76,6 @@ public abstract class Monster implements Purchasable {
 		changeMaxLevel(game.getDifficulty());
 		this.healAmount = healAmount;
 		this.critRate = critRate;
-		this.game = game;
 		player = game.getPlayer();
 		shop = game.getShop();
 		setSprite(new ImageIcon(Monster.class.getResource(
@@ -521,7 +519,11 @@ public abstract class Monster implements Purchasable {
 			player.getMonsters().add(this);
 			int index = shop.getMonsters().indexOf(this);		
 			shop.getMonsters().remove(this);
-			shop.getMonsters().add(index, game.getAllMonsters().random().clone());
+			Monster monster = game.getAllMonsters().random().clone();
+			shop.getMonsters().add(index, monster);
+			if(monster instanceof Raka) {
+    			((Raka) monster).setTeam(player.getMonsters());
+    		}
 			return "You bought: " + name;
 		}
 	}

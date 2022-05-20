@@ -52,10 +52,9 @@ public class Raka extends Monster {
 	
 	/**
 	 * Creates Raka object by calling superclass constructor and passing in the default values
-	 * @param game given GameEnvironment object
 	 */
-	public Raka(GameEnvironment game) {
-    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate, game);
+	public Raka() {
+    	super(defaultName, description, defaultMaxHealth, defaultDamage, defaultCost, level, defaultHealAmount, defaultCritRate);
     };
     
     
@@ -204,8 +203,8 @@ public class Raka extends Monster {
      * @return new Raka instance
      */
     public Monster clone() {
-    	Raka cloneInst = new Raka(game);
-    	int correctLevel = game.getAllMonsters().random().getLevel();
+    	Raka cloneInst = new Raka();
+    	int correctLevel = GameEnvironment.getInstance().getAllMonsters().random().getLevel();
     	for(int i = 0; i < correctLevel - 1; i++) {
     		try {
 				cloneInst.levelUp();

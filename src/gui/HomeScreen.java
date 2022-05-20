@@ -20,7 +20,7 @@ public class HomeScreen {
 	private JFrame window;
 	private GraphicalUserInterface gui;
 	
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Player player;
 	private MonsterInventory monsters;
 	private ItemInventory items;
@@ -48,7 +48,6 @@ public class HomeScreen {
 	 */
 	public HomeScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
-		game = gui.getGame();
 		player = game.getPlayer();
 		monsters = player.getMonsters();
 		items = player.getItems();

@@ -65,7 +65,6 @@ public class BattleScreen {
 	public BattleScreen(GraphicalUserInterface gui, Battle battle) {
 		this.gui = gui;
 		this.battle = battle;
-		gui.getGame();
 		monsters = battle.getMonsters();
 		initialize();
 		window.setVisible(true);

@@ -25,7 +25,7 @@ class RakaTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Raka raka;
 	private Monster target;
 	
@@ -35,10 +35,9 @@ class RakaTest {
 	 */
 	@BeforeEach
 	public void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
-		raka = new Raka(game);
-		target = new AverageJoe(game);
+		game.populateGame();
+		raka = new Raka();
+		target = new AverageJoe();
 	}
 	
 	/**

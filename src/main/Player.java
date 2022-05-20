@@ -25,11 +25,10 @@ public class Player {
     
     /**
      * Create a new Player object.
-     * @param game the given game
      */
-    public Player(GameEnvironment game) {
-    	this.monsters = new MonsterInventory(4, game);
-    	this.items = new ItemInventory(4, game);
+    public Player() {
+    	monsters = new MonsterInventory(4);
+    	items = new ItemInventory(4);
     }
     
     

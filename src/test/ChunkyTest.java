@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.StatMaxedOutException;
 import main.*;
-import monsters.AverageJoe;
 import monsters.Chunky;
 
 /**
@@ -20,7 +19,7 @@ class ChunkyTest {
 	/**
 	 * Fields
 	 */
-	private GameEnvironment game;
+	private GameEnvironment game = GameEnvironment.getInstance();
 	private Chunky monster;
 	
 	/**
@@ -29,9 +28,8 @@ class ChunkyTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		game = new GameEnvironment();
-		game.setupGame();
-		monster = new Chunky(game);
+		game.populateGame();
+		monster = new Chunky();
 	}
 	
 	/**
