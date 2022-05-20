@@ -135,6 +135,9 @@ public class ItemScreen {
 		btnSell.setBounds(631, 453, 119, 44);
 		window.getContentPane().add(btnSell);
 		
+		SpriteLabel spriteLabel = new SpriteLabel(item, 50, 50);
+		window.getContentPane().add(spriteLabel);
+		
 		MonstersPanel monstersPanel = new MonstersPanel(monsters, 220, 80, 2);
 		monstersPanel.setLayout(null);
 		monstersPanel.setBounds(10, 87, 766, 465);
@@ -176,7 +179,6 @@ public class ItemScreen {
 				});
 			}
 		}
-		
 	}
 	
 }

@@ -210,7 +210,7 @@ public class MonsterScreen {
 		txtDescription.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtDescription.setText(monster.getDescription());
 		txtDescription.setBackground(null);
-		txtDescription.setBounds(425, 98, 325, 294);
+		txtDescription.setBounds(425, 292, 325, 151);
 		window.getContentPane().add(txtDescription);
 		
 		lblDamageValue.setText(""+ monster.getDamage());
@@ -225,5 +225,8 @@ public class MonsterScreen {
 			status = "Alive";
 		}
 		lblStatusValue.setText(status);
+		
+		SpriteLabel spriteLabel = new SpriteLabel(monster, 500, 130);
+		window.getContentPane().add(spriteLabel);
 	}
 }

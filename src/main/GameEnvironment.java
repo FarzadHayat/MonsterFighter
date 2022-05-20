@@ -57,6 +57,15 @@ public class GameEnvironment {
 			e.printStackTrace();
 		}
     	scoreSystem.setTotalScore(easyScore);
+
+		player.getMonsters().add(new Chunky(this));
+		player.getMonsters().add(new Chunky(this));
+		player.getMonsters().add(new Chunky(this));
+
+		player.getItems().add(new HealthPotion(this));
+		player.getItems().add(new HealthPotion(this));
+		player.getItems().add(new HealthPotion(this));
+		player.getItems().add(new HealthPotion(this));
     }
     
     
