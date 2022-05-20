@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.InventoryFullException;
 import main.*;
-import items.HealUp;
+import items.HealthPotion;
 
 /**
  * Unit test for ItemInventory class
@@ -43,7 +43,7 @@ class ItemInventoryTest {
 	@Test
 	public void testAdd1() throws InventoryFullException {
 		// Blue sky
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		myItems.add(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
 		testItemList.add(testItem);
@@ -59,10 +59,10 @@ class ItemInventoryTest {
 	@Test
 	public void testAdd2() throws InventoryFullException {
 		// Add at index
-		Item testItem1 = new HealUp(game);
-		Item testItem2 = new HealUp(game);
-		Item testItem3 = new HealUp(game);
-		Item testItem4 = new HealUp(game);
+		Item testItem1 = new HealthPotion(game);
+		Item testItem2 = new HealthPotion(game);
+		Item testItem3 = new HealthPotion(game);
+		Item testItem4 = new HealthPotion(game);
 		myItems.add(testItem1);
 		myItems.add(0, testItem2);
 		myItems.add(1, testItem3);
@@ -83,7 +83,7 @@ class ItemInventoryTest {
 	@Test
 	public void testRemove1() throws InventoryFullException {
 		// Blue sky
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		myItems.add(testItem);
 		myItems.remove(testItem);
 		ArrayList<Item> testItemList = new ArrayList<Item>();
@@ -98,8 +98,8 @@ class ItemInventoryTest {
 	@Test
 	public void testRemove2() throws InventoryFullException {
 		// Multiple items of the same type
-		Item testItem1 = new HealUp(game);
-		Item testItem2 = new HealUp(game);
+		Item testItem1 = new HealthPotion(game);
+		Item testItem2 = new HealthPotion(game);
 		myItems.add(testItem1);
 		myItems.add(testItem2);
 		myItems.add(testItem2);
@@ -118,7 +118,7 @@ class ItemInventoryTest {
 	@Test
 	public void testIsFull() throws InventoryFullException {
 		// Blue sky
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		assertFalse(myItems.isFull());
 		myItems.add(testItem);
 		myItems.add(testItem);
@@ -136,7 +136,7 @@ class ItemInventoryTest {
 	@Test
 	public void testIsEmpty() throws InventoryFullException {
 		// Blue sky
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		assertTrue(myItems.isEmpty());
 		myItems.add(testItem);
 		assertFalse(myItems.isEmpty());
@@ -149,9 +149,9 @@ class ItemInventoryTest {
 	 */
 	@Test
 	public void testRandom() throws InventoryFullException {
-		Item testItem1 = new HealUp(game);
+		Item testItem1 = new HealthPotion(game);
 		myItems.add(testItem1);
-		Item testItem2 = new HealUp(game);
+		Item testItem2 = new HealthPotion(game);
 		myItems.add(testItem2);
 		
 		Item randomItem = myItems.random();
@@ -165,9 +165,9 @@ class ItemInventoryTest {
 	 */
 	@Test
 	public void testToString() throws InventoryFullException {
-		Item testItem1 = new HealUp(game);
+		Item testItem1 = new HealthPotion(game);
 		myItems.add(testItem1);
-		Item testItem2 = new HealUp(game);
+		Item testItem2 = new HealthPotion(game);
 		myItems.add(testItem2);
 		
 		String result = "";
@@ -185,9 +185,9 @@ class ItemInventoryTest {
 	 */
 	@Test
 	public void testView() throws InventoryFullException {
-		Item testItem1 = new HealUp(game);
+		Item testItem1 = new HealthPotion(game);
 		myItems.add(testItem1);
-		Item testItem2 = new HealUp(game);
+		Item testItem2 = new HealthPotion(game);
 		myItems.add(testItem2);
 		
 		String result = "";

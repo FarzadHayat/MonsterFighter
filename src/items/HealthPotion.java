@@ -8,13 +8,13 @@ import main.*;
  * Item that can be used on a monster to heal them for the given heal amount.
  * @author Farzad and Daniel
  */
-public class HealUp extends Item {
+public class HealthPotion extends Item {
     
 	/**
 	 * Fields
 	 */
 	private static int healAmount = 20;
-	private static String name = "Heal Up";
+	private static String name = "Health Potion";
 	private static String description = "Heal a monster for " + healAmount + " health.";
 	private static int cost = 20;
 	
@@ -24,11 +24,11 @@ public class HealUp extends Item {
 	 */
 	
 	/**
-     * Create a new HealUp object.
+     * Create a new HealthPotion object.
      * Set the value of game to the given GameEnvironment object.
      * @param game the given GameEnvironment object.
      */
-	public HealUp (GameEnvironment game) {
+	public HealthPotion (GameEnvironment game) {
 		super(name, description, cost, game);
 	};
 	
@@ -51,7 +51,7 @@ public class HealUp extends Item {
 	 * @param healAmount the new value of healAmount
 	 */
 	public static void setHealAmount(int healthIncrease) {
-		HealUp.healAmount = healthIncrease;
+		HealthPotion.healAmount = healthIncrease;
 	}
 
 	
@@ -81,11 +81,11 @@ public class HealUp extends Item {
     
     
     /**
-     * Get a new instance of the HealUp class.
-     * @return item the new HealUp object.
+     * Get a new instance of the HealthPotion class.
+     * @return item the new HealthPotion object.
      */
     public Item clone() {
-    	return new HealUp(game);
+    	return new HealthPotion(game);
     }
     
 }

@@ -7,13 +7,13 @@ import main.*;
  * Item that can be used on a monster to increase their crit rate by the given crit amount.
  * @author Farzad and Daniel
  */
-public class IncreaseCritRate extends Item {
+public class CritPotion extends Item {
     
 	/**
 	 * Fields
 	 */
 	private static double critIncrease = 0.2;
-	private static String name = "Increase Crit Rate";
+	private static String name = "Crit Potion";
 	private static String description = "Increase a monster's crit rate by " + (int) (critIncrease * 100) + " percent.";
 	private static int cost = 20;
 	
@@ -23,11 +23,11 @@ public class IncreaseCritRate extends Item {
 	 */
 	
 	/**
-     * Create a new IncreaseCritRate object.
+     * Create a new CritPotion object.
      * Set the value of game to the given GameEnvironment object.
      * @param game the given GameEnvironment object.
      */
-	public IncreaseCritRate (GameEnvironment game) {
+	public CritPotion (GameEnvironment game) {
 		super(name, description, cost, game);
 	};
 	
@@ -50,7 +50,7 @@ public class IncreaseCritRate extends Item {
 	 * @param critIncrease the new value of critIncrease
 	 */
 	public static void setCritIncrease(double critIncrease) {
-		IncreaseCritRate.critIncrease = critIncrease;
+		CritPotion.critIncrease = critIncrease;
 	}
 	
 	
@@ -83,11 +83,11 @@ public class IncreaseCritRate extends Item {
     
     
     /**
-     * Get a new instance of the IncreaseCritRate class.
-     * @return item the new IncreaseCritRate object.
+     * Get a new instance of the CritPotion class.
+     * @return item the new CritPotion object.
      */
     public Item clone() {
-    	return new IncreaseCritRate(game);
+    	return new CritPotion(game);
     }
     
 }

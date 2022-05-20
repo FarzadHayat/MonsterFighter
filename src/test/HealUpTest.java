@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
-import items.HealUp;
-import items.IncreaseCritRate;
+import items.HealthPotion;
+import items.CritPotion;
 import main.*;
 import monsters.Chunky;
 
 /**
- * Unit test for HealUp class
+ * Unit test for HealthPotion class
  * @author Farzad and Daniel
  */
 
@@ -49,13 +49,13 @@ class HealUpTest {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		monster.setHealth(0);
-		Item item = new HealUp(game);
+		Item item = new HealthPotion(game);
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		assertEquals(itemList, player.getItems());
-		assertEquals(HealUp.getHealAmount(), monster.getHealth());
+		assertEquals(HealthPotion.getHealAmount(), monster.getHealth());
 	}
 
 	/**
@@ -68,8 +68,8 @@ class HealUpTest {
 	void testUse2() throws InventoryFullException, StatMaxedOutException {
 		// Monster is only partially healed
 		Monster monster = new Chunky(game);
-		monster.setHealth(monster.getHealth() - (HealUp.getHealAmount() / 2));
-		Item item = new HealUp(game);
+		monster.setHealth(monster.getHealth() - (HealthPotion.getHealAmount() / 2));
+		Item item = new HealthPotion(game);
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
@@ -88,7 +88,7 @@ class HealUpTest {
 	void testUse3() throws InventoryFullException, StatMaxedOutException {
 		// Monster is already max health
 		Monster monster = new Chunky(game);
-		Item item = new HealUp(game);
+		Item item = new HealthPotion(game);
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		try {			
@@ -106,9 +106,9 @@ class HealUpTest {
 	 */
 	@Test
 	public void testClone() {
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		Item newItem = testItem.clone();
-		assertTrue(HealUp.class.isInstance(newItem));
+		assertTrue(HealthPotion.class.isInstance(newItem));
 	}
 
 }

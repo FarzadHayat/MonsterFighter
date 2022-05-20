@@ -6,13 +6,13 @@ import main.*;
  * Item that can be used on a monster to increase their damage by the given damage amount.
  * @author Farzad and Daniel
  */
-public class IncreaseDamage extends Item {
+public class DamagePotion extends Item {
     
 	/**
 	 * Fields
 	 */
 	private static int damageIncrease = 10;
-	private static String name = "Increase Damage";
+	private static String name = "Damage Potion";
 	private static String description = "Increase a monster's damage by " + damageIncrease + ".";
 	private static int cost = 20;
 
@@ -22,11 +22,11 @@ public class IncreaseDamage extends Item {
 	 */
 	
 	/**
-	 * Create a new IncreaseDamage object.
+	 * Create a new DamagePotion object.
 	 * Set the value of game to the given GameEnvironment object.
 	 * @param game the given GameEnvironment object.
 	 */
-	public IncreaseDamage (GameEnvironment game) {
+	public DamagePotion (GameEnvironment game) {
 		super(name, description, cost, game);
 	};
 	
@@ -49,7 +49,7 @@ public class IncreaseDamage extends Item {
 	 * @param damageIncrease the new value of damageIncrease
 	 */
 	public static void setDamageIncrease(int damageIncrease) {
-		IncreaseDamage.damageIncrease = damageIncrease;
+		DamagePotion.damageIncrease = damageIncrease;
 	}
 
 	
@@ -69,11 +69,11 @@ public class IncreaseDamage extends Item {
     
     
     /**
-     * Get a new instance of the IncreaseDamage class.
+     * Get a new instance of the DamagePotion class.
      * @return item the new IncreaseDamge object.
      */
     public Item clone() {
-    	return new IncreaseDamage(game);
+    	return new DamagePotion(game);
     }
 
 }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import exceptions.InsufficientFundsException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
-import items.HealUp;
+import items.HealthPotion;
 import main.*;
 import monsters.Chunky;
 
@@ -208,9 +208,9 @@ class PlayerTest {
 	@Test
     public void testViewItems() throws InventoryFullException {
 		// Blue sky
-		Item testItem1 = new HealUp(game);
+		Item testItem1 = new HealthPotion(game);
 		player.getItems().add(testItem1);
-		Item testItem2 = new HealUp(game);
+		Item testItem2 = new HealthPotion(game);
 		player.getItems().add(testItem2);
 		
     	String result = "\n===== MY INVENTORY =====\n\n";

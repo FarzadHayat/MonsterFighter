@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
-import items.IncreaseCritRate;
-import items.LevelUp;
+import items.CritPotion;
+import items.LevelPotion;
 import main.*;
 import monsters.Chunky;
 
 /**
- * Unit test for IncreaseCritRate class
+ * Unit test for CritPotion class
  * @author Farzad and Daniel
  */
 
@@ -49,13 +49,13 @@ class IncreaseCritRateTest {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		monster.setCritRate(0);
-		Item item = new IncreaseCritRate(game);
+		Item item = new CritPotion(game);
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
 		ArrayList<Item> itemList = new ArrayList<Item>();
 		assertEquals(itemList, player.getItems());
-		assertEquals(IncreaseCritRate.getCritIncrease(), monster.getCritRate());
+		assertEquals(CritPotion.getCritIncrease(), monster.getCritRate());
 	}
 
 	/** Use item on monster and monster crit rate increases to greater than maximum crit rate
@@ -67,8 +67,8 @@ class IncreaseCritRateTest {
 	void testUse2() throws InventoryFullException, StatMaxedOutException {
 		// Monster crit rate is only partially increased
 		Monster monster = new Chunky(game);
-		monster.setCritRate(monster.getMaxCritRate() - (IncreaseCritRate.getCritIncrease() / 2));
-		Item item = new IncreaseCritRate(game);
+		monster.setCritRate(monster.getMaxCritRate() - (CritPotion.getCritIncrease() / 2));
+		Item item = new CritPotion(game);
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
@@ -88,7 +88,7 @@ class IncreaseCritRateTest {
 		// Monster is already at max crit rate
 		Monster monster = new Chunky(game);
 		monster.setCritRate(1);
-		Item item = new IncreaseCritRate(game);
+		Item item = new CritPotion(game);
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		try {			
@@ -106,9 +106,9 @@ class IncreaseCritRateTest {
 	 */
 	@Test
 	public void testClone() {
-		Item testItem = new IncreaseCritRate(game);
+		Item testItem = new CritPotion(game);
 		Item newItem = testItem.clone();
-		assertTrue(IncreaseCritRate.class.isInstance(newItem));
+		assertTrue(CritPotion.class.isInstance(newItem));
 	}
 
 }

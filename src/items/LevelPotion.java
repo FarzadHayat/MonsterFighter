@@ -7,12 +7,12 @@ import main.*;
  * Item that can be used on a monster to level them up to increase their stats.
  * @author Farzad and Daniel
  */
-public class LevelUp extends Item {
+public class LevelPotion extends Item {
 	
 	/**
 	 * Fields
 	 */
-	private static String name = "Level Up";
+	private static String name = "Level Potion";
 	private static String description = "Level up a monster by one level.";
 	private static int cost = 50;
 	
@@ -22,11 +22,11 @@ public class LevelUp extends Item {
 	 */
 	
 	/**
-     * Create a new LevelUp object.
+     * Create a new LevelPotion object.
      * Set the value of game to the given GameEnvironment object.
      * @param game the given GameEnvironment object.
      */
-    public LevelUp (GameEnvironment game) {
+    public LevelPotion (GameEnvironment game) {
     	super(name, description, cost, game);
     };
     
@@ -48,11 +48,11 @@ public class LevelUp extends Item {
     
     
     /**
-     * Get a new instance of the LevelUp class.
-     * @return item the new LevelUp object.
+     * Get a new instance of the LevelPotion class.
+     * @return item the new LevelPotion object.
      */
     public Item clone() {
-    	return new LevelUp(game);
+    	return new LevelPotion(game);
     }
 
 }

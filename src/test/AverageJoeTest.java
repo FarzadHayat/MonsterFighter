@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import exceptions.StatMaxedOutException;
-import items.HealUp;
+import items.HealthPotion;
 import main.*;
 import monsters.AverageJoe;
 

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import exceptions.InsufficientFundsException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
-import items.HealUp;
+import items.HealthPotion;
 import main.*;
 
 /**
@@ -52,7 +52,7 @@ class ItemTest {
 	@Test
 	public void testBuy1() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Blue sky
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		player.setBalance(testItem.getCost());
 		shop.getItems().add(testItem);
 		testItem.buy();
@@ -72,7 +72,7 @@ class ItemTest {
 	@Test
 	public void testBuy2() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Insufficient funds
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		player.setBalance(testItem.getCost() / 2);
 		try {    		
 			testItem.buy();
@@ -92,7 +92,7 @@ class ItemTest {
 	@Test
 	public void testBuy3() throws InsufficientFundsException, InventoryFullException, InvalidValueException {
 		// Inventory full	
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		player.setBalance(testItem.getCost() * (myItems.getMaxSize() + 1));
 		
 		for (int i = 0; i < myItems.getMaxSize(); i++) {
@@ -118,7 +118,7 @@ class ItemTest {
 	@Test
 	public void testSell1() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Blue sky
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		player.setBalance(testItem.getCost());
 		shop.getItems().add(testItem);
 		testItem.buy();
@@ -138,8 +138,8 @@ class ItemTest {
 	@Test
 	public void testSell2() throws InventoryFullException, InsufficientFundsException, InvalidValueException {
 		// Multiple items of the same type
-		Item testItem1 = new HealUp(game);
-		Item testItem2 = new HealUp(game);
+		Item testItem1 = new HealthPotion(game);
+		Item testItem2 = new HealthPotion(game);
 		player.setBalance(testItem1.getCost() * 3);
 		shop.getItems().add(testItem1);
 		shop.getItems().add(testItem2);
@@ -161,7 +161,7 @@ class ItemTest {
 	 */
 	@Test
 	public void testToString() {
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		String myStr = testItem.toString();
 		assertEquals("%-20s    cost: %-3s    %-50s".formatted(testItem.getName(), testItem.getCost(), testItem.getDescription()), myStr);
 	}
@@ -172,7 +172,7 @@ class ItemTest {
 	 */
 	@Test
 	public void testView() {
-		Item testItem = new HealUp(game);
+		Item testItem = new HealthPotion(game);
 		String myStr = testItem.view();
 		
 		String result = "";

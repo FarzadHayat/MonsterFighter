@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
-import items.HealUp;
-import items.IncreaseCritRate;
-import items.IncreaseDamage;
-import items.LevelUp;
+import items.HealthPotion;
+import items.CritPotion;
+import items.DamagePotion;
+import items.LevelPotion;
 import main.*;
 import monsters.AverageJoe;
 import monsters.Chunky;

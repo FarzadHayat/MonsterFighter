@@ -1,10 +1,10 @@
 package main;
 
 import exceptions.InvalidValueException;
-import items.HealUp;
-import items.IncreaseCritRate;
-import items.IncreaseDamage;
-import items.LevelUp;
+import items.HealthPotion;
+import items.CritPotion;
+import items.DamagePotion;
+import items.LevelPotion;
 import monsters.*;
 
 /**
@@ -308,10 +308,10 @@ public class GameEnvironment {
 		allMonsters.add(new Zap(this));
 		
 		allItems = new ItemInventory(4, this);
-		allItems.add(new HealUp(this));
-		allItems.add(new IncreaseDamage(this));
-		allItems.add(new IncreaseCritRate(this));
-		allItems.add(new LevelUp(this));
+		allItems.add(new HealthPotion(this));
+		allItems.add(new DamagePotion(this));
+		allItems.add(new CritPotion(this));
+		allItems.add(new LevelPotion(this));
 		
 		shop.randomise();
 		battles = new BattleInventory(5, this);

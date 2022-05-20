@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
-import items.HealUp;
-import items.LevelUp;
+import items.HealthPotion;
+import items.LevelPotion;
 import main.*;
 import monsters.Chunky;
 
 /**
- * Unit test for LevelUp class
+ * Unit test for LevelPotion class
  * @author Farzad and Daniel
  */
 
@@ -48,7 +48,7 @@ class LevelUpTest {
 		// Blue sky
 		Monster monster = new Chunky(game);
 		int levelBefore = monster.getLevel();
-		Item item = new LevelUp(game);
+		Item item = new LevelPotion(game);
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		item.use(monster);
@@ -68,7 +68,7 @@ class LevelUpTest {
 		// Monster is already max level
 		Monster monster = new Chunky(game);
 		monster.setLevel(monster.getMaxLevel());
-		Item item = new LevelUp(game);
+		Item item = new LevelPotion(game);
 		player.getMonsters().add(monster);
 		player.getItems().add(item);
 		try {			
@@ -85,9 +85,9 @@ class LevelUpTest {
 	 */
 	@Test
 	public void testClone() {
-		Item testItem = new LevelUp(game);
+		Item testItem = new LevelPotion(game);
 		Item newItem = testItem.clone();
-		assertTrue(LevelUp.class.isInstance(newItem));
+		assertTrue(LevelPotion.class.isInstance(newItem));
 	}
 
 }
