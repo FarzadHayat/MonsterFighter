@@ -74,6 +74,9 @@ public class HomeScreen {
 		titleLabel.setBounds(250, 20, 300, 50);
 		window.getContentPane().add(titleLabel);
 		
+		BalanceLabel balanceLabel = new BalanceLabel(180, 25);
+		window.getContentPane().add(balanceLabel);
+		
 		JPanel generalPanel = new JPanel();
 		generalPanel.setBounds(300, 100, 200, 340);
 		window.getContentPane().add(generalPanel);

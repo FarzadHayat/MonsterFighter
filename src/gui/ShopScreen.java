@@ -27,7 +27,6 @@ public class ShopScreen {
 	private GraphicalUserInterface gui;
 	
 	private GameEnvironment game = GameEnvironment.getInstance();
-	private Player player;
 	
 	private MonsterInventory shopMonsters;
 	private ItemInventory shopItems;
@@ -64,7 +63,6 @@ public class ShopScreen {
 	 */
 	public ShopScreen(GraphicalUserInterface gui) {
 		this.gui = gui;
-		player = game.getPlayer();
 		shopMonsters = game.getShop().getMonsters();
 		shopItems = game.getShop().getItems();
 		initialize();
@@ -89,6 +87,9 @@ public class ShopScreen {
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		window.getContentPane().add(titleLabel);
+		
+		BalanceLabel balanceLabel = new BalanceLabel(100, 25);
+		window.getContentPane().add(balanceLabel);
 		
 		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
@@ -169,17 +170,6 @@ public class ShopScreen {
 		lblCostValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCostValue.setBounds(607, 281, 121, 40);
 		monstersPanel.add(lblCostValue);
-		
-		JLabel lblBalance = new JLabel("Balance: ");
-		lblBalance.setBounds(20, 78, 71, 40);
-		lblBalance.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		window.getContentPane().add(lblBalance);
-		
-		JLabel lblBalanceValue = new JLabel("");
-		lblBalanceValue.setText("$"+player.getBalance());
-		lblBalanceValue.setBounds(101, 78, 71, 40);
-		lblBalanceValue.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		window.getContentPane().add(lblBalanceValue);
 		
 		JButton btnBuy = new JButton("Buy");
 		btnBuy.addActionListener(new ActionListener() {

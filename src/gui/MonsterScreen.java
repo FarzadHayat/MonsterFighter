@@ -75,6 +75,9 @@ public class MonsterScreen {
 		titleLabel.setBounds(250, 20, 300, 50);
 		window.getContentPane().add(titleLabel);
 		
+		BalanceLabel balanceLabel = new BalanceLabel(100, 25);
+		window.getContentPane().add(balanceLabel);
+		
 		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

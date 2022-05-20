@@ -10,7 +10,6 @@ import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.Font;
-
 import main.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -100,7 +99,7 @@ public class BattleScreen {
 		
 		MonstersPanel monstersPanel = new MonstersPanel(monsters, 10, 20, 2);
 		monstersPanel.setLayout(null);
-		monstersPanel.setBounds(20, 150, 360, 440);
+		monstersPanel.setBounds(20, 150, 360, 360);
 		window.getContentPane().add(monstersPanel);
 		
 		for (int i = 0; i < monsters.size(); i++) {

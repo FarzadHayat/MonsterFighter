@@ -83,6 +83,9 @@ public class ItemScreen {
 		titleLabel.setBounds(250, 20, 300, 50);
 		window.getContentPane().add(titleLabel);
 		
+		BalanceLabel balanceLabel = new BalanceLabel(100, 25);
+		window.getContentPane().add(balanceLabel);
+		
 		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,10 +137,10 @@ public class ItemScreen {
 		btnSell.setBounds(631, 453, 119, 44);
 		window.getContentPane().add(btnSell);
 		
-		SpriteLabel spriteLabel = new SpriteLabel(item, 50, 50);
+		SpriteLabel spriteLabel = new SpriteLabel(item, 550, 200);
 		window.getContentPane().add(spriteLabel);
 		
-		MonstersPanel monstersPanel = new MonstersPanel(monsters, 220, 80, 2);
+		MonstersPanel monstersPanel = new MonstersPanel(monsters, 120, 80, 2);
 		monstersPanel.setLayout(null);
 		monstersPanel.setBounds(10, 87, 766, 465);
 		window.getContentPane().add(monstersPanel);
@@ -154,11 +157,9 @@ public class ItemScreen {
 		if(monsters.isEmpty()) {
 			JLabel txtNoMonster = new JLabel();
 			txtNoMonster.setVerticalAlignment(SwingConstants.TOP);
-			txtNoMonster.setText((String) null);
 			txtNoMonster.setHorizontalAlignment(SwingConstants.CENTER);
 			txtNoMonster.setFont(new Font("Tahoma", Font.PLAIN, 17));
-			txtNoMonster.setBackground((Color) null);
-			txtNoMonster.setBounds(226, 107, 325, 85);
+			txtNoMonster.setBounds(120, 107, 325, 85);
 			txtNoMonster.setText("No monster in player's inventory!");
 			monstersPanel.add(txtNoMonster);
 		}

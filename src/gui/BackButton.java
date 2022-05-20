@@ -17,7 +17,7 @@ public class BackButton extends JButton {
 	private int yPos = 30;
 	
 	/**
-	 * Create a new item button using xPos and yPos.
+	 * Create a new back button using xPos and yPos.
 	 */
 	public BackButton() {
 		super("Back");
