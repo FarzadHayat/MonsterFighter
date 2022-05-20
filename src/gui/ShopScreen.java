@@ -263,12 +263,6 @@ public class ShopScreen {
 			Item item = shopItems.get(i);
 			ItemButton itemButton = new ItemButton(item, xPos, yPos);
 			MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
-			if (item.getName().length() > 10) {				
-				itemButton.setText("<html><center>" + item.getName().replaceFirst(" ", "<br>") + "</centre></html>");
-			}
-			else if (monster.getName().length() > 10) {				
-				monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
-			}
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedMonster = monster;

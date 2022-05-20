@@ -1,9 +1,9 @@
 package gui;
 
-import java.awt.Font;
 import javax.swing.JButton;
 
 import main.Item;
+import main.Purchasable;
 
 /**
  * A template for creating a new item button.
@@ -12,6 +12,9 @@ import main.Item;
 @SuppressWarnings("serial")
 public class ItemButton extends JButton {
 
+	private SpriteLabel spriteLabel;
+	protected PurchasableLabel purchasableLabel;
+	
 	/**
 	 * Create a new item button.
 	 * @param item the given item
@@ -19,9 +22,15 @@ public class ItemButton extends JButton {
 	 * @param yPos the given y position
 	 */
 	public ItemButton(Item item, int xPos, int yPos) {
-		super(String.valueOf(item.getName()));
-		setFont(new Font("Tahoma", Font.PLAIN, 20));
-		setBounds(xPos, yPos, 160, 90);
+		super();
+		setBounds(xPos, yPos, 160, 120);
+		setLayout(null);
+		
+		purchasableLabel = new PurchasableLabel((Purchasable) item, 0, 0);
+		add(purchasableLabel);
+		
+		spriteLabel = new SpriteLabel((Purchasable) item, 0, 30);
+		add(spriteLabel);
 	}
 	
 }

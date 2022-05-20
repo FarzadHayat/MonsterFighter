@@ -1,12 +1,7 @@
 package main;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import exceptions.InsufficientFundsException;
@@ -14,13 +9,12 @@ import exceptions.InvalidTargetException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
-import gui.MonsterButton;
 
 /**
  * An abstract class that describes a monster.
  * @author Farzad and Daniel
  */
-public abstract class Monster {
+public abstract class Monster implements Purchasable {
 	
 	/**
 	 * Fields

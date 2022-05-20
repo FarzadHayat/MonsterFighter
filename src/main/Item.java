@@ -1,5 +1,7 @@
 package main;
 
+import javax.swing.ImageIcon;
+
 import exceptions.InsufficientFundsException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
@@ -9,7 +11,7 @@ import exceptions.StatMaxedOutException;
  * An abstract class that describes an item that can be used on a monster.
  * @author Farzad and Daniel
  */
-abstract public class Item {
+abstract public class Item implements Purchasable {
 
 	/**
 	 * Fields
@@ -21,6 +23,7 @@ abstract public class Item {
     protected Player player;
     private Shop shop;
     private double refundAmount = 0.5;
+    private ImageIcon sprite;
     
     
     /**
@@ -43,6 +46,8 @@ abstract public class Item {
     	this.game = game;
     	player = game.getPlayer();
     	shop = game.getShop();
+    	setSprite(new ImageIcon(Item.class.getResource(
+				"/resources/%s.png".formatted(name.replaceAll(" ", "")))));
     };
     
     
@@ -119,6 +124,24 @@ abstract public class Item {
      */
     public void setRefundAmount (double refundAmount) {
         this.refundAmount = refundAmount;
+    }
+    
+    
+    /**
+     * Get the value of sprite
+     * @return the value of sprite
+     */
+    public ImageIcon getSprite() {
+    	return sprite;
+    }
+    
+    
+    /**
+     * Set the value of sprite
+     * @param sprite the new value of sprite
+     */
+    public void setSprite(ImageIcon sprite) {
+    	this.sprite = sprite;
     }
     
     

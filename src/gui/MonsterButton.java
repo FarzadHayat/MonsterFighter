@@ -2,9 +2,10 @@ package gui;
 
 import javax.swing.JButton;
 import main.Monster;
+import main.Purchasable;
 
 /**
- * A template for creating a new monster panel.
+ * A template for creating a new monster button.
  * @author Farzad and Daniel
  */
 @SuppressWarnings("serial")
@@ -12,28 +13,27 @@ public class MonsterButton extends JButton {
 
 	private HealthBar healthBar;
 	private SpriteLabel spriteLabel;
-	private MonsterLabel monsterLabel;
+	protected PurchasableLabel purchasableLabel;
 	
 	/**
-	 * Create a new monster panel.
-	 * The panel consists of a monster button and health bar.
+	 * Create a new monster button.
 	 * @param monster the given monster
 	 * @param xPos the given x position
 	 * @param yPos the given y position
 	 */
 	public MonsterButton(Monster monster, int xPos, int yPos) {
 		super();
-		setBounds(xPos, yPos, 160, 150);
+		setBounds(xPos, yPos, 160, 120);
 		setLayout(null);
 		
-		healthBar = new HealthBar(monster, 0, 120);
+		healthBar = new HealthBar(monster, 0, 90);
 		add(healthBar);
 		
-		spriteLabel = new SpriteLabel(monster, 0, 30);
-		add(spriteLabel);
+		purchasableLabel = new PurchasableLabel((Purchasable) monster, 0, 0);
+		add(purchasableLabel);
 		
-		monsterLabel = new MonsterLabel(monster, 0, 0);
-		add(monsterLabel);
+		spriteLabel = new SpriteLabel((Purchasable) monster, 0, 0);
+		add(spriteLabel);
 	}
 	
 }
