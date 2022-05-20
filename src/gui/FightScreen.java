@@ -146,28 +146,28 @@ public class FightScreen {
 	 */
 	public void refreshMonsters() {
 		playerPanel = new JPanel();
-		playerPanel.setBounds(20, 370, 744, 120);
+		playerPanel.setBounds(20, 340, 744, 150);
 		window.getContentPane().add(playerPanel);
 		playerPanel.setLayout(null);
 		
 		int xPos = 7;
 		for (Monster monster : game.getPlayer().getMonsters()) {
-			MonsterPanel monsterPanel = new MonsterPanel(monster, xPos, 0);
-			playerPanel.add(monsterPanel);
+			MonsterButton monsterButton = new MonsterButton(monster, xPos, 0);
+			playerPanel.add(monsterButton);
 			xPos += 190;
 		}
 		playerPanel.revalidate();
 		playerPanel.repaint();
 		
 		enemyPanel = new JPanel();
-		enemyPanel.setBounds(20, 90, 744, 120);
+		enemyPanel.setBounds(20, 90, 744, 150);
 		window.getContentPane().add(enemyPanel);
 		enemyPanel.setLayout(null);
 		
 		xPos = 7;
 		for (Monster monster : battle.getMonsters()) {
-			MonsterPanel monsterPanel = new MonsterPanel(monster, xPos, 0);
-			enemyPanel.add(monsterPanel);
+			MonsterButton monsterButton = new MonsterButton(monster, xPos, 0);
+			enemyPanel.add(monsterButton);
 			xPos += 190;
 		}
 		enemyPanel.revalidate();

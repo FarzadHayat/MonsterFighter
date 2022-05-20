@@ -26,7 +26,7 @@ public class StartingMonsterScreen {
 	private MonsterInventory allMonsters;
 	private Player player;
 	private Monster selected;
-	private JButton selectedButton;
+	private MonsterButton selectedButton;
 	
 	
 	/**

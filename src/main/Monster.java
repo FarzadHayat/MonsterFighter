@@ -1,12 +1,20 @@
 package main;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import exceptions.InsufficientFundsException;
 import exceptions.InvalidTargetException;
 import exceptions.InvalidValueException;
 import exceptions.InventoryFullException;
 import exceptions.StatMaxedOutException;
+import gui.MonsterButton;
 
 /**
  * An abstract class that describes a monster.
@@ -35,6 +43,8 @@ public abstract class Monster {
 	
 	private boolean isFainted = false;
 
+	private ImageIcon sprite;
+	
 	protected GameEnvironment game;
 	protected Player player;
 	private Shop shop;
@@ -76,6 +86,8 @@ public abstract class Monster {
 		this.game = game;
 		player = game.getPlayer();
 		shop = game.getShop();
+		setSprite(new ImageIcon(Monster.class.getResource(
+				"/resources/%s.png".formatted(name.replaceAll(" ", "")))));
 	}
 	
 	
@@ -366,11 +378,29 @@ public abstract class Monster {
     }
     
     
+    /**
+     * Get the value of sprite
+     * @return the value of sprite
+     */
+    public ImageIcon getSprite() {
+    	return sprite;
+    }
+    
+    
+    /**
+     * Set the value of sprite
+     * @param sprite the new value of sprite
+     */
+    public void setSprite(ImageIcon sprite) {
+    	this.sprite = sprite;
+    }
+    
+    
 	/**
 	 * Functional 
 	 */
-    
-    /**
+
+	/**
 	 * Sets the maximum level of the monster to a value based on the difficulty given 
 	 * @param difficulty given Difficulty value 
 	 */
