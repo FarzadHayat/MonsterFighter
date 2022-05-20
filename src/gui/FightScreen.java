@@ -145,31 +145,19 @@ public class FightScreen {
 	 * Refresh the monster buttons to update their health.
 	 */
 	public void refreshMonsters() {
-		playerPanel = new JPanel();
+		playerPanel = new MonstersPanel(game.getPlayer().getMonsters(), 22, 0, 4);
 		playerPanel.setBounds(20, 370, 744, 120);
 		window.getContentPane().add(playerPanel);
 		playerPanel.setLayout(null);
 		
-		int xPos = 7;
-		for (Monster monster : game.getPlayer().getMonsters()) {
-			MonsterButton monsterButton = new MonsterButton(monster, xPos, 0);
-			playerPanel.add(monsterButton);
-			xPos += 190;
-		}
 		playerPanel.revalidate();
 		playerPanel.repaint();
 		
-		enemyPanel = new JPanel();
+		enemyPanel = new MonstersPanel(battle.getMonsters(), 22, 0, 4);
 		enemyPanel.setBounds(20, 90, 744, 120);
 		window.getContentPane().add(enemyPanel);
 		enemyPanel.setLayout(null);
 		
-		xPos = 7;
-		for (Monster monster : battle.getMonsters()) {
-			MonsterButton monsterButton = new MonsterButton(monster, xPos, 0);
-			enemyPanel.add(monsterButton);
-			xPos += 190;
-		}
 		enemyPanel.revalidate();
 		enemyPanel.repaint();
 	}

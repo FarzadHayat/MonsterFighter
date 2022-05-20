@@ -136,7 +136,7 @@ public class ItemScreen {
 		btnSell.setBounds(631, 453, 119, 44);
 		window.getContentPane().add(btnSell);
 		
-		JPanel monstersPanel = new JPanel();
+		MonstersPanel monstersPanel = new MonstersPanel(monsters, 220, 80, 2);
 		monstersPanel.setLayout(null);
 		monstersPanel.setBounds(10, 87, 766, 465);
 		window.getContentPane().add(monstersPanel);
@@ -150,15 +150,21 @@ public class ItemScreen {
 		txtDescription.setText(item.getDescription());
 		txtDescription.setBackground(null);
 		
-		if(!monsters.isEmpty()) {
-			int yPos = 100;
-			int xPos = 215;
-			int numButton = 1;
-			for (Monster monster : monsters) {
-				MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
-				if (monster.getName().length() > 10) {				
-					monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
-				}
+		if(monsters.isEmpty()) {
+			JLabel txtNoMonster = new JLabel();
+			txtNoMonster.setVerticalAlignment(SwingConstants.TOP);
+			txtNoMonster.setText((String) null);
+			txtNoMonster.setHorizontalAlignment(SwingConstants.CENTER);
+			txtNoMonster.setFont(new Font("Tahoma", Font.PLAIN, 17));
+			txtNoMonster.setBackground((Color) null);
+			txtNoMonster.setBounds(226, 107, 325, 85);
+			txtNoMonster.setText("No monster in player's inventory!");
+			monstersPanel.add(txtNoMonster);
+		}
+		else {
+			for (int i = 0; i < monsters.size(); i++) {
+				Monster monster = monsters.get(i);
+				MonsterButton monsterButton = (MonsterButton) monstersPanel.getComponent(i);
 				monsterButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						selectedMonster = monster;
@@ -169,25 +175,7 @@ public class ItemScreen {
 						selectedButton.setBackground(Color.lightGray);
 					}
 				});
-				monstersPanel.add(monsterButton);
-				xPos += 190;
-				numButton++;
-				if(numButton == 3) {
-					yPos += 120;
-					xPos = 215;
-				}
 			}
-		}
-		else {
-			JLabel txtNoMonster = new JLabel();
-			txtNoMonster.setVerticalAlignment(SwingConstants.TOP);
-			txtNoMonster.setText((String) null);
-			txtNoMonster.setHorizontalAlignment(SwingConstants.CENTER);
-			txtNoMonster.setFont(new Font("Tahoma", Font.PLAIN, 17));
-			txtNoMonster.setBackground((Color) null);
-			txtNoMonster.setBounds(226, 107, 325, 85);
-			txtNoMonster.setText("No monster in player's inventory!");
-			monstersPanel.add(txtNoMonster);
 		}
 		
 	}

@@ -101,76 +101,76 @@ public class ShopScreen {
 		});
 		window.getContentPane().add(backButton);
 		
-		JPanel monsterPanel = new JPanel();
-		monsterPanel.setBounds(10, 182, 766, 319);
-		window.getContentPane().add(monsterPanel);
-		monsterPanel.setLayout(null);
+		MonstersPanel monstersPanel = new MonstersPanel(shopMonsters, 10, 60, 2);
+		monstersPanel.setBounds(10, 182, 766, 320);
+		window.getContentPane().add(monstersPanel);
+		monstersPanel.setLayout(null);
 		
 		JLabel lblStats = new JLabel("<html><u>Stats</u></html>");
 		lblStats.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStats.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblStats.setBounds(513, 0, 151, 40);
-		monsterPanel.add(lblStats);
+		monstersPanel.add(lblStats);
 		
 		JLabel lblHealth = new JLabel("Health :");
 		lblHealth.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHealth.setBounds(453, 37, 121, 40);
-		monsterPanel.add(lblHealth);
+		monstersPanel.add(lblHealth);
 		
 		JLabel lblHealthValue = new JLabel("");
 		lblHealthValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHealthValue.setBounds(607, 37, 121, 40);
-		monsterPanel.add(lblHealthValue);
+		monstersPanel.add(lblHealthValue);
 		
 		JLabel lblDamage = new JLabel("Damage :");
 		lblDamage.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDamage.setBounds(453, 88, 121, 40);
-		monsterPanel.add(lblDamage);
+		monstersPanel.add(lblDamage);
 		
 		JLabel lblDamageValue = new JLabel("");
 		lblDamageValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDamageValue.setBounds(607, 83, 121, 40);
-		monsterPanel.add(lblDamageValue);
+		monstersPanel.add(lblDamageValue);
 		
 		JLabel lblLevel = new JLabel("Level :");
 		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblLevel.setBounds(453, 139, 121, 40);
-		monsterPanel.add(lblLevel);
+		monstersPanel.add(lblLevel);
 		
 		JLabel lblHealAmount = new JLabel("Heal amount :");
 		lblHealAmount.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHealAmount.setBounds(453, 184, 136, 40);
-		monsterPanel.add(lblHealAmount);
+		monstersPanel.add(lblHealAmount);
 		
 		JLabel lblHealValue = new JLabel("");
 		lblHealValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHealValue.setBounds(607, 184, 121, 40);
-		monsterPanel.add(lblHealValue);
+		monstersPanel.add(lblHealValue);
 		
 		JLabel lblLevelValue = new JLabel("");
 		lblLevelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblLevelValue.setBounds(607, 139, 121, 40);
-		monsterPanel.add(lblLevelValue);
+		monstersPanel.add(lblLevelValue);
 		
 		JLabel lblCritRate = new JLabel("Critical rate :");
 		lblCritRate.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCritRate.setBounds(453, 236, 121, 40);
-		monsterPanel.add(lblCritRate);
+		monstersPanel.add(lblCritRate);
 		
 		JLabel lblCritValue = new JLabel("");
 		lblCritValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCritValue.setBounds(607, 236, 121, 40);
-		monsterPanel.add(lblCritValue);
+		monstersPanel.add(lblCritValue);
 		
 		JLabel lblCost = new JLabel("Cost :");
 		lblCost.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCost.setBounds(453, 281, 121, 40);
-		monsterPanel.add(lblCost);
+		monstersPanel.add(lblCost);
 		
 		JLabel lblCostValue = new JLabel("");
 		lblCostValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCostValue.setBounds(607, 281, 121, 40);
-		monsterPanel.add(lblCostValue);
+		monstersPanel.add(lblCostValue);
 		
 		JLabel lblBalance = new JLabel("Balance: ");
 		lblBalance.setBounds(20, 78, 71, 40);
@@ -226,25 +226,25 @@ public class ShopScreen {
 		btnBuy.setBounds(631, 508, 119, 44);
 		window.getContentPane().add(btnBuy);
 		
-		JPanel itemPanel = new JPanel();
-		itemPanel.setBounds(10, 182, 766, 319);
-		window.getContentPane().add(itemPanel);
-		itemPanel.setLayout(null);
+		ItemsPanel itemsPanel = new ItemsPanel(shopItems, 10, 60, 2);
+		itemsPanel.setBounds(10, 182, 766, 320);
+		window.getContentPane().add(itemsPanel);
+		itemsPanel.setLayout(null);
 		
 		JLabel lblDescription = new JLabel("Description:");
 		lblDescription.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDescription.setBounds(452, 22, 134, 21);
-		itemPanel.add(lblDescription);
+		itemsPanel.add(lblDescription);
 		
 		JLabel lblCostItem = new JLabel("Cost:");
 		lblCostItem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCostItem.setBounds(452, 110, 92, 21);
-		itemPanel.add(lblCostItem);
+		itemsPanel.add(lblCostItem);
 		
 		JLabel lblCostItemValue = new JLabel("");
 		lblCostItemValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblCostItemValue.setBounds(452, 138, 92, 21);
-		itemPanel.add(lblCostItemValue);
+		itemsPanel.add(lblCostItemValue);
 		
 		JTextArea txtDescription = new JTextArea();
 		txtDescription.setWrapStyleWord(true);
@@ -253,16 +253,11 @@ public class ShopScreen {
 		txtDescription.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		txtDescription.setBackground(null);
 		txtDescription.setBounds(452, 50, 304, 56);
-		itemPanel.add(txtDescription);
-						
-		int xPos = 10;
-		int yPos = 60;
-		int numButton = 1;
-		for(int i = 0; i < shopMonsters.getMaxSize(); i++) {
+		itemsPanel.add(txtDescription);
+
+		for (int i = 0; i < shopMonsters.size(); i++) {
 			Monster monster = shopMonsters.get(i);
-			Item item = shopItems.get(i);
-			ItemButton itemButton = new ItemButton(item, xPos, yPos);
-			MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
+			MonsterButton monsterButton = (MonsterButton) monstersPanel.getComponent(i);
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedMonster = monster;
@@ -279,6 +274,11 @@ public class ShopScreen {
 					lblCostValue.setText("$"+selectedMonster.getCost());
 				}
 			});
+		}
+		
+		for (int i = 0; i < shopItems.size(); i++) {
+			Item item = shopItems.get(i);
+			ItemButton itemButton = (ItemButton) itemsPanel.getComponent(i);
 			itemButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedItem = item;
@@ -291,14 +291,6 @@ public class ShopScreen {
 					lblCostItemValue.setText("$"+selectedItem.getCost());
 				}
 			});
-			monsterPanel.add(monsterButton);
-			itemPanel.add(itemButton);
-			xPos += 190;
-			numButton += 1;
-			if(numButton == 3) {
-				yPos += 140;
-				xPos = 10;
-			}
 		}
 		
 		JButton btnItemSelection = new JButton("Items");
@@ -310,8 +302,8 @@ public class ShopScreen {
 				selected = 1;
 				selectedShop = btnItemSelection;
 				selectedShop.setBackground(Color.lightGray);
-				itemPanel.setVisible(true);
-				monsterPanel.setVisible(false);
+				itemsPanel.setVisible(true);
+				monstersPanel.setVisible(false);
 			}
 		});
 		
@@ -326,8 +318,8 @@ public class ShopScreen {
 				selected = 0;
 				selectedShop = btnMonsterSelection;
 				selectedShop.setBackground(Color.lightGray);
-				itemPanel.setVisible(false);
-				monsterPanel.setVisible(true);
+				itemsPanel.setVisible(false);
+				monstersPanel.setVisible(true);
 			}
 		});
 		

@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import java.awt.Font;
 
 import main.*;
+import monsters.Chunky;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
@@ -127,46 +129,36 @@ public class HomeScreen {
 		statsButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		generalPanel.add(statsButton);
 
-		JPanel monstersPanel = new JPanel();
-		monstersPanel.setBounds(0, 20, 180, 410);
-		window.getContentPane().add(monstersPanel);
+		MonstersPanel monstersPanel = new MonstersPanel(monsters, 0, 0, 1);
 		monstersPanel.setLayout(null);
-		
-		int yPos = 10;
-		for (Monster monster : monsters) {
-			MonsterButton monsterButton = new MonsterButton(monster, 10, yPos);
-			if (monster.getName().length() > 10) {				
-				monsterButton.setText("<html><center>" + monster.getName().replaceFirst(" ", "<br>") + "</centre></html>");
-			}
+		monstersPanel.setBounds(0, 10, 180, 540);
+		window.getContentPane().add(monstersPanel);
+
+		for (int i = 0; i < monsters.size(); i++) {
+			Monster monster = monsters.get(i);
+			MonsterButton monsterButton = (MonsterButton) monstersPanel.getComponent(i);
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					gui.launchMonsterScreen(monster);
 					finishedWindow();
 				}
 			});
-			monstersPanel.add(monsterButton);
-			yPos += 100;
 		}
 		
-		JPanel itemsPanel = new JPanel();
-		itemsPanel.setBounds(45, 450, 690, 110);
+		ItemsPanel itemsPanel = new ItemsPanel(items, 0, 0, 4);
+		itemsPanel.setBounds(45, 440, 700, 120);
 		window.getContentPane().add(itemsPanel);
 		itemsPanel.setLayout(null);
 		
-		int xPos = 10;
-		for (Item item : items) {
-			ItemButton itemButton = new ItemButton(item, xPos, 10);
-			if (item.getName().length() > 10) {
-				itemButton.setText("<html><center>" + item.getName().replaceFirst(" ", "<br>") + "</centre></html>");
-			}
+		for (int i = 0; i < items.size(); i++) {
+			Item item = items.get(i);
+			ItemButton itemButton = (ItemButton) itemsPanel.getComponent(i);
 			itemButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					gui.launchItemScreen(item);
 					finishedWindow();
 				}
 			});
-			itemsPanel.add(itemButton);
-			xPos += 170;
 		}
 	}
 }

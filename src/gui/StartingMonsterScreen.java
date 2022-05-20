@@ -75,11 +75,6 @@ public class StartingMonsterScreen {
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(202, 35, 376, 50);
 		window.getContentPane().add(titleLabel);
-		
-		JPanel monstersPanel = new JPanel();
-		monstersPanel.setLayout(null);
-		monstersPanel.setBounds(10, 113, 390, 428);
-		window.getContentPane().add(monstersPanel);
 				
 		JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(null);
@@ -158,18 +153,21 @@ public class StartingMonsterScreen {
 		btnNext.setBounds(237, 380, 119, 44);
 		statsPanel.add(btnNext);
 		
-		int yPos = 20;
-		int xPos = 10;
-		int numButton = 1;
-		for(Monster monster: allMonsters) {
-			MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
+		MonstersPanel monstersPanel = new MonstersPanel(allMonsters, 20, 20, 2);
+		monstersPanel.setLayout(null);
+		monstersPanel.setBounds(10, 113, 390, 428);
+		window.getContentPane().add(monstersPanel);
+		
+		for (int i = 0; i < allMonsters.size(); i++) {
+			Monster monster = allMonsters.get(i);
+			MonsterButton monsterButton = (MonsterButton) monstersPanel.getComponent(i);
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selected = monster;
 					if(selectedButton != null) {
 						selectedButton.setBackground(null);
 					}
-					selectedButton = monsterButton;
+					selectedButton = monsterButton ;
 					selectedButton.setBackground(Color.lightGray);
 					lblHealthValue.setText(""+ selected.getHealth());
 					lblDamageValue.setText(""+ selected.getDamage());
@@ -178,14 +176,36 @@ public class StartingMonsterScreen {
 					lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
 				}
 			});
-			monstersPanel.add(monsterButton);
-			numButton += 1;
-			yPos += 140;
-			if(numButton == 4) {
-				yPos = 20;
-				xPos += 200;
-			}
 		}
+		
+//		int yPos = 20;
+//		int xPos = 10;
+//		int numButton = 1;
+//		for(Monster monster: allMonsters) {
+//			MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
+//			monsterButton.addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent e) {
+//					selected = monster;
+//					if(selectedButton != null) {
+//						selectedButton.setBackground(null);
+//					}
+//					selectedButton = monsterButton;
+//					selectedButton.setBackground(Color.lightGray);
+//					lblHealthValue.setText(""+ selected.getHealth());
+//					lblDamageValue.setText(""+ selected.getDamage());
+//					lblLevelValue.setText(""+ selected.getLevel());
+//					lblHealValue.setText(""+ selected.getHealAmount());
+//					lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
+//				}
+//			});
+//			monstersPanel.add(monsterButton);
+//			numButton += 1;
+//			yPos += 140;
+//			if(numButton == 4) {
+//				yPos = 20;
+//				xPos += 200;
+//			}
+//		}
 		
 	}
 

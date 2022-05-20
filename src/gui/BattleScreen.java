@@ -102,22 +102,20 @@ public class BattleScreen {
 		});
 		window.getContentPane().add(backButton);
 		
-		JPanel monstersPanel = new JPanel();
-		monstersPanel.setBounds(20, 105, 360, 440);
-		window.getContentPane().add(monstersPanel);
+		MonstersPanel monstersPanel = new MonstersPanel(monsters, 10, 20, 2);
 		monstersPanel.setLayout(null);
+		monstersPanel.setBounds(20, 150, 360, 440);
+		window.getContentPane().add(monstersPanel);
 		
-		int yPos = 20;
-		for (Monster monster : monsters) {
-			MonsterButton monsterButton = new MonsterButton(monster, 100, yPos);
+		for (int i = 0; i < monsters.size(); i++) {
+			Monster monster = monsters.get(i);
+			MonsterButton monsterButton = (MonsterButton) monstersPanel.getComponent(i);
 			monsterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					selectedMonster = monster;
 					updateStatsPanel(monsterButton);
 				}
 			});
-			monstersPanel.add(monsterButton);
-			yPos += 100;
 		}
 		
 		JPanel statsPanel = new JPanel();

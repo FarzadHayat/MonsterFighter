@@ -158,7 +158,7 @@ abstract public class Item implements Purchasable {
      */
     public String buy() throws InsufficientFundsException, InvalidValueException, InventoryFullException {
     	if (player.getItems().isFull()) {
-    		throw new InventoryFullException("Item inventory is full");
+    		throw new InventoryFullException("Item inventory is full!");
     	}
     	else {    		
     		player.minusBalance(cost);
