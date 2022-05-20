@@ -9,24 +9,14 @@ import java.awt.Font;
 import main.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JSlider;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import java.awt.EventQueue;
-
-import javax.swing.border.MatteBorder;
-import javax.swing.border.TitledBorder;
-
 import exceptions.InvalidValueException;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JScrollBar;
 
 /**
  * Displays the setup screen in a new window.

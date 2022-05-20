@@ -25,7 +25,6 @@ public class MonsterScreen {
 	private JFrame window;
 	private GraphicalUserInterface gui;
 	
-	private GameEnvironment game;
 	private Monster monster;
 	
 	
@@ -53,7 +52,6 @@ public class MonsterScreen {
 	public MonsterScreen(GraphicalUserInterface gui, Monster monster) {
 		this.monster = monster;
 		this.gui = gui;
-		game = gui.getGame();
 		initialize();
 		window.setVisible(true);
 	}

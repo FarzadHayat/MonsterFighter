@@ -7,8 +7,6 @@ import javax.swing.JButton;
 import java.awt.Font;
 
 import main.*;
-import monsters.Chunky;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
@@ -77,22 +75,8 @@ public class HomeScreen {
 		titleLabel.setBounds(250, 20, 300, 50);
 		window.getContentPane().add(titleLabel);
 		
-		JButton sleepButton = new JButton("Sleep");
-		sleepButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				gui.launchSleepAlert();
-				if (!game.getIsFinished()) {
-					gui.launchHomeScreen();
-				}
-				finishedWindow();				
-			}
-		});
-		sleepButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		sleepButton.setBounds(650, 30, 100, 30);
-		window.getContentPane().add(sleepButton);
-		
 		JPanel generalPanel = new JPanel();
-		generalPanel.setBounds(300, 100, 200, 300);
+		generalPanel.setBounds(300, 100, 200, 340);
 		window.getContentPane().add(generalPanel);
 		generalPanel.setLayout(null);
 		
@@ -129,9 +113,23 @@ public class HomeScreen {
 		statsButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		generalPanel.add(statsButton);
 
+		JButton sleepButton = new JButton("Sleep");
+		sleepButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gui.launchSleepAlert();
+				if (!game.getIsFinished()) {
+					gui.launchHomeScreen();
+				}
+				finishedWindow();				
+			}
+		});
+		sleepButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		sleepButton.setBounds(30, 280, 140, 50);
+		generalPanel.add(sleepButton);
+
 		MonstersPanel monstersPanel = new MonstersPanel(monsters, 0, 0, 1);
 		monstersPanel.setLayout(null);
-		monstersPanel.setBounds(0, 10, 180, 540);
+		monstersPanel.setBounds(0, 10, 160, 540);
 		window.getContentPane().add(monstersPanel);
 
 		for (int i = 0; i < monsters.size(); i++) {
@@ -145,8 +143,8 @@ public class HomeScreen {
 			});
 		}
 		
-		ItemsPanel itemsPanel = new ItemsPanel(items, 0, 0, 4);
-		itemsPanel.setBounds(45, 440, 700, 120);
+		ItemsPanel itemsPanel = new ItemsPanel(items, 0, 0, 1);
+		itemsPanel.setBounds(626, 10, 160, 540);
 		window.getContentPane().add(itemsPanel);
 		itemsPanel.setLayout(null);
 		

@@ -2,7 +2,6 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import exceptions.NotFoundException;
@@ -10,12 +9,10 @@ import exceptions.NotFoundException;
 import javax.swing.JButton;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 
 import main.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 

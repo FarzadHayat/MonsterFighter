@@ -6,7 +6,6 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 
 import main.*;
-import java.awt.EventQueue;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;

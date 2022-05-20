@@ -14,7 +14,6 @@ import java.awt.Font;
 import main.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import java.awt.Color;
 
