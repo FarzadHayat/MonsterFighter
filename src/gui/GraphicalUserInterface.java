@@ -56,7 +56,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given StatsScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param statsWindow the given statsWindow
 	 */
 	public void closeStatsScreen(StatsScreen statsWindow) {
 		statsWindow.closeWindow();
@@ -73,7 +73,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given ShopScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param shopWindow the given shopWindow
 	 */
 	public void closeShopScreen(ShopScreen shopWindow) {
 		shopWindow.closeWindow();
@@ -90,7 +90,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given BattlesScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param battlesWindow the given battlesWindow
 	 */
 	public void closeBattlesScreen(BattlesScreen battlesWindow) {
 		battlesWindow.closeWindow();
@@ -107,7 +107,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given BattleScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param battleWindow the given battleWindow
 	 */
 	public void closeBattleScreen(BattleScreen battleWindow) {
 		battleWindow.closeWindow();
@@ -116,6 +116,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Launch a new MonsterScreen.
+	 * @param monster the given monster
 	 */
 	public void launchMonsterScreen(Monster monster) {
 		new MonsterScreen(this, monster);
@@ -124,7 +125,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given MonsterScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param monsterWindow the given monsterWindow
 	 */
 	public void closeMonsterScreen(MonsterScreen monsterWindow) {
 		monsterWindow.closeWindow();
@@ -141,7 +142,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given ItemScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param itemWindow the given itemWindow
 	 */
 	public void closeItemScreen(ItemScreen itemWindow) {
 		itemWindow.closeWindow();
@@ -158,7 +159,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given SetupScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param setupWindow the given setupWindow
 	 */
 	public void closeSetupScreen(SetupScreen setupWindow) {
 		setupWindow.closeWindow();
@@ -175,7 +176,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given StartScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param startWindow the given startWindow
 	 */
 	public void closeStartScreen(StartScreen startWindow) {
 		startWindow.closeWindow();
@@ -192,7 +193,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given StartingMonsterScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param startMonsterWindow the given startMonsterWindow
 	 */
 	public void closeStartingMonsterScreen(StartingMonsterScreen startMonsterWindow) {
 		startMonsterWindow.closeWindow();
@@ -201,6 +202,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Launch a new FightScreen.
+	 * @param battle the given battle
 	 */
 	public void launchFightScreen(Battle battle) {
 		new FightScreen(this, battle);
@@ -209,7 +211,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Close the given FightScreen.
-	 * @param homeWindow the given homeWindow
+	 * @param fightWindow the given fightWindow
 	 */
 	public void closeFightScreen(FightScreen fightWindow) {
 		fightWindow.closeWindow();
@@ -218,7 +220,7 @@ public class GraphicalUserInterface {
 	
 	/**
 	 * Run the GUI game.
-	 * @param args
+	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {
 		GraphicalUserInterface gui = new GraphicalUserInterface();

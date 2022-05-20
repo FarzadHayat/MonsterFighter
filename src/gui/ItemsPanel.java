@@ -12,13 +12,18 @@ import main.ItemInventory;
 @SuppressWarnings("serial")
 public class ItemsPanel extends JPanel {
 
+	/**
+	 * Fields
+	 */
 	private int verticalPadding = 20;
 	private int horizontalPadding = 20;
 	
 	/**
 	 * Create a new items panel.
 	 * @param items the given items
-	 * @param actionListener the given actionListener
+	 * @param xStart the starting x position
+	 * @param yStart the starting y position
+	 * @param numColumns the number of columns in the panel
 	 */
 	public ItemsPanel(ItemInventory items, int xStart, int yStart, int numColumns) {
 		super();

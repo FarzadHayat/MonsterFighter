@@ -12,13 +12,18 @@ import main.MonsterInventory;
 @SuppressWarnings("serial")
 public class MonstersPanel extends JPanel {
 
+	/**
+	 * Fields
+	 */
 	private int verticalPadding = 20;
 	private int horizontalPadding = 20;
 	
 	/**
 	 * Create a new monsters panel.
 	 * @param monsters the given monsters
-	 * @param actionListener the given actionListener
+	 * @param xStart the starting x position
+	 * @param yStart the starting y position
+	 * @param numColumns the number of columns in the panel
 	 */
 	public MonstersPanel(MonsterInventory monsters, int xStart, int yStart, int numColumns) {
 		super();

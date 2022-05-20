@@ -11,9 +11,12 @@ import main.Purchasable;
 @SuppressWarnings("serial")
 public class MonsterButton extends JButton {
 
+	/**
+	 * Fields
+	 */
 	private HealthBar healthBar;
 	private SpriteLabel spriteLabel;
-	protected PurchasableLabel purchasableLabel;
+	private PurchasableLabel purchasableLabel;
 	
 	/**
 	 * Create a new monster button.

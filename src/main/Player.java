@@ -23,7 +23,7 @@ public class Player {
      * Constructors
      */
     
-    /*
+    /**
      * Create a new Player object.
      * @param game the given game
      */
@@ -49,7 +49,7 @@ public class Player {
     /**
      * Set the value of balance
      * @param balance the new value of balance
-     * @throws InvalidValueException 
+     * @throws InvalidValueException if the value is negative
      */
     public void setBalance (int balance) throws InvalidValueException {
     	if (0 > balance) {
@@ -73,7 +73,7 @@ public class Player {
     /**
      * Set the value of name
      * @param name the new value of name
-     * @throws InvalidValueException 
+     * @throws InvalidValueException if the name is not valid
      */
     public void setName (String name) throws InvalidValueException {
     	name = name.strip();

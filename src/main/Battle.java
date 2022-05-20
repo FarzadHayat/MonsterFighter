@@ -306,8 +306,8 @@ public class Battle {
      * Checks the player team before the game to make sure they have at least one non fainted monster.
      * Checks the status of the battle after each turn.
      * Stop when one team's monsters have all fainted.
-     * @param result the commentary of the battle
      * @throws NotFoundException if the player has no non fainted monsters in their team
+     * @return the commentary of the battle
      */
     public String play() throws NotFoundException {
     	setup();
@@ -325,7 +325,7 @@ public class Battle {
      * checks the status of the battle.
      * If the player's monsters have all fainted, then the player loses.
      * If the enemy's monsters have all fainted, then the player wins.
-     * @result result the commentary of the battle's outcome
+     * @return the commentary of the battle's outcome
      */
     public String checkStatus() {
     	String result = "";

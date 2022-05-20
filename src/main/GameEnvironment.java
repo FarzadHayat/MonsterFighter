@@ -85,7 +85,7 @@ public class GameEnvironment {
     /**
      * Set the value of numDays
      * @param numDays the new value of numDays
-     * @throws InvalidValueException 
+     * @throws InvalidValueException if the value is not in the valid range
      */
     public void setNumDays (int numDays) throws InvalidValueException {
     	if (5 <= numDays && numDays <= 15) {

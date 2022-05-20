@@ -10,6 +10,9 @@ import javax.swing.JButton;
 @SuppressWarnings("serial")
 public class BackButton extends JButton {
 
+	/**
+	 * Fields
+	 */
 	private int xPos = 650;
 	private int yPos = 30;
 	

@@ -841,7 +841,7 @@ public class CommandLine {
     
     /**
      * the main call to start the command line game
-     * @param args 
+     * @param args the command line arguments
      */
     public static void main(String[] args) {
     	new CommandLine();

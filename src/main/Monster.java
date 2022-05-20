@@ -92,7 +92,7 @@ public abstract class Monster implements Purchasable {
 	/**
 	 * Checks if given string passes the criteria and sets the name of the monster 
 	 * @param name the new value of name 
-	 * @throws InvalidValueException 
+	 * @throws InvalidValueException if the name is not valid
 	 */
 	public void setName(String name) throws InvalidValueException {
 		name = name.strip();
@@ -455,6 +455,7 @@ public abstract class Monster implements Purchasable {
 	 * Damage to deal is calulated in finalDamage method
      * @param other given Monster object 
 	 * @throws InvalidValueException if given Monster object is fainted 
+	 * @throws InvalidTargetException if the target is fainted
 	 * @return damageDealt the final damage dealt to the given Monster object
      */
 	public int attack(Monster other) throws InvalidValueException, InvalidTargetException {

@@ -50,6 +50,7 @@ public class FightScreen {
 	/**
 	 * Create a new FightScreen object.
 	 * @param gui the given gui
+	 * @param battle the given battle
 	 */
 	public FightScreen(GraphicalUserInterface gui, Battle battle) {
 		this.gui = gui;

@@ -12,8 +12,11 @@ import main.Purchasable;
 @SuppressWarnings("serial")
 public class ItemButton extends JButton {
 
+	/**
+	 * Fields
+	 */
 	private SpriteLabel spriteLabel;
-	protected PurchasableLabel purchasableLabel;
+	private PurchasableLabel purchasableLabel;
 	
 	/**
 	 * Create a new item button.

@@ -48,7 +48,7 @@ public class HealthPotion extends Item {
 	
 	/**
 	 * Set the value of healAmount
-	 * @param healAmount the new value of healAmount
+	 * @param healthIncrease the new value of healthIncrease
 	 */
 	public static void setHealAmount(int healthIncrease) {
 		HealthPotion.healAmount = healthIncrease;

@@ -152,6 +152,7 @@ public class Raka extends Monster {
      * Heals given Monster object
      * @param other given Monster object
      * @throws InvalidValueException if heal amount is negative or zero
+     * @throws InvalidTargetException if the target is fainted
      */
     public void healAllies(Monster other) throws InvalidTargetException, InvalidValueException {
     	if(!other.getIsFainted()) {
