@@ -28,6 +28,7 @@ class ScoreTest {
 	 */
     @BeforeEach
     void setUp() throws Exception {
+    	game.setScoreSystem(new Score());
     	scoreSystem = game.getScoreSystem();
     }
 
@@ -50,6 +51,8 @@ class ScoreTest {
     @Test
     public void testAddBattlesWon2() {
     	//Won 2 battles
+		System.out.println(scoreSystem.getDayBattlesWon());
+
 		scoreSystem.addBattlesWon();
 		scoreSystem.addBattlesWon();
 		assertEquals(2, scoreSystem.getDayBattlesWon());
@@ -117,7 +120,7 @@ class ScoreTest {
     	//Calculate final score plus bonuses
     	//10 battles won and player balance of 100
 		scoreSystem.setTotalBattlesWon(10);
-		assertEquals(3000, scoreSystem.finalScore());
+		assertEquals(2000, scoreSystem.finalScore());
     }
     
     /**
@@ -129,7 +132,7 @@ class ScoreTest {
     public void testAddScore1() throws InvalidValueException {
     	scoreSystem.addScore(1000);
     	assertEquals(1000, scoreSystem.getDayScore());
-    	assertEquals(2000, scoreSystem.getTotalScore());
+    	assertEquals(2000, scoreSystem.finalScore());
     }
     
     /**
@@ -145,7 +148,7 @@ class ScoreTest {
 			assertEquals("Cannot be a negative value!", e.getMessage());
 		}
     	assertEquals(0, scoreSystem.getDayScore());
-    	assertEquals(1000, scoreSystem.getTotalScore());
+    	assertEquals(1000, scoreSystem.finalScore());
     }
 
 }
