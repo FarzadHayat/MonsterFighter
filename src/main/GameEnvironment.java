@@ -33,7 +33,7 @@ public class GameEnvironment {
     
     private boolean isFinished = false;
     
-    private int passiveIncome = 20;
+    private int passiveIncome = 50;
     private int easyScore = 1000;
     private int normalScore = 2000;
     private int hardScore = 3000;
