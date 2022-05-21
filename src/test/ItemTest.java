@@ -171,8 +171,66 @@ class ItemTest {
 	 * @result correct string is returned without any errors
 	 */
 	@Test
-	public void testView() {
+	public void testView1() {
 		Item testItem = new HealthPotion();
+		String myStr = testItem.view();
+		
+		String result = "";
+    	if (game.getShop().getItems().contains(testItem)) {
+    		result += String.format("\nBalance: %s\n\n", player.getBalance());
+    	}
+    	result += "Item: " + testItem.getName() + "\n";
+    	result += testItem.getDescription() + "\n";
+    	result += "Cost: " + testItem.getCost() + "\n";
+    	if (player.getItems().contains(testItem)) {
+    		result += "\n1: Use";
+    		result += "\n2: Sell";
+    		result += "\n3: Go back";
+    	}
+    	if (game.getShop().getItems().contains(testItem)) {    		
+    		result += "\n1: Buy";
+    		result += "\n2: Go back";
+    	}
+    	assertEquals(result, myStr);
+	}
+	
+	/**
+	 * Checks string representation of view option (in shop)
+	 * @result correct string is returned without any errors
+	 */
+	@Test
+	public void testView2() {
+		Item testItem = new HealthPotion();
+		shop.getItems().add(testItem);
+		String myStr = testItem.view();
+		
+		String result = "";
+    	if (game.getShop().getItems().contains(testItem)) {
+    		result += String.format("\nBalance: %s\n\n", player.getBalance());
+    	}
+    	result += "Item: " + testItem.getName() + "\n";
+    	result += testItem.getDescription() + "\n";
+    	result += "Cost: " + testItem.getCost() + "\n";
+    	if (player.getItems().contains(testItem)) {
+    		result += "\n1: Use";
+    		result += "\n2: Sell";
+    		result += "\n3: Go back";
+    	}
+    	if (game.getShop().getItems().contains(testItem)) {    		
+    		result += "\n1: Buy";
+    		result += "\n2: Go back";
+    	}
+    	assertEquals(result, myStr);
+	}
+	
+	/**
+	 * Checks string representation of view option (in player's inventory)
+	 * @result correct string is returned without any errors
+	 */
+	@Test
+	public void testView3() {
+		Item testItem = new HealthPotion();
+		player.getItems().add(testItem);
 		String myStr = testItem.view();
 		
 		String result = "";
