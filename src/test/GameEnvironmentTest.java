@@ -3,6 +3,7 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -98,6 +99,8 @@ class GameEnvironmentTest {
 	 */
 	@Test
 	void setupGame() {
+		game.setDifficulty(Difficulty.EASY);
+		game.populateGame();
 		assertEquals(100, player.getBalance());
 		assertEquals(1000, score.getTotalScore());
 	}
@@ -117,15 +120,18 @@ class GameEnvironmentTest {
 		result +="The battles have been randomised.\n";
 		result +="Your monsters have healed.";
     	
-		ArrayList<Monster> shopMonstersBefore = game.getShop().getMonsters();
-		ArrayList<Item> shopItemsBefore = game.getShop().getItems();
-		ArrayList<Battle> battlesBefore = game.getBattles();
+		Object shopMonstersBefore = game.getShop().getMonsters().clone();
+		Object shopItemsBefore = game.getShop().getItems().clone();
+		Object battlesBefore = game.getBattles().clone();
 		
 		Monster testMonster = new Chunky();
 		player.getMonsters().add(testMonster);
 		testMonster.setHealth(10);
 		int healthBefore = testMonster.getHealth();
     	
+		game.setDay(1);
+		game.getRandomEvent().setRandom(new Random(123));
+		
 		assertTrue(game.sleep().contains(result));
 		
 		assertFalse(game.getShop().getMonsters().equals(shopMonstersBefore));
@@ -148,7 +154,7 @@ class GameEnvironmentTest {
 	void testSleep2() {
 		// Game over
 		String result = "\n";
-
+		game.setDay(11);
 		assertEquals(result, game.sleep());
     	assertTrue(game.getIsFinished());
 	}

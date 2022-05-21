@@ -31,6 +31,7 @@ class ItemInventoryTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		game.populateGame();
+		game.getPlayer().setItems(new ItemInventory(4));
 		myItems = game.getPlayer().getItems();
 	}
 	

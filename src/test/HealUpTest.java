@@ -34,6 +34,7 @@ class HealUpTest {
 	void setUp() throws Exception {
 		game.populateGame();
 		player = game.getPlayer();
+		player.setItems(new ItemInventory(4));
 	}
 
 	/**

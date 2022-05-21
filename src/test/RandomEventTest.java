@@ -37,6 +37,7 @@ class RandomEventTest {
 	void setUp() throws Exception {
 		game.populateGame();
 		player = game.getPlayer();
+		player.setMonsters(new MonsterInventory(4));
 		randEvent = new RandomEvent();
 		monster = new Chunky();
 	}
@@ -78,6 +79,7 @@ class RandomEventTest {
 	public void testRandomMonsterLevelUp3() throws StatMaxedOutException {
 		//Monster does not level up
 		randEvent.setRandom(new Random(123));
+		game.getScoreSystem().resetDayBattles();
 		randEvent.randomMonsterLevelUp(monster);
 		assertEquals(1, monster.getLevel());
 	}
@@ -275,6 +277,7 @@ class RandomEventTest {
 		//No monster joins 
 		randEvent.setRandom(new Random(123));
 		player.getMonsters().add(monster);
+		game.getScoreSystem().resetDayBattles();
 		randEvent.runAllRandom();
 		assertEquals(1, monster.getLevel());
 		assertEquals(1, player.getMonsters().size());

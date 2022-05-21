@@ -44,8 +44,8 @@ class ShopTest {
 	 */
 	@Test
 	void testRandomise() {
-		ArrayList<Monster> monstersList = monsters;
-		ArrayList<Item> itemsList = items;
+		Object monstersList = monsters.clone();
+		Object itemsList = items.clone();
 		shop.randomise();
 		assertTrue(monstersList != monsters);
 		assertTrue(itemsList != items);

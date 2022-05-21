@@ -32,6 +32,7 @@ class PlayerTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		player = game.getPlayer();
+		player.setBalance(100);
 	}
 	
 	/**

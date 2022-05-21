@@ -32,6 +32,7 @@ class MonsterInventoryTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		game.populateGame();
+		game.getPlayer().setMonsters(new MonsterInventory(4));
 		myMonsters = game.getPlayer().getMonsters();
 	}
 	
@@ -213,6 +214,7 @@ class MonsterInventoryTest {
 	@Test
 	public void testLevelUpOnDay() throws InventoryFullException, InvalidValueException {
 		game.setDay(3);
+		game.setNumDays(5);
 		game.setDifficulty(Difficulty.EASY);
 
 		Monster testMonster1 = new Chunky();
@@ -220,7 +222,12 @@ class MonsterInventoryTest {
 		Monster testMonster2 = new Chunky();
 		myMonsters.add(testMonster2);
 		
-		myMonsters.levelUpOnDay();
+		System.out.println(game.getNumDays());
+		System.out.println(testMonster1.getMaxLevel());
+		
+		for(int day = 1; day < game.getDay(); day++) {
+			myMonsters.levelUpOnDay();
+		}
 		
 		assertEquals(3, myMonsters.get(0).getLevel());
 		assertEquals(3, myMonsters.get(1).getLevel());
