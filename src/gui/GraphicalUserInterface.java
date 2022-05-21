@@ -1,5 +1,9 @@
 package gui;
 
+import java.awt.Image;
+import java.net.URL;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import main.*;
 
@@ -28,6 +32,10 @@ public class GraphicalUserInterface extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setVisible(true);
+		
+		URL url = getClass().getResource("/resources/Chunky.png");
+		Image image = new ImageIcon(url).getImage();
+		setIconImage(image);
 	}
 	
 	
@@ -60,6 +68,7 @@ public class GraphicalUserInterface extends JFrame {
 	 */
 	public static void main(String[] args) {
 		new StartScreen();
+		instance.getContentPane().repaint();
 	}
 
 	
