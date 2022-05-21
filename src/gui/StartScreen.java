@@ -1,6 +1,5 @@
 package gui;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -10,79 +9,45 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * Displays the start screen in a new window.
+ * Displays the start screen in a new panel.
  * @author Farzad and Daniel
  */
-public class StartScreen {
+@SuppressWarnings("serial")
+public class StartScreen extends Screen {	
 
-	private JFrame window;
-	private GraphicalUserInterface gui;
 	
-	
-	/**
-	 * Closes the window.
-	 */
-	public void closeWindow() {
-		window.dispose();
-	}
-	
-	/**
-	 * Call the gui to close this screen.
-	 */
-	public void finishedWindow() {
-		gui.closeStartScreen(this);
-	}
-
-
 	/**
 	 * Create a new StartScreen object.
-	 * @param gui the given gui
 	 */
-	public StartScreen(GraphicalUserInterface gui) {
-		this.gui = gui;
-		initialize();
-		window.setVisible(true);
-	}
-	
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		window = new JFrame();
-		window.setTitle("MonsterFighter - Start");
-		window.setResizable(false);
-		window.setBounds(100, 100, 800, 600);
-		window.setLocationRelativeTo(null);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.getContentPane().setLayout(null);
+	public StartScreen() {
+		super();
 		
 		JLabel titleLabel = new JLabel("Monster Fighter");
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(250, 35, 300, 50);
-		window.getContentPane().add(titleLabel);
+		add(titleLabel);
 		
 		JButton btnStart = new JButton("Start");
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.launchSetupScreen();
-				finishedWindow();
+				new SetupScreen();
+				close();
 			}
 		});
 		btnStart.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnStart.setBounds(250, 231, 300, 71);
-		window.getContentPane().add(btnStart);
+		add(btnStart);
 		
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				finishedWindow();
+				GraphicalUserInterface.getInstance().quit();
 			}
 		});
 		btnQuit.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnQuit.setBounds(250, 371, 300, 71);
-		window.getContentPane().add(btnQuit);
+		add(btnQuit);
 
 		
 	}

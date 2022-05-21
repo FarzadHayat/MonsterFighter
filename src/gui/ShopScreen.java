@@ -1,6 +1,5 @@
 package gui;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -18,18 +17,18 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 
 /**
- * Displays the shop screen in a new window.
+ * Displays the shop screen in a new panel.
  * @author Farzad and Daniel
  */
-public class ShopScreen {
+@SuppressWarnings("serial")
+public class ShopScreen extends Screen {
 
-	private JFrame window;
-	private GraphicalUserInterface gui;
-	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game = GameEnvironment.getInstance();
-	
-	private MonsterInventory shopMonsters;
-	private ItemInventory shopItems;
+	private MonsterInventory shopMonsters = game.getShop().getMonsters();
+	private ItemInventory shopItems = game.getShop().getItems();
 	
 	private JButton selectedShop;
 	private int selected = 0; //0 representing monster shop, 1 representing item shop
@@ -39,70 +38,35 @@ public class ShopScreen {
 	
 	private Monster selectedMonster;
 	private Item selectedItem;
-	
-	
-	/**
-	 * Closes the window.
-	 */
-	public void closeWindow() {
-		window.dispose();
-	}
-	
-	
-	/**
-	 * Call the gui to close this screen.
-	 */
-	public void finishedWindow() {
-		gui.closeShopScreen(this);
-	}
 
 
 	/**
 	 * Create a new ShopScreen object.
-	 * @param gui the given gui
 	 */
-	public ShopScreen(GraphicalUserInterface gui) {
-		this.gui = gui;
-		shopMonsters = game.getShop().getMonsters();
-		shopItems = game.getShop().getItems();
-		initialize();
-		window.setVisible(true);
-	}
-
-	
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		window = new JFrame();
-		window.setTitle("MonsterFighter - Shop");
-		window.setResizable(false);
-		window.setBounds(100, 100, 800, 600);
-		window.setLocationRelativeTo(null);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.getContentPane().setLayout(null);
+	public ShopScreen() {
+		super();
 		
 		JLabel titleLabel = new JLabel("SHOP");
 		titleLabel.setBounds(250, 20, 300, 50);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		window.getContentPane().add(titleLabel);
+		add(titleLabel);
 		
 		BalanceLabel balanceLabel = new BalanceLabel(100, 25);
-		window.getContentPane().add(balanceLabel);
+		add(balanceLabel);
 		
 		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.launchHomeScreen();
-				finishedWindow();
+				new HomeScreen();
+				close();
 			}
 		});
-		window.getContentPane().add(backButton);
+		add(backButton);
 		
 		MonstersPanel monstersPanel = new MonstersPanel(shopMonsters, 10, 60, 2);
 		monstersPanel.setBounds(10, 182, 766, 320);
-		window.getContentPane().add(monstersPanel);
+		add(monstersPanel);
 		monstersPanel.setLayout(null);
 		
 		JLabel lblStats = new JLabel("<html><u>Stats</u></html>");
@@ -180,8 +144,8 @@ public class ShopScreen {
 						if(result == 0) {
 							try {
 								AlertBox.infoBox(selectedMonster.buy(), "Monster bought!");
-								gui.launchShopScreen();
-								finishedWindow();
+								new ShopScreen();
+								close();
 							} catch (InvalidValueException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -197,8 +161,8 @@ public class ShopScreen {
 						if(result == 0) {
 							try {
 								AlertBox.infoBox(selectedItem.buy(), "Item bought!");
-								gui.launchShopScreen();
-								finishedWindow();
+								new ShopScreen();
+								close();
 							} catch (InvalidValueException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -212,11 +176,11 @@ public class ShopScreen {
 		});
 		btnBuy.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnBuy.setBounds(631, 508, 119, 44);
-		window.getContentPane().add(btnBuy);
+		add(btnBuy);
 		
 		ItemsPanel itemsPanel = new ItemsPanel(shopItems, 10, 60, 2);
 		itemsPanel.setBounds(10, 182, 766, 320);
-		window.getContentPane().add(itemsPanel);
+		add(itemsPanel);
 		itemsPanel.setLayout(null);
 		
 		JLabel lblDescription = new JLabel("Description:");
@@ -313,12 +277,12 @@ public class ShopScreen {
 		
 		btnMonsterSelection.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnMonsterSelection.setBounds(20, 129, 128, 42);
-		window.getContentPane().add(btnMonsterSelection);
+		add(btnMonsterSelection);
 		
 		
 		btnItemSelection.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnItemSelection.setBounds(175, 129, 128, 42);
-		window.getContentPane().add(btnItemSelection);
+		add(btnItemSelection);
 	}
 	
 }

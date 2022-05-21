@@ -1,203 +1,57 @@
 package gui;
 
+import javax.swing.JFrame;
 import main.*;
 
 /**
  * This class launches the GUI game and manages the screens.
  * @author Farzad and Daniel
  */
-public class GraphicalUserInterface {
+@SuppressWarnings("serial")
+public class GraphicalUserInterface extends JFrame {
 
+	/**
+	 * Fields
+	 */
+	private static GraphicalUserInterface instance = null;
 	private GameEnvironment game = GameEnvironment.getInstance();
 	
 	
 	/**
-	 * Launch a new HomeScreen.
+	 * Constructors
 	 */
-	public void launchHomeScreen() {
-		new HomeScreen(this);
+	private GraphicalUserInterface() {
+		setTitle("MonsterFighter");
+		setResizable(false);
+		setBounds(100, 100, 800, 600);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
+		setVisible(true);
 	}
 	
 	
 	/**
-	 * Close the given HomeScreen.
-	 * @param homeWindow the given homeWindow
+	 * Methods
 	 */
-	public void closeHomeScreen(HomeScreen homeWindow) {
-		homeWindow.closeWindow();
-	}
-
 	
 	/**
-	 * Launch a new StatsScreen.
+	 * Quits the game
 	 */
-	public void launchStatsScreen() {
-		new StatsScreen(this);
+	public void quit() {
+		dispose();
 	}
 	
 	
 	/**
-	 * Close the given StatsScreen.
-	 * @param statsWindow the given statsWindow
-	 */
-	public void closeStatsScreen(StatsScreen statsWindow) {
-		statsWindow.closeWindow();
-	}
-
-	
-	/**
-	 * Launch a new ShopScreen.
-	 */
-	public void launchShopScreen() {
-		new ShopScreen(this);
-	}
-	
-	
-	/**
-	 * Close the given ShopScreen.
-	 * @param shopWindow the given shopWindow
-	 */
-	public void closeShopScreen(ShopScreen shopWindow) {
-		shopWindow.closeWindow();
-	}
-
-	
-	/**
-	 * Launch a new BattlesScreen.
-	 */
-	public void launchBattlesScreen() {
-		new BattlesScreen(this);
-	}
-	
-	
-	/**
-	 * Close the given BattlesScreen.
-	 * @param battlesWindow the given battlesWindow
-	 */
-	public void closeBattlesScreen(BattlesScreen battlesWindow) {
-		battlesWindow.closeWindow();
-	}
-
-	
-	/**
-	 * Launch a new BattleScreen.
-	 */
-	public void launchBattleScreen(Battle battle) {
-		new BattleScreen(this, battle);
-	}
-	
-	
-	/**
-	 * Close the given BattleScreen.
-	 * @param battleWindow the given battleWindow
-	 */
-	public void closeBattleScreen(BattleScreen battleWindow) {
-		battleWindow.closeWindow();
-	}
-	
-	
-	/**
-	 * Launch a new MonsterScreen.
-	 * @param monster the given monster
-	 */
-	public void launchMonsterScreen(Monster monster) {
-		new MonsterScreen(this, monster);
-	}
-	
-	
-	/**
-	 * Close the given MonsterScreen.
-	 * @param monsterWindow the given monsterWindow
-	 */
-	public void closeMonsterScreen(MonsterScreen monsterWindow) {
-		monsterWindow.closeWindow();
-	}
-	
-	
-	/**
-	 * Launch a new ItemScreen.
-	 */
-	public void launchItemScreen(Item item) {
-		new ItemScreen(this, item);
-	}
-	
-	
-	/**
-	 * Close the given ItemScreen.
-	 * @param itemWindow the given itemWindow
-	 */
-	public void closeItemScreen(ItemScreen itemWindow) {
-		itemWindow.closeWindow();
-	}
-	
-	
-	/**
-	 * Launch a new SetupScreen.
-	 */
-	public void launchSetupScreen() {
-		new SetupScreen(this);
-	}
-	
-	
-	/**
-	 * Close the given SetupScreen.
-	 * @param setupWindow the given setupWindow
-	 */
-	public void closeSetupScreen(SetupScreen setupWindow) {
-		setupWindow.closeWindow();
-	}
-	
-	
-	/**
-	 * Launch a new StartScreen.
-	 */
-	public void launchStartScreen() {
-		new StartScreen(this);
-	}
-	
-	
-	/**
-	 * Close the given StartScreen.
-	 * @param startWindow the given startWindow
-	 */
-	public void closeStartScreen(StartScreen startWindow) {
-		startWindow.closeWindow();
-	}
-	
-	
-	/**
-	 * Launch a new StartingMonsterScreen.
-	 */
-	public void launchStartingMonsterScreen() {
-		new StartingMonsterScreen(this);
-	}
-	
-	
-	/**
-	 * Close the given StartingMonsterScreen.
-	 * @param startMonsterWindow the given startMonsterWindow
-	 */
-	public void closeStartingMonsterScreen(StartingMonsterScreen startMonsterWindow) {
-		startMonsterWindow.closeWindow();
-	}
-	
-	
-	/**
-	 * Launch a new FightScreen.
-	 * @param battle the given battle
-	 */
-	public void launchFightScreen(Battle battle) {
-		new FightScreen(this, battle);
-	}
-	
-	
-	/**
-	 * Close the given FightScreen.
-	 * @param fightWindow the given fightWindow
-	 */
-	public void closeFightScreen(FightScreen fightWindow) {
-		fightWindow.closeWindow();
-	}
+     * @return the singleton instance of GraphicalUserInterface
+     */
+    public static GraphicalUserInterface getInstance() {
+    	if (instance == null) {
+    		instance = new GraphicalUserInterface();
+    	}
+    	return instance;
+    }
 	
 	
 	/**
@@ -205,9 +59,7 @@ public class GraphicalUserInterface {
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {
-		GraphicalUserInterface gui = new GraphicalUserInterface();
-		gui.game = GameEnvironment.getInstance();
-		gui.launchStartScreen();
+		new StartScreen();
 	}
 
 	
@@ -220,10 +72,11 @@ public class GraphicalUserInterface {
 		// sleep and show overnight commentary
 		String events = game.sleep();
 		if (game.getIsFinished()) {
+			new StatsScreen();
 			AlertBox.infoBox("GAME OVER!", "Game over");
-			launchStatsScreen();
 		}
 		else {
+			new HomeScreen();
 			AlertBox.infoBox(events.replaceFirst("(?:\n)+", ""), "Good morning!");
 		}
 	}

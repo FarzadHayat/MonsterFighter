@@ -1,6 +1,5 @@
 package gui;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -11,77 +10,44 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 /**
- * Displays the stats screen in a new window.
+ * Displays the stats screen in a new panel.
  * @author Farzad and Daniel
  */
-public class StatsScreen {
+@SuppressWarnings("serial")
+public class StatsScreen extends Screen {
 
-	private JFrame window;
-	private GraphicalUserInterface gui;
-	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game = GameEnvironment.getInstance();
-	private Player player;
-	private Score score;
+	private Player player = game.getPlayer();
+	private Score score = game.getScoreSystem();
 	
-	
-	/**
-	 * Closes the window.
-	 */
-	public void closeWindow() {
-		window.dispose();
-	}
-	
-	
-	/**
-	 * Call the gui to close this screen.
-	 */
-	public void finishedWindow() {
-		gui.closeStatsScreen(this);
-	}
 
 	/**
 	 * Create a new StatsScreen object.
-	 * @param gui the given gui
 	 */
-	public StatsScreen(GraphicalUserInterface gui) {
-		this.gui = gui;
-		player = game.getPlayer();
-		score = game.getScoreSystem();
-		initialize();
-		window.setVisible(true);
-	}
-
-	
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		window = new JFrame();
-		window.setTitle("MonsterFighter - Stats");
-		window.setResizable(false);
-		window.setBounds(100, 100, 800, 600);
-		window.setLocationRelativeTo(null);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.getContentPane().setLayout(null);
+	public StatsScreen() {
+		super();
 		
 		JLabel titleLabel = new JLabel("PLAYER STATS");
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(250, 20, 300, 50);
-		window.getContentPane().add(titleLabel);
+		add(titleLabel);
 		
 		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.launchHomeScreen();
-				finishedWindow();
+				new HomeScreen();
+				close();
 			}
 		});
-		window.getContentPane().add(backButton);
+		add(backButton);
 		
 		JPanel generalPanel = new JPanel();
 		generalPanel.setBounds(200, 100, 400, 340);
-		window.getContentPane().add(generalPanel);
+		add(generalPanel);
 		generalPanel.setLayout(null);
 		
 		JLabel balanceLabel = new JLabel("Balance:");
@@ -168,7 +134,7 @@ public class StatsScreen {
 		
 		JPanel finishedPanel = new JPanel();
 		finishedPanel.setBounds(200, 440, 400, 90);
-		window.getContentPane().add(finishedPanel);
+		add(finishedPanel);
 		finishedPanel.setLayout(null);
 		
 		JLabel finalScoreLabel = new JLabel("Final score:");

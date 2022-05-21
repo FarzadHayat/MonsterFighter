@@ -1,6 +1,5 @@
 package gui;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -19,68 +18,36 @@ import exceptions.InvalidValueException;
 import javax.swing.DefaultComboBoxModel;
 
 /**
- * Displays the setup screen in a new window.
+ * Displays the setup screen in a new panel.
  * @author Farzad and Daniel
  */
-public class SetupScreen {
+@SuppressWarnings("serial")
+public class SetupScreen extends Screen {
 
-	private JFrame window;
-	private GraphicalUserInterface gui;
+	/**
+	 * Fields
+	 */
 	private JTextField txtSelectPlayerName;
-	private Player player;
 	private GameEnvironment game = GameEnvironment.getInstance();
-	
-	
-	/**
-	 * Closes the window.
-	 */
-	public void closeWindow() {
-		window.dispose();
-	}
-	
-	
-	/**
-	 * Call the gui to close this screen.
-	 */
-	public void finishedWindow() {
-		gui.closeSetupScreen(this);
-	}
+	private Player player = game.getPlayer();
 
 	
 	/**
 	 * Create a new SetupScreen object.
-	 * @param gui the given gui
 	 */
-	public SetupScreen(GraphicalUserInterface gui) {
-		this.gui = gui;
-		initialize();
-		player = game.getPlayer();
-		window.setVisible(true);
-	}
-
-	
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		window = new JFrame();
-		window.setTitle("MonsterFighter - Setup");
-		window.setResizable(false);
-		window.setBounds(100, 100, 800, 600);
-		window.setLocationRelativeTo(null);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.getContentPane().setLayout(null);
+	public SetupScreen() {
+		super();
 		
 		JLabel titleLabel = new JLabel("SETUP");
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(250, 20, 300, 50);
-		window.getContentPane().add(titleLabel);
+		add(titleLabel);
 		
 		JLabel lblNumDays = new JLabel("Number of days:");
 		lblNumDays.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		lblNumDays.setBounds(42, 114, 242, 33);
-		window.getContentPane().add(lblNumDays);
+		add(lblNumDays);
 		
 		JSlider sliderNumDays = new JSlider();
 		sliderNumDays.setValue(5);
@@ -93,12 +60,12 @@ public class SetupScreen {
 		sliderNumDays.setMaximum(15);
 		sliderNumDays.setMinimum(5);
 		sliderNumDays.setBounds(316, 104, 345, 56);
-		window.getContentPane().add(sliderNumDays);
+		add(sliderNumDays);
 		
 		JLabel lblDifficulty = new JLabel("Difficulty:");
 		lblDifficulty.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		lblDifficulty.setBounds(42, 239, 242, 33);
-		window.getContentPane().add(lblDifficulty);
+		add(lblDifficulty);
 		
 		JComboBox difficultyBox = new JComboBox();
 		difficultyBox.setBackground(Color.WHITE);
@@ -106,18 +73,18 @@ public class SetupScreen {
 		difficultyBox.setMaximumRowCount(3);
 		difficultyBox.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		difficultyBox.setBounds(316, 239, 135, 50);
-		window.getContentPane().add(difficultyBox);
+		add(difficultyBox);
 		
 		JLabel lblPlayerName = new JLabel("Player Name:");
 		lblPlayerName.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		lblPlayerName.setBounds(42, 385, 242, 33);
-		window.getContentPane().add(lblPlayerName);
+		add(lblPlayerName);
 		
 		txtSelectPlayerName = new JTextField();
 		txtSelectPlayerName.setToolTipText("Select a player name (3 - 15 characters containing no numbers or special characters)");
 		txtSelectPlayerName.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		txtSelectPlayerName.setBounds(316, 353, 345, 134);
-		window.getContentPane().add(txtSelectPlayerName);
+		add(txtSelectPlayerName);
 		txtSelectPlayerName.setColumns(10);
 		
 		JButton btnNext = new JButton("Next");
@@ -128,8 +95,8 @@ public class SetupScreen {
 					player.setName(txtSelectPlayerName.getText());
 					game.setNumDays(sliderNumDays.getValue());
 					game.populateGame();
-					gui.launchStartingMonsterScreen();
-					finishedWindow();
+					new StartingMonsterScreen();
+					close();
 				}
 				catch(InvalidValueException error) {
 					AlertBox.infoBox(error.getMessage(), "Invalid name!");
@@ -138,7 +105,7 @@ public class SetupScreen {
 		});
 		btnNext.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnNext.setBounds(657, 508, 119, 44);
-		window.getContentPane().add(btnNext);
+		add(btnNext);
 		
 	}
 

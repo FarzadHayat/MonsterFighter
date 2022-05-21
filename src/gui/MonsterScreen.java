@@ -1,6 +1,5 @@
 package gui;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -17,75 +16,36 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 /**
- * Displays the selected monster in a new window.
+ * Displays the selected monster in a new panel.
  * @author Farzad and Daniel
  */
-public class MonsterScreen {
+@SuppressWarnings("serial")
+public class MonsterScreen extends Screen {
 
-	private JFrame window;
-	private GraphicalUserInterface gui;
-	
-	private Monster monster;
-	
-	
-	/**
-	 * Closes the window.
-	 */
-	public void closeWindow() {
-		window.dispose();
-	}
-	
-	
-	/**
-	 * Call the gui to close this screen.
-	 */
-	public void finishedWindow() {
-		gui.closeMonsterScreen(this);
-	}
-
-	
 	/**
 	 * Create a new MonsterScreen object.
-	 * @param gui the given gui
 	 * @param monster the given monster
 	 */
-	public MonsterScreen(GraphicalUserInterface gui, Monster monster) {
-		this.monster = monster;
-		this.gui = gui;
-		initialize();
-		window.setVisible(true);
-	}
-
-	
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		window = new JFrame();
-		window.setTitle("MonsterFighter - Monster");
-		window.setResizable(false);
-		window.setBounds(100, 100, 800, 600);
-		window.setLocationRelativeTo(null);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.getContentPane().setLayout(null);
+	public MonsterScreen(Monster monster) {
+		super();
 		
 		JLabel titleLabel = new JLabel(monster.getName().toUpperCase());
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(250, 20, 300, 50);
-		window.getContentPane().add(titleLabel);
+		add(titleLabel);
 		
 		BalanceLabel balanceLabel = new BalanceLabel(100, 25);
-		window.getContentPane().add(balanceLabel);
+		add(balanceLabel);
 		
 		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.launchHomeScreen();
-				finishedWindow();
+				new HomeScreen();
+				close();
 			}
 		});
-		window.getContentPane().add(backButton);
+		add(backButton);
 		
 		JButton btnRename = new JButton("Rename");
 		btnRename.addActionListener(new ActionListener() {
@@ -115,7 +75,7 @@ public class MonsterScreen {
 		});
 		btnRename.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnRename.setBounds(631, 508, 119, 44);
-		window.getContentPane().add(btnRename);
+		add(btnRename);
 		
 		JButton btnSell = new JButton("Sell");
 		btnSell.addActionListener(new ActionListener() {
@@ -124,8 +84,8 @@ public class MonsterScreen {
 				if(result == 0) {
 					try {
 						AlertBox.infoBox(monster.sell(), "Monster Sold!");
-						gui.launchHomeScreen();
-						finishedWindow();
+						new HomeScreen();
+						close();
 					} catch (InvalidValueException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -135,12 +95,12 @@ public class MonsterScreen {
 		});
 		btnSell.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnSell.setBounds(631, 453, 119, 44);
-		window.getContentPane().add(btnSell);
+		add(btnSell);
 		
 		JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(null);
 		statsPanel.setBounds(23, 98, 366, 428);
-		window.getContentPane().add(statsPanel);
+		add(statsPanel);
 		
 		JLabel lblStats = new JLabel("<html><u>Stats</u></html>");
 		lblStats.setHorizontalAlignment(SwingConstants.CENTER);
@@ -214,7 +174,7 @@ public class MonsterScreen {
 		txtDescription.setText(monster.getDescription());
 		txtDescription.setBackground(null);
 		txtDescription.setBounds(425, 292, 325, 151);
-		window.getContentPane().add(txtDescription);
+		add(txtDescription);
 		
 		lblDamageValue.setText(""+ monster.getDamage());
 		lblLevelValue.setText(""+ monster.getLevel());
@@ -230,6 +190,6 @@ public class MonsterScreen {
 		lblStatusValue.setText(status);
 		
 		SpriteLabel spriteLabel = new SpriteLabel(monster, 500, 130);
-		window.getContentPane().add(spriteLabel);
+		add(spriteLabel);
 	}
 }

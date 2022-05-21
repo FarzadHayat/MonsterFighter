@@ -1,6 +1,5 @@
 package gui;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -16,84 +15,47 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * Displays the selected item in a new window.
+ * Displays the selected item in a new panel.
  * @author Farzad and Daniel
  */
-public class ItemScreen {
+@SuppressWarnings("serial")
+public class ItemScreen extends Screen {
 
-	private JFrame window;
-	private GraphicalUserInterface gui;
-	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game = GameEnvironment.getInstance();
-	private Player player;
-	private MonsterInventory monsters;
+	private Player player = game.getPlayer();
+	private MonsterInventory monsters = player.getMonsters();
+	
 	private JButton selectedButton;
 	private Monster selectedMonster;
-	
-	private Item item;
-	
-	
-	/**
-	 * Close the window.
-	 */
-	public void closeWindow() {
-		window.dispose();
-	}
-	
-	
-	/**
-	 * Call the gui to close this screen.
-	 */
-	public void finishedWindow() {
-		gui.closeItemScreen(this);
-	}
 	
 
 	/**
 	 * Create a new ItemScreen object.
-	 * @param gui the given gui
 	 * @param item the given item
 	 */
-	public ItemScreen(GraphicalUserInterface gui, Item item) {
-		this.item = item;
-		this.gui = gui;
-		player = game.getPlayer();
-		game.getScoreSystem();
-		monsters = player.getMonsters();
-		initialize();
-		window.setVisible(true);
-	}
-	
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		window = new JFrame();
-		window.setTitle("MonsterFighter - Item");
-		window.setResizable(false);
-		window.setBounds(100, 100, 800, 600);
-		window.setLocationRelativeTo(null);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.getContentPane().setLayout(null);
+	public ItemScreen(Item item) {
+		super();
 		
 		JLabel titleLabel = new JLabel(item.getName().toUpperCase());
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(250, 20, 300, 50);
-		window.getContentPane().add(titleLabel);
+		add(titleLabel);
 		
 		BalanceLabel balanceLabel = new BalanceLabel(100, 25);
-		window.getContentPane().add(balanceLabel);
+		add(balanceLabel);
 		
 		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.launchHomeScreen();
-				finishedWindow();
+				new HomeScreen();
+				close();
 			}
 		});
-		window.getContentPane().add(backButton);
+		add(backButton);
 		
 		JButton btnUse = new JButton("Use");
 		btnUse.addActionListener(new ActionListener() {
@@ -104,8 +66,8 @@ public class ItemScreen {
 						if(result == 0) {
 							item.use(selectedMonster);
 							AlertBox.infoBox(String.format("%s item used on %s.", item.getName(), selectedMonster.getName()),"Item used!");
-							gui.launchHomeScreen();
-							finishedWindow();
+							new HomeScreen();
+							close();
 						}
 					} catch (StatMaxedOutException e1) {
 						AlertBox.infoBox("Monster stat maxed out, choose another monster.", "Try again!");
@@ -115,7 +77,7 @@ public class ItemScreen {
 		});
 		btnUse.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnUse.setBounds(631, 508, 119, 44);
-		window.getContentPane().add(btnUse);
+		add(btnUse);
 		
 		JButton btnSell = new JButton("Sell");
 		btnSell.addActionListener(new ActionListener() {
@@ -124,8 +86,8 @@ public class ItemScreen {
 				if(result == 0) {
 					try {
 						AlertBox.infoBox(item.sell(), "Item Sold!");
-						gui.launchHomeScreen();
-						finishedWindow();
+						new HomeScreen();
+						close();
 					} catch (InvalidValueException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -135,15 +97,15 @@ public class ItemScreen {
 		});
 		btnSell.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		btnSell.setBounds(631, 453, 119, 44);
-		window.getContentPane().add(btnSell);
+		add(btnSell);
 		
 		SpriteLabel spriteLabel = new SpriteLabel(item, 550, 200);
-		window.getContentPane().add(spriteLabel);
+		add(spriteLabel);
 		
 		MonstersPanel monstersPanel = new MonstersPanel(monsters, 120, 80, 2);
 		monstersPanel.setLayout(null);
 		monstersPanel.setBounds(10, 87, 766, 465);
-		window.getContentPane().add(monstersPanel);
+		add(monstersPanel);
 		
 		JLabel txtDescription = new JLabel();
 		txtDescription.setVerticalAlignment(SwingConstants.TOP);

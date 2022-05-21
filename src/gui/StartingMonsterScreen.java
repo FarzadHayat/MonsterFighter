@@ -1,6 +1,5 @@
 package gui;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -16,70 +15,38 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 /**
- * Displays the starting monster screen in a new window.
+ * Displays the starting monster screen in a new panel.
  * @author Farzad and Daniel
  */
-public class StartingMonsterScreen {
+@SuppressWarnings("serial")
+public class StartingMonsterScreen extends Screen {
 
-	private JFrame window;
-	private GraphicalUserInterface gui;
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game = GameEnvironment.getInstance();
-	private MonsterInventory allMonsters;
-	private Player player;
+	private MonsterInventory allMonsters = game.getAllMonsters();
+	private Player player = game.getPlayer();
+	
 	private Monster selected;
 	private MonsterButton selectedButton;
-	
-	
-	/**
-	 * Closes the window.
-	 */
-	public void closeWindow() {
-		window.dispose();
-	}
-
-	/**
-	 * Call the gui to close this screen.
-	 */
-	public void finishedWindow() {
-		gui.closeStartingMonsterScreen(this);
-	}
-
 
 	/**
 	 * Create a new StartingMonsterScreen object.
-	 * @param gui the given gui
 	 */
-	public StartingMonsterScreen(GraphicalUserInterface gui) {
-		this.gui = gui;
-		player = game.getPlayer();
-		allMonsters = game.getAllMonsters();
-		initialize();
-		window.setVisible(true);
-	}
-
-	
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		window = new JFrame();
-		window.setTitle("MonsterFighter - Starting Monster");
-		window.setResizable(false);
-		window.setBounds(100, 100, 800, 600);
-		window.setLocationRelativeTo(null);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.getContentPane().setLayout(null);
+	public StartingMonsterScreen() {
+		super();
 		
 		JLabel titleLabel = new JLabel("Pick a starting monster");
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(202, 35, 376, 50);
-		window.getContentPane().add(titleLabel);
+		add(titleLabel);
 				
 		JPanel statsPanel = new JPanel();
 		statsPanel.setLayout(null);
 		statsPanel.setBounds(410, 113, 366, 428);
-		window.getContentPane().add(statsPanel);
+		add(statsPanel);
 		
 		JLabel lblStats = new JLabel("Stats");
 		lblStats.setBounds(76, 11, 151, 40);
@@ -148,8 +115,8 @@ public class StartingMonsterScreen {
 					if(monster instanceof Raka) {
 		    			((Raka) monster).setTeam(player.getMonsters());
 		    		}
-					gui.launchHomeScreen();
-					finishedWindow();
+					new HomeScreen();
+					close();
 				}
 			}
 		});
@@ -160,7 +127,7 @@ public class StartingMonsterScreen {
 		MonstersPanel monstersPanel = new MonstersPanel(allMonsters, 20, 20, 2);
 		monstersPanel.setLayout(null);
 		monstersPanel.setBounds(10, 113, 390, 428);
-		window.getContentPane().add(monstersPanel);
+		add(monstersPanel);
 		
 		for (int i = 0; i < allMonsters.size(); i++) {
 			Monster monster = allMonsters.get(i);

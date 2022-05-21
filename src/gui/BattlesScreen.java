@@ -1,6 +1,5 @@
 package gui;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -15,81 +14,48 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 
 /**
- * Displays the battle inventory in a new window.
+ * Displays the battle inventory in a new panel.
  * @author Farzad and Daniel
  */
-public class BattlesScreen {
+@SuppressWarnings("serial")
+public class BattlesScreen extends Screen {
 
-	private JFrame window;
-	private GraphicalUserInterface gui;
-	
+	/**
+	 * Fields
+	 */
 	private GameEnvironment game = GameEnvironment.getInstance();
-	private BattleInventory battles;
+	private BattleInventory battles = game.getBattles();
 	
 	private JButton selectedButton;
 	private Battle selectedBattle;
 	private ArrayList<JLabel> statsLabels;
 	private ArrayList<JLabel> statsLabelValues;
-	
-	
-	/**
-	 * Closes the window.
-	 */
-	public void closeWindow() {
-		window.dispose();
-	}
-	
-	
-	/**
-	 * Call the gui to close this screen.
-	 */
-	public void finishedWindow() {
-		gui.closeBattlesScreen(this);
-	}
 
 	
 	/**
 	 * Create a new BattlesScreen object.
-	 * @param gui the given gui
 	 */
-	public BattlesScreen(GraphicalUserInterface gui) {
-		this.gui = gui;
-		battles = game.getBattles();
-		initialize();
-		window.setVisible(true);
-	}
-
-	
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		window = new JFrame();
-		window.setTitle("MonsterFighter - Battles");
-		window.setResizable(false);
-		window.setBounds(100, 100, 800, 600);
-		window.setLocationRelativeTo(null);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.getContentPane().setLayout(null);
+	public BattlesScreen() {
+		super();
 		
 		JLabel titleLabel = new JLabel("BATTLES");
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(250, 20, 300, 50);
-		window.getContentPane().add(titleLabel);
+		add(titleLabel);
 		
 		BackButton backButton = new BackButton();
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gui.launchHomeScreen();
-				finishedWindow();
+				new HomeScreen();
+				close();
 			}
 		});
-		window.getContentPane().add(backButton);
+		add(backButton);
 		
 		JPanel battlesPanel = new JPanel();
 		battlesPanel.setBounds(20, 105, 360, 440);
-		window.getContentPane().add(battlesPanel);
+		add(battlesPanel);
 		battlesPanel.setLayout(null);
 		
 		if (battles.size() > 0) {
@@ -164,7 +130,7 @@ public class BattlesScreen {
 		
 		JPanel statsPanel = new JPanel();
 		statsPanel.setBounds(405, 105, 360, 440);
-		window.getContentPane().add(statsPanel);
+		add(statsPanel);
 		statsPanel.setLayout(null);
 		
 		JLabel statsLabel = new JLabel("<html><u>Battle Stats</u></html>");
@@ -202,8 +168,8 @@ public class BattlesScreen {
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedBattle != null) {					
-					gui.launchBattleScreen(selectedBattle);
-					finishedWindow();
+					new BattleScreen(selectedBattle);
+					close();
 				}
 			}
 		});
