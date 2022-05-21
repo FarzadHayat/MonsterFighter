@@ -40,6 +40,7 @@ class MonsterTest {
 	void setUp() throws Exception {
 		game.populateGame();
 		player = game.getPlayer();
+		player.setMonsters(new MonsterInventory(4));
 		shop = game.getShop();
 		myMonsters = player.getMonsters();
 		monster = new AverageJoe();
