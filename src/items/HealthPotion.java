@@ -71,7 +71,6 @@ public class HealthPotion extends Item {
     	try {
 			monster.heal(healAmount);
 		} catch (InvalidValueException e) {
-			// Error in code
 			e.printStackTrace();
 		}
     	GameEnvironment.getInstance().getPlayer().getItems().remove(this);

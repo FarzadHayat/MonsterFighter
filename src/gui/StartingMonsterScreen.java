@@ -148,36 +148,6 @@ public class StartingMonsterScreen extends Screen {
 				}
 			});
 		}
-		
-//		int yPos = 20;
-//		int xPos = 10;
-//		int numButton = 1;
-//		for(Monster monster: allMonsters) {
-//			MonsterButton monsterButton = new MonsterButton(monster, xPos, yPos);
-//			monsterButton.addActionListener(new ActionListener() {
-//				public void actionPerformed(ActionEvent e) {
-//					selected = monster;
-//					if(selectedButton != null) {
-//						selectedButton.setBackground(null);
-//					}
-//					selectedButton = monsterButton;
-//					selectedButton.setBackground(Color.lightGray);
-//					lblHealthValue.setText(""+ selected.getHealth());
-//					lblDamageValue.setText(""+ selected.getDamage());
-//					lblLevelValue.setText(""+ selected.getLevel());
-//					lblHealValue.setText(""+ selected.getHealAmount());
-//					lblCritValue.setText(""+ (int)(selected.getCritRate() * 100 )+ "%");
-//				}
-//			});
-//			monstersPanel.add(monsterButton);
-//			numButton += 1;
-//			yPos += 140;
-//			if(numButton == 4) {
-//				yPos = 20;
-//				xPos += 200;
-//			}
-//		}
-		
 	}
 
 }

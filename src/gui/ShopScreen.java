@@ -147,7 +147,6 @@ public class ShopScreen extends Screen {
 								new ShopScreen();
 								close();
 							} catch (InvalidValueException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							} catch (InsufficientFundsException | InventoryFullException e1) {
 								AlertBox.infoBox(e1.getMessage(), "ERROR, Try again");
@@ -164,7 +163,6 @@ public class ShopScreen extends Screen {
 								new ShopScreen();
 								close();
 							} catch (InvalidValueException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							} catch (InsufficientFundsException | InventoryFullException e1) {
 								AlertBox.infoBox(e1.getMessage(), "ERROR, Try again");
