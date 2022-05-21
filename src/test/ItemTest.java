@@ -36,6 +36,7 @@ class ItemTest {
 	void setUp() throws Exception {
 		game.populateGame();
 		player = game.getPlayer();
+		player.setItems(new ItemInventory(4));
 		myItems = player.getItems();
 		game.setShop(new Shop());
 		shop = game.getShop();
