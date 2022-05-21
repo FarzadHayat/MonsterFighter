@@ -150,6 +150,7 @@ class RakaTest {
 	public void testAttack1() throws InvalidTargetException, InvalidValueException, InventoryFullException {
 		//Raka heals
 		game.getPlayer().getMonsters().add(raka);
+		raka.setTeam(game.getPlayer().getMonsters());
 		raka.setRandom(new Random(0));
 		assertEquals(raka.getHealAmount(), raka.attack(target));
 	}
@@ -165,8 +166,10 @@ class RakaTest {
 	public void testAttack2() throws InventoryFullException, InvalidTargetException, InvalidValueException {
 		//Raka attacks
 		game.getPlayer().getMonsters().add(raka);
+		raka.setTeam(game.getPlayer().getMonsters());
 		raka.setRandom(new Random(1234));
-		assertTrue(raka.getDamage() == raka.attack(target) || raka.getDamage()*2 == raka.attack(target));
+		int attackDamage = raka.attack(target);
+		assertTrue(raka.getDamage() == attackDamage || raka.getDamage()*2 == attackDamage);
 	}
 	
 	/**
