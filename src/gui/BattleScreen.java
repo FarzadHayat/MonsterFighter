@@ -24,7 +24,6 @@ public class BattleScreen extends Screen {
 	/**
 	 * Fields
 	 */	
-	private Battle battle;
 	private MonsterInventory monsters;
 	
 	private JButton selectedButton;
@@ -46,7 +45,6 @@ public class BattleScreen extends Screen {
 	 */
 	public BattleScreen(Battle battle) {
 		super();
-		this.battle = battle;
 		monsters = battle.getMonsters();
 		
 		JLabel titleLabel = new JLabel(battle.getName().toUpperCase());
