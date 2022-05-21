@@ -16,6 +16,7 @@ public class Screen extends JPanel {
 	 */
 	private Container window = GraphicalUserInterface.getInstance().getContentPane();
 	
+	
 	/**
 	 * Create a new Screen object.
 	 */
@@ -27,6 +28,10 @@ public class Screen extends JPanel {
 		window.repaint();
 	}
 	
+	
+	/**
+	 * Removes this panel from the game window
+	 */
 	public void close() {
 		window.remove(this);
 	}

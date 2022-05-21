@@ -14,6 +14,8 @@ public class BalanceLabel extends JLabel {
 	
 	/**
 	 * Create a new balance label.
+	 * @param xPos the given x position
+	 * @param yPos the given y position
 	 */
 	public BalanceLabel(int xPos, int yPos) {
 		super("Balance: $" + GameEnvironment.getInstance().getPlayer().getBalance());
