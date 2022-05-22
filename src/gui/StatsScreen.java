@@ -51,84 +51,84 @@ public class StatsScreen extends Screen {
 		generalPanel.setLayout(null);
 		
 		JLabel balanceLabel = new JLabel("Balance:");
-		balanceLabel.setBounds(50, 11, 140, 30);
+		balanceLabel.setBounds(32, 11, 158, 30);
 		generalPanel.add(balanceLabel);
 		balanceLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel balanceLabelValue = new JLabel(String.format("$%s", player.getBalance()));
-		balanceLabelValue.setBounds(210, 11, 140, 30);
+		balanceLabelValue.setBounds(196, 11, 192, 30);
 		generalPanel.add(balanceLabelValue);
 		balanceLabelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel nameLabel = new JLabel("Name:");
-		nameLabel.setBounds(50, 52, 140, 30);
+		nameLabel.setBounds(32, 52, 158, 30);
 		generalPanel.add(nameLabel);
 		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel nameLabelValue = new JLabel(player.getName());
-		nameLabelValue.setBounds(210, 52, 140, 30);
+		nameLabelValue.setBounds(196, 52, 192, 30);
 		generalPanel.add(nameLabelValue);
 		nameLabelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel dayLabel = new JLabel("Day:");
-		dayLabel.setBounds(50, 93, 140, 30);
+		dayLabel.setBounds(32, 93, 158, 30);
 		generalPanel.add(dayLabel);
 		dayLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel dayLabelValue = new JLabel(String.format("%s out of %s", game.getDay(), game.getNumDays()));
-		dayLabelValue.setBounds(210, 93, 140, 30);
+		dayLabelValue.setBounds(196, 93, 192, 30);
 		generalPanel.add(dayLabelValue);
 		dayLabelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel difficultyLabel = new JLabel("Difficulty:");
-		difficultyLabel.setBounds(50, 134, 140, 30);
+		difficultyLabel.setBounds(32, 134, 158, 30);
 		generalPanel.add(difficultyLabel);
 		difficultyLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel difficultyLabelValue = new JLabel(String.valueOf(game.getDifficulty()));
-		difficultyLabelValue.setBounds(210, 134, 140, 30);
+		difficultyLabelValue.setBounds(196, 134, 192, 30);
 		generalPanel.add(difficultyLabelValue);
 		difficultyLabelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel todayScoreLabel = new JLabel("Today score:");
-		todayScoreLabel.setBounds(50, 175, 140, 30);
+		todayScoreLabel.setBounds(32, 175, 158, 30);
 		generalPanel.add(todayScoreLabel);
 		todayScoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel todayScoreLabelValue = new JLabel(String.valueOf(score.getDayScore()));
-		todayScoreLabelValue.setBounds(210, 175, 140, 30);
+		todayScoreLabelValue.setBounds(196, 175, 192, 30);
 		generalPanel.add(todayScoreLabelValue);
 		todayScoreLabelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel totalScoreLabel = new JLabel("Total score:");
-		totalScoreLabel.setBounds(50, 216, 140, 30);
+		totalScoreLabel.setBounds(32, 216, 158, 30);
 		generalPanel.add(totalScoreLabel);
 		totalScoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel totalScoreLabelValue = new JLabel(String.valueOf(score.getTotalScore()));
-		totalScoreLabelValue.setBounds(210, 216, 140, 30);
+		totalScoreLabelValue.setBounds(196, 216, 192, 30);
 		generalPanel.add(totalScoreLabelValue);
 		totalScoreLabelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel todayBattlesLabel = new JLabel("Today battles:");
-		todayBattlesLabel.setBounds(50, 257, 140, 30);
+		todayBattlesLabel.setBounds(32, 257, 158, 30);
 		generalPanel.add(todayBattlesLabel);
 		todayBattlesLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel todayBattlesLabelValue = new JLabel(String.format("%s won out of %s", score.getDayBattlesWon(),
 													score.getDayBattlesWon() + score.getDayBattlesLost()));
-		todayBattlesLabelValue.setBounds(210, 257, 140, 30);
+		todayBattlesLabelValue.setBounds(196, 257, 192, 30);
 		generalPanel.add(todayBattlesLabelValue);
 		todayBattlesLabelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel totalBattlesLabel = new JLabel("Total battles:");
-		totalBattlesLabel.setBounds(50, 298, 140, 30);
+		totalBattlesLabel.setBounds(32, 298, 158, 30);
 		generalPanel.add(totalBattlesLabel);
 		totalBattlesLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel totalBattlesLabelValue = new JLabel(String.format("%s won out of %s", score.getTotalBattlesWon(),
 													score.getTotalBattlesWon() + score.getTotalBattlesLost()));
-		totalBattlesLabelValue.setBounds(210, 298, 140, 30);
+		totalBattlesLabelValue.setBounds(196, 298, 192, 30);
 		generalPanel.add(totalBattlesLabelValue);
 		totalBattlesLabelValue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
@@ -139,7 +139,7 @@ public class StatsScreen extends Screen {
 		
 		JLabel finalScoreLabel = new JLabel("Final score:");
 		finalScoreLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		finalScoreLabel.setBounds(50, 10, 120, 30);
+		finalScoreLabel.setBounds(30, 10, 140, 30);
 		finishedPanel.add(finalScoreLabel);
 		
 		JLabel finalScoreLabelValue = new JLabel(String.format("%s (+%s bonus)", score.finalScore(), score.scoreBonus()));

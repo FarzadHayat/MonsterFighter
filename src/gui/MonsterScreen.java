@@ -109,27 +109,27 @@ public class MonsterScreen extends Screen {
 		
 		JLabel lblHealth = new JLabel("Health :");
 		lblHealth.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHealth.setBounds(10, 76, 121, 40);
+		lblHealth.setBounds(10, 76, 154, 40);
 		statsPanel.add(lblHealth);
 		
 		JLabel lblDamage = new JLabel("Damage :");
 		lblDamage.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblDamage.setBounds(10, 137, 121, 40);
+		lblDamage.setBounds(10, 137, 154, 40);
 		statsPanel.add(lblDamage);
 		
 		JLabel lblLevel = new JLabel("Level :");
 		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblLevel.setBounds(10, 202, 121, 40);
+		lblLevel.setBounds(10, 202, 154, 40);
 		statsPanel.add(lblLevel);
 		
 		JLabel lblHealAmount = new JLabel("Heal amount :");
 		lblHealAmount.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHealAmount.setBounds(10, 260, 136, 40);
+		lblHealAmount.setBounds(10, 260, 154, 40);
 		statsPanel.add(lblHealAmount);
 		
 		JLabel lblCritRate = new JLabel("Critical rate :");
 		lblCritRate.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblCritRate.setBounds(10, 320, 121, 40);
+		lblCritRate.setBounds(10, 320, 154, 40);
 		statsPanel.add(lblCritRate);
 		
 		JLabel lblDamageValue = new JLabel("");
@@ -157,7 +157,7 @@ public class MonsterScreen extends Screen {
 		
 		JLabel lblFainted = new JLabel("Status :");
 		lblFainted.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblFainted.setBounds(10, 377, 121, 40);
+		lblFainted.setBounds(10, 377, 154, 40);
 		statsPanel.add(lblFainted);
 		
 		JLabel lblStatusValue = new JLabel("");

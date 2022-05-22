@@ -77,7 +77,7 @@ public class ShopScreen extends Screen {
 		
 		JLabel lblHealth = new JLabel("Health :");
 		lblHealth.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHealth.setBounds(453, 37, 121, 40);
+		lblHealth.setBounds(453, 37, 149, 40);
 		monstersPanel.add(lblHealth);
 		
 		JLabel lblHealthValue = new JLabel("");
@@ -87,7 +87,7 @@ public class ShopScreen extends Screen {
 		
 		JLabel lblDamage = new JLabel("Damage :");
 		lblDamage.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblDamage.setBounds(453, 88, 121, 40);
+		lblDamage.setBounds(453, 88, 149, 40);
 		monstersPanel.add(lblDamage);
 		
 		JLabel lblDamageValue = new JLabel("");
@@ -97,12 +97,12 @@ public class ShopScreen extends Screen {
 		
 		JLabel lblLevel = new JLabel("Level :");
 		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblLevel.setBounds(453, 139, 121, 40);
+		lblLevel.setBounds(453, 139, 149, 40);
 		monstersPanel.add(lblLevel);
 		
 		JLabel lblHealAmount = new JLabel("Heal amount :");
 		lblHealAmount.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHealAmount.setBounds(453, 184, 136, 40);
+		lblHealAmount.setBounds(453, 184, 149, 40);
 		monstersPanel.add(lblHealAmount);
 		
 		JLabel lblHealValue = new JLabel("");
@@ -117,7 +117,7 @@ public class ShopScreen extends Screen {
 		
 		JLabel lblCritRate = new JLabel("Critical rate :");
 		lblCritRate.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblCritRate.setBounds(453, 236, 121, 40);
+		lblCritRate.setBounds(453, 236, 149, 40);
 		monstersPanel.add(lblCritRate);
 		
 		JLabel lblCritValue = new JLabel("");
@@ -127,7 +127,7 @@ public class ShopScreen extends Screen {
 		
 		JLabel lblCost = new JLabel("Cost :");
 		lblCost.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblCost.setBounds(453, 281, 121, 40);
+		lblCost.setBounds(453, 281, 149, 40);
 		monstersPanel.add(lblCost);
 		
 		JLabel lblCostValue = new JLabel("");

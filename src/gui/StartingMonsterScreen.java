@@ -58,27 +58,27 @@ public class StartingMonsterScreen extends Screen {
 		
 		JLabel lblHealth = new JLabel("Health :");
 		lblHealth.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHealth.setBounds(10, 76, 121, 40);
+		lblHealth.setBounds(10, 76, 152, 40);
 		statsPanel.add(lblHealth);
 		
 		JLabel lblDamage = new JLabel("Damage :");
 		lblDamage.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblDamage.setBounds(10, 137, 121, 40);
+		lblDamage.setBounds(10, 137, 152, 40);
 		statsPanel.add(lblDamage);
 		
 		JLabel lblLevel = new JLabel("Level :");
 		lblLevel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblLevel.setBounds(10, 202, 121, 40);
+		lblLevel.setBounds(10, 202, 152, 40);
 		statsPanel.add(lblLevel);
 		
 		JLabel lblHealAmount = new JLabel("Heal amount :");
 		lblHealAmount.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHealAmount.setBounds(10, 268, 136, 40);
+		lblHealAmount.setBounds(10, 268, 152, 40);
 		statsPanel.add(lblHealAmount);
 		
 		JLabel lblCritRate = new JLabel("Critical rate :");
 		lblCritRate.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblCritRate.setBounds(10, 329, 121, 40);
+		lblCritRate.setBounds(10, 329, 152, 40);
 		statsPanel.add(lblCritRate);
 		
 		JLabel lblHealthValue = new JLabel("");

@@ -25,25 +25,13 @@ https://www.oracle.com/java/technologies/downloads/
 		
 2. Extract Zip File
 
-3. Run
-
-	For GUI Game:
-		
-		fha62_zrc13_MonsterFighter_GUI.jar 
-	
-	For CMD game:
-
-		See alternative method below.
-
-4. Alternatively, you can run the game from the a terminal:
-
-i. In command prompt change directory to extracted folder
+3. In command prompt change directory to extracted folder
 	
 	This can be done by typing: 
 	
 		cd <file address>
 
-ii. Type
+4. Type
 	
 	For GUI Game: 
 
