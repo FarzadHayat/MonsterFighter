@@ -409,8 +409,19 @@ public class Battle {
     		}
     		scanner.close();
     	}
-    	catch (FileNotFoundException e) {
-    		e.printStackTrace();
+    	catch (FileNotFoundException e1) {
+    		try {
+    			File myFile = new File(System.getProperty("user.dir") + "/resources/battle-names.txt");
+        		Scanner scanner = new Scanner(myFile);
+        		while (scanner.hasNextLine()) {
+        			String name = scanner.nextLine();
+        			battleNames.add(name);
+        		}
+        		scanner.close();
+    		}
+    		catch (FileNotFoundException e2) {
+    			e2.printStackTrace();
+    		}
     	}
     	Random random = new Random();
     	int i = random.nextInt(0, battleNames.size());
