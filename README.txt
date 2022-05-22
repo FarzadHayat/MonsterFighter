@@ -33,7 +33,7 @@ https://www.oracle.com/java/technologies/downloads/
 	
 	For CMD game:
 
-		fha62_zrc13_MonsterFighter_CMD.bat
+		fha62_zrc13_MonsterFighter_CMD.jar
 
 4. Alternatively, you can run the game from the a terminal:
 
