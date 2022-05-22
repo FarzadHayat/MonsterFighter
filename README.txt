@@ -51,7 +51,7 @@ ii. Type
 
 	For CMD Game: 
 
-		start fha62_zrc13_MonsterFighter_CMD.bat
+		java -jar fha62_zrc13_MonsterFighter_CMD.jar
 
 
 How to open source code in Eclipse:
